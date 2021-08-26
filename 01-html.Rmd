@@ -1,0 +1,503 @@
+# (PART) Basics {-}
+
+# HTML as a cornerstone of the internet {#html}
+
+What happens when we call up a URL such as 
+<https://webscraping-tures.github.io>{target="_blank"}
+in a browser? We will get a visualisation of the page in our browser window.
+From the perspective of the user of a website, this is everything we need to 
+know. Our goal -- calling up the website -- has already been reached at this 
+point.
+
+From the perspective of a web scraper, we need to understand however, what is
+happening behind the scenes. The link 
+<https://webscraping-tures.github.io>{target="_blank"} does nothing but call up
+an HTML-file in which the content of the website is recorded in form of a 
+specific code. This code is then interpreted by your browser and translated into
+a visual representation, which you are finding yourselves in front of now.
+
+Try it yourself. With a right-click into this area of the text and a further
+click on “View Page Source”, the HTML-code that the website is based on, is 
+shown. At this point it is completely legitimate to be overwhelmed by the flood
+of unfamiliar symbols and terminology. Who would have thought that a relatively
+simple website such as this one, can be so complex and complicated on the 
+backend?
+
+But the good news is that we do not need to be able to understand every word and
+every symbol in an HTML file.
+Our goal is identifying the parts of a website that are relevant for our data
+collection and extract them precisely from the HTML-code. This can possibly be 
+only a single line of code in an HTML-file with thousands of lines of code. Do 
+we need to understand every single line? No, but we have to be able to 
+understand the structure of an HTML-file to be able to identify that one line 
+that is of interest to us. Until we reach this point, we still have a ways to 
+go. 
+
+At the end of this first section, you will have a basic understanding of the
+structure and components of an HTML document and the source code will already 
+seem way less intimidating.
+
+
+## HTML-Tags
+
+The “language” that HTML-files have been written in, is the 
+**Hypertext Markup Language**, HTML for short. The basics of this language are 
+the so-called **Tags** or the “vocabulary”. These terms are used to structure 
+the HTML-document, format it, insert links and images or create lists and
+tables. The browser knows the meaning of these key phrases, can interpret
+them and present the website visually according to the coded HTML-Tags. As with
+any language in the IT-world, HTML also follows certain rules or “grammar” or
+**Syntax**.
+
+Fortunately for us, in the case of HTML this syntax is rather simple. In the
+following we will take a closer look at the tags and syntax rules that are
+important to us.
+
+Contemplate the following example:
+
+```
+<b>Hello World!</b>
+```
+
+`<b>` is a tag. The b stands for *bold*. Tags always follow the same pattern. 
+They begin with a `<`, followed by the name of the tag -- `b` -- and end with a
+`>`. It is important to note that an opened tag will need to be closed as well,
+under normal circumstances. To do this, the same tag is written again with a 
+*forward slash*, `</b>` in our case. Everything that is contained within the 
+opening and closing tag in an HTML-document will be interpreted according to the
+meaning of the tag. 
+
+With this knowledge we understand what will happen with our example. The tag 
+`<b>` means bold, and the opening and closing tag `<b>…</b>` include the text
+`Hello World!`. The text will be interpreted according to the tag, which means
+in bold:
+
+<b>Hello World!</b>
+
+
+### hello_world.html
+
+Let us have a look at a full HTML-document now:
+
+```
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <b>Hello World!</b>
+  </body>
+</html>
+```
+The interpretation of this document by the browser can be seen under
+<https://webscraping-tures.github.io/hello_world.html>{target="_blank"}.
+Let us take a look at the single elements of the code:
+
+The first line, the *document type declaration*, `<!DOCTYPE html>`, informs the
+browser, which version of HTML is being used in the document. `<!DOCTYPE html>`
+stands for the current HTML5 standard. This is the place to declare if an older
+version of HTML was used, to ensure the most accurate visual representation --
+in spite of possible changes or the omission of certain standards in the current
+version. From the point of view of a web-scraper the HTML-version does not
+necessarily play a massive role. Interestingly enough, the tag `<!DOCTYPE html>`
+is one of the few exceptions from the rule that a once-opened tag has to be 
+closed again; it is not necessary here.
+
+The actual content of the HTML-document only starts in line 3 with the `<html>`
+tag. This will only be closed in the last line and thus contains the total 
+contents of the document. So the tag tells the browser that all it encompasses, 
+is HTML.
+
+Next is the tag `<head>`. What we see the tag encompassing here, is not what we
+see in the browser window yet. What this means in practice is that here we 
+mainly find meta-information, advanced functionality (JavaScript) and 
+definitions of design choices (Cascading Style Sheets – CSS). This should not
+distract us too much in this introduction into web scraping, but we should be 
+aware that references to .js and .css files can appear in the `<head>` tag.
+
+In our example the `<head>` tag exclusively contains another tag called 
+`<title>`, which in turn contains the text `Hello World!`.
+The `<title>` tag determines what we will see in the title bar of our browser. 
+In this case *Hello World!*
+
+Finally, everything that the `<body>` tag includes, describes the content we can
+see in the browser window. In this simple example, only one line is included. 
+The already known `<b>` tag includes the text `Hello World!`, which it displays
+in bold for us to see in the browser window.
+
+So now you already know the basic structure of any HTML file.
+
+While looking at the sample code above, you may have noticed that certain lines 
+are indented to the right. This is not a requirement for functional HTML code, 
+but a convention that makes it easier for reading and understanding. Indented 
+lines represent the different hierarchical levels of the code. `<head>` is
+hierarchically subordinate to `<html>` and therefore single indented. `<title>`,
+in turn, is subordinate to `<head>` and therefore doubly indented. By writing it
+this way, it is also obvious at a first glance that `<body>` is subordinate to
+`<html>` but not to `<title>`, since `<body>` and `<title>` are each only single
+indented. You will often -- but not always -- encounter this convention in "real"
+HTML documents on the Internet.
+
+One more note on the technical side: HTML documents can basically be written by
+hand in any editor and must be saved with the extension *.html*. You can test 
+this by starting any text editor yourself, copying the HTML code above, saving
+the file with the extension *.html* and opening it in a browser of your choice.
+However, due to their complexity, websites are not usually written by hand 
+nowadays. A variety of professional tools now offer much more efficient ways to
+design websites. For example, the page you are looking at was written directly 
+in RStudio using the "bookdown" package, which automates most of the layout
+decisions.
+
+
+### Important tags
+
+We cannot look at all the tags available in HTML at this point, but will 
+initially limit ourselves to those that we encounter very frequently and that 
+will be particularly relevant for our first web scraping projects.
+
+
+#### Page structure
+
+One tag that relates to the structure of the page, we have already met above. 
+The `<body>` tag communicates that everything encompassed by it is part of the 
+content displayed in the browser window.
+
+One way to further structure the content is to use the maximum of six levels of 
+headings that HTML offers. The tags `<h1> <h2> ... <h6>` allow this in a simple
+way. The `h` stands for header. The text encompassed by the tag is automatically
+numbered and displayed in different font sizes depending on the level of the
+heading. As an example, you can see the structure of the headings on this page
+as HTML code:
+
+```
+<h1>HTML as a cornerstone of the internet</h1>
+  <h2>HTML-Tags</h2>
+    <h3>hello_world.html</h3>
+    <h3>Important tags</h3>
+      <h4>Page structure</h4>
+      <h4>Formatting</h4>
+      <h4>Lists</h4>
+      <h4>Tables</h4>
+  <h2>Attributes</h3>
+    <h3>Links</h4>
+    <h3>Images</h4>
+  <h2>Entities</h3>
+```
+
+Another frequently occurring form of structuring in HTML documents, are the
+groupings defined via `<div>` (*division*) and `<span>`. Both tags basically 
+work the same way, with `<div>` referring to one or more lines and `<span>` 
+referring to one line or part of a line. Neither have any direct effect on the
+display of the website at first, but they are often applied in combination with
+classes that are defined in *Cascading Style Sheets -- CSS*, to adjust the 
+visual interpretation. Normally, we do not care about how the CSS classes are 
+defined and how they affect rendering. You will learn later in this seminar why 
+the combination of `<div>` or `<span>` and CSS classes are often a very 
+practical starting point for our web scraping endeavours and how we can exploit 
+this in our work. Here is a simplified example of how both tags can appear in
+HTML code:
+
+```
+<div>
+  This sentence is part of the div tag.
+  This sentence is part of the div tag, 
+  <span> while this sentence is part of the div and the span Tags. </span>
+</div>
+This sentence is not part of the div tag.
+```
+
+#### Formatting
+
+HTML provides a variety of tags for formatting the displayed text. In the 
+following we will look at some of the most common ones.
+
+The `<p>` tag defines the enclosed text as a *paragraph* and is accordingly 
+automatically terminated in the display with a line break.
+
+```
+<p>This sentence is part of the paragraph. So is this. And this one.</p>
+This sentence is not part of the paragraph.
+```
+This is represented as:
+
+<p>This sentence is part of the paragraph. So is this. And this one.</p>
+This sentence is not part of the paragraph.
+
+<br>
+
+The tag `<br>` introduces a line break. This tag is another exception to the 
+rule that an opened tag must also be closed again. In this special case, using 
+opening and closing tags `<br></br>` stands for two line breaks, so it is not 
+equivalent to `<br>`. Unlike the line break inserted by `<p>...</p>` at the end
+of the paragraph, no further spacing is inserted after `<br>`:
+
+
+```
+Here comes some text, which is now broken up in two lines.<br>
+After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>
+As can be seen here.
+```
+
+This is represented as:
+
+Here comes some text, which is now broken up in two lines.<br>
+After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>
+As can be seen here.
+
+<br>
+
+The typeface can be adjusted by tags like the already known `<b>` (*bold*) or 
+`<i>` (*italics*) similar to the known options in common text editing programs:
+
+```
+These tags can be used to render words, sentences and paragraphs <b>bold</b> or <i>italic</i>.
+```
+
+This is represented as:
+
+These tags can be used to render words, sentences and paragraphs <b>bold</b> or <i>italic</i>.
+
+<br>
+
+
+#### Lists
+
+We will often encounter lists in HTML documents. The two most common variants 
+being the *unordered list*, introduced by `<ul>`, and the *ordered list*, 
+`<ol>`. The opening and closing list-tag covers the entire list, while each 
+individual list element is enclosed by a `<li>` tag in both variants. Here are
+two short examples:
+
+```
+<ul>
+  <li>First unordered list element</li>
+  <li>Second unordered list element</li>
+  <li>Third unordered list element</li>
+</ul>
+```
+This is represented as:
+
+<ul>
+  <li>First unordered list element</li>
+  <li>Second unordered list element</li>
+  <li>Third unordered list element</li>
+</ul>
+
+```
+<ol>
+  <li>First ordered list element</li>
+  <li>Second ordered list element</li>
+  <li>Third ordered list element</li>
+</ol>
+```
+This is represented as:
+
+<ol>
+  <li>First ordered list element</li>
+  <li>Second ordered list element</li>
+  <li>Third ordered list element</li>
+</ol>
+
+
+#### Tables
+
+HTML can also be used to display tables, without further adjustments of the 
+display via CSS admittedly not very attractive tables. These are opened by a 
+`<table>` tag and closed accordingly. Within the table, lines are defined by 
+`<tr>...</tr>` (*table row*). Within the line, table headers can be defined by 
+`<th>` (*table header*) and cell contents by `<td>` (*table data*). Content 
+encompassed by `<th>...</th>` and `<td>...</td>` are not only formatted 
+differently in their presentation, from the web scraper's point of view, these 
+tags also allow us to clearly distinguish the table content to be read. Here is 
+a simple example:
+
+```
+<table>
+  <tr> <th>#</th> <th>Tag</th> <th>Effect</th> </tr>
+  <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
+  <tr> <td>2</td> <td>"i"</td> <td>italics</td> </tr>
+</table>
+```
+This is displayed as:
+
+<table>
+  <tr> <th>#</th> <th>Tag</th> <th>Effect</th> </tr>
+  <tr> <td>1</td> <td>"b"</td> <td>bold</td> </tr>
+  <tr> <td>2</td> <td>"i"</td> <td>italics</td> </tr>
+</table>
+
+<br>
+
+Formatting the HTML code in a kind of "table form" as in the example above is 
+not necessary but increases intuitive readability. In fact, the following manner
+of writing it, is equivalent in result and actually more common in practice:
+
+```
+<table>
+  <tr>
+    <th>#</th>
+    <th>Tag</th>
+    <th>Effect</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"b"</td>
+    <td>bold</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"i"</td>
+    <td>italics</td>
+  </tr>
+</table>
+```
+
+This will also be displayed as:
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Tag</th>
+    <th>Effect</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"b"</td>
+    <td>bold</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>"i"</td>
+    <td>italics</td>
+  </tr>
+</table>
+
+
+## Attributes {#attribute}
+
+Many HTML tags can be further adapted in their functionality and presentation by
+using so-called *attributes*. The basic syntax is: 
+`<tag attribute="value">...</tag>`. In the opening (never in the closing) tag, 
+the name of the tag is followed by the name of the attribute `=` the *value* to
+be assigned, enclosed in single or double inverted commas. In HTML, 
+`<tag attribute="value">` is not equal to `<tag attribute = "value">`. The pair
+of attribute name and value must be connected with a `=` without spaces in order
+to be interpreted correctly.
+
+A variety of tags can be modified with a multitude of attributes. Two of the
+most common and illustrative applications are the inclusion of links and images,
+two other frequently encountered HTML tags.
+
+
+### Links
+
+Links are included using the `<a>` (*anchor*) tag. The first intuitive attempt 
+`<a>This is a link</a>` is unfortunately unsuccessful:
+
+<a>This is (not) a link</a>
+
+Although the text is displayed and marked as a link -- i.e. blue and underlined 
+-- it does not lead to any destination, since it was not defined in the HTML
+document what this destination should be. This is where the first attribute 
+comes into play. With `<a href="url">` the target of the link is defined. 
+`href` stands for *hypertext reference* and its assigned value can be, among
+other things, a website, an email address or even a file. For example, 
+`<a href="webscraping-tures.github.io/html.html">This is a link</a>` links to 
+the page you are viewing.
+
+<a href="webscraping-tures.github.io/html.html">This is a link</a>
+
+You may have noticed that you had to scroll to this point again to continue 
+reading. A second attribute can remedy this. With 
+`<a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a>`
+we instruct the browser to open the link in a new tab. The assigned value of 
+target here is "_blank", which stands for a new tab, but it can also take on a 
+number of other values.
+
+<a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a>
+
+Links are of particular interest to us in web scraping when we collect links to
+all sub-pages from a parent page in order to scrape them specifically. But more
+about that later.
+
+One more note: the `<link>` tag is not to be confused with `<a>` and is used to
+integrate external files, such as the JavaScript or CSS files already mentioned.
+
+
+### Images
+
+Images and graphics are integrated in HTML with `<img>`, another tag that does
+not have to be explicitly closed. So that the browser knows which image is to be 
+included, this is specified via the `src` (*source*) attribute of the tag. Thus
+`<img src="webscraping-tures.github.io/Rlogo.png">` includes the following
+image:
+
+<img src="webscraping-tures.github.io/Rlogo.png">
+
+Using further attributes, it is also possible, for example, to adjust the size 
+of the image in pixels. 
+`<img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100">`
+leads to a resized display of the image.
+
+<img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100">
+
+Images can also be combined with links. So 
+`<a href="https://www.r-project.org/" target="_blank"><img src="webscraping-tures.github.io/Rlogo.png"></a>`
+defines the image as a link, where a click on the image takes you to the 
+specified link:
+
+<a href="https://www.r-project.org/" target="_blank">
+<img src="webscraping-tures.github.io/Rlogo.png">
+</a>
+
+
+## Entities
+
+A number of characters are reserved for the HTML code. We have already seen that
+the characters `< > "` are part of the code to define tags and values of 
+attributes. In many cases, more current HTML versions allow for the usage of
+reserved characters directly in continuous text. For the time being, however, we
+will regularly encounter so-called *entities* instead of the actual characters 
+in web scraping. Entities are coded representations of certain characters. They 
+are always introduced with `&` and ended with `;`. Between the two characters is
+either the name or the number of the entity.
+
+For example, `&lt;` stands for *less than*, i.e. `<` and `&gt;` for 
+*greater than*, i.e. `>`.
+
+```
+A text with reserved characters like &lt; und &gt; or the so-called &quot;ampersand&quot; &amp;.
+```
+Is displayed as:
+
+A text with reserved characters like &lt; und &gt; or the so-called &quot;ampersand&quot; &amp;.
+
+Sidenote: If you are interested in the origin of the term ampersand, I recommend
+its Wikipedia article, which makes for an interesting read: 
+<https://en.wikipedia.org/wiki/Ampersand>{target="_blank"}
+
+<br>
+
+Another entity we will encounter regularly is `&nbsp;` (*non-breaking space*), 
+which can be used instead of a simple space. The advantage of this is that there
+is never a line break in the browser, and it allows the use of more than one
+space:
+
+```
+Displayed with one    space
+Displayed with four&nbsp;&nbsp;&nbsp;&nbsp;spaces
+```
+Displayed with one    space<br>
+Displayed with four&nbsp;&nbsp;&nbsp;&nbsp;spaces
+
+<br>
+
+An overview of the most common entities can be found here:
+<https://www.w3schools.com/html/html_entities.asp>{target="_blank"}
+
+The entities of all Unicode characters can be found here:
+<https://unicode-table.com/>{target="_blank"}

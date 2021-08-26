@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 HTML as a cornerstone of the internet | Web Scraping using R</title>
+  <meta name="description" content="1 HTML as a cornerstone of the internet | Web Scraping using R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 HTML as a cornerstone of the internet | Web Scraping using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 HTML as a cornerstone of the internet | Web Scraping using R" />
+  
+  
+  
+
+<meta name="author" content="Jakob Tures" />
+
+
+<meta name="date" content="2021-06-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="R1.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
+<script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
+<script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
+<script src="libs/echarts4r-binding-0.4.0/echarts4r.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+Web Scraping using R
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
+</ul></li>
+<li class="part"><span><b>I Basics</b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+</ul></li>
+<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
+</ul></li>
+<li class="part"><span><b>III Scraping</b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#csv-files"><i class="fa fa-check"></i><b>8.1</b> CSV files</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the csv files</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
+</ul></li>
+<li class="part"><span><b>IV Data analysis</b></span></li>
+<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.1</b> Gathering the links</a></li>
+<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2</b> Downloading the subpages</a></li>
+<li class="chapter" data-level="10.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.3</b> Extracting the data of interest</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="scraping.html"><a href="scraping.html#dealing-with-missing-data-in-lists"><i class="fa fa-check"></i><b>10.3.1</b> Dealing with missing data in lists</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.4</b> Saving the data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones</a></li>
+<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#cleaning-the-data-on-police-reports"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code></a></li>
+<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code></a></li>
+<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups</a></li>
+<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax</a></li>
+<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
+<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-and-counting-robberies-from-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting and counting robberies from police reports</a></li>
+<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#parsing-two-numbers-from-a-string"><i class="fa fa-check"></i><b>13.3</b> Parsing two numbers from a string</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Web Scraping using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="html" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> HTML as a cornerstone of the internet</h1>
+<p>What happens when we call up a URL such as
+<a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a>
+in a browser? We will get a visualisation of the page in our browser window.
+From the perspective of the user of a website, this is everything we need to
+know. Our goal – calling up the website – has already been reached at this
+point.</p>
+<p>From the perspective of a web scraper, we need to understand however, what is
+happening behind the scenes. The link
+<a href="https://webscraping-tures.github.io" target="_blank">https://webscraping-tures.github.io</a> does nothing but call up
+an HTML-file in which the content of the website is recorded in form of a
+specific code. This code is then interpreted by your browser and translated into
+a visual representation, which you are finding yourselves in front of now.</p>
+<p>Try it yourself. With a right-click into this area of the text and a further
+click on “View Page Source”, the HTML-code that the website is based on, is
+shown. At this point it is completely legitimate to be overwhelmed by the flood
+of unfamiliar symbols and terminology. Who would have thought that a relatively
+simple website such as this one, can be so complex and complicated on the
+backend?</p>
+<p>But the good news is that we do not need to be able to understand every word and
+every symbol in an HTML file.
+Our goal is identifying the parts of a website that are relevant for our data
+collection and extract them precisely from the HTML-code. This can possibly be
+only a single line of code in an HTML-file with thousands of lines of code. Do
+we need to understand every single line? No, but we have to be able to
+understand the structure of an HTML-file to be able to identify that one line
+that is of interest to us. Until we reach this point, we still have a ways to
+go.</p>
+<p>At the end of this first section, you will have a basic understanding of the
+structure and components of an HTML document and the source code will already
+seem way less intimidating.</p>
+<div id="html-tags" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> HTML-Tags</h2>
+<p>The “language” that HTML-files have been written in, is the
+<strong>Hypertext Markup Language</strong>, HTML for short. The basics of this language are
+the so-called <strong>Tags</strong> or the “vocabulary”. These terms are used to structure
+the HTML-document, format it, insert links and images or create lists and
+tables. The browser knows the meaning of these key phrases, can interpret
+them and present the website visually according to the coded HTML-Tags. As with
+any language in the IT-world, HTML also follows certain rules or “grammar” or
+<strong>Syntax</strong>.</p>
+<p>Fortunately for us, in the case of HTML this syntax is rather simple. In the
+following we will take a closer look at the tags and syntax rules that are
+important to us.</p>
+<p>Contemplate the following example:</p>
+<pre><code>&lt;b&gt;Hello World!&lt;/b&gt;</code></pre>
+<p><code>&lt;b&gt;</code> is a tag. The b stands for <em>bold</em>. Tags always follow the same pattern.
+They begin with a <code>&lt;</code>, followed by the name of the tag – <code>b</code> – and end with a
+<code>&gt;</code>. It is important to note that an opened tag will need to be closed as well,
+under normal circumstances. To do this, the same tag is written again with a
+<em>forward slash</em>, <code>&lt;/b&gt;</code> in our case. Everything that is contained within the
+opening and closing tag in an HTML-document will be interpreted according to the
+meaning of the tag.</p>
+<p>With this knowledge we understand what will happen with our example. The tag
+<code>&lt;b&gt;</code> means bold, and the opening and closing tag <code>&lt;b&gt;…&lt;/b&gt;</code> include the text
+<code>Hello World!</code>. The text will be interpreted according to the tag, which means
+in bold:</p>
+<p><b>Hello World!</b></p>
+<div id="hello_world.html" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> hello_world.html</h3>
+<p>Let us have a look at a full HTML-document now:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;b&gt;Hello World!&lt;/b&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>The interpretation of this document by the browser can be seen under
+<a href="https://webscraping-tures.github.io/hello_world.html" target="_blank">https://webscraping-tures.github.io/hello_world.html</a>.
+Let us take a look at the single elements of the code:</p>
+<p>The first line, the <em>document type declaration</em>, <code>&lt;!DOCTYPE html&gt;</code>, informs the
+browser, which version of HTML is being used in the document. <code>&lt;!DOCTYPE html&gt;</code>
+stands for the current HTML5 standard. This is the place to declare if an older
+version of HTML was used, to ensure the most accurate visual representation –
+in spite of possible changes or the omission of certain standards in the current
+version. From the point of view of a web-scraper the HTML-version does not
+necessarily play a massive role. Interestingly enough, the tag <code>&lt;!DOCTYPE html&gt;</code>
+is one of the few exceptions from the rule that a once-opened tag has to be
+closed again; it is not necessary here.</p>
+<p>The actual content of the HTML-document only starts in line 3 with the <code>&lt;html&gt;</code>
+tag. This will only be closed in the last line and thus contains the total
+contents of the document. So the tag tells the browser that all it encompasses,
+is HTML.</p>
+<p>Next is the tag <code>&lt;head&gt;</code>. What we see the tag encompassing here, is not what we
+see in the browser window yet. What this means in practice is that here we
+mainly find meta-information, advanced functionality (JavaScript) and
+definitions of design choices (Cascading Style Sheets – CSS). This should not
+distract us too much in this introduction into web scraping, but we should be
+aware that references to .js and .css files can appear in the <code>&lt;head&gt;</code> tag.</p>
+<p>In our example the <code>&lt;head&gt;</code> tag exclusively contains another tag called
+<code>&lt;title&gt;</code>, which in turn contains the text <code>Hello World!</code>.
+The <code>&lt;title&gt;</code> tag determines what we will see in the title bar of our browser.
+In this case <em>Hello World!</em></p>
+<p>Finally, everything that the <code>&lt;body&gt;</code> tag includes, describes the content we can
+see in the browser window. In this simple example, only one line is included.
+The already known <code>&lt;b&gt;</code> tag includes the text <code>Hello World!</code>, which it displays
+in bold for us to see in the browser window.</p>
+<p>So now you already know the basic structure of any HTML file.</p>
+<p>While looking at the sample code above, you may have noticed that certain lines
+are indented to the right. This is not a requirement for functional HTML code,
+but a convention that makes it easier for reading and understanding. Indented
+lines represent the different hierarchical levels of the code. <code>&lt;head&gt;</code> is
+hierarchically subordinate to <code>&lt;html&gt;</code> and therefore single indented. <code>&lt;title&gt;</code>,
+in turn, is subordinate to <code>&lt;head&gt;</code> and therefore doubly indented. By writing it
+this way, it is also obvious at a first glance that <code>&lt;body&gt;</code> is subordinate to
+<code>&lt;html&gt;</code> but not to <code>&lt;title&gt;</code>, since <code>&lt;body&gt;</code> and <code>&lt;title&gt;</code> are each only single
+indented. You will often – but not always – encounter this convention in “real”
+HTML documents on the Internet.</p>
+<p>One more note on the technical side: HTML documents can basically be written by
+hand in any editor and must be saved with the extension <em>.html</em>. You can test
+this by starting any text editor yourself, copying the HTML code above, saving
+the file with the extension <em>.html</em> and opening it in a browser of your choice.
+However, due to their complexity, websites are not usually written by hand
+nowadays. A variety of professional tools now offer much more efficient ways to
+design websites. For example, the page you are looking at was written directly
+in RStudio using the “bookdown” package, which automates most of the layout
+decisions.</p>
+</div>
+<div id="important-tags" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Important tags</h3>
+<p>We cannot look at all the tags available in HTML at this point, but will
+initially limit ourselves to those that we encounter very frequently and that
+will be particularly relevant for our first web scraping projects.</p>
+<div id="page-structure" class="section level4" number="1.1.2.1">
+<h4><span class="header-section-number">1.1.2.1</span> Page structure</h4>
+<p>One tag that relates to the structure of the page, we have already met above.
+The <code>&lt;body&gt;</code> tag communicates that everything encompassed by it is part of the
+content displayed in the browser window.</p>
+<p>One way to further structure the content is to use the maximum of six levels of
+headings that HTML offers. The tags <code>&lt;h1&gt; &lt;h2&gt; ... &lt;h6&gt;</code> allow this in a simple
+way. The <code>h</code> stands for header. The text encompassed by the tag is automatically
+numbered and displayed in different font sizes depending on the level of the
+heading. As an example, you can see the structure of the headings on this page
+as HTML code:</p>
+<pre><code>&lt;h1&gt;HTML as a cornerstone of the internet&lt;/h1&gt;
+  &lt;h2&gt;HTML-Tags&lt;/h2&gt;
+    &lt;h3&gt;hello_world.html&lt;/h3&gt;
+    &lt;h3&gt;Important tags&lt;/h3&gt;
+      &lt;h4&gt;Page structure&lt;/h4&gt;
+      &lt;h4&gt;Formatting&lt;/h4&gt;
+      &lt;h4&gt;Lists&lt;/h4&gt;
+      &lt;h4&gt;Tables&lt;/h4&gt;
+  &lt;h2&gt;Attributes&lt;/h3&gt;
+    &lt;h3&gt;Links&lt;/h4&gt;
+    &lt;h3&gt;Images&lt;/h4&gt;
+  &lt;h2&gt;Entities&lt;/h3&gt;</code></pre>
+<p>Another frequently occurring form of structuring in HTML documents, are the
+groupings defined via <code>&lt;div&gt;</code> (<em>division</em>) and <code>&lt;span&gt;</code>. Both tags basically
+work the same way, with <code>&lt;div&gt;</code> referring to one or more lines and <code>&lt;span&gt;</code>
+referring to one line or part of a line. Neither have any direct effect on the
+display of the website at first, but they are often applied in combination with
+classes that are defined in <em>Cascading Style Sheets – CSS</em>, to adjust the
+visual interpretation. Normally, we do not care about how the CSS classes are
+defined and how they affect rendering. You will learn later in this seminar why
+the combination of <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> and CSS classes are often a very
+practical starting point for our web scraping endeavours and how we can exploit
+this in our work. Here is a simplified example of how both tags can appear in
+HTML code:</p>
+<pre><code>&lt;div&gt;
+  This sentence is part of the div tag.
+  This sentence is part of the div tag, 
+  &lt;span&gt; while this sentence is part of the div and the span Tags. &lt;/span&gt;
+&lt;/div&gt;
+This sentence is not part of the div tag.</code></pre>
+</div>
+<div id="formatting" class="section level4" number="1.1.2.2">
+<h4><span class="header-section-number">1.1.2.2</span> Formatting</h4>
+<p>HTML provides a variety of tags for formatting the displayed text. In the
+following we will look at some of the most common ones.</p>
+<p>The <code>&lt;p&gt;</code> tag defines the enclosed text as a <em>paragraph</em> and is accordingly
+automatically terminated in the display with a line break.</p>
+<pre><code>&lt;p&gt;This sentence is part of the paragraph. So is this. And this one.&lt;/p&gt;
+This sentence is not part of the paragraph.</code></pre>
+<p>This is represented as:</p>
+<p>
+This sentence is part of the paragraph. So is this. And this one.
+</p>
+<p>This sentence is not part of the paragraph.</p>
+<p><br></p>
+<p>The tag <code>&lt;br&gt;</code> introduces a line break. This tag is another exception to the
+rule that an opened tag must also be closed again. In this special case, using
+opening and closing tags <code>&lt;br&gt;&lt;/br&gt;</code> stands for two line breaks, so it is not
+equivalent to <code>&lt;br&gt;</code>. Unlike the line break inserted by <code>&lt;p&gt;...&lt;/p&gt;</code> at the end
+of the paragraph, no further spacing is inserted after <code>&lt;br&gt;</code>:</p>
+<pre><code>Here comes some text, which is now broken up in two lines.&lt;br&gt;
+After the break tag, in contrast to the paragraph tag, no line spacing is inserted.&lt;br&gt;
+If the break tag is also explicitly closed again, two line breaks are inserted.&lt;br&gt;&lt;/br&gt;
+As can be seen here.</code></pre>
+<p>This is represented as:</p>
+<p>Here comes some text, which is now broken up in two lines.<br>
+After the break tag, in contrast to the paragraph tag, no line spacing is inserted.<br>
+If the break tag is also explicitly closed again, two line breaks are inserted.<br></br>
+As can be seen here.</p>
+<p><br></p>
+<p>The typeface can be adjusted by tags like the already known <code>&lt;b&gt;</code> (<em>bold</em>) or
+<code>&lt;i&gt;</code> (<em>italics</em>) similar to the known options in common text editing programs:</p>
+<pre><code>These tags can be used to render words, sentences and paragraphs &lt;b&gt;bold&lt;/b&gt; or &lt;i&gt;italic&lt;/i&gt;.</code></pre>
+<p>This is represented as:</p>
+<p>These tags can be used to render words, sentences and paragraphs <b>bold</b> or <i>italic</i>.</p>
+<p><br></p>
+</div>
+<div id="lists" class="section level4" number="1.1.2.3">
+<h4><span class="header-section-number">1.1.2.3</span> Lists</h4>
+<p>We will often encounter lists in HTML documents. The two most common variants
+being the <em>unordered list</em>, introduced by <code>&lt;ul&gt;</code>, and the <em>ordered list</em>,
+<code>&lt;ol&gt;</code>. The opening and closing list-tag covers the entire list, while each
+individual list element is enclosed by a <code>&lt;li&gt;</code> tag in both variants. Here are
+two short examples:</p>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;First unordered list element&lt;/li&gt;
+  &lt;li&gt;Second unordered list element&lt;/li&gt;
+  &lt;li&gt;Third unordered list element&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<p>This is represented as:</p>
+<ul>
+<li>
+First unordered list element
+</li>
+<li>
+Second unordered list element
+</li>
+<li>
+Third unordered list element
+</li>
+</ul>
+<pre><code>&lt;ol&gt;
+  &lt;li&gt;First ordered list element&lt;/li&gt;
+  &lt;li&gt;Second ordered list element&lt;/li&gt;
+  &lt;li&gt;Third ordered list element&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<p>This is represented as:</p>
+<ol>
+<li>
+First ordered list element
+</li>
+<li>
+Second ordered list element
+</li>
+<li>
+Third ordered list element
+</li>
+</ol>
+</div>
+<div id="tables" class="section level4" number="1.1.2.4">
+<h4><span class="header-section-number">1.1.2.4</span> Tables</h4>
+<p>HTML can also be used to display tables, without further adjustments of the
+display via CSS admittedly not very attractive tables. These are opened by a
+<code>&lt;table&gt;</code> tag and closed accordingly. Within the table, lines are defined by
+<code>&lt;tr&gt;...&lt;/tr&gt;</code> (<em>table row</em>). Within the line, table headers can be defined by
+<code>&lt;th&gt;</code> (<em>table header</em>) and cell contents by <code>&lt;td&gt;</code> (<em>table data</em>). Content
+encompassed by <code>&lt;th&gt;...&lt;/th&gt;</code> and <code>&lt;td&gt;...&lt;/td&gt;</code> are not only formatted
+differently in their presentation, from the web scraper’s point of view, these
+tags also allow us to clearly distinguish the table content to be read. Here is
+a simple example:</p>
+<pre><code>&lt;table&gt;
+  &lt;tr&gt; &lt;th&gt;#&lt;/th&gt; &lt;th&gt;Tag&lt;/th&gt; &lt;th&gt;Effect&lt;/th&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td&gt;1&lt;/td&gt; &lt;td&gt;&quot;b&quot;&lt;/td&gt; &lt;td&gt;bold&lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt; &lt;td&gt;2&lt;/td&gt; &lt;td&gt;&quot;i&quot;&lt;/td&gt; &lt;td&gt;italics&lt;/td&gt; &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+<p>This is displayed as:</p>
+<table>
+<tr>
+<th>
+#
+</th>
+<th>
+Tag
+</th>
+<th>
+Effect
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<td>
+“b”
+</td>
+<td>
+bold
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+“i”
+</td>
+<td>
+italics
+</td>
+</tr>
+</table>
+<p><br></p>
+<p>Formatting the HTML code in a kind of “table form” as in the example above is
+not necessary but increases intuitive readability. In fact, the following manner
+of writing it, is equivalent in result and actually more common in practice:</p>
+<pre><code>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;#&lt;/th&gt;
+    &lt;th&gt;Tag&lt;/th&gt;
+    &lt;th&gt;Effect&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;1&lt;/td&gt;
+    &lt;td&gt;&quot;b&quot;&lt;/td&gt;
+    &lt;td&gt;bold&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;1&lt;/td&gt;
+    &lt;td&gt;&quot;i&quot;&lt;/td&gt;
+    &lt;td&gt;italics&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+<p>This will also be displayed as:</p>
+<table>
+<tr>
+<th>
+#
+</th>
+<th>
+Tag
+</th>
+<th>
+Effect
+</th>
+</tr>
+<tr>
+<td>
+1
+</td>
+<td>
+“b”
+</td>
+<td>
+bold
+</td>
+</tr>
+<tr>
+<td>
+1
+</td>
+<td>
+“i”
+</td>
+<td>
+italics
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div id="attribute" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Attributes</h2>
+<p>Many HTML tags can be further adapted in their functionality and presentation by
+using so-called <em>attributes</em>. The basic syntax is:
+<code>&lt;tag attribute="value"&gt;...&lt;/tag&gt;</code>. In the opening (never in the closing) tag,
+the name of the tag is followed by the name of the attribute <code>=</code> the <em>value</em> to
+be assigned, enclosed in single or double inverted commas. In HTML,
+<code>&lt;tag attribute="value"&gt;</code> is not equal to <code>&lt;tag attribute = "value"&gt;</code>. The pair
+of attribute name and value must be connected with a <code>=</code> without spaces in order
+to be interpreted correctly.</p>
+<p>A variety of tags can be modified with a multitude of attributes. Two of the
+most common and illustrative applications are the inclusion of links and images,
+two other frequently encountered HTML tags.</p>
+<div id="links" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Links</h3>
+<p>Links are included using the <code>&lt;a&gt;</code> (<em>anchor</em>) tag. The first intuitive attempt
+<code>&lt;a&gt;This is a link&lt;/a&gt;</code> is unfortunately unsuccessful:</p>
+<p><a>This is (not) a link</a></p>
+<p>Although the text is displayed and marked as a link – i.e. blue and underlined
+– it does not lead to any destination, since it was not defined in the HTML
+document what this destination should be. This is where the first attribute
+comes into play. With <code>&lt;a href="url"&gt;</code> the target of the link is defined.
+<code>href</code> stands for <em>hypertext reference</em> and its assigned value can be, among
+other things, a website, an email address or even a file. For example,
+<code>&lt;a href="webscraping-tures.github.io/html.html"&gt;This is a link&lt;/a&gt;</code> links to
+the page you are viewing.</p>
+<p><a href="webscraping-tures.github.io/html.html">This is a link</a></p>
+<p>You may have noticed that you had to scroll to this point again to continue
+reading. A second attribute can remedy this. With
+<code>&lt;a href="webscraping-tures.github.io/html.html" target="_blank"&gt;This is a link&lt;/a&gt;</code>
+we instruct the browser to open the link in a new tab. The assigned value of
+target here is "_blank", which stands for a new tab, but it can also take on a
+number of other values.</p>
+<p><a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a></p>
+<p>Links are of particular interest to us in web scraping when we collect links to
+all sub-pages from a parent page in order to scrape them specifically. But more
+about that later.</p>
+<p>One more note: the <code>&lt;link&gt;</code> tag is not to be confused with <code>&lt;a&gt;</code> and is used to
+integrate external files, such as the JavaScript or CSS files already mentioned.</p>
+</div>
+<div id="images" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Images</h3>
+<p>Images and graphics are integrated in HTML with <code>&lt;img&gt;</code>, another tag that does
+not have to be explicitly closed. So that the browser knows which image is to be
+included, this is specified via the <code>src</code> (<em>source</em>) attribute of the tag. Thus
+<code>&lt;img src="webscraping-tures.github.io/Rlogo.png"&gt;</code> includes the following
+image:</p>
+<p><img src="webscraping-tures.github.io/Rlogo.png"></p>
+<p>Using further attributes, it is also possible, for example, to adjust the size
+of the image in pixels.
+<code>&lt;img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100"&gt;</code>
+leads to a resized display of the image.</p>
+<p><img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100"></p>
+<p>Images can also be combined with links. So
+<code>&lt;a href="https://www.r-project.org/" target="_blank"&gt;&lt;img src="webscraping-tures.github.io/Rlogo.png"&gt;&lt;/a&gt;</code>
+defines the image as a link, where a click on the image takes you to the
+specified link:</p>
+<p><a href="https://www.r-project.org/" target="_blank">
+<img src="webscraping-tures.github.io/Rlogo.png">
+</a></p>
+</div>
+</div>
+<div id="entities" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Entities</h2>
+<p>A number of characters are reserved for the HTML code. We have already seen that
+the characters <code>&lt; &gt; "</code> are part of the code to define tags and values of
+attributes. In many cases, more current HTML versions allow for the usage of
+reserved characters directly in continuous text. For the time being, however, we
+will regularly encounter so-called <em>entities</em> instead of the actual characters
+in web scraping. Entities are coded representations of certain characters. They
+are always introduced with <code>&amp;</code> and ended with <code>;</code>. Between the two characters is
+either the name or the number of the entity.</p>
+<p>For example, <code>&amp;lt;</code> stands for <em>less than</em>, i.e. <code>&lt;</code> and <code>&amp;gt;</code> for
+<em>greater than</em>, i.e. <code>&gt;</code>.</p>
+<pre><code>A text with reserved characters like &amp;lt; und &amp;gt; or the so-called &amp;quot;ampersand&amp;quot; &amp;amp;.</code></pre>
+<p>Is displayed as:</p>
+<p>A text with reserved characters like &lt; und &gt; or the so-called “ampersand” &amp;.</p>
+<p>Sidenote: If you are interested in the origin of the term ampersand, I recommend
+its Wikipedia article, which makes for an interesting read:
+<a href="https://en.wikipedia.org/wiki/Ampersand" target="_blank">https://en.wikipedia.org/wiki/Ampersand</a></p>
+<p><br></p>
+<p>Another entity we will encounter regularly is <code>&amp;nbsp;</code> (<em>non-breaking space</em>),
+which can be used instead of a simple space. The advantage of this is that there
+is never a line break in the browser, and it allows the use of more than one
+space:</p>
+<pre><code>Displayed with one    space
+Displayed with four&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;spaces</code></pre>
+<p>Displayed with one space<br>
+Displayed with four    spaces</p>
+<p><br></p>
+<p>An overview of the most common entities can be found here:
+<a href="https://www.w3schools.com/html/html_entities.asp" target="_blank">https://www.w3schools.com/html/html_entities.asp</a></p>
+<p>The entities of all Unicode characters can be found here:
+<a href="https://unicode-table.com/" target="_blank">https://unicode-table.com/</a></p>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="R1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/01-html.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
