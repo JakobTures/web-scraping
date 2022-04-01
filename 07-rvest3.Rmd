@@ -36,7 +36,7 @@ contain in one step. This is exactly what we will look at in the following.
 
 ### Scraping of the index
 
-``` {r, message = FALSE}
+``` {r load_packages_7, message = FALSE}
 library(tidyverse)
 library(rvest)
 ```
@@ -44,7 +44,7 @@ library(rvest)
 As a first step, we need to extract the links to the sub-pages from the source 
 code of the index page. As always, we download the website and parse it.
 
-``` {r}
+``` {r parse_tidyverse}
 website <- "https://www.tidyverse.org/packages/" %>% 
   read_html()
 ```
@@ -55,18 +55,18 @@ follow this in the source code and/or with the WDTs yourself by now. However, we
 need each link only once. One of several ways to select them could be to select
 the `<a>` tags that directly follow the individual `<div class="package">` tags.
 
-``` {r}
-a_nodes <- website %>% 
-  html_nodes(css = "div.package > a")
+``` {r extract_tidyverse_links}
+a_elements <- website %>% 
+  html_elements(css = "div.package > a")
 
-a_nodes
+a_elements
 ```
 
 Since we need the actual URLs to be able to read out the sub-pages in the 
 following, we should now extract the values of the `href=""` attributes. 
 
-``` {r}
-links <- a_nodes %>%
+``` {r extract_tidyverse_urls}
+links <- a_elements %>%
   html_attr(name = "href")
 
 links
@@ -77,7 +77,7 @@ links
 Before starting to parse the sub-pages, we must think about how we can get R to
 apply these steps automatically to several URLs one after the other. One 
 possibility from base R would be to apply a "For Loop". However, I would like to
-introduce the `map()` functions family, from the tidyverse package *purrr*. 
+introduce the `map()` functions family, from the tidyverse package **purrr**. 
 These follow the basic logic of the tidyverse, can easily be included in pipes
 and have a short and intuitively understandable syntax.
 
@@ -85,7 +85,7 @@ The `map()` function takes a vector or list as input, applies a function
 specified in the second argument to each of the elements of the input, and 
 returns to us a list of the results of the applied function.
 
-``` {r}
+``` {r map_exmpl}
 x <- c(1.28, 1.46, 1.64, 1.82)
 
 map(x, round)
@@ -106,7 +106,7 @@ indicated type (or die trying)."
 For example, if we want to have a numeric vector instead of a list as output for
 the above example, we can use `map_dbl()`:
 
-``` {r}
+``` {r map_numeric}
 x <- c(1.28, 1.46, 1.64, 1.82)
 
 map_dbl(x, round)
@@ -115,7 +115,7 @@ map_dbl(x, round)
 Or for a character vector we can apply `map_chr()`. The function `toupper()`
 used here, puts returns the input as uppercase letters.
 
-``` {r}
+``` {r map_char}
 x <- c("abc", "def", "gah")
 
 map_chr(x, toupper)
@@ -125,7 +125,7 @@ If we want to change the arguments of the applied function, the arguments are
 listed after the name of the function. Here, the number of decimal places to be
 rounded is set from the default value of 0 to 1.
 
-``` {r}
+``` {r map_numeric_argument}
 x <- c(1.28, 1.46, 1.64, 1.82)
 
 map_dbl(x, round, digits = 1)
@@ -149,7 +149,7 @@ be applied, the familiar `read_html()`. For each of the eight URLs, the function
 is applied to the respective URL one after the other. As output we get a list of
 the eight parsed sub-pages.
 
-``` {r}
+``` {r parse_subpages}
 pages <- links %>% 
   map(read_html)
 ```
@@ -159,9 +159,9 @@ is identical for each sub-page in terms of the information we are interested in
 -- name, version number and CRAN as well as "R for Data Science" links. We can 
 therefore extract the data for each of them using the same CSS selectors.
 
-``` {r}
+``` {r extract_name}
 pages %>% 
-  map(html_node, css = "a.navbar-brand") %>% 
+  map(html_element, css = "a.navbar-brand") %>% 
   map_chr(html_text)
 ```
 
@@ -169,70 +169,72 @@ The name of the package is displayed in the menu bar in the upper section of the
 pages. This is enclosed by an `<a>` tag. For example, for 
 <https://ggplot2.tidyverse.org/>{target="_blank"}
 this is: `<a class="navbar-brand" href="index.html">ggplot2</a>`. The CSS
-selector used here is one of the possible options to retireve the desired
+selector used here is one of the possible options to retrieve the desired
 information.
 
 So what happens in detail in the code shown? The input is the previously created
 list with the eight parsed websites. In the second line, by using `map()`, the
-function `html_node()` with the argument `css = "a.navbar-brand"` is applied to
+function `html_element()` with the argument `css = "a.navbar-brand"` is applied to
 each of the parsed pages. For each of the eight pages, the corresponding 
-HTML-node is selected in turn. These are passed through the pipe to the third 
-line, where iteration is again performed over each node, this time using the
-familiar function `html_text()`. For each of the eight selected nodes, the text
+HTML-element is selected in turn. These are passed through the pipe to the third 
+line, where iteration is again performed over each element, this time using the
+familiar function `html_text()`. For each of the eight selected elements, the text
 between the start and end tag is extracted. Since `map_chr()` is used here, a
 character vector is returned as output.
 
-``` {r}
+``` {r extract_version}
 pages %>% 
-  map(html_node, css = "span.version.version-default") %>% 
+  map(html_element, css = "small.nav-text.text-muted.me-auto") %>% 
   map_chr(html_text)
 ```
 
 The extraction of the current version number of the packages works the same way.
 For ggplot2, these are contained in the following tag: 
-`<span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.3.2</span>`. 
-This can also be selected easily, but we see an interesting detail. Namely, the
-class name here contains a space. This indicates that the `<span>` tag carries 
-both the class `version` and `version-default`. We can select this by attaching
-both class names to `span` in the selector with a `.` Strictly speaking, 
-however, we do not need to do this here. Both class names by themselves are 
-sufficient for selection, as they do not appear anywhere else on the website. 
-In terms of the most explicit CSS selectors possible, I would still recommend to 
-use both class names, but this is also a matter of taste.
+`<small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">3.3.5</small>`. 
+The `<small>` tag is used for smaller than normal text, which here results in the
+small version number written after the package's name. Looking closely at the tag
+reveals an interesting detail. Namely, the class name contains spaces. This
+indicates that the `<small>` tag carries the classes `nav-text`, `text-muted`
+and `me-auto`. We can select the tag by attaching all class names to `small` in
+the selector, combined with dots between them. Strictly speaking, however, we do
+not need to do this here. Each class name by itself would be sufficient for
+selection, as they do not appear anywhere else on the website. In terms of the
+most explicit CSS selectors possible, I would still recommend to use all three
+class names, but this is also a matter of taste.
 
-``` {r}
+``` {r extract_further_links}
 pages %>% 
-  map(html_node, css = "ul.list-unstyled > li:nth-child(1) > a") %>% 
+  map(html_element, css = "ul.list-unstyled > li:nth-child(1) > a") %>% 
   map_chr(html_attr, name = "href")
 
 pages %>% 
-  map(html_node, css = "ul.list-unstyled > li:nth-child(4) > a") %>% 
+  map(html_element, css = "ul.list-unstyled > li:nth-child(4) > a") %>% 
   map_chr(html_attr, name = "href")
 ```
 
-The extraction of the links also follows the same basic principle. The selector 
-is a little more complicated, but can easily be understood using the WDTs. We
-select the `<a>` tags of the first and fourth `<li>` children of the unordered 
-list with the class `list-unstyled`. Here we apply the function `html_attr()` 
-with the argument `name = "href"` to each of the eight selected nodes to get the
-data of interest, the URLs of the links.
+The extraction of the links also follows the same basic principle. The selectors
+are a little more complicated, but can easily be understood looking in the source
+code and/or using the WDTs. We select the `<a>` tags of the first and fourth
+`<li>` children of the unordered list with the class `list-unstyled`. Here we
+apply the function `html_attr()` with the argument `name = "href"` to each of
+the eight selected elements to get the data of interest, the URLs of the links.
 
 If we are only interested in the final result, we can also extract the data of
 the sub-pages directly during the creation of a tibble:
 
-``` {r}
+``` {r tibble_it_7}
 tibble(
   name = pages %>% 
-    map(html_node, css = "a.navbar-brand") %>% 
+    map(html_element, css = "a.navbar-brand") %>% 
     map_chr(html_text),
   version = pages %>% 
-    map(html_node, css = "span.version.version-default") %>% 
+    map(html_element, css = "small.nav-text.text-muted.me-auto") %>% 
     map_chr(html_text),
   CRAN = pages %>% 
-    map(html_node, css = "ul.list-unstyled > li:nth-child(1) > a") %>% 
+    map(html_element, css = "ul.list-unstyled > li:nth-child(1) > a") %>% 
     map_chr(html_attr, name = "href"),
   Learn = pages %>% 
-    map(html_node, css = "ul.list-unstyled > li:nth-child(4) > a") %>% 
+    map(html_element, css = "ul.list-unstyled > li:nth-child(4) > a") %>% 
     map_chr(html_attr, name = "href")
 )
 ```
@@ -250,28 +252,28 @@ encounter similar variants on many websites.
 In the press release archive of the website of the Brandenburg state parliament,
 pagination is used to distribute the releases over several sub-pages. To
 illustrate the scraping of such a website, we can, for example, aim at scraping
-the date, title and further link for all press releases from 2020 and summarise 
+the date, title and further link for all press releases from 2021 and summarise 
 them in a tibble.
 
 You can find the website at:
-<https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521>{target="_blank"}
+<https://www.landtag.brandenburg.de/de/pressemitteilungen_2021/27025>{target="_blank"}
 
 ### The query
 
 Let's first look at the page in the browser and examine what happens when we 
 click through the sub-pages. If we select the second sub-page, the URL in the
-browser window changes. We see that the end of the URL is extended from "980521"
-to "980521?skip=15". So a query is sent to the server and the corresponding 
+browser window changes. We see that the end of the URL is extended from "27025"
+to "27025?skip=12". So a query is sent to the server and the corresponding 
 sub-page is sent back and displayed. On the third sub-page, the query changes 
-again to "980521?skip=30".
+again to "27025?skip=24".
 
-What could "skip=15" mean? If we look at the list of press releases, we see that
-exactly 15 releases are displayed on each sub-page. We can therefore assume that
-"skip=15" instructs the server to skip the first 15 releases and thus display 
-entries 16-30. "skip=30" then skips the first 30 and so on. The principle can be
+What could "skip=12" mean? If we look at the list of press releases, we see that
+exactly 12 releases are displayed on each sub-page. We can therefore assume that
+"skip=12" instructs the server to skip the first 12 releases and thus display 
+entries 13-24. "skip=24" then skips the first 24 and so on. The principle can be
 further confirmed by testing what "skip=0" triggers. The first sub-page is 
-displayed again. So "980521" is actually functionally equivalent to 
-"980521?skip=0".
+displayed again. So "27025" is actually functionally equivalent to 
+"27025?skip=0".
 
 With this we already know that we will be able to manipulate the URLs directly
 from Rstudio and thus scrape the sub-pages.
@@ -280,30 +282,26 @@ from Rstudio and thus scrape the sub-pages.
 
 Before we start scraping all the press releases, we first need to find out how 
 many sub-pages there are. The easiest way would be to do this by eye. We can see
-in the browser that the highest selectable sub-page is "12". But we can also find
+in the browser that the highest selectable sub-page is "13". But we can also find
 this out in the scraping process itself. This has several advantages. We might
-not only want to scrap the messages from 2020, but those from several or all
+not only want to scrap the messages from 2021, but those from several or all
 years. To do this, we would have to check for each year in the browser how many
 sub-pages there are and adjust this accordingly. If we extract the page number in
 the R code, this can be easily generalised to other years with different page 
-numbers. If, on the other hand, the goal were to scrape the messages from 2021, 
-we would have to check again whether the page number has changed every time we
-repeat the process over the course of the year, as new press releases are added.
-By extracting it in the code, this step is eliminated and we can run the script
-regularly with minimal effort and be sure that it remains functional.
+numbers. 
 
-The links to the sub-pages, are contained in the HTML code in an unordered list 
-(`<ul>`). The penultimate list element `<li>` contains the page number of the
-last page, here "12". Please note that the last list element is the "Forward" 
-button. With this information we can construct a selector and extract the 
-highest page number, as the second to last list element.
+The pagination "buttons" are contained in the HTML code in an unordered list 
+(`<ul>`) carrying the class `pagination`. The penultimate list element `<li>`
+contains the page number of the last page, here "13". Please note that the last
+list element is the "Forward" button. With this information we can construct a
+selector and extract the highest page number, as the second to last list element.
 
-``` {r}
-website <- "https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521" %>% 
+``` {r extract_max_pages}
+website <- "https://www.landtag.brandenburg.de/de/pressemitteilungen_2021/27025" %>% 
   read_html()
 
 max <- website %>% 
-  html_node(css = "ul.pagination.pagination-sm > li:nth-last-child(2)") %>% 
+  html_element(css = "ul.pagination > li:nth-last-child(2)") %>% 
   html_text() %>% 
   as.numeric()
 ```
@@ -318,21 +316,21 @@ script. To do this, we need two components that we can then combine to create
 the URLs. First we have to define the constant part of the URL, the base URL. In
 this case, this is the complete URL up to "?skip=" inclusive. In addition, we
 need the values that are inserted after "?skip=". We can easily calculate these.
-Each sub-page contains 15 press releases. So we can multiply the number of the 
-sub-page by 15, but then we have to subtract another 15, because the 15 press 
+Each sub-page contains 12 press releases. So we can multiply the number of the 
+sub-page by 12, but then we have to subtract another 12, because the 12 press 
 releases shown on the current sub-page should not be skipped. So for page 1 we 
-calculate: $1 ∗ 15 - 15 = 0$, for page 2: $2 ∗ 15 - 15 = 15$ and so on. To do 
-this in one step for all sub-pages, we can use `1:max * 15 - 15` to instruct R to
+calculate: $1 ∗ 12 - 12 = 0$, for page 2: $2 ∗ 12 - 12 = 12$ and so on. To do 
+this in one step for all sub-pages, we can use `1:max * 12 - 12` to instruct R to
 repeat the calculation for all numbers from 1 to the maximum value -- which we
 previously stored in the object `max`. `:` stands for "from-to". In this way we
 get a numeric vector with the values for "?skip=". In the third step we can 
 combine the base URL and the calculated values with `str_c()` to complete URLs
 and parse them in the fourth step with `map()`.
 
-``` {r}
-base_url <- "https://www.landtag.brandenburg.de/de/aktuelles/presse/pressemitteilungsarchiv/archiv_pressemitteilungen_2020/980521?skip="
+``` {r construct_pag_urls}
+base_url <- "https://www.landtag.brandenburg.de/de/pressemitteilungen_2021/27025?skip="
 
-skips <- 1:max * 15 - 15
+skips <- 1:max * 12 - 12
 skips 
 
 links <- str_c(base_url, skips)
@@ -341,24 +339,29 @@ pages <- links %>%
   map(read_html)
 ```
 
-Now we can extract the data we are interested in. Let's start with the date of 
-the press release. This is enclosed by a `<p>` tag of the class `date`. With
-`map()` we first select the corresponding nodes and in the next step extract the
-text of these nodes. Since at this point a list of lists is returned, and this
-would be unnecessarily complicated in further processing, we can use `unlist()`
-to receive a character vector as output.
+Now we can extract the data we are interested in. The press releases are part of
+an unordered list with the class `list-entries`. Each individual list entry
+contains the date of the release, the title and the link to the full text.
 
-``` {r}
+Let's start with extracting the date of the press release. This is enclosed by a
+`<div>` tag of the class `list-entry-date`. With `map()` we first select the
+corresponding elements and in the next step extract the text of these elements. As
+there is a lot of whitespace around the dates, `trim = TRUE` should be used.
+Since at this point a list of lists is returned, and this would be unnecessarily
+complicated in further processing, we can use `unlist()` to dissolve the list
+and receive a character vector as output.
+
+``` {r extract_dates}
 pages %>% 
-  map(html_nodes, css = "p.date") %>% 
-  map(html_text) %>% 
+  map(html_elements, css = "div.list-entry-date") %>% 
+  map(html_text, trim = TRUE) %>% 
   unlist() %>% 
   head(n = 5)
 ```
 
 However, we can go one step further and store the data as a vector of the type 
 "Date". This could be advantageous for potential further analyses. The tidyverse
-package *lubridate* makes it easy to convert dates from character or numeric
+package **lubridate** makes it easy to convert dates from character or numeric
 vectors into the "Date" format. The package is not part of the core tidyverse 
 and has to be loaded explicitly. Among other things, it offers a number of
 functions in the form `dmy()`, `mdy()`, `ymd()` and so on. `d` stands for "day",
@@ -372,41 +375,41 @@ irrelevant whether the components of the date are separated with ".", "/", "-"
 or spaces. Even written out or abbreviated month names can be processed by
 lubridate.
 
-``` {r, message = FALSE}
+``` {r load_lubridate, message = FALSE}
 library(lubridate)
 ```
 
-``` {r}
+``` {r extract_date_as_date}
 pages %>% 
-  map(html_nodes, css = "p.date") %>% 
-  map(html_text) %>% 
+  map(html_elements, css = "div.list-entry-date") %>% 
+  map(html_text, trim = TRUE) %>% 
   unlist() %>% 
   dmy() %>% 
   head(n = 5)
 ```
 
 More about the handling of dates and times in R as well as the further 
-possibilities opened up by lubridate, can be found in the corresponding chapter
-in "R for Data Science":
+possibilities opened up by **lubridate**, can be found in the corresponding
+chapter in "R for Data Science":
 <https://r4ds.had.co.nz/dates-and-times.html>{target="_blank"}
 
-Next, we can extract the titles of the press releases. By now you will be able 
-to understand the code and the CSS selector for this yourself.
+Next, we can extract the titles of the press releases. These are also enclosed
+by a `<div>` tag, this time carrying the clas `list-entry-title`.
 
-``` {r}
+``` {r extract_titles}
 pages %>% 
-  map(html_nodes, css = "p.result-name") %>% 
+  map(html_elements, css = "div.list-entry-title") %>% 
   map(html_text, trim = TRUE) %>% 
   unlist() %>% 
   head(n = 5)
 ```
 
-The last thing to extract, are the links to the individual messages. Here, too, 
-nothing surprising happens at first.
+The last thing to extract, are the links to the individual messages. These are
+included in `<a>` tags with the class `list-entry`.
 
-``` {r}
+``` {r extract_urls}
 pages %>% 
-  map(html_nodes, css = "li.ce.ce-teaser > a") %>% 
+  map(html_elements, css = "a.list-entry") %>% 
   map(html_attr, name = "href") %>% 
   unlist() %>% 
   head(n = 5)
@@ -424,9 +427,9 @@ However, we want this to happen the other way round. To do this, we need to tell
 can achieve this by using `.`. `.` refers to the data passed through the pipe.
 In this way we can combine the URLs correctly:
 
-``` {r}
+``` {r build_link_urls}
 pages %>% 
-  map(html_nodes, css = "li.ce.ce-teaser > a") %>% 
+  map(html_elements, css = "a.list-entry") %>% 
   map(html_attr, name = "href") %>% 
   unlist() %>% 
   str_c("https://www.landtag.brandenburg.de", .) %>% 
@@ -436,19 +439,19 @@ pages %>%
 As always, we can perform the complete extraction of the data during the 
 construction of a tibble:
 
-``` {r}
+``` {r tibble_it}
 tibble(
   date = pages %>% 
-    map(html_nodes, css = "p.date") %>% 
-    map(html_text) %>% 
+    map(html_elements, css = "div.list-entry-date") %>% 
+    map(html_text, trim = TRUE) %>% 
     unlist() %>% 
     dmy(),
   name = pages %>% 
-    map(html_nodes, css = "p.result-name") %>% 
+    map(html_elements, css = "div.list-entry-title") %>% 
     map(html_text, trim = TRUE) %>% 
     unlist(),
   link = pages %>% 
-    map(html_nodes, css = "li.ce.ce-teaser > a") %>% 
+    map(html_elements, css = "a.list-entry") %>% 
     map(html_attr, name = "href") %>% 
     unlist() %>% 
     str_c("https://www.landtag.brandenburg.de", .)

@@ -7,15 +7,15 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
 In this chapter, we will use several functions from the tidyverse package
-dplyr to clean the data we scraped in chapter \@ref(scraping). We will then
+**dplyr** to clean the data we scraped in chapter \@ref(scraping). We will then
 select the columns and filter the observations (rows) we need, as well as
 compute some grouped summaries of the data.
 
-First, let us load the required packages. Dplyr is part of the core tidyverse;
-we will need the package lubridate as well, to be able to deal with dates and
+First, let us load the required packages. **dplyr** is part of the core tidyverse;
+we will need the package **lubridate** as well, to be able to deal with dates and
 times.
 
-``` {r message = FALSE}
+``` {r load_packages_11, message = FALSE}
 library(tidyverse)
 library(lubridate)
 ```
@@ -24,14 +24,14 @@ library(lubridate)
 
 ### Computing new variables from existing ones
 
-Before we continue working on our current example, we will look at some simple
+Before we continue working on our scraped reports data, we will look at some simple
 examples that will show how new variables can be computed in a tibble from
-existing ones, using `mutate()` from dplyr.
+existing ones, using `mutate()` from **dplyr**.
 
 For this purpose, let us create a new simple tibble on voter turnout. Note that
 the entered data is purely illustrational and has no meaning.
 
-```  {r}
+```  {r exmpl_data}
 exmpl_tbl <- tibble(
   ybirth = c("1993 - 2002", "1983 - 1992", "1973 - 1982", "1963 - 1972"),
   eligible = c(100000, 100000, 100000, 100000),
@@ -42,7 +42,7 @@ exmpl_tbl <- tibble(
 exmpl_tbl
 ```
 
-Here we have different columns for people who voted in person and who voted by
+Here we have different columns for people who were eligible to vot,  who voted in person and who voted by
 mail, by their year of birth. We do not actually care about the difference in
 the voting method in this example and want one column that combines both. We can
 get there by using `mutate()`. The function takes the data to be manipulated as
@@ -52,15 +52,16 @@ columns already present.
 
 To calculate the total turnout, we write:
   
-``` {r}
+``` {r total_turnout}
 exmpl_tbl %>% 
   mutate(turnout = turnout_person + turnout_mail)
 ```
 
-We can also immediately start calculating with new columns in the same pipe. To
-calculate the turnout percentage in a second step, we write the following:
+We can also immediately start calculating with new columns in the same `mutate()`
+command. For this, we chain multiple operations in `mutate()` separated with `,`.
+To calculate the turnout percentage in a second step, we write the following:
   
-``` {r}
+``` {r turnout_pct}
 exmpl_tbl %>% 
   mutate(
     turnout = turnout_person + turnout_mail,
@@ -73,14 +74,14 @@ functions can be applied within `mutate()`: `sum()` or `mean()` are two examples
 we already know.
 
 
-### Cleaning the data on police reports
+### Cleaning the data on police reports {#clean}
 
 Now knowing the basic principle of working with `mutate()`, we can apply this to
 the data on police reports we scraped in chapter \@ref(scraping).
 
 First we have to load the data and examine what we are working with.
 
-``` {r}
+``` {r load_reports}
 load("reports.RData")
 
 reports
@@ -92,9 +93,8 @@ some work.
 
 The data in the column "District" includes the string "Ereignisort: " before
 listing the actual name of the district the report refers to. This unnecessarily
-clutters this column: we can use `substr()` to remove these leading characters.
-Instead of selecting the column by `reports$District`, we can apply the function
-to the column using `mutate()`. `substr()` extracts a part of a string we want
+clutters this column: we can use `substr()` to remove these leading characters
+within `mutate()`. `substr()` extracts a part of a string we want
 to keep, taking the data to be applied to, as its first argument -- here the
 name of the column --, the starting character position where the extraction
 shall begin as its second, and the character position where it shall stop, as
@@ -105,7 +105,7 @@ $13$ and thus use $14$ as the starting position. For the position to stop
 extraction, we could either use an unrealistically high number or use
 `length(District)` to determine the exact length of each string.
 
-``` {r}
+``` {r substr_district}
 reports %>% 
   mutate(District = substr(District, 14, 99))
 
@@ -113,20 +113,20 @@ reports %>%
   mutate(District = substr(District, 14, length(District)))
 ```
 
-The column "Date" includes the data and the time of each report as a character
+The column "Date" includes the date and the time of each report as a character
 string. To be able to use this data in analysis, we have to extract the date and
 time in a format R can understand. This is easily achieved using the parsing
-functions from lubridate. As the character data are written in the format
+functions from **lubridate**. As the character data are written in the format
 "day.month.year hour:minute", we have to use the function `dmy_hm()` on the
 column.
 
-``` {r}
+``` {r extract_date}
 reports %>% 
   mutate(date_cmpl = dmy_hm(Date))
 ```
 
 At a later point we will do some analysis by year, month, weekday and time of
-day. Lubridate includes functions that extract the subparts of date and time
+day. **lubridate** includes functions that extract the subparts of date and time
 data.
 
 `year()` extracts the year, `month()` the month and `wday()` the day of the
@@ -134,18 +134,19 @@ week. The argument `label = TRUE` tells the function to use the names of months
 and days instead of a numerical value ranging from $1$ to $12$ and $1$ to $7$
 respectively.
 
-``` {r}
+``` {r year_month_wday}
 reports %>% 
-  mutate(date_cmpl = dmy_hm(Date)) %>% 
-  mutate(year = year(date_cmpl)) %>% 
-  mutate(month = month(date_cmpl, label = TRUE)) %>% 
-  mutate(day = wday(date_cmpl, label = TRUE))
+  mutate(date_cmpl = dmy_hm(Date),
+         year = year(date_cmpl),
+         month = month(date_cmpl, label = TRUE),
+         day = wday(date_cmpl, label = TRUE)
+         )
 ```
 
 To extract the time of day, we first have to extract the substring of "Date"
 that contains the time and then apply the lubridate function `hm()` to it.
 
-``` {r}
+``` {r extract_time}
 reports %>% 
   mutate(time = 
            substr(Date, 12, length(Date)) %>% 
@@ -153,17 +154,17 @@ reports %>%
          )
 ```
 
-We can combine all these individual steps in one pipe and apply them to the
-object `reports`.
+We can combine all these individual steps in one `mutate()` command and apply
+them to the object `reports`.
 
-``` {r}
+``` {r mutate_cmpl}
 reports <- reports %>% 
-  mutate(District = substr(District, 14, length(District))) %>% 
-  mutate(date_cmpl = dmy_hm(Date)) %>% 
-  mutate(year = year(date_cmpl)) %>% 
-  mutate(month = month(date_cmpl, label = TRUE)) %>% 
-  mutate(day = wday(date_cmpl, label = TRUE)) %>% 
-  mutate(time = 
+  mutate(District = substr(District, 14, length(District)),
+         date_cmpl = dmy_hm(Date),
+         year = year(date_cmpl),
+         month = month(date_cmpl, label = TRUE),
+         day = wday(date_cmpl, label = TRUE),
+         time = 
            substr(Date, 12, length(Date)) %>% 
            hm()
          )
@@ -174,28 +175,31 @@ reports
 
 ## `select()`
 
-As we have already extracted all we need from the "Date" column, and we will not
-work with the "Report" column in this chapter, to keep the tibble neat and free
-of clutter, we remove both columns by using the function `select()`. The
+As we have already extracted all we need from the "Date" and "date_cmpl" columns,
+and we will not work with the "Report" column in this chapter, to keep the
+tibble neat and free of clutter, we remove the three columns by using the
+function `select()`. `select()` is used for selecting columns from a tibbble. The
 function takes the data as its first argument -- here provided by the pipe --
 and one or several names of columns that should be kept. If columns follow after
 each other in order, we can also use a "from:to" notation.
 
-``` {r}
+``` {r select_positive}
 reports %>% 
-  select(District, date_cmpl, year, month, day, time)
+  select(District, year, month, day, time)
 
 reports %>% 
-  select(District:time)
+  select(District, year:time)
 ```
 
 Instead of telling `select()` which columns we want to keep, we can also tell it
-which ones not to keep by adding a `-` before the column names. In this last
-example we will assign the result to `reports`.
+which ones not to keep by adding a `-` before the column names. If we want to
+exclude multiple columns in one step, we combine them with the `c()` function
+and write the `-` directly before it. In this last example we will assign the
+result to `reports`.
 
-``` {r}
+``` {r elect_negative}
 reports <- reports %>% 
-  select(-c(Date, Report))
+  select(-c(Date, Report, date_cmpl))
 
 reports
 ```
@@ -207,12 +211,12 @@ while "District" begins with an upper case letter. You may want to rename this
 column to a lower case name -- or all the others to upper case names, depending
 on your preference.
 
-One approach to renaming is using the function `rename()` from dplyr: the
-function takes the data to be applied to as its first argument -- passed on by
-the pipe in this case -- followed by one or more arguments in the form
+One approach to renaming is using the function `rename()` from **dplyr**: the
+function takes the data to be applied to as its first argument -- again passed
+on by the pipe here -- followed by one or more arguments in the form
 `new_name = old_name`. 
 
-``` {r}
+``` {r rename}
 reports <- reports %>% 
   rename(district = District)
 
@@ -230,30 +234,30 @@ month, as some months will have more observations than others; therefore, we
 should filter our data for complete years.
 
 To filter the observations, we can use the function `filter()`. As always in
-tidyverse functions, `filter()` takes the data to be filtered as its first
+**tidyverse** functions, `filter()` takes the data to be filtered as its first
 argument and one or multiple expressions that specify the rules by which to
 filter. To write these expressions, we can make use of the comparison operators
 discussed in subchapter \@ref(comparison).
 
-To filter for all years that are not 2021, we can write:
+To filter for all years that are not 2022, we can write:
 
-``` {r}
+``` {r filter_years}
 reports %>% 
-  filter(year != 2021)
+  filter(year != 2022)
 ```
 
-Thus, only the observations where "year" does not equal "2021" remain in the
-tibble; in other words, those observations for which the expression
-`year != 2021` is returned as `TRUE`.
+Thus, only the observations where "year" does not equal "2022" remain in the
+tibble; more accurately, those observations for which the expression
+`year != 2022` is returned as `TRUE`.
 
 Closer inspection of the data reveals, that 2014 (the first year that is
 available on the website) is not complete either. There also seems to be one
 single report for 2013. We should also exclude these years for analysis. We can
 chain multiple expressions when using `filter()` separated by commas.
 
-``` {r}
+``` {r filter_mltpl_years}
 reports %>% 
-  filter(year != 2021, year != 2014, year != 2013)
+  filter(year != 2022, year != 2014, year != 2013)
 ```
 
 Often there are multiple ways to formulate the filtering expressions. Here, we
@@ -262,9 +266,9 @@ want to keep. Instead of listing all those individual years, we can use `%in%`
 to define a range of numerical values which should be kept when filtering. We
 assign the result to a new object for later use.
 
-``` {r}
+``` {r filter_years_positive}
 reports_fyears <- reports %>% 
-  filter(year %in% 2015:2020)
+  filter(year %in% 2015:2021)
 ```
 
 While the `,` behaves like the logical operator `&`, we can also use `|` for
@@ -292,93 +296,108 @@ crimes in Berlin, but rather the working practice of the PR team.
 
 The dplyr function `summarise()` can be used to calculate summary statistics for
 a whole tibble; the syntax being similar to `mutate()`. The result is a new
-tibble, containing only the summary statistics we requested. We are often
-interested in summaries grouped by the value of one or more other variables. We
-might ask ourselves, if there are differences in the number of released police
-reports by year; for this purpose, we can group the data by the values of the
-"year" column using `group_by()` and then compute the summary statistics
-separately for each group. The function we use for the summary statistic here is
-`n()`, which returns the size of each group. As each observation represents one
-police report, the group size equals the number of reports. As always with dplyr
-functions, `group_by()` needs the data which will be grouped as the first
-argument, followed by one or multiple columns to group by. 
+tibble, containing only the summary statistics we requested. The function we use
+for the summary statistic here is `n()`, which returns the number of
+observations. As each observation represents one police report, this equals the
+overall number of reports.
 
-``` {r}
+``` {r no_reports}
+reports_fyears %>% 
+  summarise(reports = n())
+```
+
+This worked, but is not very interesting, as the result is the same as the length
+of the reports tibble. We are often more interested in summaries grouped by the
+value of one or more other variables. We might ask ourselves, if there are
+differences in the number of released police reports by year; for this purpose,
+we can group the data by the values of the "year" column using `group_by()` and
+then compute the summary statistic separately for each group. Here, `n()`
+returns the number of observations for each group, i.e. the number of reports
+per year. As always with **dplyr** functions, `group_by()` needs the data which
+will be grouped as the first argument, followed by one or multiple columns to
+group by. 
+
+``` {r no_reports_year}
 reports_fyears %>% 
   group_by(year) %>% 
-  summarize(reports = n())
+  summarise(reports = n())
 ```
 
 While there are differences between the years, there does not seem to be a
 systematic pattern to it. We can do the same kind of analysis grouped by months
 and weekdays.
 
-``` {r}
+``` {r no_reports_months_wdays}
 reports_fyears %>% 
   group_by(month) %>% 
-  summarize(reports = n())
+  summarise(reports = n())
 
 reports_fyears %>% 
   group_by(day) %>% 
-  summarize(reports = n())
+  summarise(reports = n())
 ```
 
 The analysis by month again shows no systematic variation. Looking at the
 reports by day of the week on the other hand, shows a slight increase in reports
-over the week, culminating on Friday. As stated above, we don not really know
+over the week, culminating on Friday. As stated above, we do not really know
 how the data is created, so the main point to take away from this analysis might
 be, that the PR team of the Berlin police also works on the weekend.
 
 In the same manner, we can analyse the number of released police reports by
 district.
 
-``` {r}
+``` {r no_reports_district}
 reports_fyears %>% 
   group_by(district) %>% 
-  summarize(reports = n())
+  summarise(reports = n())
 ```
 
 Before we interpret the result, let us examine the district names; districts
 with a dash are written in two ways: with whitespace around the dash and without
 one. There may have been a change in the way these names are recorded in the data
 over the years and we have to deal with it. We can use the function
-`str_remove_all()` to remove every occurrence of a pattern we specify as its
-argument. If we remove the pattern " " we basically delete all whitespace. This
-can again be combined with `mutate()` to transform the data in our tibble.
+`str_remove_all()` from **stringr** to remove every occurrence of a pattern we
+specify as its argument. If we remove the pattern " " we basically delete all
+whitespace. This can again be combined with `mutate()` to transform the data in
+our tibble.
 
-``` {r}
+``` {r no_reports_district_corrected}
 reports_fyears <- reports_fyears %>% 
   mutate(district = str_remove_all(district, pattern = " "))
 
 reports_fyears %>% 
   group_by(district) %>% 
-  summarize(reports = n()) %>% 
+  summarise(reports = n()) %>% 
   arrange(desc(reports))
 ```
 
-For the group summary we also included `arrange(desc())` which orders the values
-from highest to lowest. If you omit `desc()` the order is reversed.
+For the grouped summary we also included `arrange(desc())` which orders the values
+from highest to lowest. If you omit `desc()` the results are ordered
+ascending. 
 
 We might also be interested in the relative share of reports by district. To
 compute those, one option is to add another column to the tibble resulting from
 `summarise()`, in which we calculate the relative share by dividing the
 "reports" columns values by the total of this column.
 
-``` {r}
+``` {r rel_no_district}
 reports_fyears %>% 
   group_by(district) %>% 
-  summarize(reports = n()) %>% 
+  summarise(reports = n()) %>% 
   arrange(desc(reports)) %>% 
   mutate(reports_rel = reports / sum(reports))
 ```
 
-Whether we look at the absolute or relative values, it is clear that there are
-differences between the districts in the number of police reports released and
-that the values for the district "Mitte" are considerably higher compared to the
-others. Again, we do not know how the data is created, so maybe it is just the
-case that the crimes in "Mitte" are more interesting than in other districts and
-that the data does not necessarily point to a higher number of crimes in central
-Berlin.
+The results show clear differences in the number of reports by
+district, with "Mitte" leading by a substantial margin. Other districts with
+high counts seem to be those that at least in part lie within the inner ring.
+The outer districts all show lower numbers.
+Again, we do not know how the data is created, so maybe it is just the
+case that the crimes in the inner ring are more interesting than in other
+districts and that the data does not necessarily point to a higher number of
+crimes in central Berlin. To get a more complete picture, we would also have to
+relate the number of reports to the citizens or even tourists per district. For
+this we woulkd need additional external data though.
 
 Using `group_by()` we can also group by multiple columns. "Mitte" and
 "Friedrichshain-Kreuzberg" showed the highest numbers among all districts. Let
@@ -387,16 +406,17 @@ First we have to use `filter()` to use only the observations referring to those
 districts and then group the data by the remaining districts and year before we
 count the the number of released reports.
 
-``` {r}
+``` {r no_district_year}
 reports_fyears %>% 
   filter(district == "Mitte" | district == "Friedrichshain-Kreuzberg") %>% 
   group_by(district, year) %>% 
-  summarize(reports = n())
+  summarise(reports = n())
 ```
 
-While the number of reports seems to be rather constant over the years, for
-"Mitte" there is a considerable spike in 2016. To analyse this further, we had
-to go deeper into the data and look at the actual texts of the police reports.
+There does not seem to be a clear pattern for the number of reports over time in
+both districts. For "Mitte" there is a considerable spike in 2016. To analyse
+this further, we had to go deeper into the data and look at the actual texts of
+the police reports.
 
 But we should briefly talk about a peculiarity to the way `group_by()` works
 with `summarise()` that can cause headaches, if we are not aware of it. In
@@ -425,7 +445,7 @@ The column "time" holds the time of day for each report in hours, minutes and
 seconds as a representation of the actual values, which are seconds from
 midnight.
 
-``` {r}
+``` {r look_at_the_time}
 reports_fyears[[1, 'time']]
 
 reports_fyears[[1, 'time']] %>% 
@@ -437,11 +457,11 @@ want to use the data as seconds, then compute the summary statistic and after
 this, transform the display of seconds back into the time of day. For the
 transformations we can use the functions `period_to_seconds()` and
 `seconds_to_period()`. We will calculate the mean and the median for the time of
-day over all police reports in one call of `summary()`.
+day over all police reports in one call of `summarise()`.
 
-``` {r}
+``` {r time_of_day}
 reports %>% 
-  summarize(mean = period_to_seconds(time) %>% 
+  summarise(mean = period_to_seconds(time) %>% 
               mean() %>% 
               seconds_to_period(),
             median = period_to_seconds(time) %>% 
@@ -450,17 +470,16 @@ reports %>%
   )
 ```
 
-The mean time of day over all police reports is 11:55 while the median is 11:01.
-This may indicate that the mean is biased towards a later time by a high number
-of very late reports. We will explore this further graphically in the next
+The mean time of day over all police reports is about 11:57 while the median is
+11:05. This may indicate that the mean is biased towards a later time by a high
+number of very late reports. We will explore this further graphically in the next
 chapter. Again, the results may represent the time when crimes occur, but it is
 more likely, that we are actually analysing the time when the PR team posts
 their police reports.
 
-``` {r, include = FALSE}
+``` {r save_cleaned, include = FALSE}
 save(reports, reports_fyears, file = "reports_cleaned.RData")
 ```
-
 
 ## Exporting tables
 
@@ -472,8 +491,7 @@ prone.
 
 One way of directly exporting tables we already know about is writing them to a
 .csv file. For more on this please review section \@ref(CSV). These can be
-imported into Excel and also possibly directly into Word. As I am not an active
-Microsoft Office user, I can only give you limited advice on this point. This
+imported into Excel and also directly into Word. This
 may be a quick way of exporting the values of a table and importing them into
 Office, but we have to do all the formatting in the external software and may
 have to repeat the formatting procedure every time the values change. So we
@@ -483,11 +501,11 @@ before exporting to .csv.
 In this example we save the number of police reports by year for the districts
 "Mitte" and "Friedrichshain-Kreuzberg" we computed earlier into a .csv file:
 
-``` {r}
+``` {r save_csv}
 reports_fyears %>% 
   filter(district == "Mitte" | district == "Friedrichshain-Kreuzberg") %>% 
   group_by(district, year) %>% 
-  summarize(reports = n()) %>% 
+  summarise(reports = n()) %>% 
   write_csv("reports_year_M-FK.csv")
 ```
 
@@ -507,17 +525,17 @@ If you want to skip importing a .csv into Microsoft Office, you may be
 interested in packages that allow writing directly to .xlsx files. Two options
 are:
 
-* writexl: <https://cran.r-project.org/web/packages/writexl/index.html>{target="_blank"}
-* openxlsx: <https://cran.r-project.org/web/packages/openxlsx/index.html>{target="_blank"}
+* **writexl**: <https://cran.r-project.org/web/packages/writexl/index.html>{target="_blank"}
+* **openxlsx**: <https://cran.r-project.org/web/packages/openxlsx/index.html>{target="_blank"}
 
 A way to directly produce tables in the .docx format is provided by the
-flextable package: <https://davidgohel.github.io/flextable/>{target="_blank"}
+**flextable** package: <https://davidgohel.github.io/flextable/>{target="_blank"}
 
-If your are working with LaTeX, the huxtable package can directly output .tex
-files: <https://hughjonesd.github.io/huxtable/>{target="_blank"}
+If your are working with LaTeX, the **huxtable** package can directly output .tex
+files, as well as HTML, Word, Excel and Powerpoint: <https://hughjonesd.github.io/huxtable/>{target="_blank"}
 
 If you want to circumvent using external software for producing reports
-completely, R Markdown may be of interest to you. This allows you to write your
+completely, *R Markdown* may be of interest to you. This allows you to write your
 report and your R code in one document and write it to .pdf or a range of other
 formats. The produced file includes all the output from your code that you want
 to report, i.e. code, plots and tables. Some resources on R Markdown can be
@@ -529,7 +547,7 @@ found here:
 * "R Markdown Cookbook" by Yihui Xie, Christophe Dervieux, Emily Riederer: <https://bookdown.org/yihui/rmarkdown-cookbook/>{target="_blank"}
 
 The website your are viewing right now, as well as many of the linked resources,
-are built with the bookdown package, which extends the functionality of R
-Markdown.
+are built with the **bookdown** package, which extends the functionality of R
+Markdown and is suited for more large scale projects.
 
 * "bookdown: Authoring Books and Technical Documents with R Markdown" by Yihui Xie: <https://bookdown.org/yihui/bookdown/>{target="_blank"}

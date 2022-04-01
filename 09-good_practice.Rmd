@@ -66,11 +66,11 @@ Some websites may give you access to an API, an
 *application programming interface*. APIs in the web context are mostly used for
 allowing third party sites and applications to access the services a website
 provides. For example, YouTube's IFrame player API is used when a YouTube Video
-is embedded in a third party site. The API gives accesss to the video and much
+is embedded in a third party site. The API gives access to the video and much
 of YouTube's functionality. Another example would be Twitter's API that can be
 used by tweet reader apps to access your tweets. 
 
-In many cases, you can use those APIs to directly access the data we are
+In many cases, you can use those APIs to directly access the data you are
 interested in instead of scraping the raw HTML code for it. Sometimes the APIs
 are openly accessible, sometimes you have to apply for access first. Using the
 latter as an example, if you want to use Twitter's API to collect tweets for
@@ -179,8 +179,9 @@ amounts of data. If our aim is to download a large number of websites and/or
 files, we ought to make sure that our code actually works. While there are
 problems in our code -- and there will be -- we may create a lot of unnecessary
 traffic during bugfixing. If we test our code until we are sure it will run
-without errors on a single instead of multiple pages, we will reduce traffic and
-again, also reduce the time we have to wait for the downloads to finish.
+without errors on a single or a small set of subpages, instead of all, we will
+reduce traffic and again, also reduce the time we have to wait for the downloads
+to finish.
 
 **Set waiting times**
 
@@ -189,8 +190,8 @@ down the process on our end by setting a waiting time between each
 download, this will spread our traffic over time. If a server detects
 unusually large amounts of site requests, it may even block our IP which would
 make us unable to continue our downloads. Waiting a little while between each
-request is a eay to circumvent this. A waiting time between 2-5 seconds should
-be more enough in most cases. Sometimes the robots.txt also specifies desired
+request is a way to circumvent this. A waiting time between 2-5 seconds should
+be more than enough in most cases. Sometimes the robots.txt also specifies desired
 waiting times for a specific site.
 
 ### Waiting times in action
@@ -202,17 +203,13 @@ how to set waiting times in practice when downloading multiple pages with
 First, let us generate the list of links we want to download like we did in
 chapter \@ref(rvest3).
 
-``` {r, message = FALSE}
+``` {r init_tidyverse, message = FALSE}
 library(tidyverse)
 library(rvest)
 
-website <- "https://www.tidyverse.org/packages/" %>% 
-  read_html()
-
-a_nodes <- website %>% 
-  html_nodes(css = "div.package > a")
-
-links <- a_nodes %>%
+links <- "https://www.tidyverse.org/packages/" %>% 
+  read_html() %>% 
+  html_elements(css = "div.package > a") %>% 
   html_attr(name = "href")
 ```
 
@@ -221,22 +218,26 @@ which takes the seconds to wait as its only argument. Since we want the `map()`
 function to add the waiting time before each `read_html()` iteration, we have to
 include `Sys.sleep()` into the iteration process. We can achieve the addition of
 the waiting time by defining a multi-line formula using the `~ {...}` notation.
-The arguments passed to this formula can be accessed via any name starting with
-`.`, so we will just use `.x` in this case. Each new line enclosed by the `{}`
-is run once for each iteration over the object we pass on to `map`. For each
-element of the `links` object, R first waits for two seconds and then uses
-`read_html()` on the element of `links`. So in effect, we added a waiting time
-of two seconds between each iteration. Note that `read_html()` has to come last
-if we want this short notation to work because only the return value of the last
-function within the braces is assigned to `pages`.
+Each new line enclosed by the `{}` is run once for each iteration over the
+object we pass on to `map`. So for each element of the `links` object, R first
+waits for two seconds and then applies `read_html()` to the element of `links`. 
+Note, that we have to refer to the element of `links` in this formula notation
+by writing `.` between the parentheses of `read_html()`. So on the first
+iteration the `.` stands for the first element of `links`, on the second for the
+second element and so on.
 
-``` {r}
+``` {r waiting}
 pages <- links %>% 
   map(~ {
     Sys.sleep(2)
-    read_html(.x)
+    read_html(.)
   })
 ```
+
+We successfully added a waiting time of two seconds between each iteration. Note
+that `read_html()` has to come last if we want this short notation to work
+because only the return value of the last function within the braces is assigned
+to `pages`.
 
 
 ## Citation and an additional resource

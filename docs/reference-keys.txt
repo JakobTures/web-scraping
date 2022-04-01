@@ -17,6 +17,7 @@ overview
 hello-world
 calculating-with-r
 comparison
+logical-operators
 objects
 vectors
 subsetting
@@ -25,7 +26,6 @@ a-brief-look-at-lists
 functions
 help
 examples-basic-statistical-functions
-ifelse-statements
 R2
 rstudio-workflow
 r-scripts
@@ -36,12 +36,13 @@ installing-and-loading-packages
 namespaces
 tidyverse
 tibbles
+subsetting-tibbles
 additional-resources
 rvest1
 the-rvest-package
 hello_world.html-1
 read_html
-html_nodes
+html_elements
 html_text
 countries-of-the-world
 country-names
@@ -64,7 +65,7 @@ scraping-of-tables
 table-with-css-selectors-from-wikipedia
 scraping-multiple-tables
 tabellen-mit-nas
-dynamische-websites
+dynamic-websites
 html-forms-and-html-queries
 html-forms
 the-query
@@ -79,7 +80,7 @@ pagination
 the-query-1
 sub-pgs
 files
-csv-files
+CSV
 parsing-a-csv-file
 downloading-files
 parsing-the-csv-files
@@ -91,6 +92,8 @@ reduce-traffic
 waiting-times-in-action
 citation-and-an-additional-resource
 scraping
+topic-and-data
+scraping-the-data
 gathering-the-links
 downloading-the-subpages
 extracting-the-data-of-interest
@@ -99,13 +102,15 @@ saving-the-data
 dplyr
 mutate
 computing-new-variables-from-existing-ones
-cleaning-the-data-on-police-reports
+clean
 select
 rename
 filter
 summarise-group_by
 number-of-reports-by-groups
 summary-statistics-on-the-time
+exporting-tables
+further-resources
 ggplot
 ggplot2-syntax
 geoms-and-aesthetics
@@ -113,11 +118,8 @@ continuous-x-continuous-y
 graphical-analysis-of-berlin-police-reports
 categorical-x-variables
 continuous-x-variables
+exporting-plots
 regex
 cleaning-the-district-column
 detecting-robberies-in-police-reports
 extracting-details-from-a-list-of-names
-CSV
-exporting-tables
-further-resources
-exporting-plots

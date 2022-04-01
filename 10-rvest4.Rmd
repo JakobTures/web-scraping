@@ -1,4 +1,4 @@
-# (PART) Data analysis {-}
+# (PART) Sample project {-}
 
 # Scraping Berlin police reports {#scraping}
 
@@ -9,11 +9,30 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 ```
 
 
-From here on out, we will talk about the basics of data analysis, and of using
-regular expressions when dealing with textual data. We will start by showing,
-and briefly explaining, how we scrape the data we will be using as an example
-for the remaining chapters.
+Over the next three chapters we will follow a small sample project. In this
+chapter we will briefly outline the research topic and scrape the data.
+In the next two chapters we will concern ourselfes with cleaning, transforming
+and analysing the data. First statistically, then grapically.
 
+## Topic and data
+
+This sample project aims to analyse police reports in Berlin. Specifically, we
+will try to answer two questions:
+
+* Does the number of reports differ by district?
+* Does the number of reports differ over time?
+  * over years
+  * over months
+  * over days of the week
+  * over time of day
+
+Note that these are ad hoc questions constructed for this sample project. In a real
+research project, we would have to motivate the research question more clearly
+and develop hyotheses based on theoretical considerations and existing research.
+These steps are skipped here to keep the focus on scraping the data and basic
+methods of data analysis.
+
+Now that topic and questions are defined, we need some data to answer them.
 The website
 <https://www.berlin.de/polizei/polizeimeldungen/archiv/>{target="_blank"}
 contains reports by the Berlin police that are open to the public, beginning
@@ -21,28 +40,31 @@ with the year 2014. We will gather the links to all subpages, download them and
 extract the text of the report, as well as the date, time and district where it
 occurred.
 
-## Gathering the links
+## Scraping the data
 
-``` {r message = FALSE}
+### Gathering the links
+
+``` {r load_packages_10, message = FALSE}
 library(tidyverse)
 library(rvest)
 ```
 
 We begin by downloading the mainpage.
 
-``` {r}
+``` {r parse_mainpage}
 website <- "https://www.berlin.de/polizei/polizeimeldungen/archiv/" %>% 
   read_html()
 ```
 
 The next step is to extract the URLs for the yearly archives. All the `<a>` tags
 that contain those links, have a `title=` attribute whose value begins with
-"Link". We can use this in selector construction, extract the value of the
-`href=` attribute and, as they are incomplete URLs, append them to the base URL.
+"Link". Also they are contained in a `<div>` tag with the class `textile`. We
+can use this in selector construction, extract the value of the `href=`
+attribute and, as they are incomplete URLs, append them to the base URL.
 
-``` {r}
+``` {r build_links}
 links <- website %>% 
-  html_nodes(css = "div.html5-section.body a[title^='Link']") %>% 
+  html_elements(css = "div.textile a[title^='Link']") %>% 
   html_attr(name = "href") %>% 
   str_c("https://www.berlin.de", .)
 ```
@@ -52,32 +74,83 @@ divided by pagination; to gather the links to all the subpages, we have to
 understand how the pagination works. In this case, the URL for the yearly
 archive is simply appended with the query "?page_at_1_0=" and a value indicating
 the number of the subpage we want to access.
-So "https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/?page_at_1_0=5"
-for example gives access to the fifth page for 2020. 
+So "https://www.berlin.de/polizei/polizeimeldungen/archiv/2022/?page_at_1_0=13"
+for example gives access to the fifth page for 2022. 
 
 The number of police reports is not constant over the years; the number of
 subpages per year will also differ. We do not know in advance, how many
 subpages we will have to download, but we can scrape this information from the
-last pagination link for each year. We read the first page for each year, select
+last pagination link for each year. We are lucky, as the `<a>` tag for the last
+subpage per year is a list item that can be identified by its two classes
+`pager-item` and `last`. We parse the first page for each year, select
 the `<a>` tag for the last subpage, extract the text from it and save it as a
 number. Note that I also added a waiting time of two seconds between each
 download, as shown in chapter \@ref(goodpractice). 
 
-``` {r}
+``` {r gather_subpages}
 max_pages <- links %>% 
   map(~ {
     Sys.sleep(2)
     read_html(.x)
   }) %>%
-  map(html_node, css = "li.pager-item.last > a") %>% 
+  map(html_element, css = "li.pager-item.last > a") %>% 
   map(html_text) %>% 
   as.numeric()
 ```
 
-Now we can construct the links to all subpages; done by nesting two for loops in
-my script.
+Now we can construct the links to all subpages; done by nesting two *for loops*
+in the script. For this to be understandable, we should have a brief look on for
+loops.
 
-```{r}
+Like `map()`, for loops are used for iteration. We can use them to repeat one or
+multiple commands for a fixed number of times. The following **non-runable**
+code block, shows the basic for loop syntax.
+
+``` {r for_loops_intro, eval = FALSE}
+for (variable in vector) {
+  Code
+}
+```
+
+We will replace `variable` with a name for our counter. Per convention lower
+case letters are used, typically `i`. In `vector` we will define the values the
+counter will take. If we define the vector `1:5`, the counter will take on the
+value `1` in the first loop, `2` in the second and so on. After the loop runs
+with the value `5`, it ends. The values in vector do not have to be ascending
+numbers though. We could also use a numeric vector like `c(4, 8, 15, 16, 23, 42)`,
+a character vector like `c("a", "s", "d", "f)`, or any other vector.
+
+Between the `{}` brackets, we write the commands that shall be executed in each
+iteration. The important thing is, that we can use the value the counter takes
+in each iteration. For example, the following code prints the value of `i` for
+each iteration into the console:
+
+``` {r for_loops_a}
+for (i in 1:5) {
+  print(i)
+}
+```
+
+For loops can also be nested. Then, the *inner loop* iterates completely for
+each iteration of the *outer loop*. In the following example, the inner loop
+iterates three times for each of the two iterations of the outer loop. So we
+get six iterations in total. Note, that inner and outer loop have to have different
+`variable` names for this to work. The `paste()` function in `print()` is used to
+combine the values of `i` and `j` seperated by a `-` and print this combination
+into the console, so we can see exactly in which order the iterations occur.
+
+``` {r for_loops_nested}
+for (i in 1:2) {
+  for (j in 1:3) {
+    print(paste(i, j, sep = "-"))
+  }
+}
+```
+
+With this knowledge, we can construct a nested for loop that builds a vector of
+the links to all subpages for all years.
+
+```{r construct_all_links}
 pag_links <- character()
 
 for (i in 1:length(links)) {
@@ -87,15 +160,17 @@ for (i in 1:length(links)) {
 }
 ```
 
-
 The outer loop is a counter for the elements in the objects `links`; in this
-case the loop counts from 1 to 8, one step for each yearly archive page. For
+case the loop counts from 1 to 9, one step for each yearly archive page. For
 each of these iterations, the inner loop will count from 1 to the number of
 the last subpage for this year, which we assigned to the vector `max_pages`.
+Using subsetting with `max_pages[i]`, we select the correct number of subpages
+for each year, i.e. each iteration of the outer loop.
 Using both counters together, we can construct the links to the subpages using
 `str_c()`. The function takes the link to a yearly archive indicated by the
 counter in the outer loop `i`, appends "?page_at_1_0=" and after this the value
-of the inner loop counter `j`. The resulting link is then added to the vector
+of the inner loop counter `j`, i.e. the subpages (1, 2, ..., j) for this year.
+The resulting link is then added to the vector
 `pag_links` using the function `append()` which adds the data indicated by the
 argument `values` to the object specified in the first argument. For this to
 work, we first have to initialise the object as an empty object outside of the
@@ -104,14 +179,14 @@ loop. Here I created it as an empty character vector, using
 data type assigned, you can also use `empty_vector <- NULL`.
 
 
-## Downloading the subpages
+### Downloading the subpages
 
-Now that the the links to all subpages are gathered, we can finally download
+Now that the links to all subpages are gathered, we can finally download
 them. Please note that the download will take up to 20 minutes due to the number
-of subpages (337 at the time of writing), and the additional waiting time of 2
+of subpages (377 at the time of writing), and the additional waiting time of 2
 seconds between each iteration.
 
-``` {r}
+``` {r parse_all_subpages}
 pages <- pag_links %>% 
   map(~ {
     Sys.sleep(2)
@@ -119,24 +194,33 @@ pages <- pag_links %>%
   })
 ```
 
-## Extracting the data of interest
+
+### Extracting the data of interest
 
 The goal is to extract the text of the report, the date/time and the district
-the report refers to. Let us try to approach this using the techniques we
-developed over the last chapters:
+the report refers to. Looking into the source code, we find that all reports are
+list items in an unordered list. Conveniently for us, all data fields we are
+interested in have distinct classes we can use in scraping. Date and time are
+enclosed by a `<div>` tag with the classes `cell`, `nowrap` and `date`. The
+report headline is also part of a `<div>`. Here the classes are `cell` and
+`text`. The same `<div>` also includes the district's name, but we can discern
+between the two. The text is included in a `<a>` tag, that is a child of the
+`<div>` and the district is part of a `<span>` with the class `category`, which
+is also a child of the `<div>`. We can use this information to construct
+appropriate CSS selectors like this:
 
-``` {r error=TRUE}
+``` {r try_extract_data, error=TRUE}
 reports <- tibble(
   Date = pages %>% 
-    map(html_nodes, css = "div.cell.date") %>% 
+    map(html_elements, css = "div.cell.nowrap.date") %>% 
     map(html_text) %>% 
     unlist(),
   Report = pages %>% 
-    map(html_nodes, css = "div.cell.text > a") %>% 
+    map(html_elements, css = "div.cell.text > a") %>% 
     map(html_text) %>% 
     unlist(),
   District = pages %>% 
-    map(html_nodes, css = "span.category") %>% 
+    map(html_elements, css = "div.cell.text > span.category") %>% 
     map(html_text) %>% 
     unlist()
 )
@@ -154,13 +238,13 @@ e.g.
 <https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/>{target="_blank"}.
 
 
-### Dealing with missing data in lists
+#### Dealing with missing data in lists
 
 Some of the `<span>` tags that contain the district are missing. Using the
-approach presented above, `html_nodes()` just extracts the `<span>` tags that
+approach presented above, `html_elements()` just extracts the `<span>` tags that
 are present. We tell R that we do want all `<span>` tags of the class
-"category", and this is what R returns to us. The cases where the tag is
-missing, are skipped. But this is not what we want; what we actually want is,
+"category", and this is what R returns to us. For list items where the tag is
+missing, nothing is returned. But this is not what we want; what we actually want is,
 that R looks at every single police report and saves its text, date and time, as
 well as the district, if it is not missing. If it is missing, we want R to save
 a `NA` in the cell of the tibble, the representation of missing values in R.
@@ -174,37 +258,45 @@ every single `<li>` tag and extract the data that is present, as well as save an
 To start, we have to extract all the `<li>` tags and their content from the
 subpages. Right now, the subpages are saved in the object `pages`. We use a for
 loop that takes every element of `pages`, extracts all the `<li>` tags from it
-and adds them to a new list using `append()`. `append()` takes an existing
-object as its first argument and adds the data indicated in the `values =`
-argument to it. For this to work, we have to initiate the new list as an empty
-object before the loop starts.
+and adds them to a new list using `append()`. Note, that we have to use
+`pages[[]]` to subset the list of subpages, as we want to access the actual list
+elements, i.e. the node sets for the sub pages. As with tibbles, `pages[]` would
+always return another list. The `<li>` tags are all children
+of an `<ul>` with the class `list--tablelist`, which we can use in our selector.
+`append()` takes an existing object as its first argument and adds the data
+indicated in the `values =` argument to it. For this to work, we have to
+initiate the new list as an empty object before the loop starts.
 
-``` {r}
+``` {r list_of_lists}
 list_items <- NULL
 
 for (i in 1:length(pages)) {
-  list_items <- append(list_items, values = html_nodes(pages[[i]], css = "li.row-fluid"))
+  list_items <- append(list_items, values = html_elements(pages[[i]], css = "ul.list--tablelist > li"))
 }
 ```
 
-The newly created list `list_items` contains a nodeset for each `<li>` tag from
-all subpages:
+The newly created list `list_items` contains a node set for each `<li>` tag from
+all subpages. Again, we have to use double brackets to access the node set.
+With single brackets a new list containing the node set as its first element is
+returned, as illustrated here:
 
-``` {r}
+``` {r check_lists}
 list_items[[1]]
+
+list_items[1]
 ```
 
 We can now make R examine every element of this list one after the other and
 extract all the data they contain. But what happens when we try to extract a
-node that is not present in one of the elements? R returns an `NA`:
+element that is not present in one of the elements? R returns an `NA`:
 
-``` {r}
-html_node(list_items[[1]], css = "span.notthere")
+``` {r na_test}
+html_element(list_items[[1]], css = "span.notthere")
 ```
 
 Using a for loop that iterates over the elements in `list_items`, we write a
 tibble row by row, filling the data cells with the extracted information and
-with `NA` if a node could not be found for this element of `list_items`. We have
+with `NA` if a element could not be found for this element of `list_items`. We have
 to initiate the tibble before the for loop starts: we define the column names,
 the type of data to be saved and also the length of the columns. The
 latter is not strictly necessary as we could also have created a tibble with a
@@ -212,7 +304,7 @@ column length of $0$, but pre-defining their length increases computational
 efficiency. Still, the for loop has to iterate over several thousand elements
 and extract the data contained, which will take several minutes to complete.
 
-``` {r}
+``` {r extract_data_for_loop}
 reports <- tibble(
   Date = character()[1:length(list_items)],
   Report = character()[1:length(list_items)],
@@ -220,23 +312,52 @@ reports <- tibble(
 )
 
 for (i in 1:length(list_items)) {
-  reports[i, "Date"] <- html_node(list_items[[i]], css = "div.cell.date") %>% 
+  reports[i, "Date"] <- html_element(list_items[[i]], css = "div.cell.nowrap.date") %>% 
     html_text()
-  reports[i, "Report"] <- html_node(list_items[[i]], css = "div.cell.text > a") %>% 
+  reports[i, "Report"] <- html_element(list_items[[i]], css = "div.cell.text > a") %>% 
     html_text()
-  reports[i, "District"] <- html_node(list_items[[i]], css = "span.category") %>% 
+  reports[i, "District"] <- html_element(list_items[[i]], css = "div.cell.text > span.category") %>% 
     html_text()
 }
 ```
 
+Let's look at the tibble we just constructed:
 
-## Saving the data
+``` {r reports_looksie}
+reports
+```
+
+This looks good, but we should also confirm, that `NA`s were handled correctly.
+We can examine the entry for "31.12.2014 13:21 Uhr" that we saw on
+<https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/>{target="_blank"},
+and for which the district was missing. We can use subsetting to just look at
+this one observation in our tibble. Remembet that when subsetting two
+dimensional objects like tibbles, we have to supply an index for the row(s) as
+well as for the column(s) we want to subset. Our goal is, to subset the row for which the
+column "Date" holds the value "31.12.2014 13:21 Uhr". We can thus write our row
+index as `reports$Date == "31.12.2014 13:21 Uhr"`, which reads as:
+*the row(s) for which the value of the column "Date" in the object "reports" is equal to "31.12.2014 13:21 Uhr"*.
+As we want to see all columns for this observation, we do not need to supply a
+column index. By writing nothing after the `,` we instruct R to show us all
+columns.
+
+``` {r report_na}
+reports[reports$Date == "31.12.2014 13:21 Uhr", ]
+```
+
+This also looks good. We now have extracted the data we need to answer our
+questions.
+
+### Saving the data
 
 As discussed in chapter \@ref(files), we save the scraped data at this point.
 You have seen that we downloaded a lot of subpages, which took a considerable
 amount of time; if we repeat this for every instance of further data analysis,
 we create a lot of unnecessary traffic and waste a lot of our own time. 
 
-``` {r}
+``` {r save_reports}
 save(reports, file = "reports.RData")
 ```
+
+In the next chapter we will continue with cleaning the data, transforming it and
+calculating some descriptive statistics on it.

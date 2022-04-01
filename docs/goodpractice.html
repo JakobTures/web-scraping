@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Good practice | Web Scraping using R</title>
   <meta name="description" content="9 Good practice | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Good practice | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
   
-  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+  <meta name="github-repo" content="jakobtures.github.io/web-scraping/" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="9 Good practice | Web Scraping using R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-30" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="files.html"/>
 <link rel="next" href="scraping.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,18 +51,21 @@
 
 
 
-
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
-<script src="libs/echarts4r-binding-0.4.0/echarts4r.js"></script>
+<script src="libs/echarts4r-binding-0.4.2/echarts4r.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -122,6 +126,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -137,201 +142,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Web Scraping using R
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<li><a href="index.html#introduction">Introduction<span></span></a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
+<li><a href="index.html#what-is-web-scraping">What is web scraping?<span></span></a></li>
+<li><a href="index.html#course-contents">Course contents<span></span></a></li>
+<li><a href="index.html#technical-requirements">Technical requirements<span></span></a></li>
+<li><a href="index.html#conventions">Conventions<span></span></a></li>
+<li><a href="index.html#acknowledgements">Acknowledgements<span></span></a></li>
+<li><a href="index.html#colophon">Colophon<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<li class="part"><span><b>I Basics<span></span></b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html<span></span></a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes<span></span></a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links<span></span></a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<li class="part"><span><b>II R Basics &amp; Tidyverse<span></span></b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators<span></span></a></li>
+<li class="chapter" data-level="2.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>2.3.3</b> Logical operators<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
-<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects<span></span></a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
-<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors<span></span></a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
-<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
-<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
-<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
-<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
-</ul></li>
-<li class="part"><span><b>III Scraping</b></span></li>
-<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
-<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
-<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
-<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
-<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
-<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help<span></span></a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
-<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
-<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
-<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
-<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects<span></span></a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
-<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
-<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
-<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
-<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources<span></span></a></li>
 </ul></li>
+<li class="part"><span><b>III Scraping<span></span></b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_elements"><i class="fa fa-check"></i><b>4.2.2</b> html_elements()<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
-<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area<span></span></a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files</a>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#csv-files"><i class="fa fa-check"></i><b>8.1</b> CSV files</a>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file</a></li>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes<span></span></a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs<span></span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes<span></span></a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels<span></span></a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the csv files</a></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files</a></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables<span></span></a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites<span></span></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
-</ul></li>
-<li class="part"><span><b>IV Data analysis</b></span></li>
-<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.1</b> Gathering the links</a></li>
-<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2</b> Downloading the subpages</a></li>
-<li class="chapter" data-level="10.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.3</b> Extracting the data of interest</a>
-<ul>
-<li class="chapter" data-level="10.3.1" data-path="scraping.html"><a href="scraping.html#dealing-with-missing-data-in-lists"><i class="fa fa-check"></i><b>10.3.1</b> Dealing with missing data in lists</a></li>
-</ul></li>
-<li class="chapter" data-level="10.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.4</b> Saving the data</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code></a>
-<ul>
-<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones</a></li>
-<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#cleaning-the-data-on-police-reports"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports</a></li>
-</ul></li>
-<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code></a></li>
-<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a>
-<ul>
-<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups</a></li>
-<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time</a></li>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query<span></span></a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result<span></span></a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax</a></li>
-<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics</a>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages<span></span></a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y</a></li>
-<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports</a></li>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
+<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
-<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-and-counting-robberies-from-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting and counting robberies from police reports</a></li>
-<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#parsing-two-numbers-from-a-string"><i class="fa fa-check"></i><b>13.3</b> Parsing two numbers from a string</a></li>
+<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#CSV"><i class="fa fa-check"></i><b>8.1</b> CSV files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the CSV files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>IV Sample project<span></span></b></span></li>
+<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#topic-and-data"><i class="fa fa-check"></i><b>10.1</b> Topic and data<span></span></a></li>
+<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#scraping-the-data"><i class="fa fa-check"></i><b>10.2</b> Scraping the data<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.2.1</b> Gathering the links<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2.2</b> Downloading the subpages<span></span></a></li>
+<li class="chapter" data-level="10.2.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.2.3</b> Extracting the data of interest<span></span></a></li>
+<li class="chapter" data-level="10.2.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.2.4</b> Saving the data<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#clean"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code><span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code><span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups<span></span></a></li>
+<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="dplyr.html"><a href="dplyr.html#exporting-tables"><i class="fa fa-check"></i><b>11.6</b> Exporting tables<span></span></a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="dplyr.html"><a href="dplyr.html#further-resources"><i class="fa fa-check"></i><b>11.6.1</b> Further resources<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics<span></span></a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#exporting-plots"><i class="fa fa-check"></i><b>12.3</b> Exporting plots<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>V Regular expressions<span></span></b></span></li>
+<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column<span></span></a></li>
+<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-robberies-in-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting robberies in police reports<span></span></a></li>
+<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#extracting-details-from-a-list-of-names"><i class="fa fa-check"></i><b>13.3</b> Extracting details from a list of names<span></span></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -353,8 +365,8 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="goodpractice" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Good practice</h1>
+<div id="goodpractice" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Good practice<a href="goodpractice.html#goodpractice" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this following section, we will concern ourselves with questions regarding
 good practice of web scraping and how to scrape responsibly. There are no wrong
 or right answers to these questions. But in my view, it is a privilege that we
@@ -383,8 +395,8 @@ sources.</p></li>
 <li><p>Rule #2 of Scrape Club: Scrape responsibly and with respect to the data
 sources!</p></li>
 </ul>
-<div id="we-aint-no-web-crawlers" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> We ain’t no web crawlers</h2>
+<div id="we-aint-no-web-crawlers" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> We ain’t no web crawlers<a href="goodpractice.html#we-aint-no-web-crawlers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Web crawlers – also known as web spiders or robots – are pieces of software
 that aim at collecting and indexing all content on the internet. Web crawlers
 are for example, operated by search engines whose aim is to index the content of
@@ -404,10 +416,10 @@ data of interest.</p>
 <em>application programming interface</em>. APIs in the web context are mostly used for
 allowing third party sites and applications to access the services a website
 provides. For example, YouTube’s IFrame player API is used when a YouTube Video
-is embedded in a third party site. The API gives accesss to the video and much
+is embedded in a third party site. The API gives access to the video and much
 of YouTube’s functionality. Another example would be Twitter’s API that can be
 used by tweet reader apps to access your tweets.</p>
-<p>In many cases, you can use those APIs to directly access the data we are
+<p>In many cases, you can use those APIs to directly access the data you are
 interested in instead of scraping the raw HTML code for it. Sometimes the APIs
 are openly accessible, sometimes you have to apply for access first. Using the
 latter as an example, if you want to use Twitter’s API to collect tweets for
@@ -448,8 +460,8 @@ decide if we want to go forward with the project: Is the collection of this
 specific piece of data really necessary? Do I have support by superiors or my
 employer? Can we contact the website operator, describe our project and kindly
 ask for permission?</p>
-<div id="on-robots.txt-files" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> On robots.txt files</h3>
+<div id="on-robots.txt-files" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> On robots.txt files<a href="goodpractice.html#on-robots.txt-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The robots.txt files are usually accessible by appending the URL of the mainpage
 of a website. If you do not find a robots.txt in this manner, there most
 probably is none; e.g. to access the robots.txt file for the website
@@ -475,8 +487,8 @@ the crawler “Pixray-Seeker”. Here there is only one Disallow rule, namely �
 allowed access to any content on the website.</p>
 </div>
 </div>
-<div id="reduce-traffic" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Reduce traffic</h2>
+<div id="reduce-traffic" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Reduce traffic<a href="goodpractice.html#reduce-traffic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Every time a website is accessed, traffic is generated. Traffic here refers to
 the transfer of the HTML data from the website’s server to our computer, this
 produces monetary costs on the side of the providers of the website. Many
@@ -495,57 +507,57 @@ amounts of data. If our aim is to download a large number of websites and/or
 files, we ought to make sure that our code actually works. While there are
 problems in our code – and there will be – we may create a lot of unnecessary
 traffic during bugfixing. If we test our code until we are sure it will run
-without errors on a single instead of multiple pages, we will reduce traffic and
-again, also reduce the time we have to wait for the downloads to finish.</p>
+without errors on a single or a small set of subpages, instead of all, we will
+reduce traffic and again, also reduce the time we have to wait for the downloads
+to finish.</p>
 <p><strong>Set waiting times</strong></p>
 <p>If we are downloading many pages or files, it may also be a good idea to slow
 down the process on our end by setting a waiting time between each
 download, this will spread our traffic over time. If a server detects
 unusually large amounts of site requests, it may even block our IP which would
 make us unable to continue our downloads. Waiting a little while between each
-request is a eay to circumvent this. A waiting time between 2-5 seconds should
-be more enough in most cases. Sometimes the robots.txt also specifies desired
+request is a way to circumvent this. A waiting time between 2-5 seconds should
+be more than enough in most cases. Sometimes the robots.txt also specifies desired
 waiting times for a specific site.</p>
-<div id="waiting-times-in-action" class="section level3" number="9.2.1">
-<h3><span class="header-section-number">9.2.1</span> Waiting times in action</h3>
+<div id="waiting-times-in-action" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Waiting times in action<a href="goodpractice.html#waiting-times-in-action" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let us have another look on the first example from chapter <a href="rvest3.html#rvest3">7</a> to see
 how to set waiting times in practice when downloading multiple pages with
 <code>read_html()</code>.</p>
 <p>First, let us generate the list of links we want to download like we did in
 chapter <a href="rvest3.html#rvest3">7</a>.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="goodpractice.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb174-2"><a href="goodpractice.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb174-3"><a href="goodpractice.html#cb174-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-4"><a href="goodpractice.html#cb174-4" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.tidyverse.org/packages/&quot;</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb174-5"><a href="goodpractice.html#cb174-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span>
-<span id="cb174-6"><a href="goodpractice.html#cb174-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-7"><a href="goodpractice.html#cb174-7" aria-hidden="true" tabindex="-1"></a>a_nodes <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb174-8"><a href="goodpractice.html#cb174-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>)</span>
-<span id="cb174-9"><a href="goodpractice.html#cb174-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb174-10"><a href="goodpractice.html#cb174-10" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_nodes <span class="sc">%&gt;%</span></span>
-<span id="cb174-11"><a href="goodpractice.html#cb174-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="goodpractice.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb172-2"><a href="goodpractice.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb172-3"><a href="goodpractice.html#cb172-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb172-4"><a href="goodpractice.html#cb172-4" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="st">&quot;https://www.tidyverse.org/packages/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb172-5"><a href="goodpractice.html#cb172-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb172-6"><a href="goodpractice.html#cb172-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-7"><a href="goodpractice.html#cb172-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span></code></pre></div>
 <p>To let R wait for several seconds, we can use the base R function <code>Sys.sleep()</code>
 which takes the seconds to wait as its only argument. Since we want the <code>map()</code>
 function to add the waiting time before each <code>read_html()</code> iteration, we have to
 include <code>Sys.sleep()</code> into the iteration process. We can achieve the addition of
 the waiting time by defining a multi-line formula using the <code>~ {...}</code> notation.
-The arguments passed to this formula can be accessed via any name starting with
-<code>.</code>, so we will just use <code>.x</code> in this case. Each new line enclosed by the <code>{}</code>
-is run once for each iteration over the object we pass on to <code>map</code>. For each
-element of the <code>links</code> object, R first waits for two seconds and then uses
-<code>read_html()</code> on the element of <code>links</code>. So in effect, we added a waiting time
-of two seconds between each iteration. Note that <code>read_html()</code> has to come last
-if we want this short notation to work because only the return value of the last
-function within the braces is assigned to <code>pages</code>.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="goodpractice.html#cb175-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
-<span id="cb175-2"><a href="goodpractice.html#cb175-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
-<span id="cb175-3"><a href="goodpractice.html#cb175-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
-<span id="cb175-4"><a href="goodpractice.html#cb175-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
-<span id="cb175-5"><a href="goodpractice.html#cb175-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+Each new line enclosed by the <code>{}</code> is run once for each iteration over the
+object we pass on to <code>map</code>. So for each element of the <code>links</code> object, R first
+waits for two seconds and then applies <code>read_html()</code> to the element of <code>links</code>.
+Note, that we have to refer to the element of <code>links</code> in this formula notation
+by writing <code>.</code> between the parentheses of <code>read_html()</code>. So on the first
+iteration the <code>.</code> stands for the first element of <code>links</code>, on the second for the
+second element and so on.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="goodpractice.html#cb173-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb173-2"><a href="goodpractice.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
+<span id="cb173-3"><a href="goodpractice.html#cb173-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb173-4"><a href="goodpractice.html#cb173-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.)</span>
+<span id="cb173-5"><a href="goodpractice.html#cb173-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<p>We successfully added a waiting time of two seconds between each iteration. Note
+that <code>read_html()</code> has to come last if we want this short notation to work
+because only the return value of the last function within the braces is assigned
+to <code>pages</code>.</p>
 </div>
 </div>
-<div id="citation-and-an-additional-resource" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Citation and an additional resource</h2>
+<div id="citation-and-an-additional-resource" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Citation and an additional resource<a href="goodpractice.html#citation-and-an-additional-resource" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Some of the ideas expressed above are in part based on the subchapter “9.3 Web
 scraping: Good practice” from:</p>
 <p>Munzert et. al (2015). Automated Data Collection with R. A Practical Guide to
@@ -570,7 +582,6 @@ situation by way of some examples. A read is highly recommended.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -600,6 +611,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

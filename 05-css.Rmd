@@ -8,43 +8,44 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 ## CSS selectors {#css}
 
-In the previous section, you already got to know the first CSS selectors. These 
+In the previous section, you already got to know the first *CSS selectors*. These 
 are actually used in web design to select individual elements of a website and 
 apply a CSS style to them, i.e. to define the display of the elements. So they
 were not developed with web scraping applications in mind, yet we can still make
 use of them, because we also want to select individual elements of a website in 
 order to extract them.
 
-CSS selectors are used in rvest as an argument of the `read_html()` function. 
+CSS selectors are used in **rvest** as an argument of the `read_html()` function. 
 As a second argument -- the first one determines which data the function should
-be applied to --we specify a selector in the form `css = "selector"`. This
+be applied to -- we specify a selector in the form `css = "selector"`. This
 determines which elements of the HTML code we want to extract. It is important
 here that the entire selector -- regardless of how many individual parts it
-consists of -- is always passed along as a string to the argument.
+consists of -- is always passed along as a string to the argument, i.e. enclosed
+in `"`.
 
 In the following, the CSS selectors are applied to the website
-<https://webscraping-tures.github.io/turnout.html>{target="_blank"}
+<https://jakobtures.github.io/web-scraping/turnout.html>{target="_blank"}
 for illustration. You can view the source code the usual way. Firstly, we load
-the rvest package and parse the website.
+the **rvest** package and parse the website.
 
-``` {r, message = FALSE}
+``` {r read_turnout, message = FALSE}
 library(rvest)
 
-website <- "https://webscraping-tures.github.io/turnout.html" %>% 
+website <- "https://jakobtures.github.io/web-scraping/turnout.html" %>% 
   read_html()
 ```
 
-We have already learned about the simplest selector. `"Tag"` selects all
+We have already learned about the simplest selector. `"tag"` selects all
 occurrences of the specified HTML tag. For example, we can select the title of
 the website -- in the `<title>` tag -- or the heading displayed in the browser 
-window -- in  `<h3>`.
+window -- in `<h3>`.
 
-``` {r}
+``` {r select_tag}
 website %>% 
-  html_nodes(css = "title")
+  html_elements(css = "title")
 
 website %>% 
-  html_nodes(css = "h3")
+  html_elements(css = "h3")
 ```
 
 ### Classes
@@ -53,14 +54,14 @@ We also got to know the selector for the argument `class` -- `".class"` -- in
 the previous section. We can select all `<span>` tags of the class 
 `"state-name"` as follows:
 
-``` {r}
+``` {r selct_class}
 website %>% 
-  html_nodes(css = ".state-name") %>% 
+  html_elements(css = ".state-name") %>% 
   head(n = 2)
 
 
 website %>% 
-  html_nodes(css = "span.state-name") %>% 
+  html_elements(css = "span.state-name") %>% 
   head(n = 2)
 ```
 
@@ -81,9 +82,9 @@ clarity of the selector.
 
 To illustrate:
 
-``` {r}
+``` {r selct_class_full}
 website %>% 
-  html_nodes(css = "body > div#data > div[class^=state-] > span.state-name") %>% 
+  html_elements(css = "body > div#data > div[class^=state-] > span.state-name") %>% 
   head(n = 2)
 ```
 
@@ -112,9 +113,9 @@ id that identifies the state with a two-character abbreviation:
 
 The selector for IDs is being written as `"#id"`.
 
-``` {r}
+``` {r select_id}
 website %>% 
-  html_nodes(css = "#bw")
+  html_elements(css = "#bw")
 ```
 
 In this case, however, we have selected more than we wanted. Because the `<img>` 
@@ -127,16 +128,16 @@ unexpected structures.
 The solution at this point is the combination of ID and tag in the selector,
 in the form `"tag#id"`.
 
-``` {r}
+``` {r select_tag_id}
 website %>% 
-  html_nodes(css = "span#bw")
+  html_elements(css = "span#bw")
 ```
 
 A combination with the class attribute is also possible.
 
-``` {r}
+``` {r select_tag_class_id}
 website %>% 
-  html_nodes(css = "span.state-name#bw")
+  html_elements(css = "span.state-name#bw")
 ```
 
 In general, it should be noted that the CSS selectors are *case-sensitive*. 
@@ -150,12 +151,12 @@ name of the id is capitalized:
 If we want to extract this element, we have to use this way of writing in the
 selector as well, `"#hh"` will not work.
 
-``` {r}
+``` {r select_case}
 website %>% 
-  html_nodes(css = "span#hh")
+  html_elements(css = "span#hh")
 
 website %>% 
-  html_nodes(css = "span#HH")
+  html_elements(css = "span#HH")
 ```
 
 ### Attributes
@@ -172,9 +173,9 @@ a new browser tab, `"_self"` in the active tab. For the second link no
 `target=""` attribute is set. In our example, to select all `<a>` tags that have
 a `target` attribute, i.e. the first and third, we could proceed as follows:
 
-``` {r}
+``` {r select_att}
 website %>% 
-  html_nodes(css = "a[target]")
+  html_elements(css = "a[target]")
 ```
 
 With `"element[attribute='value']"` it is possible to select only attributes 
@@ -188,9 +189,9 @@ levels of quotes.
 
 If we want to select only the link that opens in a new tab:
 
-``` {r}
+``` {r select_att_specific}
 website %>% 
-  html_nodes(css = "a[target='_blank']")
+  html_elements(css = "a[target='_blank']")
 ```
 
 This can be further modified by specifying that the value of an attribute should
@@ -200,15 +201,15 @@ have a certain beginning -- `"element[attribute^='beginning']"` -- a certain end
 the beginning, the end, or any part of the URL assigned to the `href=""` 
 attribute.
 
-``` {r}
+``` {r select_att_less_specific}
 website %>% 
-  html_nodes(css = "a[href^='https://www']")
+  html_elements(css = "a[href^='https://www']")
 
 website %>% 
-  html_nodes(css = "a[href$='Deutschland']")
+  html_elements(css = "a[href$='Deutschland']")
 
 website %>% 
-  html_nodes(css = "a[href*='webscraping']")
+  html_elements(css = "a[href*='web-scraping']")
 ```
 
 
@@ -218,7 +219,7 @@ We can think of the hierarchy of an HTML structure as analogous to a family
 tree. A simplified representation of our example page as a family tree could 
 look like this:
 
-``` {r echo = FALSE}
+``` {r hierarchy, echo = FALSE}
 library(echarts4r)
 library(tidyverse)
 
@@ -275,9 +276,9 @@ selector, we write this as `"B A"`.
 For example, if we want to select all `<span>` tags that descend from the
 `<div id="data">` tag -- that is, a grandchild-grandparent relationship:
 
-``` {r}
+``` {r select_desc}
 website %>% 
-  html_nodes(css = "div#data span") %>% 
+  html_elements(css = "div#data span") %>% 
   head(n = 6)
 ```
 
@@ -291,9 +292,9 @@ CSS selectors are not limited to mapping the relationship of two generations.
 A longer selector containing four generations and leading to the same result 
 could look like this:
 
-``` {r}
+``` {r select_desc_longer}
 website %>% 
-  html_nodes(css = "body div#data div span") %>% 
+  html_elements(css = "body div#data div span") %>% 
   head(n = 6)
 ```
 
@@ -312,9 +313,9 @@ already be sufficient. However, we could become more explicit to write less
 error-prone code. Both `<div>` tags are similar in that their classes start with
 `"state"` and we already know how to exploit this:
 
-``` {r}
+``` {r select_child}
 website %>% 
-  html_nodes(css = "div[class^='state'] > span") %>% 
+  html_elements(css = "div[class^='state'] > span") %>% 
   head(n = 6)
 ```
 
@@ -323,9 +324,9 @@ number of options.
 
 `":first-child"` selects the first child of an element:
 
-``` {r}
+``` {r select_first_child}
 website %>% 
-  html_nodes(css = "div[class^='state'] > :first-child") %>% 
+  html_elements(css = "div[class^='state'] > :first-child") %>% 
   head(n = 2)
 ```
 
@@ -335,9 +336,9 @@ precisely which child -- counted in the order in which they appear in the HTML
 code -- we are interested in. To make it clearer again that we are only 
 interested in `<span>` children, we combine `"span"` and `"nth-child(n)"`:
 
-``` {r}
+``` {r select_n_child}
 website %>% 
-  html_nodes(css = "div[class^='state'] > span:nth-child(2)") %>% 
+  html_elements(css = "div[class^='state'] > span:nth-child(2)") %>% 
   head(n = 2)
 ```
 
@@ -347,9 +348,9 @@ tags whose classes start with `"state"`.
 If we would like to select only the last child, we could do this with
 `:last-child`:
 
-``` {r}
+``` {r select_last_child}
 website %>% 
-  html_nodes(css = "div[class^='state'] > span:last-child") %>% 
+  html_elements(css = "div[class^='state'] > span:last-child") %>% 
   head(n = 2)
 ```
 
@@ -361,13 +362,13 @@ siblings per federal state in our example. One `<img>` and three `<span>` tags.
 The selector `"Element-A ~ Element-B"` selects all siblings B that follow 
 sibling A:
 
-``` {r}
+``` {r select_siblings}
 website %>% 
-  html_nodes(css = "div[class^='state'] img ~ span") %>% 
+  html_elements(css = "div[class^='state'] img ~ span") %>% 
   head(n = 6)
 
 website %>% 
-  html_nodes(css = "img ~ span") %>% 
+  html_elements(css = "img ~ span") %>% 
   head(n = 6)
 ```
 
@@ -378,13 +379,13 @@ would no longer be explicit enough.
 The selector `"Element-A + Element-B"` works in the same way, but only selects
 the sibling B that follows directly after sibling A:
 
-``` {r}
+``` {r select_direct_sibling}
 website %>% 
-  html_nodes(css = "img + span") %>% 
+  html_elements(css = "img + span") %>% 
   head(n = 2)
 
 website %>% 
-  html_nodes(css = "span.state-name + span") %>% 
+  html_elements(css = "span.state-name + span") %>% 
   head(n = 2)
 ```
 
@@ -395,17 +396,17 @@ certain type can be selected. The siblings are thus differentiated according to
 the type of element, with which our family tree metaphor is being somewhat 
 overused.
 
-``` {r}
+``` {r select_specific_sibling}
 website %>% 
-  html_nodes(css = "div[class^='state'] > span:first-of-type") %>% 
+  html_elements(css = "div[class^='state'] > span:first-of-type") %>% 
   head(n = 2)
 
 website %>% 
-  html_nodes(css = "div[class^='state'] > span:nth-of-type(2)") %>% 
+  html_elements(css = "div[class^='state'] > span:nth-of-type(2)") %>% 
   head(n = 2)
 
 website %>% 
-  html_nodes(css = "div[class^='state'] > span:last-of-type") %>% 
+  html_elements(css = "div[class^='state'] > span:last-of-type") %>% 
   head(n = 2)
 ```
 
@@ -415,9 +416,9 @@ website %>%
 The wildcard `"*"` selects all elements. For example, we can also select all 
 children of an element in the following way:
 
-``` {r}
+``` {r select_wild}
 website %>% 
-  html_nodes(css = "div[class^='state'] > *") %>% 
+  html_elements(css = "div[class^='state'] > *") %>% 
   head(n = 8)
 ```
 
@@ -425,18 +426,18 @@ If we want to exclude certain elements from the selection, this is possible with
 `":not(selector)"`. Here, all elements are selected, except those that we have
 explicitly excluded. For example, all children except the `<img>` elements:
 
-``` {r}
+``` {r select_not}
 website %>% 
-  html_nodes(css = "div[class^='state'] > :not(img)") %>% 
+  html_elements(css = "div[class^='state'] > :not(img)") %>% 
   head(n = 6)
 ```
 
 With `"selector-A, selector-B"`, several selectors can be linked with "and/or".
 This makes it possible, for example, to select two `<span>` classes in one step:
 
-``` {r}
+``` {r select_and}
 website %>% 
-  html_nodes(css = "div[class^='state'] > span.election-year, div[class^='state'] > span.election-turnout") %>% 
+  html_elements(css = "div[class^='state'] > span.election-year, div[class^='state'] > span.election-turnout") %>% 
   head(n = 4)
 ```
 
@@ -451,11 +452,12 @@ lower one. The price for the higher flexibility, however, is an often longer and
 somewhat more complicated syntax. In most cases, the CSS selectors will suffice. 
 And if at some point you reach a point where they are no longer sufficient to
 achieve your scraping goal, you will already be so proficient in using the CSS
-selectors that you will find it very easy to switch to XPath. On the pages of 
+selectors that you will find it easy to switch to XPath. On the pages of 
 the W3, you will find a suitable introduction.:
 <https://www.w3schools.com/xml/xpath_intro.asp>{target="_blank"}
 
 ## Developer Tools
+
 ``` {r, include = FALSE}
 library(knitr)
 ```
@@ -473,8 +475,8 @@ by right-clicking in the browser window and then selecting "Inspect Element".
 Depending on the setting, the Developer Tools open in a horizontally or 
 vertically separated area of the browser. We see a variety of tabs here, but for
 this introduction we will concentrate purely on the "Elements" tab. This shows 
-us the HTML code in its hierarchical structure and allows us to expand and c
-ollapse individual elements.
+us the HTML code in its hierarchical structure and allows us to expand and
+collapse individual elements.
 
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("wdt/wdt_01.png")
@@ -535,3 +537,14 @@ Another possibility would be to use the *SelectorGadget* extension instead of
 the integrated developer tools. Among other things, this enables the selection 
 of several elements at the same time. You can find information on how to use it 
 at:<https://selectorgadget.com/>{target="_blank"}
+
+Word of caution: For dynamically generated web sites -- which many modern sites
+are -- the developer tools will show us the dynamically generated HTML that the
+browser "sees". So we may be presented with tags that are not "really" present
+in the actual HTML file and thus selectors based on these will not work. We
+should always also view the page source in the browser and confirm that the tags
+and their contents are actually "hardcoded" into the HTML file. If they are not,
+we can not scrape the information using the methods presented in this seminar.
+There are ways to scrape such sites, most notably the *Selenium WebDriver* and
+its R implementation **RSelenium**, but these methods are beyond the scope of
+the seminar.

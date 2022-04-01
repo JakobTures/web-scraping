@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>13 Regular expressions | Web Scraping using R</title>
   <meta name="description" content="13 Regular expressions | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="13 Regular expressions | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
   
-  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+  <meta name="github-repo" content="jakobtures.github.io/web-scraping/" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="13 Regular expressions | Web Scraping using R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-07-06" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="ggplot.html"/>
 
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,13 +51,21 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
+<script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
+<script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
+<script src="libs/echarts4r-binding-0.4.2/echarts4r.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +126,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -132,201 +142,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Web Scraping using R
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<li><a href="index.html#introduction">Introduction<span></span></a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
+<li><a href="index.html#what-is-web-scraping">What is web scraping?<span></span></a></li>
+<li><a href="index.html#course-contents">Course contents<span></span></a></li>
+<li><a href="index.html#technical-requirements">Technical requirements<span></span></a></li>
+<li><a href="index.html#conventions">Conventions<span></span></a></li>
+<li><a href="index.html#acknowledgements">Acknowledgements<span></span></a></li>
+<li><a href="index.html#colophon">Colophon<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<li class="part"><span><b>I Basics<span></span></b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html<span></span></a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes<span></span></a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links<span></span></a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<li class="part"><span><b>II R Basics &amp; Tidyverse<span></span></b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators<span></span></a></li>
+<li class="chapter" data-level="2.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>2.3.3</b> Logical operators<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
-<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects<span></span></a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
-<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors<span></span></a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
-<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
-<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
-<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
-<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
-</ul></li>
-<li class="part"><span><b>III Scraping</b></span></li>
-<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
-<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
-<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
-<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
-<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
-<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help<span></span></a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
-<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
-<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
-<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
-<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects<span></span></a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
-<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
-<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
-<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
-<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources<span></span></a></li>
 </ul></li>
+<li class="part"><span><b>III Scraping<span></span></b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_elements"><i class="fa fa-check"></i><b>4.2.2</b> html_elements()<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
-<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area<span></span></a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files</a>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#csv-files"><i class="fa fa-check"></i><b>8.1</b> CSV files</a>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file</a></li>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes<span></span></a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs<span></span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes<span></span></a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels<span></span></a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the csv files</a></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files</a></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables<span></span></a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites<span></span></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
-</ul></li>
-<li class="part"><span><b>IV Data analysis</b></span></li>
-<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.1</b> Gathering the links</a></li>
-<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2</b> Downloading the subpages</a></li>
-<li class="chapter" data-level="10.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.3</b> Extracting the data of interest</a>
-<ul>
-<li class="chapter" data-level="10.3.1" data-path="scraping.html"><a href="scraping.html#dealing-with-missing-data-in-lists"><i class="fa fa-check"></i><b>10.3.1</b> Dealing with missing data in lists</a></li>
-</ul></li>
-<li class="chapter" data-level="10.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.4</b> Saving the data</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code></a>
-<ul>
-<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones</a></li>
-<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#cleaning-the-data-on-police-reports"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports</a></li>
-</ul></li>
-<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code></a></li>
-<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a>
-<ul>
-<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups</a></li>
-<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time</a></li>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query<span></span></a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result<span></span></a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax</a></li>
-<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics</a>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages<span></span></a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y</a></li>
-<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports</a></li>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
+<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
-<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-robberies-in-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting robberies in police reports</a></li>
-<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#extracting-details-from-a-list-of-names"><i class="fa fa-check"></i><b>13.3</b> Extracting details from a list of names</a></li>
+<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#CSV"><i class="fa fa-check"></i><b>8.1</b> CSV files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the CSV files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>IV Sample project<span></span></b></span></li>
+<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#topic-and-data"><i class="fa fa-check"></i><b>10.1</b> Topic and data<span></span></a></li>
+<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#scraping-the-data"><i class="fa fa-check"></i><b>10.2</b> Scraping the data<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.2.1</b> Gathering the links<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2.2</b> Downloading the subpages<span></span></a></li>
+<li class="chapter" data-level="10.2.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.2.3</b> Extracting the data of interest<span></span></a></li>
+<li class="chapter" data-level="10.2.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.2.4</b> Saving the data<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#clean"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code><span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code><span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups<span></span></a></li>
+<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="dplyr.html"><a href="dplyr.html#exporting-tables"><i class="fa fa-check"></i><b>11.6</b> Exporting tables<span></span></a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="dplyr.html"><a href="dplyr.html#further-resources"><i class="fa fa-check"></i><b>11.6.1</b> Further resources<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics<span></span></a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#exporting-plots"><i class="fa fa-check"></i><b>12.3</b> Exporting plots<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>V Regular expressions<span></span></b></span></li>
+<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column<span></span></a></li>
+<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-robberies-in-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting robberies in police reports<span></span></a></li>
+<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#extracting-details-from-a-list-of-names"><i class="fa fa-check"></i><b>13.3</b> Extracting details from a list of names<span></span></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -348,141 +365,163 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regex" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Regular expressions</h1>
+<div id="regex" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">13</span> Regular expressions<a href="regex.html#regex" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In web scraping, we are often dealing with text data that has been collected
 from a website and may include information that is not easily accessible and
 usable in data analysis. We are interested either in detecting the occurrence of
 certain words or in extracting some information from the strings in our data.
 For these purposes we will use some functions from the core tidyverse package
-stringr. We will also use <em>regular expressions</em>, a powerful and flexible formal
+<strong>stringr</strong>. We will also use <em>regular expressions</em>, a powerful and flexible formal
 representation of characters that we can use to select substrings by their
 content.</p>
 <p>This chapter will make use of some practical examples, introducing the basics of
-regular expressions and stringr. This can only be a starting point; if you want
+regular expressions and <strong>stringr</strong>. This can only be a starting point; if you want
 to follow the road of web scraping, you most probably will have to further your
 knowledge on regular expressions at some point. I would recommended reading the
 chapter on strings from “R for Data Science” by Wickham and Grolemund as a next
 step: <a href="https://r4ds.had.co.nz/strings.html" target="_blank">https://r4ds.had.co.nz/strings.html</a>, as well as the
 RStudio Cheat Sheet on stringr:
 <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf" target="_blank">https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf</a>.</p>
-<div id="cleaning-the-district-column" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Cleaning the <code>district</code> column</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regex.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="regex.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="regex.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports.RData&quot;</span>)</span></code></pre></div>
+<div id="cleaning-the-district-column" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Cleaning the <code>district</code> column<a href="regex.html#cleaning-the-district-column" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can use the data on Berlin police reports scraped earlier (<a href="scraping.html#scraping">10</a>)
+for our examples.</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="regex.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb235-2"><a href="regex.html#cb235-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-3"><a href="regex.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports.RData&quot;</span>)</span></code></pre></div>
 <p>In our example the data on police reports contain the district a report refers
-to as a column which needs some cleaning to be usable.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regex.html#cb2-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="regex.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="regex.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb2-4"><a href="regex.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 1</span></span>
-<span id="cb2-5"><a href="regex.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                               </span></span>
-<span id="cb2-6"><a href="regex.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                  </span></span>
-<span id="cb2-7"><a href="regex.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort: Treptow-Köpenick          </span></span>
-<span id="cb2-8"><a href="regex.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort: Tempelhof-Schöneberg      </span></span>
-<span id="cb2-9"><a href="regex.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort: bezirksübergreifend       </span></span>
-<span id="cb2-10"><a href="regex.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort: bezirksübergreifend       </span></span>
-<span id="cb2-11"><a href="regex.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort: Tempelhof-Schöneberg      </span></span>
-<span id="cb2-12"><a href="regex.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort: Friedrichshain-Kreuzberg  </span></span>
-<span id="cb2-13"><a href="regex.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort: Steglitz-Zehlendorf       </span></span>
-<span id="cb2-14"><a href="regex.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort: Charlottenburg-Wilmersdorf</span></span>
-<span id="cb2-15"><a href="regex.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort: Marzahn-Hellersdorf       </span></span>
-<span id="cb2-16"><a href="regex.html#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Charlottenburg-Wilmersdorf</span></span></code></pre></div>
+to as a column which needs some cleaning to be usable. We have already done this
+in subchapter <a href="dplyr.html#clean">11.1.2</a>, but we will use some alternative and more advanced
+approaches here.</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="regex.html#cb236-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb236-2"><a href="regex.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span></span>
+<span id="cb236-3"><a href="regex.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb236-4"><a href="regex.html#cb236-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
+<span id="cb236-5"><a href="regex.html#cb236-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                             </span></span>
+<span id="cb236-6"><a href="regex.html#cb236-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                </span></span>
+<span id="cb236-7"><a href="regex.html#cb236-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort: Mitte                   </span></span>
+<span id="cb236-8"><a href="regex.html#cb236-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort: Spandau                 </span></span>
+<span id="cb236-9"><a href="regex.html#cb236-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort: Friedrichshain-Kreuzberg</span></span>
+<span id="cb236-10"><a href="regex.html#cb236-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort: Tempelhof-Schöneberg    </span></span>
+<span id="cb236-11"><a href="regex.html#cb236-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort: Mitte                   </span></span>
+<span id="cb236-12"><a href="regex.html#cb236-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort: Mitte                   </span></span>
+<span id="cb236-13"><a href="regex.html#cb236-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort: Steglitz-Zehlendorf     </span></span>
+<span id="cb236-14"><a href="regex.html#cb236-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort: berlinweit              </span></span>
+<span id="cb236-15"><a href="regex.html#cb236-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort: Pankow                  </span></span>
+<span id="cb236-16"><a href="regex.html#cb236-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Mitte</span></span></code></pre></div>
 <p>One problem we encounter here is that each string begins with “Ereignisort:”.
 We want to get rid of this substring, as it does not contain any useful
 information. With <code>str_remove()</code> we can remove substrings from a string. Like
 all stringr functions we will use here, <code>str_remove()</code> takes the string(s) to be
 applied to, as its first argument. The argument <code>pattern =</code> specifies a regular
 expression for the pattern that is to be matched and removed. In the code block
-below, all strings from <code>District</code> are passed through the pipe and
-<code>"Ereignisort:</code> is removed. We are using the most basic form of a regular
+below, the substring <code>"Ereignisort:</code> is removed for all values in the “District”
+column. We are using the most basic form of a regular
 expression here which is the exact matching of characters. In general, the
-complete regular expression is enclosed by <code>"</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regex.html#cb3-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="regex.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove</span>(<span class="at">pattern =</span> <span class="st">&quot;Ereignisort: &quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="regex.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb3-4"><a href="regex.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Treptow-Köpenick&quot;           &quot;Tempelhof-Schöneberg&quot;      </span></span>
-<span id="cb3-5"><a href="regex.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [3] &quot;bezirksübergreifend&quot;        &quot;bezirksübergreifend&quot;       </span></span>
-<span id="cb3-6"><a href="regex.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;Tempelhof-Schöneberg&quot;       &quot;Friedrichshain-Kreuzberg&quot;  </span></span>
-<span id="cb3-7"><a href="regex.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;Steglitz-Zehlendorf&quot;        &quot;Charlottenburg-Wilmersdorf&quot;</span></span>
-<span id="cb3-8"><a href="regex.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;Marzahn-Hellersdorf&quot;        &quot;Charlottenburg-Wilmersdorf&quot;</span></span></code></pre></div>
-<p>We could keep the substring but translate it to English. For this, we use
+complete regular expression is enclosed by <code>"</code>. Please note, that the whitespace
+following <code>:</code> is part of the regular expression.</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="regex.html#cb237-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb237-2"><a href="regex.html#cb237-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove</span>(District, <span class="at">pattern =</span> <span class="st">&quot;Ereignisort: &quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb237-3"><a href="regex.html#cb237-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
+<span id="cb237-4"><a href="regex.html#cb237-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb237-5"><a href="regex.html#cb237-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
+<span id="cb237-6"><a href="regex.html#cb237-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                </span></span>
+<span id="cb237-7"><a href="regex.html#cb237-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                   </span></span>
+<span id="cb237-8"><a href="regex.html#cb237-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Mitte                   </span></span>
+<span id="cb237-9"><a href="regex.html#cb237-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Spandau                 </span></span>
+<span id="cb237-10"><a href="regex.html#cb237-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Friedrichshain-Kreuzberg</span></span>
+<span id="cb237-11"><a href="regex.html#cb237-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Tempelhof-Schöneberg    </span></span>
+<span id="cb237-12"><a href="regex.html#cb237-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Mitte                   </span></span>
+<span id="cb237-13"><a href="regex.html#cb237-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Mitte                   </span></span>
+<span id="cb237-14"><a href="regex.html#cb237-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Steglitz-Zehlendorf     </span></span>
+<span id="cb237-15"><a href="regex.html#cb237-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 berlinweit              </span></span>
+<span id="cb237-16"><a href="regex.html#cb237-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Pankow                  </span></span>
+<span id="cb237-17"><a href="regex.html#cb237-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Mitte</span></span></code></pre></div>
+<p>We could also keep the substring but translate it to English. For this, we use
 <code>str_replace()</code> which also matches a regular expression, but replaces it with a
 string specified in <code>replacement =</code>. Here, the pattern is shortened to
 <code>"Ereignisort"</code>, as we want to keep the <code>": "</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regex.html#cb4-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="regex.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="at">pattern =</span> <span class="st">&quot;Ereignisort&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;District&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="regex.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb4-4"><a href="regex.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;District: Treptow-Köpenick&quot;          </span></span>
-<span id="cb4-5"><a href="regex.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [2] &quot;District: Tempelhof-Schöneberg&quot;      </span></span>
-<span id="cb4-6"><a href="regex.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [3] &quot;District: bezirksübergreifend&quot;       </span></span>
-<span id="cb4-7"><a href="regex.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] &quot;District: bezirksübergreifend&quot;       </span></span>
-<span id="cb4-8"><a href="regex.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;District: Tempelhof-Schöneberg&quot;      </span></span>
-<span id="cb4-9"><a href="regex.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] &quot;District: Friedrichshain-Kreuzberg&quot;  </span></span>
-<span id="cb4-10"><a href="regex.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;District: Steglitz-Zehlendorf&quot;       </span></span>
-<span id="cb4-11"><a href="regex.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] &quot;District: Charlottenburg-Wilmersdorf&quot;</span></span>
-<span id="cb4-12"><a href="regex.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;District: Marzahn-Hellersdorf&quot;       </span></span>
-<span id="cb4-13"><a href="regex.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] &quot;District: Charlottenburg-Wilmersdorf&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="regex.html#cb238-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb238-2"><a href="regex.html#cb238-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot;Ereignisort&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;District&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb238-3"><a href="regex.html#cb238-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
+<span id="cb238-4"><a href="regex.html#cb238-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb238-5"><a href="regex.html#cb238-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
+<span id="cb238-6"><a href="regex.html#cb238-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                          </span></span>
+<span id="cb238-7"><a href="regex.html#cb238-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                             </span></span>
+<span id="cb238-8"><a href="regex.html#cb238-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 District: Mitte                   </span></span>
+<span id="cb238-9"><a href="regex.html#cb238-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 District: Spandau                 </span></span>
+<span id="cb238-10"><a href="regex.html#cb238-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 District: Friedrichshain-Kreuzberg</span></span>
+<span id="cb238-11"><a href="regex.html#cb238-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 District: Tempelhof-Schöneberg    </span></span>
+<span id="cb238-12"><a href="regex.html#cb238-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 District: Mitte                   </span></span>
+<span id="cb238-13"><a href="regex.html#cb238-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 District: Mitte                   </span></span>
+<span id="cb238-14"><a href="regex.html#cb238-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 District: Steglitz-Zehlendorf     </span></span>
+<span id="cb238-15"><a href="regex.html#cb238-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 District: berlinweit              </span></span>
+<span id="cb238-16"><a href="regex.html#cb238-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 District: Pankow                  </span></span>
+<span id="cb238-17"><a href="regex.html#cb238-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 District: Mitte</span></span></code></pre></div>
 <p>In the same way, we can replace the <code>": "</code> substring with a dash.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regex.html#cb5-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>District <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="regex.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace</span>(<span class="at">pattern =</span> <span class="st">&quot;: &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="regex.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb5-4"><a href="regex.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Ereignisort-Treptow-Köpenick&quot;          </span></span>
-<span id="cb5-5"><a href="regex.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [2] &quot;Ereignisort-Tempelhof-Schöneberg&quot;      </span></span>
-<span id="cb5-6"><a href="regex.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [3] &quot;Ereignisort-bezirksübergreifend&quot;       </span></span>
-<span id="cb5-7"><a href="regex.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] &quot;Ereignisort-bezirksübergreifend&quot;       </span></span>
-<span id="cb5-8"><a href="regex.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [5] &quot;Ereignisort-Tempelhof-Schöneberg&quot;      </span></span>
-<span id="cb5-9"><a href="regex.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [6] &quot;Ereignisort-Friedrichshain-Kreuzberg&quot;  </span></span>
-<span id="cb5-10"><a href="regex.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;Ereignisort-Steglitz-Zehlendorf&quot;       </span></span>
-<span id="cb5-11"><a href="regex.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] &quot;Ereignisort-Charlottenburg-Wilmersdorf&quot;</span></span>
-<span id="cb5-12"><a href="regex.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] &quot;Ereignisort-Marzahn-Hellersdorf&quot;       </span></span>
-<span id="cb5-13"><a href="regex.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] &quot;Ereignisort-Charlottenburg-Wilmersdorf&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="regex.html#cb239-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb239-2"><a href="regex.html#cb239-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot;: &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb239-3"><a href="regex.html#cb239-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
+<span id="cb239-4"><a href="regex.html#cb239-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb239-5"><a href="regex.html#cb239-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
+<span id="cb239-6"><a href="regex.html#cb239-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                            </span></span>
+<span id="cb239-7"><a href="regex.html#cb239-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                               </span></span>
+<span id="cb239-8"><a href="regex.html#cb239-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort-Mitte                   </span></span>
+<span id="cb239-9"><a href="regex.html#cb239-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort-Spandau                 </span></span>
+<span id="cb239-10"><a href="regex.html#cb239-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort-Friedrichshain-Kreuzberg</span></span>
+<span id="cb239-11"><a href="regex.html#cb239-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort-Tempelhof-Schöneberg    </span></span>
+<span id="cb239-12"><a href="regex.html#cb239-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort-Mitte                   </span></span>
+<span id="cb239-13"><a href="regex.html#cb239-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort-Mitte                   </span></span>
+<span id="cb239-14"><a href="regex.html#cb239-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort-Steglitz-Zehlendorf     </span></span>
+<span id="cb239-15"><a href="regex.html#cb239-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort-berlinweit              </span></span>
+<span id="cb239-16"><a href="regex.html#cb239-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort-Pankow                  </span></span>
+<span id="cb239-17"><a href="regex.html#cb239-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort-Mitte</span></span></code></pre></div>
 <p>In chapter <a href="dplyr.html#dplyr">11</a> we saw district names with two parts that are sometimes
 written with and sometimes without whitespace around the dash, as seen here:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regex.html#cb6-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="regex.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="regex.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb6-4"><a href="regex.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 x 2</span></span>
-<span id="cb6-5"><a href="regex.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                  reports</span></span>
-<span id="cb6-6"><a href="regex.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  * &lt;chr&gt;                                       &lt;int&gt;</span></span>
-<span id="cb6-7"><a href="regex.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort: berlinweit                       252</span></span>
-<span id="cb6-8"><a href="regex.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort: bezirksübergreifend              775</span></span>
-<span id="cb6-9"><a href="regex.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort: bundesweit                        39</span></span>
-<span id="cb6-10"><a href="regex.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort: Charlottenburg - Wilmersdorf     580</span></span>
-<span id="cb6-11"><a href="regex.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort: Charlottenburg-Wilmersdorf       980</span></span>
-<span id="cb6-12"><a href="regex.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort: Friedrichshain - Kreuzberg       661</span></span>
-<span id="cb6-13"><a href="regex.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort: Friedrichshain-Kreuzberg        1170</span></span>
-<span id="cb6-14"><a href="regex.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort: Lichtenberg                      890</span></span>
-<span id="cb6-15"><a href="regex.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort: Marzahn - Hellersdorf            253</span></span>
-<span id="cb6-16"><a href="regex.html#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Marzahn-Hellersdorf              560</span></span>
-<span id="cb6-17"><a href="regex.html#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 12 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="regex.html#cb240-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb240-2"><a href="regex.html#cb240-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
+<span id="cb240-3"><a href="regex.html#cb240-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb240-4"><a href="regex.html#cb240-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 × 2</span></span>
+<span id="cb240-5"><a href="regex.html#cb240-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                  reports</span></span>
+<span id="cb240-6"><a href="regex.html#cb240-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                       &lt;int&gt;</span></span>
+<span id="cb240-7"><a href="regex.html#cb240-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort: berlinweit                       309</span></span>
+<span id="cb240-8"><a href="regex.html#cb240-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort: bezirksübergreifend              861</span></span>
+<span id="cb240-9"><a href="regex.html#cb240-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort: bundesweit                        47</span></span>
+<span id="cb240-10"><a href="regex.html#cb240-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort: Charlottenburg - Wilmersdorf     579</span></span>
+<span id="cb240-11"><a href="regex.html#cb240-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort: Charlottenburg-Wilmersdorf      1138</span></span>
+<span id="cb240-12"><a href="regex.html#cb240-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort: Friedrichshain - Kreuzberg       661</span></span>
+<span id="cb240-13"><a href="regex.html#cb240-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort: Friedrichshain-Kreuzberg        1405</span></span>
+<span id="cb240-14"><a href="regex.html#cb240-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort: Lichtenberg                     1008</span></span>
+<span id="cb240-15"><a href="regex.html#cb240-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort: Marzahn - Hellersdorf            253</span></span>
+<span id="cb240-16"><a href="regex.html#cb240-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Marzahn-Hellersdorf              659</span></span>
+<span id="cb240-17"><a href="regex.html#cb240-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 12 more rows</span></span></code></pre></div>
 <p>We can easily unify those names using <code>str_replace</code> and regular expressions.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regex.html#cb7-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="regex.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot; - &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="regex.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="regex.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb7-5"><a href="regex.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 x 2</span></span>
-<span id="cb7-6"><a href="regex.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                reports</span></span>
-<span id="cb7-7"><a href="regex.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  * &lt;chr&gt;                                     &lt;int&gt;</span></span>
-<span id="cb7-8"><a href="regex.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort: berlinweit                     252</span></span>
-<span id="cb7-9"><a href="regex.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort: bezirksübergreifend            775</span></span>
-<span id="cb7-10"><a href="regex.html#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort: bundesweit                      39</span></span>
-<span id="cb7-11"><a href="regex.html#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort: Charlottenburg-Wilmersdorf    1560</span></span>
-<span id="cb7-12"><a href="regex.html#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort: Friedrichshain-Kreuzberg      1831</span></span>
-<span id="cb7-13"><a href="regex.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort: Lichtenberg                    890</span></span>
-<span id="cb7-14"><a href="regex.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort: Marzahn-Hellersdorf            813</span></span>
-<span id="cb7-15"><a href="regex.html#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort: Mitte                         2557</span></span>
-<span id="cb7-16"><a href="regex.html#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort: Neukölln                      1468</span></span>
-<span id="cb7-17"><a href="regex.html#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Pankow                        1245</span></span>
-<span id="cb7-18"><a href="regex.html#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Ereignisort: Reinickendorf                  898</span></span>
-<span id="cb7-19"><a href="regex.html#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Ereignisort: Spandau                        835</span></span>
-<span id="cb7-20"><a href="regex.html#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Ereignisort: Steglitz-Zehlendorf            790</span></span>
-<span id="cb7-21"><a href="regex.html#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Ereignisort: Tempelhof-Schöneberg          1345</span></span>
-<span id="cb7-22"><a href="regex.html#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Ereignisort: Treptow-Köpenick              1014</span></span>
-<span id="cb7-23"><a href="regex.html#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 &lt;NA&gt;                                        395</span></span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="regex.html#cb241-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb241-2"><a href="regex.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot; - &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb241-3"><a href="regex.html#cb241-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
+<span id="cb241-4"><a href="regex.html#cb241-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb241-5"><a href="regex.html#cb241-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 × 2</span></span>
+<span id="cb241-6"><a href="regex.html#cb241-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                reports</span></span>
+<span id="cb241-7"><a href="regex.html#cb241-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                     &lt;int&gt;</span></span>
+<span id="cb241-8"><a href="regex.html#cb241-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort: berlinweit                     309</span></span>
+<span id="cb241-9"><a href="regex.html#cb241-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort: bezirksübergreifend            861</span></span>
+<span id="cb241-10"><a href="regex.html#cb241-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort: bundesweit                      47</span></span>
+<span id="cb241-11"><a href="regex.html#cb241-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort: Charlottenburg-Wilmersdorf    1717</span></span>
+<span id="cb241-12"><a href="regex.html#cb241-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort: Friedrichshain-Kreuzberg      2066</span></span>
+<span id="cb241-13"><a href="regex.html#cb241-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort: Lichtenberg                   1008</span></span>
+<span id="cb241-14"><a href="regex.html#cb241-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort: Marzahn-Hellersdorf            912</span></span>
+<span id="cb241-15"><a href="regex.html#cb241-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort: Mitte                         2832</span></span>
+<span id="cb241-16"><a href="regex.html#cb241-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort: Neukölln                      1627</span></span>
+<span id="cb241-17"><a href="regex.html#cb241-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort: Pankow                        1379</span></span>
+<span id="cb241-18"><a href="regex.html#cb241-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Ereignisort: Reinickendorf                  985</span></span>
+<span id="cb241-19"><a href="regex.html#cb241-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Ereignisort: Spandau                        962</span></span>
+<span id="cb241-20"><a href="regex.html#cb241-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Ereignisort: Steglitz-Zehlendorf            893</span></span>
+<span id="cb241-21"><a href="regex.html#cb241-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Ereignisort: Tempelhof-Schöneberg          1480</span></span>
+<span id="cb241-22"><a href="regex.html#cb241-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Ereignisort: Treptow-Köpenick              1120</span></span>
+<span id="cb241-23"><a href="regex.html#cb241-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 &lt;NA&gt;                                        414</span></span></code></pre></div>
 <p>If we want to remove the whitespace and unify the names in the process, we use
-<code>str_remove()</code> and the regular expression <code>"\\s"</code> being a shortcut for matching
+<code>str_remove()</code> and the regular expression <code>"\\s"</code>, being a shortcut for matching
 all kinds of whitespace.</p>
 <p>At this point we have to talk about <em>escape characters</em>. Some characters used in
 regular expressions have a special meaning, e.g. <code>"."</code>, <code>"?"</code> or <code>"*"</code>. If we
@@ -501,56 +540,56 @@ escaped and that you find a full list of those in the cheat sheet linked above.<
 <p>In a similar way, we have to use two escape characters in <code>"\\s"</code> to make R
 interpret it not as an “s” but as the shortcut for whitespace characters we want
 to use:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regex.html#cb8-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="regex.html#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="regex.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="regex.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb8-5"><a href="regex.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 x 2</span></span>
-<span id="cb8-6"><a href="regex.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                 reports</span></span>
-<span id="cb8-7"><a href="regex.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  * &lt;chr&gt;                                      &lt;int&gt;</span></span>
-<span id="cb8-8"><a href="regex.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort:berlinweit                       252</span></span>
-<span id="cb8-9"><a href="regex.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort:bezirksübergreifend              775</span></span>
-<span id="cb8-10"><a href="regex.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort:bundesweit                        39</span></span>
-<span id="cb8-11"><a href="regex.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort:Charlottenburg - Wilmersdorf     580</span></span>
-<span id="cb8-12"><a href="regex.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort:Charlottenburg-Wilmersdorf       980</span></span>
-<span id="cb8-13"><a href="regex.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort:Friedrichshain - Kreuzberg       661</span></span>
-<span id="cb8-14"><a href="regex.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort:Friedrichshain-Kreuzberg        1170</span></span>
-<span id="cb8-15"><a href="regex.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort:Lichtenberg                      890</span></span>
-<span id="cb8-16"><a href="regex.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort:Marzahn - Hellersdorf            253</span></span>
-<span id="cb8-17"><a href="regex.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort:Marzahn-Hellersdorf              560</span></span>
-<span id="cb8-18"><a href="regex.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 12 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="regex.html#cb242-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb242-2"><a href="regex.html#cb242-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb242-3"><a href="regex.html#cb242-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
+<span id="cb242-4"><a href="regex.html#cb242-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb242-5"><a href="regex.html#cb242-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 22 × 2</span></span>
+<span id="cb242-6"><a href="regex.html#cb242-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                                 reports</span></span>
+<span id="cb242-7"><a href="regex.html#cb242-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                      &lt;int&gt;</span></span>
+<span id="cb242-8"><a href="regex.html#cb242-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort:berlinweit                       309</span></span>
+<span id="cb242-9"><a href="regex.html#cb242-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort:bezirksübergreifend              861</span></span>
+<span id="cb242-10"><a href="regex.html#cb242-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort:bundesweit                        47</span></span>
+<span id="cb242-11"><a href="regex.html#cb242-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort:Charlottenburg - Wilmersdorf     579</span></span>
+<span id="cb242-12"><a href="regex.html#cb242-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort:Charlottenburg-Wilmersdorf      1138</span></span>
+<span id="cb242-13"><a href="regex.html#cb242-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort:Friedrichshain - Kreuzberg       661</span></span>
+<span id="cb242-14"><a href="regex.html#cb242-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort:Friedrichshain-Kreuzberg        1405</span></span>
+<span id="cb242-15"><a href="regex.html#cb242-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort:Lichtenberg                     1008</span></span>
+<span id="cb242-16"><a href="regex.html#cb242-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort:Marzahn - Hellersdorf            253</span></span>
+<span id="cb242-17"><a href="regex.html#cb242-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort:Marzahn-Hellersdorf              659</span></span>
+<span id="cb242-18"><a href="regex.html#cb242-18" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 12 more rows</span></span></code></pre></div>
 <p>This did not work as expected. The whitespace following the <code>":"</code> was removed,
 but not the whitespace around the dashes. This is the case because most of the
 stringr functions stop after they found the first match for the pattern in a
 string. But there are versions of the functions that do not stop after their
 first match, ending in <code>_all</code>: e.g. <code>str_replace_all()</code>. So if we use
 <code>str_remove_all()</code> in our code, all occurrences of whitespace will be removed.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regex.html#cb9-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="regex.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove_all</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="regex.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="regex.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb9-5"><a href="regex.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 x 2</span></span>
-<span id="cb9-6"><a href="regex.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                               reports</span></span>
-<span id="cb9-7"><a href="regex.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  * &lt;chr&gt;                                    &lt;int&gt;</span></span>
-<span id="cb9-8"><a href="regex.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort:berlinweit                     252</span></span>
-<span id="cb9-9"><a href="regex.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort:bezirksübergreifend            775</span></span>
-<span id="cb9-10"><a href="regex.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort:bundesweit                      39</span></span>
-<span id="cb9-11"><a href="regex.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort:Charlottenburg-Wilmersdorf    1560</span></span>
-<span id="cb9-12"><a href="regex.html#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort:Friedrichshain-Kreuzberg      1831</span></span>
-<span id="cb9-13"><a href="regex.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort:Lichtenberg                    890</span></span>
-<span id="cb9-14"><a href="regex.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort:Marzahn-Hellersdorf            813</span></span>
-<span id="cb9-15"><a href="regex.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort:Mitte                         2557</span></span>
-<span id="cb9-16"><a href="regex.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort:Neukölln                      1468</span></span>
-<span id="cb9-17"><a href="regex.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort:Pankow                        1245</span></span>
-<span id="cb9-18"><a href="regex.html#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Ereignisort:Reinickendorf                  898</span></span>
-<span id="cb9-19"><a href="regex.html#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Ereignisort:Spandau                        835</span></span>
-<span id="cb9-20"><a href="regex.html#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Ereignisort:Steglitz-Zehlendorf            790</span></span>
-<span id="cb9-21"><a href="regex.html#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Ereignisort:Tempelhof-Schöneberg          1345</span></span>
-<span id="cb9-22"><a href="regex.html#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Ereignisort:Treptow-Köpenick              1014</span></span>
-<span id="cb9-23"><a href="regex.html#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 &lt;NA&gt;                                       395</span></span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="regex.html#cb243-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb243-2"><a href="regex.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_remove_all</span>(District, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb243-3"><a href="regex.html#cb243-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(District) <span class="sc">%&gt;%</span></span>
+<span id="cb243-4"><a href="regex.html#cb243-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb243-5"><a href="regex.html#cb243-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 × 2</span></span>
+<span id="cb243-6"><a href="regex.html#cb243-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    District                               reports</span></span>
+<span id="cb243-7"><a href="regex.html#cb243-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                    &lt;int&gt;</span></span>
+<span id="cb243-8"><a href="regex.html#cb243-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Ereignisort:berlinweit                     309</span></span>
+<span id="cb243-9"><a href="regex.html#cb243-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Ereignisort:bezirksübergreifend            861</span></span>
+<span id="cb243-10"><a href="regex.html#cb243-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Ereignisort:bundesweit                      47</span></span>
+<span id="cb243-11"><a href="regex.html#cb243-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Ereignisort:Charlottenburg-Wilmersdorf    1717</span></span>
+<span id="cb243-12"><a href="regex.html#cb243-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Ereignisort:Friedrichshain-Kreuzberg      2066</span></span>
+<span id="cb243-13"><a href="regex.html#cb243-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Ereignisort:Lichtenberg                   1008</span></span>
+<span id="cb243-14"><a href="regex.html#cb243-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Ereignisort:Marzahn-Hellersdorf            912</span></span>
+<span id="cb243-15"><a href="regex.html#cb243-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Ereignisort:Mitte                         2832</span></span>
+<span id="cb243-16"><a href="regex.html#cb243-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ereignisort:Neukölln                      1627</span></span>
+<span id="cb243-17"><a href="regex.html#cb243-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ereignisort:Pankow                        1379</span></span>
+<span id="cb243-18"><a href="regex.html#cb243-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Ereignisort:Reinickendorf                  985</span></span>
+<span id="cb243-19"><a href="regex.html#cb243-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Ereignisort:Spandau                        962</span></span>
+<span id="cb243-20"><a href="regex.html#cb243-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Ereignisort:Steglitz-Zehlendorf            893</span></span>
+<span id="cb243-21"><a href="regex.html#cb243-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Ereignisort:Tempelhof-Schöneberg          1480</span></span>
+<span id="cb243-22"><a href="regex.html#cb243-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Ereignisort:Treptow-Köpenick              1120</span></span>
+<span id="cb243-23"><a href="regex.html#cb243-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 &lt;NA&gt;                                       414</span></span></code></pre></div>
 </div>
-<div id="detecting-robberies-in-police-reports" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Detecting robberies in police reports</h2>
+<div id="detecting-robberies-in-police-reports" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Detecting robberies in police reports<a href="regex.html#detecting-robberies-in-police-reports" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When collecting the data on police reports, we also scraped the short
 description of the report’s contents, but we did no analysis on these in
 chapters <a href="dplyr.html#dplyr">11</a> &amp; <a href="ggplot.html#ggplot">12</a>. We could try to categorize the texts into
@@ -564,10 +603,10 @@ that contain the term “raub” in some form. <code>str_detect()</code> determi
 pattern was found in a string, returning <code>TRUE</code> or <code>FALSE</code>. We can then count
 the number of strings for which the result is <code>TRUE</code>– remember <code>TRUE</code> is equal
 to <span class="math inline">\(1\)</span>, <code>FALSE</code> equal to <span class="math inline">\(0\)</span> – using <code>sum()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regex.html#cb10-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="regex.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;raub&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="regex.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb10-4"><a href="regex.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 424</span></span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="regex.html#cb244-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb244-2"><a href="regex.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;raub&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb244-3"><a href="regex.html#cb244-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb244-4"><a href="regex.html#cb244-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 461</span></span></code></pre></div>
 <p>But what if a text begins with “Raub”. In this case the “R” will be upper case.
 Pattern matching is case sensitive and that means that “Raub” is not equal to
 “raub”. If we want both ways of writing the term to be counted as equal, we have
@@ -576,41 +615,49 @@ as the first character. For this we can define a <em>class</em> which contains b
 characters enclosed by <code>[]</code>. <code>"[Rr]aub"</code> means that we want to find <em>either</em> an
 “R” or an “r” as the first character and “aub” after this; only one of the
 characters from the class is matched.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regex.html#cb11-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="regex.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[Rr]aub&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="regex.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb11-4"><a href="regex.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 932</span></span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="regex.html#cb245-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb245-2"><a href="regex.html#cb245-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[Rr]aub&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb245-3"><a href="regex.html#cb245-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb245-4"><a href="regex.html#cb245-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1000</span></span></code></pre></div>
 <p>If we also want to detect terms like “Räuber” or “räuberische”, we have to allow
 for an “ä” instead of the “a” as the second character by defining a class for
 the second position in the term:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regex.html#cb12-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="regex.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[rR][aä]ub&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="regex.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb12-4"><a href="regex.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1214</span></span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="regex.html#cb246-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb246-2"><a href="regex.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[rR][aä]ub&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb246-3"><a href="regex.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb246-4"><a href="regex.html#cb246-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1309</span></span></code></pre></div>
 <p>Let us have a look at some of the strings which returned a <code>TRUE</code> match, using
 <code>str_detect()</code> in <code>filter()</code>: telling R we want to see only lines from <code>reports</code>
 for which the pattern could be found, and only the first <span class="math inline">\(10\)</span> of those.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regex.html#cb13-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="regex.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Report, <span class="at">pattern =</span> <span class="st">&quot;[Rr][aä]ub&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="regex.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Report) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="regex.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
-<span id="cb13-5"><a href="regex.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 1</span></span>
-<span id="cb13-6"><a href="regex.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Report                                                                       </span></span>
-<span id="cb13-7"><a href="regex.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                                                        </span></span>
-<span id="cb13-8"><a href="regex.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 &quot;Raub im Hausflur&quot;                                                           </span></span>
-<span id="cb13-9"><a href="regex.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 &quot;Mit dem Rettungshubschrauber ins Krankenhaus – Motorradfahrer schwer verlet…</span></span>
-<span id="cb13-10"><a href="regex.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 &quot;Drei Raubüberfälle in 30 Minuten - Tatverdächtige ermittelt&quot;                </span></span>
-<span id="cb13-11"><a href="regex.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 &quot;Öffentlichkeitsfahndung nach schwerem Raub&quot;                                 </span></span>
-<span id="cb13-12"><a href="regex.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 &quot;Supermarkt überfallen und beraubt - Angestellte bedroht&quot;                    </span></span>
-<span id="cb13-13"><a href="regex.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 &quot;Mann geschlagen, getreten und beraubt&quot;                                      </span></span>
-<span id="cb13-14"><a href="regex.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 &quot;Jugendlicher Räuber mit Besen vertrieben und festgenommen&quot;                  </span></span>
-<span id="cb13-15"><a href="regex.html#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 &quot;Nach Raubüberfall auf Geldboten – zweiter Tatverdächtiger festgenommen&quot;     </span></span>
-<span id="cb13-16"><a href="regex.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 &quot;Goldring geraubt - Festnahme&quot;                                               </span></span>
-<span id="cb13-17"><a href="regex.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 &quot;Ladenbesitzer bei Raubüberfall mit Messer attackiert und schwer verletzt&quot;</span></span></code></pre></div>
-<p>This looks good at a first glance, but why was a report on a motorcycle accident
-included? Because the word “Rettungshubschrauber” also has “raub” in it. You
-see, how reliably detecting a simple string such as “raub” gets complicated very
-quickly.</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="regex.html#cb247-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb247-2"><a href="regex.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Report, <span class="at">pattern =</span> <span class="st">&quot;[Rr][aä]ub&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb247-3"><a href="regex.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Report) <span class="sc">%&gt;%</span> </span>
+<span id="cb247-4"><a href="regex.html#cb247-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb247-5"><a href="regex.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
+<span id="cb247-6"><a href="regex.html#cb247-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Report                                        </span></span>
+<span id="cb247-7"><a href="regex.html#cb247-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                         </span></span>
+<span id="cb247-8"><a href="regex.html#cb247-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 &quot;Räuberische Erpressung in Tankstelle&quot;        </span></span>
+<span id="cb247-9"><a href="regex.html#cb247-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 &quot;Raub in Tankstelle&quot;                          </span></span>
+<span id="cb247-10"><a href="regex.html#cb247-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 &quot;Raub in Spielhalle&quot;                          </span></span>
+<span id="cb247-11"><a href="regex.html#cb247-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 &quot;Zwei Teenager von Jugendgruppe ausgeraubt&quot;   </span></span>
+<span id="cb247-12"><a href="regex.html#cb247-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 &quot;Raub in Park&quot;                                </span></span>
+<span id="cb247-13"><a href="regex.html#cb247-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 &quot;Raub in Tankstelle &quot;                         </span></span>
+<span id="cb247-14"><a href="regex.html#cb247-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 &quot;Taxifahrer wird Zeuge eines Raubes&quot;          </span></span>
+<span id="cb247-15"><a href="regex.html#cb247-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 &quot;Firma überfallen und Geld geraubt&quot;           </span></span>
+<span id="cb247-16"><a href="regex.html#cb247-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 &quot;Festnahme nach räuberischen Diebstahl&quot;       </span></span>
+<span id="cb247-17"><a href="regex.html#cb247-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 &quot;Erst nach Zigarette gefragt, dann ausgeraubt&quot;</span></span></code></pre></div>
+<p>This looks good at a first glance, but consider this result:</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="regex.html#cb248-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
+<span id="cb248-2"><a href="regex.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Report, <span class="at">pattern =</span> <span class="st">&quot;[Rr][aä]ub&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb248-3"><a href="regex.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">==</span> <span class="st">&quot;18.06.2021 10:20 Uhr&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb248-4"><a href="regex.html#cb248-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Report)</span>
+<span id="cb248-5"><a href="regex.html#cb248-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 1</span></span>
+<span id="cb248-6"><a href="regex.html#cb248-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Report                                                                        </span></span>
+<span id="cb248-7"><a href="regex.html#cb248-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                                                         </span></span>
+<span id="cb248-8"><a href="regex.html#cb248-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 &quot;Mit dem Rettungshubschrauber ins Krankenhaus – Motorradfahrer schwer verletz…</span></span></code></pre></div>
+<p>Why was a report on a motorcycle accident included? Because the word
+“Rettungshubschrauber” also has “raub” in it. You see, how reliably detecting a
+simple string such as “raub” gets complicated very quickly.</p>
 <p>At this point, we would have to put in the hours and define a list of phrases
 referring to robberies that we actually want to select while constructing
 regular expressions that select those phrases and only those. This is beyond the
@@ -625,23 +672,10 @@ for now you can interpret them like parentheses in mathematics. The enclosed
 expression is evaluated first and as a whole. If one of the prefixes, connected
 by <code>|</code>, is found in a string and is then followed up by either “a” or “ä” and
 “ub” after this, the pattern is matched.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regex.html#cb14-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="regex.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Report, <span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="regex.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Report) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="regex.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
-<span id="cb14-5"><a href="regex.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 1</span></span>
-<span id="cb14-6"><a href="regex.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Report                                                                  </span></span>
-<span id="cb14-7"><a href="regex.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                                                   </span></span>
-<span id="cb14-8"><a href="regex.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Raub im Hausflur                                                        </span></span>
-<span id="cb14-9"><a href="regex.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Drei Raubüberfälle in 30 Minuten - Tatverdächtige ermittelt             </span></span>
-<span id="cb14-10"><a href="regex.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Öffentlichkeitsfahndung nach schwerem Raub                              </span></span>
-<span id="cb14-11"><a href="regex.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Supermarkt überfallen und beraubt - Angestellte bedroht                 </span></span>
-<span id="cb14-12"><a href="regex.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Mann geschlagen, getreten und beraubt                                   </span></span>
-<span id="cb14-13"><a href="regex.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Jugendlicher Räuber mit Besen vertrieben und festgenommen               </span></span>
-<span id="cb14-14"><a href="regex.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Nach Raubüberfall auf Geldboten – zweiter Tatverdächtiger festgenommen  </span></span>
-<span id="cb14-15"><a href="regex.html#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Goldring geraubt - Festnahme                                            </span></span>
-<span id="cb14-16"><a href="regex.html#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Ladenbesitzer bei Raubüberfall mit Messer attackiert und schwer verletzt</span></span>
-<span id="cb14-17"><a href="regex.html#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Ausgeraubt und fremdenfeindlich beleidigt - Männer mit Bildern gesucht</span></span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="regex.html#cb249-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb249-2"><a href="regex.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb249-3"><a href="regex.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb249-4"><a href="regex.html#cb249-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1127</span></span></code></pre></div>
 <p>There are other words in the German language that are used to describe the
 concept of robberies. Adding all of them and the several individual pre- and/or
 suffixes that have to be taken into account to reliably select the terms we want
@@ -650,43 +684,29 @@ this example. But we can at least add one further word to the regular
 expression. Using the <code>|</code> operator we extend the regular expression to also
 detect “dieb” with an upper or lower case “d”. The expression now selects all
 ways of writing “raub” and “dieb” we allowed for.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="regex.html#cb15-1" aria-hidden="true" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="regex.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Report, <span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="regex.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Report) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="regex.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
-<span id="cb15-5"><a href="regex.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 1</span></span>
-<span id="cb15-6"><a href="regex.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    Report                                                                </span></span>
-<span id="cb15-7"><a href="regex.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                                                 </span></span>
-<span id="cb15-8"><a href="regex.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Raub im Hausflur                                                      </span></span>
-<span id="cb15-9"><a href="regex.html#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Drei Raubüberfälle in 30 Minuten - Tatverdächtige ermittelt           </span></span>
-<span id="cb15-10"><a href="regex.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Öffentlichkeitsfahndung nach schwerem Raub                            </span></span>
-<span id="cb15-11"><a href="regex.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Supermarkt überfallen und beraubt - Angestellte bedroht               </span></span>
-<span id="cb15-12"><a href="regex.html#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Mann nach Fahrzeugdiebstahl festgenommen                              </span></span>
-<span id="cb15-13"><a href="regex.html#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Mann geschlagen, getreten und beraubt                                 </span></span>
-<span id="cb15-14"><a href="regex.html#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Festnahme nach Diebstahl aus Auto                                     </span></span>
-<span id="cb15-15"><a href="regex.html#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Jugendlicher Räuber mit Besen vertrieben und festgenommen             </span></span>
-<span id="cb15-16"><a href="regex.html#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Nach Raubüberfall auf Geldboten – zweiter Tatverdächtiger festgenommen</span></span>
-<span id="cb15-17"><a href="regex.html#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Festnahme nach Taschendiebstahl</span></span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="regex.html#cb250-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb250-2"><a href="regex.html#cb250-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb250-3"><a href="regex.html#cb250-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb250-4"><a href="regex.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1758</span></span></code></pre></div>
 <p>Now that we have constructed a provisional regular expression that can detect
-reports that are related to robberies, we can compute their number and relative
+reports that are related to robberies, we can also compute their relative
 proportion. Remember, we are dealing with a logical vector of ones and zeros:
 <code>sum()</code> counts all ones and thus returns the absolute number of reports and
 <code>mean()</code> divides the number of ones by the number of all reports, thus returning
 the relative proportion.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regex.html#cb16-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="regex.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="regex.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb16-4"><a href="regex.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1617</span></span>
-<span id="cb16-5"><a href="regex.html#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="regex.html#cb16-6" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
-<span id="cb16-7"><a href="regex.html#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-8"><a href="regex.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span>
-<span id="cb16-9"><a href="regex.html#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.09678578</span></span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="regex.html#cb251-1" aria-hidden="true" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
+<span id="cb251-2"><a href="regex.html#cb251-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb251-3"><a href="regex.html#cb251-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span>
+<span id="cb251-4"><a href="regex.html#cb251-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.09445519</span></span></code></pre></div>
+<p>So about <span class="math inline">\(9.5\)</span>% of police reports deal with robberies if we apply the regular
+expression constructed above. Remember, that we might still match some words
+that we do not want to match, while missing others that also relate to robberies.
+Thus the actual percentage may differ.</p>
 </div>
-<div id="extracting-details-from-a-list-of-names" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Extracting details from a list of names</h2>
+<div id="extracting-details-from-a-list-of-names" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> Extracting details from a list of names<a href="regex.html#extracting-details-from-a-list-of-names" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The website
-<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/" target="_blank">https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/</a>
+<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/" target="_blank">https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/</a>
 lists all German members of parliament in tables, with the first column holding
 the full names and academic degrees in one character string. A common
 application of regular expressions in the context of web scraping is to extract
@@ -698,37 +718,38 @@ object <code>letters</code>, a character vector conveniently containing all 26 l
 the alphabet in lower case. We then read the links and extract the table cells
 containing the names into a character vector, which is then transformed into a
 tibble.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="regex.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb17-2"><a href="regex.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="regex.html#cb17-3" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/&quot;</span></span>
-<span id="cb17-4"><a href="regex.html#cb17-4" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(website, letters, <span class="st">&quot;.html&quot;</span>)</span>
-<span id="cb17-5"><a href="regex.html#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="regex.html#cb17-6" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span></span>
-<span id="cb17-7"><a href="regex.html#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
-<span id="cb17-8"><a href="regex.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
-<span id="cb17-9"><a href="regex.html#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
-<span id="cb17-10"><a href="regex.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb17-11"><a href="regex.html#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="regex.html#cb17-12" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> pages <span class="sc">%&gt;%</span></span>
-<span id="cb17-13"><a href="regex.html#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_nodes, <span class="at">css =</span> <span class="st">&quot;th[scope=&#39;row&#39;]&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-14"><a href="regex.html#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-15"><a href="regex.html#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
-<span id="cb17-16"><a href="regex.html#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-17"><a href="regex.html#cb17-17" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb17-18"><a href="regex.html#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">full_name =</span> names</span>
-<span id="cb17-19"><a href="regex.html#cb17-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="regex.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb252-2"><a href="regex.html#cb252-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-3"><a href="regex.html#cb252-3" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/&quot;</span></span>
+<span id="cb252-4"><a href="regex.html#cb252-4" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="fu">str_c</span>(website, letters, <span class="st">&quot;.html&quot;</span>)</span>
+<span id="cb252-5"><a href="regex.html#cb252-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-6"><a href="regex.html#cb252-6" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span></span>
+<span id="cb252-7"><a href="regex.html#cb252-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
+<span id="cb252-8"><a href="regex.html#cb252-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb252-9"><a href="regex.html#cb252-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.x)</span>
+<span id="cb252-10"><a href="regex.html#cb252-10" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb252-11"><a href="regex.html#cb252-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-12"><a href="regex.html#cb252-12" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> pages <span class="sc">%&gt;%</span></span>
+<span id="cb252-13"><a href="regex.html#cb252-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;th[scope=&#39;row&#39;]&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb252-14"><a href="regex.html#cb252-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb252-15"><a href="regex.html#cb252-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb252-16"><a href="regex.html#cb252-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-17"><a href="regex.html#cb252-17" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb252-18"><a href="regex.html#cb252-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">full_name =</span> names</span>
+<span id="cb252-19"><a href="regex.html#cb252-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Our goal is to extract the academic degree from strings of full names. We first
 need to understand the pattern of how degrees are listed in those strings. Let
-us look at an example:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="regex.html#cb18-1" aria-hidden="true" tabindex="-1"></a>names_tbl[<span class="dv">65</span><span class="sc">:</span><span class="dv">69</span>, ]</span>
-<span id="cb18-2"><a href="regex.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 x 1</span></span>
-<span id="cb18-3"><a href="regex.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   full_name                      </span></span>
-<span id="cb18-4"><a href="regex.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                          </span></span>
-<span id="cb18-5"><a href="regex.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Dr. Brantner, Franziska        </span></span>
-<span id="cb18-6"><a href="regex.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Dr. Brauksiepe, Ralf           </span></span>
-<span id="cb18-7"><a href="regex.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Braun, Jürgen                  </span></span>
-<span id="cb18-8"><a href="regex.html#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Prof. Dr. Braun, Helge Reinhold</span></span>
-<span id="cb18-9"><a href="regex.html#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Breher, Silvia</span></span></code></pre></div>
+us look at some members of parliament with and without degrees. To filter a
+tibble by row numbers, we can conveniently use <code>slice()</code> from <strong>dplyr</strong>:</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="regex.html#cb253-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb253-2"><a href="regex.html#cb253-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">186</span><span class="sc">:</span><span class="dv">189</span>)</span>
+<span id="cb253-3"><a href="regex.html#cb253-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 × 1</span></span>
+<span id="cb253-4"><a href="regex.html#cb253-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   full_name                        </span></span>
+<span id="cb253-5"><a href="regex.html#cb253-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                            </span></span>
+<span id="cb253-6"><a href="regex.html#cb253-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Gramling, Fabian Benedikt Meinrad</span></span>
+<span id="cb253-7"><a href="regex.html#cb253-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Dr. Gräßle, Ingeborg Gabriele    </span></span>
+<span id="cb253-8"><a href="regex.html#cb253-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Prof. Dr. Grau, Armin Jürgen     </span></span>
+<span id="cb253-9"><a href="regex.html#cb253-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Gremmels, Timon</span></span></code></pre></div>
 <p>If the members of parliament carry an academic degree, the string begins with
 it and the abbreviated titles always end in a dot. Based on this, we can start
 constructing a regular expression that will be used to detect and extract
@@ -750,12 +771,13 @@ allow for variation in the number of repetitions we use the quantifiers <code>?<
 and <code>+</code>. <code>?</code> stands for zero or one, <code>*</code> for zero or multiple and <code>+</code> for one or
 multiple repetitions, multiple meaning <span class="math inline">\(n &gt;=1\)</span>.</p>
 <p><code>"^[:alpha:]+"</code> will select the word a string begins with. <code>[:alpha:]</code> does not
-contain any whitespace characters. Therefore, the regular expression will begin
-selecting letters at the beginning of a string until it “hits” a whitespace
-character. For members of parliament without a degree, this would select their
-last name. To make sure we only select titles, we can make use of the fact that
-all titles in this data end with a “.”. As the dot is a special character –
-standing for <em>any</em> character – we have to escape it by using two backslashes.</p>
+contain any whitespace or punctuation characters. Therefore, the regular
+expression will begin selecting letters at the beginning of a string until it
+“hits” a whitespace or punctuation character. For members of parliament without
+a degree, this would select their last name. To make sure we only select titles,
+we can make use of the fact that all titles in this data end with a “.”. As the
+dot is a special character – standing for <em>any</em> character – we have to escape
+it by using two backslashes.</p>
 <p>The regular expression <code>"^[:alpha:]+\\."</code> selects all words at the beginning of
 a string that end with a dot. We use it in the function <code>str_extract()</code> which
 will extract the substring that is specified by the regular expression if it
@@ -763,19 +785,33 @@ could be matched in the string. We use the function inside of <code>mutate()</co
 assign the extracted degrees into a new column. To get an overview of the
 result, we group the data by this new column and count the occurrences per
 group.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="regex.html#cb19-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="regex.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="regex.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="regex.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span>
-<span id="cb19-5"><a href="regex.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 x 2</span></span>
-<span id="cb19-6"><a href="regex.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   academic `n()`</span></span>
-<span id="cb19-7"><a href="regex.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;    &lt;int&gt;</span></span>
-<span id="cb19-8"><a href="regex.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Dr.        119</span></span>
-<span id="cb19-9"><a href="regex.html#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Prof.       11</span></span>
-<span id="cb19-10"><a href="regex.html#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 &lt;NA&gt;       579</span></span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="regex.html#cb254-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb254-2"><a href="regex.html#cb254-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb254-3"><a href="regex.html#cb254-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span></span>
+<span id="cb254-4"><a href="regex.html#cb254-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span>
+<span id="cb254-5"><a href="regex.html#cb254-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb254-6"><a href="regex.html#cb254-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   academic `n()`</span></span>
+<span id="cb254-7"><a href="regex.html#cb254-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;    &lt;int&gt;</span></span>
+<span id="cb254-8"><a href="regex.html#cb254-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Dr.        111</span></span>
+<span id="cb254-9"><a href="regex.html#cb254-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Prof.        5</span></span>
+<span id="cb254-10"><a href="regex.html#cb254-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 &lt;NA&gt;       620</span></span></code></pre></div>
 <p>We successfully identified a high percentage of doctors, as well as some
-professors. In some cases, there actually are multiple titles – i.e. “Prof.
-Dr.”. We can extend the expression to allow for this as well.</p>
+professors. Let us also check, how it worked for the four members of parliament
+we examined above.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="regex.html#cb255-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb255-2"><a href="regex.html#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb255-3"><a href="regex.html#cb255-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">186</span><span class="sc">:</span><span class="dv">189</span>)</span>
+<span id="cb255-4"><a href="regex.html#cb255-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 × 2</span></span>
+<span id="cb255-5"><a href="regex.html#cb255-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   full_name                         academic</span></span>
+<span id="cb255-6"><a href="regex.html#cb255-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                             &lt;chr&gt;   </span></span>
+<span id="cb255-7"><a href="regex.html#cb255-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Gramling, Fabian Benedikt Meinrad &lt;NA&gt;    </span></span>
+<span id="cb255-8"><a href="regex.html#cb255-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Dr. Gräßle, Ingeborg Gabriele     Dr.     </span></span>
+<span id="cb255-9"><a href="regex.html#cb255-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Prof. Dr. Grau, Armin Jürgen      Prof.   </span></span>
+<span id="cb255-10"><a href="regex.html#cb255-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Gremmels, Timon                   &lt;NA&gt;</span></span></code></pre></div>
+<p>Members of parliament without a degree received an <code>NA</code>, which is correct. For
+observations with one title, it also worked, but for cases with multiple titles
+– i.e. “Prof. Dr.”, it did not. But we can extend the expression to allow for
+multiple titles as well.</p>
 <p>If there are two or more components to a title, they are separated by
 whitespace; which we can refer to using <code>\\s</code>. After the whitespace there will
 be another word ending in a dot. Thus we can reuse the first part of the
@@ -786,18 +822,27 @@ to the complete group. The regular expression <code>"(\\s[:alpha:]+\\.)*"</code>
 no additional title or for multiple ones. Appending this to the regular
 expression used in the code above allows us to select and extract one or more
 titles.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regex.html#cb20-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="regex.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.(</span><span class="sc">\\</span><span class="st">s[:alpha:]+</span><span class="sc">\\</span><span class="st">.)*&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="regex.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="regex.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span>
-<span id="cb20-5"><a href="regex.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 5 x 2</span></span>
-<span id="cb20-6"><a href="regex.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   academic        `n()`</span></span>
-<span id="cb20-7"><a href="regex.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="do">## * &lt;chr&gt;           &lt;int&gt;</span></span>
-<span id="cb20-8"><a href="regex.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Dr.               118</span></span>
-<span id="cb20-9"><a href="regex.html#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Dr. h. c.           1</span></span>
-<span id="cb20-10"><a href="regex.html#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Prof. Dr.          10</span></span>
-<span id="cb20-11"><a href="regex.html#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Prof. h. c. Dr.     1</span></span>
-<span id="cb20-12"><a href="regex.html#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 &lt;NA&gt;              579</span></span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="regex.html#cb256-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb256-2"><a href="regex.html#cb256-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.(</span><span class="sc">\\</span><span class="st">s[:alpha:]+</span><span class="sc">\\</span><span class="st">.)*&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb256-3"><a href="regex.html#cb256-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(academic) <span class="sc">%&gt;%</span></span>
+<span id="cb256-4"><a href="regex.html#cb256-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">n</span>())</span>
+<span id="cb256-5"><a href="regex.html#cb256-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb256-6"><a href="regex.html#cb256-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   academic  `n()`</span></span>
+<span id="cb256-7"><a href="regex.html#cb256-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;     &lt;int&gt;</span></span>
+<span id="cb256-8"><a href="regex.html#cb256-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Dr.         111</span></span>
+<span id="cb256-9"><a href="regex.html#cb256-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Prof. Dr.     5</span></span>
+<span id="cb256-10"><a href="regex.html#cb256-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 &lt;NA&gt;        620</span></span></code></pre></div>
+<p>Let us confirm that it worked correctly:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="regex.html#cb257-1" aria-hidden="true" tabindex="-1"></a>names_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb257-2"><a href="regex.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">str_extract</span>(full_name, <span class="at">pattern =</span> <span class="st">&quot;^[:alpha:]+</span><span class="sc">\\</span><span class="st">.(</span><span class="sc">\\</span><span class="st">s[:alpha:]+</span><span class="sc">\\</span><span class="st">.)*&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb257-3"><a href="regex.html#cb257-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">186</span><span class="sc">:</span><span class="dv">189</span>)</span>
+<span id="cb257-4"><a href="regex.html#cb257-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 × 2</span></span>
+<span id="cb257-5"><a href="regex.html#cb257-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   full_name                         academic </span></span>
+<span id="cb257-6"><a href="regex.html#cb257-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                             &lt;chr&gt;    </span></span>
+<span id="cb257-7"><a href="regex.html#cb257-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Gramling, Fabian Benedikt Meinrad &lt;NA&gt;     </span></span>
+<span id="cb257-8"><a href="regex.html#cb257-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Dr. Gräßle, Ingeborg Gabriele     Dr.      </span></span>
+<span id="cb257-9"><a href="regex.html#cb257-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Prof. Dr. Grau, Armin Jürgen      Prof. Dr.</span></span>
+<span id="cb257-10"><a href="regex.html#cb257-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Gremmels, Timon                   &lt;NA&gt;</span></span></code></pre></div>
 
 </div>
 </div>
@@ -811,7 +856,6 @@ titles.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -841,6 +885,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

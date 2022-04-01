@@ -11,7 +11,7 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 In web scraping, we will often pursue the goal of transferring the extracted 
 data into a tibble or data frame in order to be able to analyse it further. It
 is particularly helpful if the data we are interested in is already stored in an
-HTML table. Because rvest allows us to read out complete tables quickly and
+HTML table. Because **rvest** allows us to read out complete tables quickly and
 easily with the function `html_table()`.
 
 
@@ -30,7 +30,7 @@ headings with `<th>` and cells with `<td>`.
 
 Before we start scraping, we load the necessary packages as usual:
 
-``` {r, message = FALSE}
+``` {r load_packages, message = FALSE}
 library(tidyverse)
 library(rvest)
 ```
@@ -43,7 +43,7 @@ there is also a table with CSS selectors. This is our scraping target.
 
 First we parse the website:
 
-``` {r}
+``` {r load_wikip_css}
 website <- "https://en.wikipedia.org/wiki/CSS" %>% 
   read_html()
 ```
@@ -55,62 +55,47 @@ among other things, the "info boxes" at the top right edge of the article or the
 fold-out lists of further links at the bottom. If you want to look at this more
 closely, the Web Developer Tools can be very helpful here.
 
-Instead of simply selecting all `<table>` nodes on the page, one strategy might
+Instead of simply selecting all `<table>` elements on the page, one strategy might
 be to use the WDTs to create a CSS selector for that specific table:
-`"table.wikitable:nth-child(28)"`. We thus select the table of class 
-`"wikitable"` which is the 28th child of the parent hierarchy level -- 
+`"table.wikitable:nth-child(32)"`. We thus select the table of class 
+`"wikitable"` which is the 32nd child of the parent hierarchy level -- 
 `<div class="mw-parser-output">`.
 
 If we only want to select a single HTML element, it can be helpful to use the 
-function `html_node()` instead of `html_nodes()`.
+function `html_element()` instead of `html_elements()`.
 
-``` {r}
-node <- website %>% 
-  html_node(css = "table.wikitable:nth-child(28)")
-nodes <- website %>% 
-  html_nodes(css = "table.wikitable:nth-child(28)")
+``` {r select_css_table}
+elements <- website %>% 
+  html_elements(css = "table.wikitable:nth-child(32)")
+elements
 
-nodes
-node
+element <- website %>% 
+  html_element(css = "table.wikitable:nth-child(32)")
+element
 ```
 
 The difference is mainly in the output of the function. This is recognisable by 
 the entry inside the { } in the output. In the first case, we get a list of HTML 
 elements -- an "xml_nodeset" -- even if this list, as here, consists of only one
-entry. `html_node()` returns the HTML element itself -- the "html_node" -- as
+entry. `html_element()` returns the HTML element itself -- the "html_element" -- as
 the function's output. Why is this relevant? In many cases it can be easier to 
 work directly with the HTML element instead of a list of HTML elements, for 
 example when transferring tables into data frames and tibbles, but more on that 
 later. 
 
 To read out the table selected in this way, we only need to apply the function 
-`html_table()` to the HTML node.
+`html_table()` to the HTML element.
 
-``` {r}
-css_table_df <- node %>% 
+``` {r extract_css_table}
+css_table <- element %>% 
   html_table()
 
-css_table_df %>% 
+css_table %>% 
   head(n = 4)
 ```
 
-The result is a data frame that contains the scraped contents of the HTML table
-and adopts the column names stored in the `<th>` tags for the columns of the 
-data frame. Due to the very long cells in the "Matches" column, the output of 
-the RStudio console is unfortunately not particularly helpful. Another advantage
-of using tibbles instead of data frames is that long cell contents are
-automatically abbreviated in the output. To convert a data frame into a tibble, 
-we can use the function `as_tibble()`.
-
-``` {r}
-css_table_tbl <- node %>% 
-  html_table() %>% 
-  as_tibble()
-
-css_table_tbl %>% 
-  head(n = 4)
-```
-
+The result is a tibble that contains the scraped contents of the HTML table
+and adopts the column names stored in the `<th>` tags for the columns.
 
 ### Scraping multiple tables
 
@@ -118,17 +103,17 @@ It could also be our scraping goal to scrape not only the first, but all four
 content tables of the Wikipedia article. If we look at the four tables in the
 source code and/or the WDTs, we see that they all carry the class `"wikitable"`.
 This allows us to select them easily. Please note that the function 
-`html_nodes()` must be used again, as we no longer need just one element, but a
+`html_elements()` must be used again, as we no longer need just one element, but a
 list of several selected elements.
 
-``` {r}
+``` {r select_wiki_tables}
 tables <- website %>% 
-  html_nodes(css = "table.wikitable") %>% 
+  html_elements(css = "table.wikitable") %>% 
   html_table()
 ```
 
-The result is a list of four data frames, each of which contains one of the four
-tables. If we want to select an individual data frame from the list, for 
+The result is a list of four tibbles, each of which contains one of the four
+tables. If we want to select an individual tibble from the list, for 
 example, to transfer it into a new object, we have to rely on *subsetting*.
 
 We have learned about basic subsetting for vectors using `[#]`, in chapter
@@ -138,12 +123,12 @@ There are basically two ways of subsetting lists in R: `list_name[#]` and
 returns to us. In the first case, the returned object is always a list, even if
 it may only consist of one element. Using double square brackets, on the other 
 hand, returns a single element directly. So the difference is not dissimilar to
-that between `html_nodes()` and `html_node()`.
+that between `html_elements()` and `html_element()`.
 
-For example, if our goal is to select the third data frame from the list of four 
+For example, if our goal is to select the third tibble from the list of four 
 data frames, which subsetting should we use?
 
-``` {r}
+``` {r list_subsetting}
 tables[3] %>% 
   str()
 
@@ -151,11 +136,11 @@ tables[[3]] %>%
   str()
 ```
 
-In the first case, we see that we have a list of length 1, which contains a data 
-frame with 7 lines and 2 variables, as well as further information about these
-variables. In the second case, we get the data frame directly, i.e. no longer as
+In the first case, we see that we have a list of length 1, which contains a
+tibble with 7 lines and 2 variables, as well as further information about these
+variables. In the second case, we get the tibble directly, i.e. no longer as
 an element of a list. So we have to use `list_name[[]]` to directly select a 
-single data frame from a list of data frames.
+single tibble from a list of tibbles.
 
 If we are interested in selecting several elements from a list instead, this is
 only possible with `list_name[]`. Instead of selecting an element with a single
@@ -167,45 +152,36 @@ tables[c(1, 3)] %>%
   str()
 ```
 
-As a result, we get a list again that contains the two elements selected here.
+As a result, we get a list again that contains the two tibbles selected here.
 
 
 ### Tabellen mit NAs
 
 What happens when we try to read a table with missing values? Consider the 
 following example:
-<https://webscraping-tures.github.io/table_na.html>{target="_blank"}
+<https://jakobtures.github.io/web-scraping/table_na.html>{target="_blank"}
 
 At first glance, it is already obvious that several cells of the table are
 unoccupied here. Values are missing. Let's try to read in the table anyway.
 
-``` {r error = TRUE}
-table_na <- "https://webscraping-tures.github.io/table_na.html" %>% 
+``` {r table_na, error = TRUE}
+table_na <- "https://jakobtures.github.io/web-scraping/table_na.html" %>% 
   read_html %>% 
-  html_node(css = "table")
+  html_element(css = "table")
 
-table_na %>% 
+turnout <- table_na %>% 
   html_table()
+
+turnout
 ```
 
-We get a helpful error message informing us that the number of columns is not 
-constant across the entire table. We are also kindly offered a possible solution
-directly. The function `html_table()` can be instructed with the argument 
-`fill = TRUE` to automatically fill rows with a different number of columns with
-`NA`. This stands for "Not Available" and represents missing values in R.
 
-``` {r}
-wahlbet <- table_na %>% 
-  html_table(fill = TRUE)
+As we can see, `html_table` filled four cells with with `NA`. This stands for
+"Not Available" and represents missing values in R. However, there are
+different types of missing values in the HTML source code, which the automatic
+repair implemented in `html_table()` handles differently. Let's first look at
+the source code of the first two lines:
 
-wahlbet %>% 
-  head(n = 4)
-```
-
-As we can see, `html_table` was able to fill the four cells with missing values
-with `NA` and read the table despite the problems. However, there are two
-different types of problems in the HTML source code, which the automatic repair 
-handles differently. Let's first look at the source code of the first two lines:
 
 ```
 <tr>
@@ -220,14 +196,14 @@ handles differently. Let's first look at the source code of the first two lines:
 </tr>
 ```
 
-For "Baden-Württemberg", we see that the third column is created in the source 
-code, but there is no content in this cell. `html_table()` could have read this
-without `fill = TRUE` and would have filled the cell with a `NA`. In contrast, 
-for "Bayern" the cell is completely missing. This means that the second row of
-the table consists of only two columns, while the rest of the table has three
-columns. This is the problem that the error message pointed out to us. As a 
-result, R was able to draw the correct conclusion in both cases and fill the 
-cell in both rows with an `NA`.
+In both cases the value for turnout is missing.
+For "Baden-Württemberg", we see that the third column is created in the HTML 
+code, but there is no content in this cell. `html_table()` knows, that this
+empty cell has to be filled with a `NA`. In contrast, for "Bayern" the cell is
+completely missing. This means that the second row of the table consists of only
+two columns, while the rest of the table has three columns. In this case,
+`html_table()` could draw the correct conclusion and filled the missing third
+column with an `NA`.
 
 But let's also look at the third and fourth rows in the source code:
 
@@ -250,32 +226,31 @@ again handle it without any problems. For "Brandenburg", however, the function
 reaches its limits. We, as human observers, quickly realise that the last state
 election in Brandenburg did not take place in 61.3 and that this must therefore
 be the turnout. R cannot distinguish this so easily and takes 61.3 as the value
-for the column "Election year" and inserts a `NA` for "Voter turnout".
+for the column "Election year" and inserts a `NA` in the third column.
 
-What to do? First of all, we should be aware that such problems exist. So if 
-`html_table()` gives this error message, we should not simply set `fill = TRUE`,
-but try to find out why the problem exists and whether the option to have it
-fixed automatically will actually get us there. If this is not the case, one
-approach could be to write our own *extractor function* that fixes the problems 
-directly during scraping. However, this is a rather advanced method and outside
-the scope of what is feasible in this introduction. However, we can at least 
-correct the problems that arise afterwards.
+What to do? First of all, we should be aware that such problems exist. So we
+should check if such a problem exists and whether the option to have it
+fixed automatically will actually get us there. If this is not the case, we can
+at least correct the problems that arise after extraction.
 
 Our problem lies exclusively in row four. Its second column must be moved to the
 third and the second must then itself be set as `NA`. For this we need 
-subsetting again. In the case of a data frame, we need to specify the row and 
-column in the form `df[row, column]` to select a cell. So we can tell R: "Write
+subsetting again. In the case of a tibble, we need to specify the row and 
+column in the form `tbl[row, column]` to select a cell. So we can tell R: "Write
 in cell three the content of cell two, and then write in cell two `NA`".
 
-```{r}
-wahlbet[4, 3] <- wahlbet[4, 2]
-wahlbet[4, 2] <- NA
+```{r fix_turnout}
+turnout[4, 3] <- turnout[4, 2]
+turnout[4, 2] <- NA
 
-wahlbet %>% 
+turnout %>% 
   head(n = 4)
 ```
 
-## Dynamische Websites
+
+
+
+## Dynamic Websites
 
 In the "reality" of the modern internet, we will increasingly encounter websites 
 that are no longer based exclusively on static HTML files, but generate content 
@@ -285,7 +260,7 @@ websites may generate the displayed content with *JavaScript* functions or in
 response to input in HTML forms.
 
 In many of these cases, it is no longer sufficient from a web scraping 
-perspective to read in an HTML page and extract the data you are looking for, as
+perspective to parse an HTML page and extract the data you are looking for, as
 this is often not contained in the HTML source code but is loaded dynamically in
 the background. The good news is that there are usually ways of scraping the
 information anyway.
@@ -302,7 +277,7 @@ However, all of these approaches are advanced methods that are beyond the scope
 of this introduction.
 
 But in cases where an HTML file is dynamically generated based on input into a
-HTML form, we can read it using the methods we already know.
+HTML form, we can *often* (not always) read it using the methods we already know.
 
 ### HTML forms and HTML queries
 
@@ -312,14 +287,20 @@ Library <https://opac.ub.uni-potsdam.de/>{target="_blank"} in the browser.
 If we enter the term "test" in the search field and click on Search, the browser
 window will show us the results of the search query. But what actually interests 
 us here is the browser's address bar. Instead of the URL 
-"https://opac.ub.uni-potsdam.de/", there is now a much longer URL in the form: "https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test". 
-The first part is obviously still the URL of the website called up, let's call
-this the base URL. However, the part "CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" 
-was added to the end of the URL. This is the *HTML query* we are interested in
-here. Between the base URL and the query there are one or more components, which
+"https://opac.ub.uni-potsdam.de/", there is now a much longer URL.
+Note that the exact URL may very well differ for you, but the basic form should
+be similar to:
+"https://opac.ub.uni-potsdam.de/DB=1/LNG=DU/SID=3f0e2b15-1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test".
+
+The first part is obviously still the URL of the website called up:
+"https://opac.ub.uni-potsdam.de/". Let's call this the base URL.
+However, the part "CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" was added to the end
+of the URL. This is the *HTML query* we are interested in here.
+Between the base URL and the query there are one or more components, which
 in this case may also differ depending on your browser. However, these are also
-irrelevant for the actual search query. The shortened URL: "https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test" 
-leads to the same result.
+irrelevant for the actual search query. We can shorten the URL to
+"https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=test"
+and receive the same result.
 
 A query is a request in which data from an HTML form is sent to the server. In 
 response, the server generates a new website, which is sent back to the user and
@@ -352,30 +333,40 @@ placed.
 attribute of interest to us is the `method="GET"` attribute. This specifies the
 method of data transfer between client and server. It is important to note that 
 the method "GET" uses queries in the URL for the transmission of data and the
-method "POST" does not. We can therefore only manipulate queries if the "GET" 
-method is used. If no method is specified in the `<form>` tag, "GET" is also
-used as the default.
+method "POST" does not. We can therefore only manipulate queries in this way, if
+the "GET" method is used. If no method is specified in the `<form>` tag, "GET"
+is also used as the default.
 
 The second attribute of interest to us is `action="CMD"`. This specifies which
 action should be triggered after the form has been submitted. Often the value of
 `action=` is the name of a file on the server to which the data will be sent and
 which then returns a dynamically generated HTML page back to the user.
 
-Let us now look at the elements of the form. For this, the rvest function 
+Let us now look at the elements of the form. For this, the **rvest** function 
 `html_form()` can be helpful.
 
-``` {r}
+``` {r forms}
 "https://opac.ub.uni-potsdam.de/" %>% 
   read_html() %>% 
-  html_node(css = "form") %>% 
+  html_element(css = "form") %>% 
   html_form()
 ```
 
-The output shows us in the first line again the values for `method=` and 
-`action=` as well as the name of the form. The other six lines show that the 
-form consists of three `<select>` and three `<input>` elements. We also see the
-names of these elements as well as the default value that is sent when the form
-is submitted, as long as no other value is selected or entered.
+The output shows us in the first line the name of the form and the action that
+is performed on submit: "GET https://opac.ub.uni-potsdam.de/CMD".
+The other six lines show the form components:
+
+* The three drop-down selections for:
+  * type of search
+  * which fields should be searched
+  * how results should be ordered
+* The Checkbox for "unscharfe Suche"
+* The text field where we enter terms to be searched
+* The search button itself
+
+We also see the names of these components as well as in some cases the default
+value that is sent when the form is submitted, as long as no other value is
+selected or entered.
 
 Let's look at some of these elements. `<select>` elements are drop-down lists of
 options that can be selected. This is the source code for the first `<select>`
@@ -383,9 +374,10 @@ element in our example:
 
 ```
 <select name="ACT">
-  <OPTION VALUE="SRCH">suchen [oder]
-  <OPTION VALUE="SRCHA" SELECTED>suchen [und]
-  <OPTION value="BRWS">Index bl&auml;ttern
+	    <OPTION VALUE="SRCH">suchen [oder]
+	    <OPTION VALUE="SRCHA" SELECTED>suchen [und]
+	    
+	    <OPTION value="BRWS">Index bl&auml;ttern
 </select>
 ```
 
@@ -402,12 +394,11 @@ specified via the attribute `type=""`. These can be, for example, text boxes
 (`type="text"`) or checkboxes (`input="checkbox"`), but there are many more
 options available. A comprehensive list can be found at:
 <https://www.w3schools.com/html/html_form_input_types.asp>{target="_blank"}. 
-Here is the source code for two of the three `<input>` elements on the example
-page:
+Here is the source code for two of the three `<input>` elements on the example page:
 
 ```
 <input type="text" name="TRM" value="" size="50">
-
+...
 <input type="submit" class="button" value=" Suchen ">
 ```
 
@@ -433,11 +424,12 @@ appended after the base URL. The value of the attribute tells the server what to
 do with the other transmitted data. This is followed by a `?`, which introduces 
 the data to be transmitted as several pairs of `name=""` and `value=""` 
 attributes of the individual elements. The pairs are connected with `&`. 
-`ACT=SRCHA` thus stands for the fact that the option "SRCHA" has been selected 
+`ACT=SRCHA` thus stands for the fact that the (default) value "SRCHA" has been selected 
 in the element with the name "ACT". What the values of the two other `<select>`
 elements "IKT" and "SRT" stand for, you can understand yourself with a look into
-the source code or the WDTs. The text entered in the field is transmitted as the
-value of the `<input type="text">` with the name "TRM". Here "test".
+the source code or the WDTs. These are not important for our endeavour.
+The text entered in the field is transmitted as the value of the
+`<input type="text">` tag with the name "TRM". Here the value was "test".
 
 The server receives the form data in this way, can then take a decision on the 
 basis of the `action=""` attribute, here "CMD", how the data is to be processed 
@@ -452,12 +444,12 @@ Instead of writing queries by hand, we should use R to combine them for us. We
 will also encounter the technique of manipulating URLs directly in the R code
 more often. So we should learn it early.
 
-The function `str_c()` assembles the strings listed as arguments, i.e. sequences
-of letters, into a single string. Strings stored in other R objects can also be
+The function `str_c()` from **stringr** (core tidyverse) combines the strings
+listed as arguments into a single string. Strings stored in other R objects can also be
 included. If we have the goal of manipulating both the search method and the
-search handle, we could achieve this in this way:
+search term, we could achieve this in this way:
 
-``` {r}
+``` {r str_combine_1}
 base_url <- "https://opac.ub.uni-potsdam.de/"
 method <- "SRCHA"
 term <- "test"
@@ -470,7 +462,7 @@ If we now change the strings stored in the `method` and `term` objects and
 generate the complete URL again, these components of the query are manipulated
 accordingly.
 
-``` {r}
+``` {r str_combine_2}
 method <- "SRCH"
 term <- "web+scraping"
 
@@ -487,7 +479,7 @@ As an example application, we can now have the server perform an "AND" search
 for the term "web scraping", read out the HTML page generated by the server and
 extract the 10 titles displayed.
 
-``` {r}
+``` {r query_web_scraping}
 base_url <- "https://opac.ub.uni-potsdam.de/"
 method <- "SRCHA"
 term <- "web+scraping"
@@ -503,9 +495,9 @@ The search results are displayed as tables in the generated HTML file. The
 `<table>` tag has the attribute-value combination `summary="hitlist"`, which we
 can use for our CSS selector:
 
-``` {r}
+``` {r extract_hits}
 hits <- website %>% 
-  html_node(css = "table[summary='hitlist']") %>% 
+  html_element(css = "table[summary='hitlist']") %>% 
   html_table() %>% 
   as_tibble()
 
@@ -519,9 +511,9 @@ the cells that contain the information we are looking for. These are the `<td>`
 tags with `class="hit"` and the attribute-value combination `align="left"`. 
 On this basis, we can construct a unique CSS selector.
 
-``` {r}
+``` {r extract_hitters}
 hits <- website %>% 
-  html_nodes(css = "td.hit[align='left']") %>% 
+  html_elements(css = "td.hit[align='left']") %>% 
   html_text(trim = TRUE)
 
 hits %>% head(n = 5)

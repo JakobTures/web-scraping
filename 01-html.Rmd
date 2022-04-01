@@ -2,8 +2,8 @@
 
 # HTML as a cornerstone of the internet {#html}
 
-What happens when we call up a URL such as 
-<https://webscraping-tures.github.io>{target="_blank"}
+What happens when we call up a URL such as
+<https://jakobtures.github.io/web-scraping/>{target="_blank"}
 in a browser? We will get a visualisation of the page in our browser window.
 From the perspective of the user of a website, this is everything we need to 
 know. Our goal -- calling up the website -- has already been reached at this 
@@ -11,7 +11,7 @@ point.
 
 From the perspective of a web scraper, we need to understand however, what is
 happening behind the scenes. The link 
-<https://webscraping-tures.github.io>{target="_blank"} does nothing but call up
+<https://jakobtures.github.io/web-scraping/>{target="_blank"} does nothing but call up
 an HTML-file in which the content of the website is recorded in form of a 
 specific code. This code is then interpreted by your browser and translated into
 a visual representation, which you are finding yourselves in front of now.
@@ -42,12 +42,12 @@ seem way less intimidating.
 
 The “language” that HTML-files have been written in, is the 
 **Hypertext Markup Language**, HTML for short. The basics of this language are 
-the so-called **Tags** or the “vocabulary”. These terms are used to structure 
+the so-called *Tags*, the HTML “vocabulary”. These terms are used to structure 
 the HTML-document, format it, insert links and images or create lists and
 tables. The browser knows the meaning of these key phrases, can interpret
 them and present the website visually according to the coded HTML-Tags. As with
-any language in the IT-world, HTML also follows certain rules or “grammar” or
-**Syntax**.
+any language in the IT-world, HTML also follows certain rules of “grammar”, the
+*Syntax*.
 
 Fortunately for us, in the case of HTML this syntax is rather simple. In the
 following we will take a closer look at the tags and syntax rules that are
@@ -67,7 +67,7 @@ under normal circumstances. To do this, the same tag is written again with a
 opening and closing tag in an HTML-document will be interpreted according to the
 meaning of the tag. 
 
-With this knowledge we understand what will happen with our example. The tag 
+With this knowledge we understand what will happen in our example. The tag 
 `<b>` means bold, and the opening and closing tag `<b>…</b>` include the text
 `Hello World!`. The text will be interpreted according to the tag, which means
 in bold:
@@ -92,7 +92,7 @@ Let us have a look at a full HTML-document now:
 </html>
 ```
 The interpretation of this document by the browser can be seen under
-<https://webscraping-tures.github.io/hello_world.html>{target="_blank"}.
+<https://jakobtures.github.io/web-scraping/hello_world.html>{target="_blank"}.
 Let us take a look at the single elements of the code:
 
 The first line, the *document type declaration*, `<!DOCTYPE html>`, informs the
@@ -105,16 +105,16 @@ necessarily play a massive role. Interestingly enough, the tag `<!DOCTYPE html>`
 is one of the few exceptions from the rule that a once-opened tag has to be 
 closed again; it is not necessary here.
 
-The actual content of the HTML-document only starts in line 3 with the `<html>`
-tag. This will only be closed in the last line and thus contains the total 
+The actual content of the HTML-document starts in line 3 with the `<html>`
+tag. The tag is closed again in the last line and thus contains the total 
 contents of the document. So the tag tells the browser that all it encompasses, 
 is HTML.
 
 Next is the tag `<head>`. What we see the tag encompassing here, is not what we
 see in the browser window yet. What this means in practice is that here we 
-mainly find meta-information, advanced functionality (JavaScript) and 
-definitions of design choices (Cascading Style Sheets – CSS). This should not
-distract us too much in this introduction into web scraping, but we should be 
+mainly find meta-information, advanced functionality (*JavaScript*) and 
+definitions of design choices (*Cascading Style Sheets* – *CSS*). This should not
+distract us too much in this introduction to web scraping, but we should be 
 aware that references to .js and .css files can appear in the `<head>` tag.
 
 In our example the `<head>` tag exclusively contains another tag called 
@@ -147,7 +147,7 @@ the file with the extension *.html* and opening it in a browser of your choice.
 However, due to their complexity, websites are not usually written by hand 
 nowadays. A variety of professional tools now offer much more efficient ways to
 design websites. For example, the page you are looking at was written directly 
-in RStudio using the "bookdown" package, which automates most of the layout
+in RStudio using the **bookdown** package, which automates most of the layout
 decisions.
 
 
@@ -390,7 +390,7 @@ to be interpreted correctly.
 
 A variety of tags can be modified with a multitude of attributes. Two of the
 most common and illustrative applications are the inclusion of links and images,
-two other frequently encountered HTML tags.
+two further frequently encountered HTML tags.
 
 
 ### Links
@@ -406,23 +406,23 @@ document what this destination should be. This is where the first attribute
 comes into play. With `<a href="url">` the target of the link is defined. 
 `href` stands for *hypertext reference* and its assigned value can be, among
 other things, a website, an email address or even a file. For example, 
-`<a href="webscraping-tures.github.io/html.html">This is a link</a>` links to 
+`<a href="https://jakobtures.github.io/web-scraping/html.html">This is a link</a>` links to 
 the page you are viewing.
 
-<a href="webscraping-tures.github.io/html.html">This is a link</a>
+<a href="https://jakobtures.github.io/web-scraping/html.html">This is a link</a>
 
 You may have noticed that you had to scroll to this point again to continue 
 reading. A second attribute can remedy this. With 
-`<a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a>`
+`<a href="https://jakobtures.github.io/web-scraping/html.html" target="_blank">This is a link</a>`
 we instruct the browser to open the link in a new tab. The assigned value of 
 target here is "_blank", which stands for a new tab, but it can also take on a 
 number of other values.
 
-<a href="webscraping-tures.github.io/html.html" target="_blank">This is a link</a>
+<a href="https://jakobtures.github.io/web-scraping/html.html" target="_blank">This is a link</a>
 
-Links are of particular interest to us in web scraping when we collect links to
-all sub-pages from a parent page in order to scrape them specifically. But more
-about that later.
+Links are of particular interest in web scraping when we collect the links to
+all sub-pages from a parent page in order to scrape all of them in one step.
+But more about that later.
 
 One more note: the `<link>` tag is not to be confused with `<a>` and is used to
 integrate external files, such as the JavaScript or CSS files already mentioned.
@@ -431,27 +431,27 @@ integrate external files, such as the JavaScript or CSS files already mentioned.
 ### Images
 
 Images and graphics are integrated in HTML with `<img>`, another tag that does
-not have to be explicitly closed. So that the browser knows which image is to be 
-included, this is specified via the `src` (*source*) attribute of the tag. Thus
-`<img src="webscraping-tures.github.io/Rlogo.png">` includes the following
+not have to be explicitly closed. The URL of the image to be included is
+specified via the `src` (*source*) attribute of the tag. Thus
+`<img src="https://jakobtures.github.io/web-scraping/Rlogo.png">` includes the following
 image:
 
-<img src="webscraping-tures.github.io/Rlogo.png">
+<img src="https://jakobtures.github.io/web-scraping/Rlogo.png">
 
 Using further attributes, it is also possible, for example, to adjust the size 
 of the image in pixels. 
-`<img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100">`
-leads to a resized display of the image.
+`<img src="https://jakobtures.github.io/web-scraping/Rlogo.png" width="100" height="100">`
+results in a resized display of the image.
 
-<img src="webscraping-tures.github.io/Rlogo.png" width="100" height="100">
+<img src="https://jakobtures.github.io/web-scraping/Rlogo.png" width="100" height="100">
 
 Images can also be combined with links. So 
-`<a href="https://www.r-project.org/" target="_blank"><img src="webscraping-tures.github.io/Rlogo.png"></a>`
+`<a href="https://www.r-project.org/" target="_blank"><img src="https://jakobtures.github.io/web-scraping/Rlogo.png"></a>`
 defines the image as a link, where a click on the image takes you to the 
 specified link:
 
 <a href="https://www.r-project.org/" target="_blank">
-<img src="webscraping-tures.github.io/Rlogo.png">
+<img src="https://jakobtures.github.io/web-scraping/Rlogo.png">
 </a>
 
 

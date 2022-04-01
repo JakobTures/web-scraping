@@ -1,3 +1,5 @@
+# (PART) Regular expressions {-}
+
 # Regular expressions {#regex}
 
 ``` {r, include = FALSE}
@@ -12,12 +14,12 @@ from a website and may include information that is not easily accessible and
 usable in data analysis. We are interested either in detecting the occurrence of
 certain words or in extracting some information from the strings in our data.
 For these purposes we will use some functions from the core tidyverse package
-stringr. We will also use *regular expressions*, a powerful and flexible formal
+**stringr**. We will also use *regular expressions*, a powerful and flexible formal
 representation of characters that we can use to select substrings by their
 content.
 
 This chapter will make use of some practical examples, introducing the basics of
-regular expressions and stringr. This can only be a starting point; if you want
+regular expressions and **stringr**. This can only be a starting point; if you want
 to follow the road of web scraping, you most probably will have to further your
 knowledge on regular expressions at some point. I would recommended reading the
 chapter on strings from "R for Data Science" by Wickham and Grolemund as a next
@@ -28,16 +30,21 @@ RStudio Cheat Sheet on stringr:
 
 ## Cleaning the `district` column
 
-``` {r message = FALSE}
+We can use the data on Berlin police reports scraped earlier (\@ref(scraping))
+for our examples.
+
+``` {r load_packages_data, message = FALSE}
 library(tidyverse)
 
 load("reports.RData")
 ```
 
 In our example the data on police reports contain the district a report refers
-to as a column which needs some cleaning to be usable.
+to as a column which needs some cleaning to be usable. We have already done this
+in subchapter \@ref(clean), but we will use some alternative and more advanced
+approaches here.
 
-``` {r}
+``` {r looksie}
 reports %>%
   select(District) %>%
   head(n = 10)
@@ -49,41 +56,44 @@ information. With `str_remove()` we can remove substrings from a string. Like
 all stringr functions we will use here, `str_remove()` takes the string(s) to be
 applied to, as its first argument. The argument `pattern =` specifies a regular
 expression for the pattern that is to be matched and removed. In the code block
-below, all strings from `District` are passed through the pipe and
-`"Ereignisort: ` is removed. We are using the most basic form of a regular
+below, the substring `"Ereignisort: ` is removed for all values in the "District"
+column. We are using the most basic form of a regular
 expression here which is the exact matching of characters. In general, the
-complete regular expression is enclosed by `"`.
+complete regular expression is enclosed by `"`. Please note, that the whitespace
+following `:` is part of the regular expression.
 
-
-``` {r}
-reports$District %>%
-  str_remove(pattern = "Ereignisort: ") %>%
+``` {r district_remove}
+reports %>%
+  mutate(District = str_remove(District, pattern = "Ereignisort: ")) %>%
+  select(District) %>% 
   head(n = 10)
 ```
 
-We could keep the substring but translate it to English. For this, we use
+We could also keep the substring but translate it to English. For this, we use
 `str_replace()` which also matches a regular expression, but replaces it with a
 string specified in `replacement =`. Here, the pattern is shortened to
 `"Ereignisort"`, as we want to keep the `": "`.
 
-``` {r}
-reports$District %>%
-  str_replace(pattern = "Ereignisort", replacement = "District") %>%
+``` {r district_translate}
+reports %>%
+  mutate(District = str_replace(District, pattern = "Ereignisort", replacement = "District")) %>%
+  select(District) %>% 
   head(n = 10)
 ```
 
 In the same way, we can replace the `": "` substring with a dash.
 
-``` {r}
-reports$District %>%
-  str_replace(pattern = ": ", replacement = "-") %>%
+``` {r district_replace_dash}
+reports %>%
+  mutate(District = str_replace(District, pattern = ": ", replacement = "-")) %>%
+  select(District) %>% 
   head(n = 10)
 ```
 
 In chapter \@ref(dplyr) we saw district names with two parts that are sometimes
 written with and sometimes without whitespace around the dash, as seen here:
 
-``` {r}
+``` {r district_names}
 reports %>%
   group_by(District) %>%
   summarize(reports = n())
@@ -91,7 +101,7 @@ reports %>%
 
 We can easily unify those names using `str_replace` and regular expressions.
 
-``` {r}
+``` {r district_names_fix}
 reports %>%
   mutate(District = str_replace(District, pattern = " - ", replacement = "-")) %>%
   group_by(District) %>%
@@ -99,7 +109,7 @@ reports %>%
 ```
 
 If we want to remove the whitespace and unify the names in the process, we use
-`str_remove()` and the regular expression `"\\s"` being a shortcut for matching
+`str_remove()` and the regular expression `"\\s"`, being a shortcut for matching
 all kinds of whitespace.
 
 At this point we have to talk about *escape characters*. Some characters used in
@@ -123,7 +133,7 @@ In a similar way, we have to use two escape characters in `"\\s"` to make R
 interpret it not as an "s" but as the shortcut for whitespace characters we want
 to use:
 
-``` {r}
+``` {r remove_whitespace}
 reports %>%
   mutate(District = str_remove(District, pattern = "\\s")) %>%
   group_by(District) %>%
@@ -137,7 +147,7 @@ string. But there are versions of the functions that do not stop after their
 first match, ending in `_all`: e.g. `str_replace_all()`. So if we use
 `str_remove_all()` in our code, all occurrences of whitespace will be removed.
 
-``` {r}
+``` {r remove_whitespaces}
 reports %>%
   mutate(District = str_remove_all(District, pattern = "\\s")) %>%
   group_by(District) %>%
@@ -161,7 +171,7 @@ pattern was found in a string, returning `TRUE` or `FALSE`. We can then count
 the number of strings for which the result is `TRUE`-- remember `TRUE` is equal
 to $1$, `FALSE` equal to $0$ -- using `sum()`.
 
-``` {r}
+``` {r raub_1}
 reports$Report %>%
   str_detect(pattern = "raub") %>%
   sum()
@@ -176,7 +186,7 @@ characters enclosed by `[]`. `"[Rr]aub"` means that we want to find *either* an
 "R" or an "r" as the first character and "aub" after this; only one of the
 characters from the class is matched.
 
-``` {r}
+``` {r raub_2}
 reports$Report %>%
   str_detect(pattern = "[Rr]aub") %>%
   sum()
@@ -187,28 +197,34 @@ for an "ä" instead of the "a" as the second character by defining a class for
 the second position in the term:
 
 
-``` {r}
+``` {r raub_3}
 reports$Report %>%
   str_detect(pattern = "[rR][aä]ub") %>%
   sum()
 ```
 
-
 Let us have a look at some of the strings which returned a `TRUE` match, using
 `str_detect()` in `filter()`: telling R we want to see only lines from `reports`
 for which the pattern could be found, and only the first $10$ of those.
 
-``` {r}
+``` {r raub_4}
 reports %>%
   filter(str_detect(Report, pattern = "[Rr][aä]ub")) %>% 
   select(Report) %>% 
   head(n=10)
 ```
 
-This looks good at a first glance, but why was a report on a motorcycle accident
-included? Because the word "Rettungshubschrauber" also has "raub" in it. You
-see, how reliably detecting a simple string such as "raub" gets complicated very
-quickly.
+This looks good at a first glance, but consider this result:
+
+``` {r raub_5}
+reports %>%
+  filter(str_detect(Report, pattern = "[Rr][aä]ub")) %>% 
+  filter(Date == "18.06.2021 10:20 Uhr") %>% 
+  select(Report)
+```
+Why was a report on a motorcycle accident included? Because the word
+"Rettungshubschrauber" also has "raub" in it. You see, how reliably detecting a
+simple string such as "raub" gets complicated very quickly.
 
 At this point, we would have to put in the hours and define a list of phrases
 referring to robberies that we actually want to select while constructing
@@ -225,11 +241,10 @@ expression is evaluated first and as a whole. If one of the prefixes, connected
 by `|`, is found in a string and is then followed up by either "a" or "ä" and
 "ub" after this, the pattern is matched.
 
-``` {r}
-reports %>%
-  filter(str_detect(Report, pattern = "(R|ger|ber|zur)[aä]ub")) %>% 
-  select(Report) %>% 
-  head(n=10)
+``` {r raub_6}
+reports$Report %>%
+  str_detect(pattern = "(R|ger|ber|zur)[aä]ub") %>%
+  sum()
 ```
 
 There are other words in the German language that are used to describe the
@@ -241,35 +256,34 @@ expression. Using the `|` operator we extend the regular expression to also
 detect "dieb" with an upper or lower case "d". The expression now selects all
 ways of writing "raub" and "dieb" we allowed for.
 
-``` {r}
-reports %>%
-  filter(str_detect(Report, pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb")) %>% 
-  select(Report) %>% 
-  head(n=10)
+``` {r raub_dieb}
+reports$Report %>%
+  str_detect(pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb") %>%
+  sum()
 ```
 
 Now that we have constructed a provisional regular expression that can detect
-reports that are related to robberies, we can compute their number and relative
+reports that are related to robberies, we can also compute their relative
 proportion. Remember, we are dealing with a logical vector of ones and zeros:
 `sum()` counts all ones and thus returns the absolute number of reports and
 `mean()` divides the number of ones by the number of all reports, thus returning
 the relative proportion.
 
-``` {r}
-reports$Report %>%
-  str_detect(pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb") %>%
-  sum()
-
+``` {r raub_dieb_rel}
 reports$Report %>%
   str_detect(pattern = "(R|ger|ber|zur)[aä]ub|[Dd]ieb") %>%
   mean()
 ```
 
+So about $9.5$% of police reports deal with robberies if we apply the regular
+expression constructed above. Remember, that we might still match some words
+that we do not want to match, while missing others that also relate to robberies.
+Thus the actual percentage may differ.
 
 ## Extracting details from a list of names
 
 The website
-<https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/>{target="_blank"}
+<https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/>{target="_blank"}
 lists all German members of parliament in tables, with the first column holding
 the full names and academic degrees in one character string. A common
 application of regular expressions in the context of web scraping is to extract
@@ -283,10 +297,10 @@ the alphabet in lower case. We then read the links and extract the table cells
 containing the names into a character vector, which is then transformed into a
 tibble.
 
-``` {r}
+``` {r scrape_mdbs}
 library(rvest)
 
-website <- "https://www.bundeswahlleiter.de/bundestagswahlen/2017/gewaehlte/bund-99/"
+website <- "https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/"
 links <- str_c(website, letters, ".html")
 
 pages <- links %>%
@@ -296,7 +310,7 @@ pages <- links %>%
   })
 
 names <- pages %>%
-  map(html_nodes, css = "th[scope='row']") %>%
+  map(html_elements, css = "th[scope='row']") %>%
   map(html_text, trim = TRUE) %>%
   unlist()
 
@@ -307,10 +321,12 @@ names_tbl <- tibble(
 
 Our goal is to extract the academic degree from strings of full names. We first
 need to understand the pattern of how degrees are listed in those strings. Let
-us look at an example:
+us look at some members of parliament with and without degrees. To filter a
+tibble by row numbers, we can conveniently use `slice()` from **dplyr**:
 
-``` {r}
-names_tbl[65:69, ]
+``` {r mdbs_looksie}
+names_tbl %>% 
+  slice(186:189)
 ```
 
 If the members of parliament carry an academic degree, the string begins with
@@ -337,12 +353,13 @@ and `+`. `?` stands for zero or one, `*` for zero or multiple and `+` for one or
 multiple repetitions, multiple meaning $n >=1$.
 
 `"^[:alpha:]+"` will select the word a string begins with. `[:alpha:]` does not
-contain any whitespace characters. Therefore, the regular expression will begin
-selecting letters at the beginning of a string until it "hits" a whitespace 
-character. For members of parliament without a degree, this would select their
-last name. To make sure we only select titles, we can make use of the fact that
-all titles in this data end with a ".". As the dot is a special character --
-standing for *any* character -- we have to escape it by using two backslashes.
+contain any whitespace or punctuation characters. Therefore, the regular
+expression will begin selecting letters at the beginning of a string until it
+"hits" a whitespace or punctuation character. For members of parliament without
+a degree, this would select their last name. To make sure we only select titles,
+we can make use of the fact that all titles in this data end with a ".". As the
+dot is a special character -- standing for *any* character -- we have to escape
+it by using two backslashes.
 
 The regular expression `"^[:alpha:]+\\."` selects all words at the beginning of
 a string that end with a dot. We use it in the function `str_extract()` which
@@ -352,7 +369,7 @@ assign the extracted degrees into a new column. To get an overview of the
 result, we group the data by this new column and count the occurrences per
 group.
 
-``` {r}
+``` {r one_tile}
 names_tbl %>%
   mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.")) %>%
   group_by(academic) %>%
@@ -360,8 +377,19 @@ names_tbl %>%
 ```
 
 We successfully identified a high percentage of doctors, as well as some
-professors. In some cases, there actually are multiple titles -- i.e. "Prof.
-Dr.". We can extend the expression to allow for this as well.
+professors. Let us also check, how it worked for the four members of parliament
+we examined above. 
+
+``` {r mdbs_looksie_again}
+names_tbl %>%
+  mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.")) %>%
+  slice(186:189)
+```
+
+Members of parliament without a degree received an `NA`, which is correct. For
+observations with one title, it also worked, but for cases with multiple titles
+-- i.e. "Prof. Dr.", it did not. But we can extend the expression to allow for
+multiple titles as well.
 
 If there are two or more components to a title, they are separated by
 whitespace; which we can refer to using `\\s`. After the whitespace there will
@@ -374,9 +402,17 @@ no additional title or for multiple ones. Appending this to the regular
 expression used in the code above allows us to select and extract one or more
 titles.
 
-``` {r}
+``` {r multi_titles}
 names_tbl %>%
   mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.(\\s[:alpha:]+\\.)*")) %>%
   group_by(academic) %>%
   summarise(n())
+```
+
+Let us confirm that it worked correctly:
+
+``` {r mdbs_looksie_last}
+names_tbl %>%
+  mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.(\\s[:alpha:]+\\.)*")) %>%
+  slice(186:189)
 ```

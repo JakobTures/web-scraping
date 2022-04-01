@@ -9,42 +9,42 @@ knitr::opts_chunk$set(cache.path = 'cache/')
 
 
 Since we have cleaned our example data in the last chapter, we will now apply
-some graphical analysis to it, using the ggplot2 package.
+some graphical analysis to it, using the **ggplot2** package.
 
 To follow most of the examples, we need the object `reports_fyears` from chapter
 \@ref(dplyr). Either you can re-run the relevant code blocks from the last
-chapter, or the condensed block below. We also will need to load the tidyverse
-package -- which includes ggplot2 -- and lubridate.
+chapter, or the condensed block below. We also will need to load the **tidyverse**
+package -- which includes **ggplot2** -- and **lubridate**.
 
-``` {r message = FALSE}
+``` {r load_packages_12, message = FALSE}
 library(tidyverse)
 library(lubridate)
 ```
 
-``` {r}
+``` {r clean_again}
 load("reports.RData")
 
 reports_fyears <- reports %>% 
-  mutate(District = substr(District, 14, length(District))) %>% 
-  mutate(date_cmpl = dmy_hm(Date)) %>% 
-  mutate(year = year(date_cmpl)) %>% 
-  mutate(month = month(date_cmpl, label = TRUE)) %>% 
-  mutate(day = wday(date_cmpl, label = TRUE)) %>% 
-  mutate(time = 
+  mutate(District = substr(District, 14, length(District)),
+         date_cmpl = dmy_hm(Date),
+         year = year(date_cmpl),
+         month = month(date_cmpl, label = TRUE),
+         day = wday(date_cmpl, label = TRUE),
+         time = 
            substr(Date, 12, length(Date)) %>% 
            hm()
          ) %>% 
-  select(-c(Date, Report)) %>% 
+  select(-c(Date, Report, date_cmpl)) %>% 
   rename(district = District) %>% 
-  filter(year %in% 2015:2020) %>% 
+  filter(year %in% 2015:2021) %>% 
   mutate(district = str_remove_all(district, pattern = " "))
 ```
 
 
 ## ggplot2 syntax
 
-The basic principle of ggplot2 is that we initiate an empty plot using
-`ggplot()` -- note that while the package is called ggplot2, the function is
+The basic principle of **ggplot2** is that we initiate an empty plot using
+`ggplot()` -- note that while the package is called **ggplot2**, the function is
 written without the "2" -- and then add one or multiple *geoms*, the graphical
 elements that shall be plotted -- e.g. points, lines, bars and so on. We will
 look at some practical examples of geoms soon.
@@ -52,22 +52,12 @@ look at some practical examples of geoms soon.
 `ggplot()` has to be provided the name of the object that contains the data we
 want to plot as its first argument. 
 
-``` {r}
+``` {r empty_plot}
 ggplot(data = reports_fyears)
 ```
 
 As you can see in the "Plots" tab located in the lower right of RStudio, a plot
-was created but it is still empty because we have not added any geoms yet; we
-can do this by writing a `+` after `ggplot()` and adding the geom in a new line.
-Additional geoms can be added in the same manner. So the basic syntax, this is
-not runnable code, looks like this:
-
-``` {r eval = FALSE}
-ggplot(data = ...) +
-  geom_1() +
-  geom_2() +
-  ...
-```
+was created but it is still empty because we have not added any geoms yet.
 
 
 ## Geoms and aesthetics
@@ -76,14 +66,25 @@ Geoms represent the graphical objects we actually want to plot. All geom
 functions start with `geom_` and end in a word describing the type of geom, e.g.
 `geom_point()` for scatter plots, `geom_line()` for lines or `geom_col()` for
 bar plots. To get an overview of the available geoms, I highly recommend the R
-cheat sheet for ggplot2, accessible here:
+cheat sheet for **ggplot2**, accessible here:
 <https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf>{target="_black"}
+
+We add geoms to a plot by writing a `+` after `ggplot()` and adding the geom in
+a new line. Additional geoms can be added in the same manner. So the basic
+syntax, this is not runnable code, looks like this:
+
+``` {r ggplot_exmpl_1, eval = FALSE}
+ggplot(data = ...) +
+  geom_1() +
+  geom_2() +
+  ...
+```
 
 The *aesthetics* of a geom are used to assign the x and y variables that will be
 plotted on the coordinate system. Additionally, aesthetics can be used to
 influence the visual display of the plotted elements by the value of a variable,
 e.g. the colour of points or the thickness of a line. We will look at examples
-that show this later, and we will first focus on assigning variables to both
+that show this later, and we will first focus on assigning variables to the
 axes, as these are the only aesthetics that *have* to be provided, everything
 else being optional. 
 
@@ -92,7 +93,7 @@ assign variables to the horizontal x-axis and vertical y-axis of the plot, as
 shown below. Once more, the code block is used for illustration only and will
 not run.
 
-``` {r eval = FALSE}
+``` {r ggplot_exmpl_2, eval = FALSE}
 ggplot(data = ...) +
   geom_1(aes(x = x_variable, y = y_variable)) +
   geom_2(aes(x = x_variable, y = y_variable)) +
@@ -102,7 +103,7 @@ ggplot(data = ...) +
 If we are using the same x and y variables for all geoms, we can define them
 directly in the call of `ggplot()`.
 
-``` {r eval = FALSE}
+``` {r ggplot_exmpl_3, eval = FALSE}
 ggplot(data = ..., aes(x = x_variable, y = y_variable)) +
   geom_1() +
   geom_2() +
@@ -112,7 +113,7 @@ ggplot(data = ..., aes(x = x_variable, y = y_variable)) +
 
 ### Continuous x, continuous y
 
-Variables are only continuous, when they are able to take on every value --
+Variables are continuous, when they are able to take on every value --
 maybe limited by a maximum and minimum; they are also always numerical. Examples
 that are frequently used in the social sciences are income or monetary values in
 general, if they are measured accurately and not in a number of broad
@@ -122,12 +123,10 @@ an example for this, as would be gender or the party that has been voted for in
 the last election.
 
 In our example data, we mostly find categorical variables like `district` or
-`day`, while `date_cmpl` and `time` are continuous variables. Because all of the
-continuous variables are referring to the same concept -- the moment in time
-when the report occurred -- it makes no sense plotting them against each other.
-For this reason and because plots for continuous by continuous variables are
-important types of plots, we will construct a simple example dataset using
-random values.
+`day`, while `time` and `year` are the only continuous variable. Plotting
+time against year makes no inherent sense though. To be able to construct
+plots for continuous by continuous variables -- which are important types of
+plots -- we will thus construct a simple example dataset using random values.
 
 Let us create fictional data for the size and the price of apartments in a city.
 Let us assume, that the mean value for size in square meters is $70$ and the
@@ -139,13 +138,13 @@ following code block -- which can not be explained in detail here -- will
 generate the data just described. `set.seed()` assures that you will get the
 same *random number generator* results every time.
 
-``` {r}
-set.seed(08072021)
+``` {r random_data}
+set.seed(01042022)
 
 rent <- tibble(
   size = rnorm(1000, mean = 70, sd = 15),
   premium = as.logical(rbinom(n = 1000, size = 1, prob = 0.2)),
-  price = size * (10 + rnorm(1000, mean = 0, sd = 3) + (10 * premium)) 
+  price = size * (10 + rnorm(1000, mean = 0, sd = 3) + (10 * premium))
 )
 
 rent %>% 
@@ -160,7 +159,7 @@ apartment explains its price. We will use the `geom_point()` to build a
 scatterplot, with each point representing one of the 1000s of combinations of
 size and price in the data.
 
-``` {r}
+``` {r scatter}
 ggplot(data = rent, aes(x = size, y = price)) +
   geom_point()
 ```
@@ -176,7 +175,7 @@ that we want to use `method = 'lm'`, which is a linear model. The second option
 the regression line, which is a measure of the uncertainty of the estimated
 relationship.
 
-``` {r}
+``` {r scatter_lm}
 ggplot(data = rent, aes(x = size, y = price)) +
   geom_point() +
   geom_smooth(method = 'lm', se = FALSE)
@@ -193,7 +192,7 @@ different regression lines per group using the aesthetic `group = premium` or we
 can use `colour = premium` to simultaneously group the data and colour the
 plotted objects by their group membership.
 
-``` {r}
+``` {r scatter_grouped_lm}
 ggplot(data = rent, aes(x = size, y = price, colour = premium)) +
   geom_point() +
   geom_smooth(method = 'lm', se = FALSE)
@@ -225,7 +224,7 @@ police reports per day, one common approach is to use a bar plot.
 -- here `day` -- and will then count the number of occurrences of the category
 which are plotted as bars with corresponding height.
 
-``` {r}
+``` {r bar_wday}
 ggplot(data = reports_fyears, aes(x = day)) +
   geom_bar()
 ```
@@ -243,7 +242,7 @@ happened on a specific day.
 Let us plot the report counts by the district, using the same approach. Let us
 plot the categories on the y-axis to make the long district names more readable.
 
-``` {r}
+``` {r basr_district}
 ggplot(data = reports_fyears, aes(y = district)) +
   geom_bar()
 ```
@@ -264,7 +263,7 @@ values of the variable defined in the second argument. In this case ordering the
 categories of `district` by the values of `reports`.
 
 
-``` {r}
+``` {r bars_district_ordered}
 reports_fyears %>% 
   drop_na(district) %>% 
   group_by(district) %>% 
@@ -293,7 +292,7 @@ by using `as.numeric()` or `period_to_seconds()` (also see chapter
 \@ref(dplyr)).
 
 
-``` {r}
+``` {r time_histo}
 ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
   geom_histogram()
 ```
@@ -334,7 +333,7 @@ thus colouring the data by the values of a third variable.
 Sidenote: For an overview of the available colours, have a look at:
 <http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf>{target="_blank"}.
   
-``` {r}
+``` {r time_histo_nice}
 mean_time <- reports_fyears$time %>% 
         period_to_seconds() %>% 
         mean()
@@ -342,8 +341,8 @@ mean_time <- reports_fyears$time %>%
 ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
   geom_histogram() +
   scale_x_continuous(breaks = c(6 * 60 * 60, 9 * 60 * 60, 12 * 60 * 60,
-                                15 * 60 * 60, 18 * 60 * 60),
-                     labels = c("6:00", "9:00", "12:00", "15:00", "18:00")
+                                15 * 60 * 60, 18 * 60 * 60, 21 * 60 * 60),
+                     labels = c("6:00", "9:00", "12:00", "15:00", "18:00", "21:00")
                      ) +
   labs(x = "Time of Day",
        y = "Reports",
@@ -361,10 +360,10 @@ on the streets of Berlin at night time, but rather that the working hours of the
 people responsible for communicating the police reports range from about 08:00
 to 19:00-20:00.
 
-We can also see that the mean we calculated in chapter \@ref(dplyr) -- 11:55 --
-is misleading. As many reports are filed in the timespan of late afternoon to
-early evening, the mean is biased to the right. 11:55 is not the time when most
-reports occur; actually, half of all reports are filed before 11:00, as
+We can also see that the mean we calculated in chapter \@ref(dplyr) -- 11:57 --
+is misleading. As a relevant number of reports are filed in the time span of late
+afternoon to early evening, the mean is biased to the right. 11:57 is not the
+peak of the distribution; actually, half of all reports are filed before 11:05, as
 indicated by the median, which in general is more robust to skewed
 distributions. There seems to be a short period of high activity in the early to
 late morning hours. From this data, we can again infer more about the working
@@ -372,7 +371,7 @@ context of the police PR team than about crimes in Berlin. It seems reasonable
 that reports on the events that occurred in the night pile up and are then
 quickly published in the morning when office hours begin. After this, the number
 of reports gets considerably lower as events are reported at the rate they they
-occur at.
+occur at and quite possibly team members already finished their working hours.
 
 We can also ask if the distribution of the time of day when the reports are
 published, has changed over time. To compare plots grouped by the values of
@@ -381,7 +380,7 @@ of `facet_wrap()` we specify the variable by which we want subgroups to be
 formed, using the notation `~ variable`. The argument `nrows` determines the
 number of rows to be displayed.
 
-``` {r}
+``` {r time_histo_facets}
 ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
   geom_histogram() +
   facet_wrap(~ year, nrow = 2) +
@@ -395,7 +394,7 @@ ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
 
 Looking at the high numbers of very early reports and their maximum, we can see
 a gradual and moderate shift from the early to the late morning, which is
-especially apparent in 2019 and 2020. Because there are still reports beginning
+especially apparent from 2019 to 2021. Because there are still reports beginning
 from about 08:00, we can not necessarily infer that the working hours have
 changed, but maybe that the working process has. Maybe the writers started
 favouring the quality of the written reports over the quantity of early reports.
@@ -433,7 +432,7 @@ last created plot (Distribution of police reports over time of day by year) as
 an .eps file. We could also provide a path argument. If we do not, the file is
 saved in the current working directory.
 
-``` {r}
+``` {r save_last_plot}
 ggsave("distr_preports.eps")
 ```
 
@@ -446,12 +445,12 @@ To see the plot, we can always call the created object by typing it's name in
 the console. I would advice building the plot until you are satisfied and only
 then assign it to an object.
 
-``` {r}
+``` {r save_object_plots}
 distr_reports_day <- ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
   geom_histogram() +
   scale_x_continuous(breaks = c(6 * 60 * 60, 9 * 60 * 60, 12 * 60 * 60,
-                                15 * 60 * 60, 18 * 60 * 60),
-                     labels = c("6:00", "9:00", "12:00", "15:00", "18:00")
+                                15 * 60 * 60, 18 * 60 * 60, 21 * 60 * 60),
+                     labels = c("6:00", "9:00", "12:00", "15:00", "18:00", "21:00")
                      ) +
   labs(x = "Time of Day",
        y = "Reports",

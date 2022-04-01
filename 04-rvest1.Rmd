@@ -17,24 +17,21 @@ analysis in the future.
 
 ## The rvest package
 
-Part of the *tidyverse* is a package called rvest, which provides us with all
+Part of the **tidyverse** is a package called **rvest**, which provides us with all
 the basic functions for a variety of typical web scraping tasks. This package 
-was included in the installation of the tidyverse package, but it is not part of
+was included in the installation of the **tidyverse** package, but it is not part of
 the *core tidyverse* and thus is not loaded into the current R session with
 `library(tidyverse)`. Therefore, we have to do this explicitly:
 
-``` {r, message = FALSE}
+``` {r load_rvest}
 library(rvest)
 ```
 
-The output in the RStudio console informs us that besides rvest, the package 
-*xml2* has also been loaded, on which rvest is partly based and whose function
-for reading HTML files, we will need in the following.
 
 ## hello_world.html
 
 As a first exercise, it is a good idea to scrape the 
-[Hello World](https://webscraping-tures.github.io/hello_world.html){target="_blank"}
+[Hello World](https://jakobtures.github.io/web-scraping/hello_world.html){target="_blank"}
 example already described in chapter \@ref(html).
 As a reminder, here is the HTML source code:
 
@@ -54,7 +51,7 @@ As a reminder, here is the HTML source code:
 ### read_html()
 
 The first step in web scraping is to convert the page we are interested in into
-an R object. This is made possible by the function `read_html()` from the xml2
+an R object. This is made possible by the function `read_html()` from the **rvest**
 package. `read_html()` "parses" the website, i.e. it reads the HTML, understands
 its source code and transforms it into a representation R can understand. This
 function needs the URL, i.e. the address of the website we want to read in, as 
@@ -64,8 +61,8 @@ however, the default settings are sufficient. So we read in the hello_world.html
 file, assign it to a new R object at the same time and have this object put out
 in the next step:
 
-``` {r}
-hello_world <- read_html("https://webscraping-tures.github.io/hello_world.html")
+``` {r read_hw}
+hello_world <- read_html("https://jakobtures.github.io/web-scraping/hello_world.html")
 hello_world
 ```
 
@@ -74,18 +71,18 @@ entries. The first entry contains everything enclosed by the `<head>` tag, the
 second entry everything enclosed by the `<body>` tag. The opening and closing
 `<html>` tag is not part of the object. Remembering that HTML code is
 hierarchically structured, the list is thus organised based on the highest 
-remaining levels -- `<title>` and `<body>`.
+remaining levels -- `<head>` and `<body>`.
 
 We have thus successfully created a representation of the website in an R 
 object. But what do we do with it now? In the case of this simple example, we 
 might be interested in extracting the title of the website or the text displayed
 on the page.
 
-### html_nodes()
+### html_elements()
 
-The function `html_nodes()` from the rvest package allows us to extract
+The function `html_elements()` from **rvest** allows us to extract
 individual elements of the HTML code. To do this, it needs the object to be
-extracted from, as the first argument and a *selector* as well. In this 
+extracted from as the first argument and a *selector* as well. In this 
 introduction, we will concentrate exclusively on the so-called *CSS selectors*.
 The alternative *XPath* is a bit more flexible, but CSS selectors are sufficient
 in most cases and have a shorter and more intuitive syntax, which clearly makes
@@ -96,27 +93,27 @@ chapter \@ref(css) and will limit ourselves to the basics for now. A selector in
 the form `"tag"`, selects all HTML tags of the specified name. If we want to 
 extract the `<title>` tag, we can do so in this way:
 
-``` {r}
-node_title <- html_nodes(hello_world, css = "title")
-node_title
+``` {r title_hw}
+element_title <- html_elements(hello_world, css = "title")
+element_title
 ```
 
 If we want to extract the text **Hello World!** shown on the website, one
 possibility would be to select the complete `<body>` tag, since in this case no 
 other text is displayed on the page.
 
-``` {r}
-node_body <- html_nodes(hello_world, css = "body")
-node_body
+``` {r body_hw}
+element_body <- html_elements(hello_world, css = "body")
+element_body
 ```
 
-This works in principle, but we also extracted the `<b>` tags as well as 
+This works in principle, but we also extracted the `<b>` tags as well as
 multiple *new lines* (`\n`), which we do not need both.
 It would be more efficient to directly select the `<b>` tag enclosing the text.
 
-``` {r}
-node_b <- html_nodes(hello_world, css = "b")
-node_b
+``` {r b_hw}
+element_b <- html_elements(hello_world, css = "b")
+element_b
 ```
 
 
@@ -128,9 +125,9 @@ elements in an additional step. This is made possible by the rvest function
 `html_text()`. This requires the previously extracted HTML element as the only
 argument.
 
-``` {r}
-html_text(node_title)
-html_text(node_b)
+``` {r text_hw}
+html_text(element_title)
+html_text(element_b)
 ```
 
 With this, we have successfully completed our first web scraping goal, the 
@@ -138,20 +135,20 @@ extraction of the title and the text displayed on the page.
 
 One more thing about the application of `html_text()` to elements that 
 themselves contain further tags: Further above we extracted the object 
-node_body, which contains the `<b>` tags as well as several line breaks in 
+element_body, which contains the `<b>` tags as well as several line breaks in 
 addition to the displayed text. Here, too, we can extract the pure text.
 
-``` {r}
-html_text(node_body)
+``` {r text_body_hw}
+html_text(element_body)
 ```
 
 We see that the function has conveniently removed the `<b>` tags we were not
-interested in, for us. However, the line breaks and several spaces, so-called
+interested in for us. However, the line breaks and several spaces, so-called
 *whitespace*, remain. Both can be removed with the additional argument 
 `trim = TRUE`.
 
-``` {r}
-html_text(node_body, trim = TRUE)
+``` {r trim}
+html_text(element_body, trim = TRUE)
 ```
 
 ## Countries of the World
@@ -166,7 +163,7 @@ Before we start, we should load the required packages (we will also need the
 tidyverse package this time) and read the website with the function 
 `read_html()` and assign it to an R object.
 
-``` {r, message = FALSE}
+``` {r read_ctrs, message = FALSE}
 library(tidyverse)
 library(rvest)
 
@@ -207,7 +204,7 @@ From a web scraping perspective, we generally don't care how the styles are
 defined. We just need to know that we can exploit these CSS assignments of 
 classes for our purposes. At the next level down, we find two blocks, one 
 containing, among other things, the name of the country and another containing
-information about that country. Let's look at the first block first.
+information about that country. Let's begin with examining the first block.
 
 ### Country names
 
@@ -218,7 +215,7 @@ information about that country. Let's look at the first block first.
 </h3>
 ```
 
-The name "Andorra" is enclosed in an `<h3>` tag, i.e., a third-level heading. In
+The name "Andorra" is enclosed in an `<h3>` tag, i.e. a third-level heading. In
 addition to the name, we also find another tag within the tag that includes the 
 image of the flag. Since we are not interested in the graphics here, we can 
 ignore this.
@@ -227,9 +224,9 @@ On this website, all `<h3>` tags are used exclusively to display the names of
 the countries. Thus, we can use the `<h3>` tag as a CSS selector to read out the
 enclosed text analogous to the first example.
 
-``` {r}
-node_country <- html_nodes(website, css = "h3")
-text_country <- html_text(node_country, trim = TRUE)
+``` {r ctr_names}
+element_country <- html_elements(website, css = "h3")
+text_country <- html_text(element_country, trim = TRUE)
 
 head(text_country, n = 10)
 ```
@@ -246,31 +243,31 @@ number of entries specified by the argument `n`, starting with the first.
 At this point, we should think again about the readability and structure of our
 R code. Let us consider the preceding code block:
 
-``` {r, eval = FALSE}
-node_country <- html_nodes(website, css = "h3")
-text_country <- html_text(node_country, trim = TRUE)
+``` {r ctr_names_rpt, eval = FALSE}
+element_country <- html_elements(website, css = "h3")
+text_country <- html_text(element_country, trim = TRUE)
 ```
 
 As we have seen, this achieves our goal. However, we have also created the
-`node_country` object to temporarily save the first step -- reading the `<h3>`
-tags. We will never need this object again. If we use the already introduced 
-pipe `%>%` instead, the need to cache partial results is eliminated and we write
+`element_country` object to temporarily save the result of the first step -- reading the `<h3>`
+tags. We will never need this object again. If we use the pipe `%>%` from **tidyverse**
+instead, the need to cache partial results is eliminated and we write
 code that is more intuitive and easier to understand at the same time.
 
-``` {r}
+``` {r ctr_names_pipe}
 country <- website %>% 
-  html_nodes(css = "h3") %>% 
+  html_elements(css = "h3") %>% 
   html_text(trim = TRUE)
 
 head(country, n = 10)
 ```
 
-As a reminder, the pipe passes the result of a work step along to the next 
+The pipe passes the result of a work step along to the next 
 function, which in the tidyverse as well as in many other R-functions (but not 
-ALL!) takes data as the first argument, which we then do not have to define
+all!) takes data as the first argument, which we then do not have to define
 explicitly. For a better understanding, let's look at the above example in 
 detail. The first line passes the object `website` along to the function 
-`html_nodes()`. So we don't have to tell `html_nodes()` which object to apply 
+`html_elements()`. So we don't have to tell `html_elements()` which object to apply 
 to, because we already passed it along to the function with the pipe. The 
 function is applied to the object `website` with all other defined arguments -- 
 here `css` -- and the result is passed along again to the next line, where the
@@ -280,16 +277,17 @@ result is assigned to the object country.
 We now need three instead of two lines to get the same result, but the actual 
 typing work has been reduced -- especially if you create the pipe with the key
 combination CTRL+Shift+M -- and we have created code that can be read and
-understood more intuitively with a little practice.
+understood more intuitively with a little practice. Also we do not clutter our
+environment with unneeded objects.
 
 So should we always connect all steps with the pipe? No. In many cases it makes 
 sense to save intermediate results in an object, namely whenever we will access 
 it multiple times. In our example, we could also integrate the import of the 
 website into the pipe:
 
-``` {r}
+``` {r too_much_pipe}
 country <- read_html("https://scrapethissite.com/pages/simple/") %>% 
-  html_nodes(css = "h3") %>% 
+  html_elements(css = "h3") %>% 
   html_text(trim = TRUE)
 ```
 
@@ -299,9 +297,11 @@ parsing process has to be repeated each time. On the one hand, this can have a
 noticeable impact on the computing time for larger amounts of data. On the other
 hand, it also means accessing the website's servers and downloading the data 
 again each time. However, we should avoid data traffic generated without good 
-reasons as part of a *good practice* of web scraping. So it makes perfect sense
-to save the result of the `read_html()` function in an R object so that it can 
-be reused multiple times later.
+reasons as part of a *good practice* of web scraping -- see \@ref(goodpractice).
+So it makes perfect sense to save the result of the `read_html()` function in an
+R object so that it can be reused multiple times.
+
+We will see the pipe in action many more times over the course of this seminar.
 
 ### Capitals, population and area
 
@@ -322,9 +322,9 @@ respectively. Like `<div>`, `<span>` defines groupings, but not across multiple
 lines but for one, or as here, part of a line. So let's try to read the names of
 the capitals, using the `<span>` tag as a selector.
 
-``` {r}
+``` {r capitals_first_try}
 website %>% 
-  html_nodes(css = "span") %>% 
+  html_elements(css = "span") %>% 
   html_text() %>% 
   head(n = 10)
 ```
@@ -332,7 +332,7 @@ website %>%
 So we get the names of the capitals, but also the population and the size of the
 country. `span` was too unspecific as a selector. Since all three types of
 country data are enclosed with `<span>` tags, all three are also selected. So we
-have to tell `html_nodes()` more precisely which `<span>` we are interested in. 
+have to tell `html_elements()` more precisely which `<span>` we are interested in. 
 This is where the CSS classes we mentioned earlier come into play. These differ
 between the three countries’ information. For example, the `<span>` that 
 includes the name of the capital city is assigned the class `"country-capital"`.
@@ -340,47 +340,47 @@ We can target this class with our CSS selector. To select a class, we can use
 the syntax `.class-name`. So, to select all `<span>` that have the class
 `"country-capital"`, we can do as follows:
 
-``` {r}
+``` {r capitals}
 capital <- website %>% 
-  html_nodes(css = "span.country-capital") %>% 
+  html_elements(css = "span.country-capital") %>% 
   html_text()
 
-  head(capital, n = 10)
+head(capital, n = 10)
 ```
 
 We can repeat this in an analogue manner for the number of inhabitants with the 
 class `"country-population"`.
 
-``` {r}
+``` {r population}
 population <- website %>% 
-  html_nodes(css = "span.country-population") %>% 
+  html_elements(css = "span.country-population") %>% 
   html_text()
 
-  head(population, n = 10)
+head(population, n = 10)
 ```
 
 If we take a closer look at the vector created in this way, we see that it is a
 character vector. For inspection we can use the function `str()`, which gives us
 the structure of an R object, including the data type used.
 
-``` {r}
+``` {r pop_chr}
 str(population)
 ```
 
 So the numbers were not read out as numbers but as strings. Among other things,
-this does not allow for calculation with the numbers. `population[1]` selects 
-the first element of the vector.
+this does not allow for calculation with the numbers. Reminder: `population[1]`
+selects the first element of the vector.
 
-``` {r, error = TRUE}
+``` {r pop_chr_calc, error = TRUE}
 population[1] / 2
 ```
 
-As you remember, one way to tell R to interpret the "text" read from the HTML
-code as numbers is to use the function `as.numeric()`.
+As you remember, we can tell R to interpret the "text" read from the HTML
+code as numbers using the function `as.numeric()`.
 
-``` {r}
+``` {r pop_num}
 population <- website %>% 
-  html_nodes(css = "span.country-population") %>% 
+  html_elements(css = "span.country-population") %>% 
   html_text() %>% 
   as.numeric()
 
@@ -392,9 +392,9 @@ population[1] / 2
 In the same way, the size in square kilometers can be read with the class
 `"country-area"`.
 
-``` {r}
+``` {r size}
 area <- website %>% 
-  html_nodes(css = "span.country-area") %>% 
+  html_elements(css = "span.country-area") %>% 
   html_text() %>% 
   as.numeric()
 
@@ -408,7 +408,7 @@ We have now created four vectors, which respectively contain the information
 about the name of the country, the associated capital, the number of population 
 and the size of the country. For Andorra:
 
-``` {r}
+``` {r andorra}
 country[1]
 capital[1]
 population[1]
@@ -416,10 +416,10 @@ area[1]
 ```
 
 We could already continue working with this, but for many applications it is 
-more practical if we compile the data in tabular form. In the tidyverse, the 
+more practical if we combine the data in tabular form. In the tidyverse, the 
 form of the tibble is suitable for this purpose.
 
-``` {r}
+``` {r ctr_tbl}
 countries <- tibble(
   Land = country,
   Hauptstadt = capital,
@@ -438,23 +438,23 @@ the reading of the data and the creation of the tibble in a single step. Below
 you can see how the complete scraping process can be completed in relatively few
 lines.
 
-``` {r}
+``` {r ctr_tbl_short}
 website <- "https://scrapethissite.com/pages/simple/" %>%
   read_html()
 
 countries_2 <- tibble(
   Land = website %>%
-    html_nodes(css = "h3") %>% 
+    html_elements(css = "h3") %>% 
     html_text(trim = TRUE),
   Hauptstadt = website %>% 
-    html_nodes(css = "span.country-capital") %>% 
+    html_elements(css = "span.country-capital") %>% 
     html_text(),
   Bevoelkerung = website %>% 
-    html_nodes(css = "span.country-population") %>% 
+    html_elements(css = "span.country-population") %>% 
     html_text() %>% 
     as.numeric(),
   Flaeche = website %>% 
-    html_nodes(css = "span.country-area") %>% 
+    html_elements(css = "span.country-area") %>% 
     html_text() %>% 
     as.numeric()
 )

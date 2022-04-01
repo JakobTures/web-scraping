@@ -35,7 +35,7 @@ breaks, the columns are delimited by commas.
 The first row usually represents the column names, just as in the example above
 (`column1, column2, column3`). Be aware, that this isn't necessarily always the
 case. A CSV file may not contain any column names at all, and start with a first
-row of data cells. This is on of the vital differences when it comes to parsing
+row of data cells. This is one of the vital differences when it comes to parsing
 the file.
 
 
@@ -45,25 +45,25 @@ To convert the data contained in the CSV file into a format we can use for data
 analysis we have to *parse* it. The function used for parsing "understands" the
 representation of a table in the CSV syntax, can discern column names from data
 cells, assigns data cells to the correct rows and columns and returns an R
-object representing the table. `read_csv()`, from the readr package that we will
+object representing the table. `read_csv()`, from the **readr** package that we will
 use here, returns a tibble, while `read.csv()` from base R returns a data frame.
 
-Since readr is part of the core tidyverse, we can just load the tidyverse
-package. Soon we will also need rvest, so let us begin with loading both
+Since **readr** is part of the core tidyverse, we can just load the **tidyverse**
+package. Soon we will also need **rvest**, so let us begin with loading both
 libraries.
 
-``` {r, message = FALSE}
+``` {r load_packages_8, message = FALSE}
 library(tidyverse)
 library(rvest)
 ```
 
-The readr function `read_csv()` takes a CSV file as its first argument. To test
+`read_csv()` takes a CSV file as its first argument. To test
 it, we can also use *literal data* for the file argument. So we can pass the
 example defined above as a string -- contained in `"` -- as the `file`argument.
 We will not be using this in practice much, but it serves well as a first
 example.
 
-``` {r}
+``` {r literal_csv_1}
 read_csv(
 "column1, column2, column3
 data1_1, data1_2, data1_3
@@ -77,7 +77,7 @@ were automatically defined as character vectors here. Automatic guessing works
 reliably in most situations. Let's try a CSV with multiple different column
 types:
 
-``` {r}
+``` {r literal_csv_2}
 read_csv(
 "name, age, size, retired
 Peter, 42, 1.68, FALSE
@@ -98,7 +98,7 @@ can be found in the help file.
 What happens when we have CSV data without column names defined in the first
 line?
 
-``` {r}
+``` {r literal_csv_3}
 read_csv(
 "Peter, 42, 1.68, FALSE
 Paul, 84, 1.82, TRUE
@@ -113,7 +113,7 @@ the first line for column names. We can do this by specifying the `col_names()`
 argument as `FALSE`; in this case, `read_csv()` chooses default names for the
 columns, which can be changed later on.
 
-``` {r}
+``` {r literal_csv_4}
 read_csv(
 "Peter, 42, 1.68, FALSE
 Paul, 84, 1.82, TRUE
@@ -142,22 +142,23 @@ to regularly update files, downloading them from within your code is a safer and
 more efficient option.
 
 To start, we will download the HTML file containing the links to the CSV files.
-The, using the tools at our disposal, we will extract the first two links
+Using the tools at our disposal, we will extract the first two links
 following the header "Tabellen zur Weiterverwendung". To understand the
 construction of the css selector, read chapter \@ref(css). Note that this is
 only one of many possible selectors that can achieve the selection of both links
 of interest.
 
-``` {r}
+``` {r download_links_csv}
 website <- "https://www.bundeswahlleiter.de/bundestagswahlen/2017/ergebnisse/repraesentative-wahlstatistik.html" %>%
   read_html()
 
-a_nodes <- website %>% 
-  html_nodes(css = "ul[style='list-style-type:none'] > li:first-child > a, ul[style='list-style-type:none'] > li:nth-child(2) > a")
+a_elements <- website %>% 
+  html_elements(css = "ul[style='list-style-type:none'] > li:first-child > a,
+                    ul[style='list-style-type:none'] > li:nth-child(2) > a")
 
-a_nodes
+a_elements
 
-links <- a_nodes %>%
+links <- a_elements %>%
   html_attr(name = "href")
 
 links
@@ -171,12 +172,12 @@ use the function `str_c()` to construct the complete URLs. If we give `str_c()`
 a vector as one of its input arguments, the function will repeat the string
 connection for each element in the vector. For this example we can ignore the
 "../../../" part of the link as it will work regardless; to remove this part we
-could apply some of the functions from the stringr package. For this we need
+could apply some of the functions from the **stringr** package. For this we need
 some basic knowledge in string manipulation and regular expressions, which we
 will gain in chapter \@ref(regex). So for now, we will just use the links as
 they come.
 
-``` {r}
+``` {r combine_links_csv}
 links <- str_c("https://www.bundeswahlleiter.de/", links)
 links
 ```
@@ -187,7 +188,7 @@ first argument and also specify a path and file name for the `destfile`
 argument. When no path is given, the file is saved in the directory where your R
 script is located.
 
-``` {r}
+``` {r download_csv}
 download.file(links[1], destfile =  "eligible.csv")
 download.file(links[2], destfile =  "turnout.csv")
 ```
@@ -199,7 +200,7 @@ for the server, as well as increase the efficiency of our code. This is only a
 benefit if we download only once and not every time we rerun our script. So we
 have to comment out the lines where the download occurs after it was successful.
 
-### Parsing the csv files  
+### Parsing the CSV files  
 
 Now we proceed to parse the downloaded CSV files into R objects. But first let's
 have a look at the CSV files. You can open them in a text editor of your
@@ -214,14 +215,14 @@ is common in those countries where a "." is used as the decimal point, thus the
 as a decimal point, it is not available as a delimiter and therefore the ";" is
 used. The function `read_csv2()` can be used in this case. A more generalized
 function is `read_delim()`, because the delimiting character can freely be
-defined as an argument. Secondly, we see that the first 8 lines are neither
+defined as an argument. Secondly, we see that the first 9 lines are neither
 column names nor data, but contain comments on the CSV file itself. We have to
 tell `read_csv2()` to ignore these lines. We could use the argument `skip` to
-tell R to ignore the first 8 lines; however, these comments are neatly
+tell R to ignore the first 9 lines; however, these comments are neatly
 introduced with an `#`, so we can use the `comment` argument instead and specify
 the `#` as the identifier for comments, which then will be ignored.
 
-``` {r}
+``` {r parse_csv}
 eligible_tbl <- read_csv2("eligible.csv", comment = "#")
 
 eligible_tbl
@@ -248,10 +249,17 @@ with, we will try to minimize the traffic we create on the websites we scrape
 (see \@ref(good_practice)). If we re-run the `read_html()` function every time
 we run our script, we also re-download all of the HTML data in each re-run. This
 puts unnecessary load on the servers and also slows down our script, which
-becomes more relevant the more data you are scraping from the web. Another point
+becomes more relevant the more data you are scraping from the web.
+
+Another point
 to consider, is that websites change all the time. The data you scraped today
 may be changed or even gone tomorrow. You should also keep in mind that if the
-structure of the site changes, your CSS selectors and URLs may not work anymore. 
+structure of the site changes, your CSS selectors and URLs may not work anymore.
+The website you are viewing right now, is an updated version of a site that was
+originally written for a Seminar in the summer of 2021. In the course of
+updating it for 2022, virtually every example had to be rewritten at least in
+some parts because the scraped websites had changed, often only in small details,
+rendering most of the original CSS selectors useless.
 
 So for both of those reasons, it may be appropriate to save all of our
 downloaded HTML data locally, so that we can re-load it for re-runs of our
@@ -260,13 +268,13 @@ script without having to worry about changes to the source.
 The most straightforward approach would be to use the `download.file()` function
 and apply it directly to the URL and thus copy the original HTML data exactly.
 
-``` {r}
+``` {r download_html}
 download.file("https://webscraping-tures.github.io/hello_world.html", "hello_world_local.html")
 ```
 
 We run this line once and afterwards just use `read_html()` on the local file.
 
-``` {r}
+``` {r read_html_local}
 hello_world <- read_html("hello_world_local.html")
 ```
 
@@ -278,7 +286,7 @@ use `write_csv()` from stringr, or save the data in the native R format .RData.
 
 Let's create an example object we want to save first:
 
-``` {r}
+``` {r exmpl_tbl}
 data <- tibble(
   name = c("Peter", "Paul", "Mary"),
   age = c(42, 84, 24),
@@ -292,7 +300,7 @@ top of that has the advantage of being readable by most software that deals with
 data, not just by R. It takes the object to be saved as its first argument and
 the path and file name used for saving as its second argument.
 
-``` {r}
+``` {r write_csv}
 write_csv(data, "peter_paul_mary.csv")
 ```
 
@@ -311,20 +319,22 @@ load the resulting file we would just use `read_csv()` or `read_csv2()`.
 The downside to using CSV files is that the definition of column types -- e.g.
 character, numeric or integer -- is lost and may have to be redefined when
 reloading the data. Also more complex objects like lists, can not be saved as a
-CSV, so we may use the data format native to R, .RData.
+CSV, so we may use the data format native to R, .RData. These files also have the
+advantages of being neatly compressed, thus taking up less space on your drive,
+and R can read them in faster than CSV files.
 
 The `save()` function also takes the name of the object -- or multiple objects
 -- to be saved as its first argument. We also have to specify a file name (and
 possibly path) in the `file = ` argument.
 
-``` {r}
+``` {r save_ppm}
 save(data, file = "peter_paul_mary.RData")
 ```
 
 We can load objects stored as .RData files by using the `load()` function on
 this file.
 
-``` {r}
+``` {r load_ppm}
 load("peter_paul_mary.RData")
 ```
 
@@ -334,9 +344,17 @@ it, the object will be empty. The reasons for this are rather technical, but you
 should know that you will loose some of your work, if you do try something like
 this:
 
-``` {r eval = FALSE}
+``` {r failed_save, eval = FALSE}
 hello_world <- read_html("https://webscraping-tures.github.io/hello_world.html")
-save(hello_world, "hello_world.RData")
+hello_world
+
+save(hello_world, file = "hello_world.RData")
 rm(hello_world)
+
 load("hello_world.RData")
+hello_world
 ```
+
+As you can see, the objext `hello_world` does not work after loading.
+Sidenote: The function `rm()` removes the object(s) defined between the parantheses
+from the environment.

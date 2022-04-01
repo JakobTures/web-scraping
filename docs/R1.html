@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 R &amp; R Studio | Web Scraping using R</title>
   <meta name="description" content="2 R &amp; R Studio | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 R &amp; R Studio | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
   
-  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+  <meta name="github-repo" content="jakobtures.github.io/web-scraping/" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="2 R &amp; R Studio | Web Scraping using R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-30" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="html.html"/>
 <link rel="next" href="R2.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,18 +51,21 @@
 
 
 
-
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
-<script src="libs/echarts4r-binding-0.4.0/echarts4r.js"></script>
+<script src="libs/echarts4r-binding-0.4.2/echarts4r.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -122,6 +126,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -137,201 +142,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Web Scraping using R
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<li><a href="index.html#introduction">Introduction<span></span></a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
+<li><a href="index.html#what-is-web-scraping">What is web scraping?<span></span></a></li>
+<li><a href="index.html#course-contents">Course contents<span></span></a></li>
+<li><a href="index.html#technical-requirements">Technical requirements<span></span></a></li>
+<li><a href="index.html#conventions">Conventions<span></span></a></li>
+<li><a href="index.html#acknowledgements">Acknowledgements<span></span></a></li>
+<li><a href="index.html#colophon">Colophon<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<li class="part"><span><b>I Basics<span></span></b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html<span></span></a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes<span></span></a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links<span></span></a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<li class="part"><span><b>II R Basics &amp; Tidyverse<span></span></b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators<span></span></a></li>
+<li class="chapter" data-level="2.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>2.3.3</b> Logical operators<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
-<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects<span></span></a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
-<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors<span></span></a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
-<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
-<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
-<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
-<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
-</ul></li>
-<li class="part"><span><b>III Scraping</b></span></li>
-<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
-<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
-<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
-<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
-<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
-<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help<span></span></a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
-<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
-<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
-<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
-<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects<span></span></a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
-<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
-<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
-<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
-<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources<span></span></a></li>
 </ul></li>
+<li class="part"><span><b>III Scraping<span></span></b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_elements"><i class="fa fa-check"></i><b>4.2.2</b> html_elements()<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
-<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area<span></span></a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files</a>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#csv-files"><i class="fa fa-check"></i><b>8.1</b> CSV files</a>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file</a></li>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes<span></span></a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs<span></span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes<span></span></a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels<span></span></a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the csv files</a></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files</a></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables<span></span></a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites<span></span></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
-</ul></li>
-<li class="part"><span><b>IV Data analysis</b></span></li>
-<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.1</b> Gathering the links</a></li>
-<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2</b> Downloading the subpages</a></li>
-<li class="chapter" data-level="10.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.3</b> Extracting the data of interest</a>
-<ul>
-<li class="chapter" data-level="10.3.1" data-path="scraping.html"><a href="scraping.html#dealing-with-missing-data-in-lists"><i class="fa fa-check"></i><b>10.3.1</b> Dealing with missing data in lists</a></li>
-</ul></li>
-<li class="chapter" data-level="10.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.4</b> Saving the data</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code></a>
-<ul>
-<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones</a></li>
-<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#cleaning-the-data-on-police-reports"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports</a></li>
-</ul></li>
-<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code></a></li>
-<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a>
-<ul>
-<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups</a></li>
-<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time</a></li>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query<span></span></a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result<span></span></a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax</a></li>
-<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics</a>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages<span></span></a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y</a></li>
-<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports</a></li>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
+<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
-<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-and-counting-robberies-from-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting and counting robberies from police reports</a></li>
-<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#parsing-two-numbers-from-a-string"><i class="fa fa-check"></i><b>13.3</b> Parsing two numbers from a string</a></li>
+<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#CSV"><i class="fa fa-check"></i><b>8.1</b> CSV files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the CSV files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>IV Sample project<span></span></b></span></li>
+<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#topic-and-data"><i class="fa fa-check"></i><b>10.1</b> Topic and data<span></span></a></li>
+<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#scraping-the-data"><i class="fa fa-check"></i><b>10.2</b> Scraping the data<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.2.1</b> Gathering the links<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2.2</b> Downloading the subpages<span></span></a></li>
+<li class="chapter" data-level="10.2.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.2.3</b> Extracting the data of interest<span></span></a></li>
+<li class="chapter" data-level="10.2.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.2.4</b> Saving the data<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#clean"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code><span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code><span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups<span></span></a></li>
+<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="dplyr.html"><a href="dplyr.html#exporting-tables"><i class="fa fa-check"></i><b>11.6</b> Exporting tables<span></span></a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="dplyr.html"><a href="dplyr.html#further-resources"><i class="fa fa-check"></i><b>11.6.1</b> Further resources<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics<span></span></a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#exporting-plots"><i class="fa fa-check"></i><b>12.3</b> Exporting plots<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>V Regular expressions<span></span></b></span></li>
+<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column<span></span></a></li>
+<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-robberies-in-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting robberies in police reports<span></span></a></li>
+<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#extracting-details-from-a-list-of-names"><i class="fa fa-check"></i><b>13.3</b> Extracting details from a list of names<span></span></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -353,10 +365,10 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="R1" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> R &amp; R Studio</h1>
-<div id="installing-r" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Installing R</h2>
+<div id="R1" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> R &amp; R Studio<a href="R1.html#R1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="installing-r" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Installing R<a href="R1.html#installing-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>R</em> is a freely available programming language used predominantly for data
 science and statistical computations. For more information on the language and
 to access the documentation, visit:
@@ -372,16 +384,16 @@ directory of your choice. If you are using Linux, the link on CRAN will offer
 installation advice for some of the more popular distributions. In any case, you
 can check the package manager of your choice for the latest available release
 for your system.</p>
-<p>All examples used on this Website were written and tested with R version 4.0.4
-“Lost Library Book”. While it is not to be expected, they might, nonetheless,
-return errors in newer versions of R.</p>
+<p>All examples used on this Website were written and tested with R version 4.1.3
+“One Push-Up”. While it is not to be expected, they might, nonetheless,
+return errors in newer or older versions of R.</p>
 </div>
-<div id="rstudio" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> RStudio</h2>
-<p>The basic R installation provides a simple GUI – Graphical User Interface –
+<div id="rstudio" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> RStudio<a href="R1.html#rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The basic R installation provides a terminal
 that could in principle be used to follow the contents of this introduction to
-Web Scraping. The widely more common approach is to use an external IDE
-– Integrated Development Environment –, the most popular being RStudio.
+Web Scraping. The widely more common approach is to use an external <em>IDE</em>
+– <em>Integrated Development Environment</em> –, the most popular being <em>RStudio</em>.
 Using an IDE will dramatically improve your workflow and I would strongly
 recommend using RStudio for this purpose.</p>
 <p>RStudio is also freely available and can be found at
@@ -390,9 +402,9 @@ scrolling down (ignoring the different versions offered for professional usage)
 you will find the latest installers for several operating systems offered as
 downloads. In most cases, simply installing RStudio after R has been installed,
 will work “out of the box”.</p>
-<div id="overview" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Overview</h3>
-<p><img src="rstudio/RStudio.png" width="1922" /></p>
+<div id="overview" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Overview<a href="R1.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="rstudio/RStudio.png" /><!-- --></p>
 <p>The RStudio interface consists of four sub-areas. The bottom-left shows the
 “Console” as well as additional tabs which you will rarely need in the
 beginning. The console can be used to evaluate R code live. We will begin
@@ -407,13 +419,13 @@ other things, the “Files” in a selected folder, graphical output under “Pl
 and requested “Help” on packages and functions.</p>
 </div>
 </div>
-<div id="hello-world" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Hello World!</h2>
+<div id="hello-world" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Hello World!<a href="R1.html#hello-world" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So, let’s begin with putting R &amp; RStudio to use. For now, we will write our
 commands directly into the console.
 You will notice a <code>&gt;</code> sign at the beginning of the last line in the console.
-This is a prompt, as in “write commands here”. Try writing this and executing
-the command with the “Enter” key:</p>
+This is a prompt, as in “write commands here”. Try writing this command and
+executing it with the “Enter” key:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="R1.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span>
 <span id="cb16-2"><a href="R1.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Hello World!&quot;</span></span></code></pre></div>
 <p>You just entered your first R command, received your first output and also used
@@ -425,12 +437,12 @@ the executed command. Please note, that RStudio will not print <code>##</code> b
 output. In the shown code segments on this website, <code>##</code> is inserted before the
 output to allow copying the code directly to RStudio, as one or mutliple <code>#</code>
 indicate that a line is a comment, and thus is not evaluated as a command by R.</p>
-<div id="calculating-with-r" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Calculating with R</h3>
+<div id="calculating-with-r" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Calculating with R<a href="R1.html#calculating-with-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>R understands the basic arithmetic symbols <code>+ - * /</code> and thus the console can be
 used as a calculator. Many functions for more involved calculations, e.g. 
 <code>sqrt()</code> for taking a square root of the content enclosed in the parenthesis,
-are available. <code>x^y</code> can be used to write x to the power of y. For now, you
+are available. <code>x^y</code> can be used to write <span class="math inline">\(x^y\)</span>. For now, you
 should write the code below line for line into the R console and execute each
 line with the “Enter” key.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="R1.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="sc">+</span> <span class="dv">25</span></span>
@@ -446,8 +458,8 @@ line with the “Enter” key.</p>
 <span id="cb17-11"><a href="R1.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fl">6.480741</span> <span class="sc">^</span> <span class="dv">2</span></span>
 <span id="cb17-12"><a href="R1.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 </div>
-<div id="comparison" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Comparison operators</h3>
+<div id="comparison" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Comparison operators<a href="R1.html#comparison" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can use comparison operators to compare two values and receive the test
 result as output. To test if two values are equal, we write <code>==</code>. To test if
 they are not equal, we can use <code>!=</code></p>
@@ -466,42 +478,64 @@ larger <code>&gt;</code> or larger or equal <code>&gt;=</code>, compared to the 
 <span id="cb19-7"><a href="R1.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="dv">90</span> <span class="sc">&gt;=</span> <span class="dv">42</span></span>
 <span id="cb19-8"><a href="R1.html#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 </div>
+<div id="logical-operators" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Logical operators<a href="R1.html#logical-operators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can also combine tests by applying <em>logical operators</em> to create more
+complex conditions. <code>&amp;</code> – <em>AND</em> – checks if both tests combined by it
+are <code>TRUE</code> and only returns <code>TRUE</code> if both are at the same time. <code>|</code> – <em>OR</em> –
+checks if at least on of the tests is <code>TRUE</code> and returns <code>TRUE</code> if one or
+both are. When combining two tests, we thus have these possibilities:</p>
+<ul>
+<li><code>TRUE &amp; TRUE</code> returns <code>TRUE</code></li>
+<li><code>TRUE &amp; FALSE</code>, <code>FALSE &amp; TRUE</code> and <code>FALSE &amp; FALSE</code> all return <code>FALSE</code></li>
+<li><code>TRUE | TRUE</code>, <code>TRUE | FALSE</code> and <code>FALSE | TRUE</code> all return <code>TRUE</code></li>
+<li><code>FALSE | FALSE</code> returns <code>FALSE</code></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="R1.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">&amp;</span> <span class="dv">3</span> <span class="sc">!=</span> <span class="dv">4</span>  <span class="co"># TRUE &amp; TRUE</span></span>
+<span id="cb20-2"><a href="R1.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb20-3"><a href="R1.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">&amp;</span> <span class="dv">3</span> <span class="sc">!=</span> <span class="dv">4</span>  <span class="co"># FALSE &amp; TRUE</span></span>
+<span id="cb20-4"><a href="R1.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
+<span id="cb20-5"><a href="R1.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">|</span> <span class="dv">3</span> <span class="sc">!=</span> <span class="dv">4</span>  <span class="co"># FALSE | TRUE</span></span>
+<span id="cb20-6"><a href="R1.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb20-7"><a href="R1.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">|</span> <span class="dv">3</span> <span class="sc">==</span> <span class="dv">4</span>  <span class="co"># FALSE | FALSE</span></span>
+<span id="cb20-8"><a href="R1.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span></code></pre></div>
 </div>
-<div id="objects" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Objects</h2>
+</div>
+<div id="objects" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Objects<a href="R1.html#objects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Some of the power of using a language like R for computation, comes from the
 ability to store data or results for later use and further analysis.
 In R, all types of data are stored in objects.
 On a basic level, an object is a name that we define that has some form of data
 assigned to it. To assign data to a name, we use the assignment operator <code>&lt;-</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="R1.html#cb20-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> <span class="dv">42</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="R1.html#cb21-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> <span class="dv">42</span></span></code></pre></div>
 <p>A handy keyboard shortcut for writing the assignment operator is pressing the
 “Alt” and “-” keys simultaneously. Learning this shortcut early, will safe you
 on a lot of typing and keyboard gymnastics.</p>
 <p>After we assigned a value to an object, we can recall that value, by writing the
 object’s name.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="R1.html#cb21-1" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb21-2"><a href="R1.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="R1.html#cb22-1" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb22-2"><a href="R1.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 <p>We can also use defined objects in calculations and function calls (more on
 those later). Note, that if we assign a value to an already defined object, the
 stored value is overwritten by the new one.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="R1.html#cb22-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> the_answer <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb22-2"><a href="R1.html#cb22-2" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb22-3"><a href="R1.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 21</span></span>
-<span id="cb22-4"><a href="R1.html#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="R1.html#cb22-5" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
-<span id="cb22-6"><a href="R1.html#cb22-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb22-7"><a href="R1.html#cb22-7" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb22-8"><a href="R1.html#cb22-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
-<span id="cb22-9"><a href="R1.html#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="R1.html#cb23-1" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> the_answer <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb23-2"><a href="R1.html#cb23-2" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb23-3"><a href="R1.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 21</span></span>
+<span id="cb23-4"><a href="R1.html#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="R1.html#cb23-5" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb23-6"><a href="R1.html#cb23-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb23-7"><a href="R1.html#cb23-7" aria-hidden="true" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb23-8"><a href="R1.html#cb23-8" aria-hidden="true" tabindex="-1"></a>the_answer</span>
+<span id="cb23-9"><a href="R1.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
 <p>All objects we define are listed in the “Environment” tab, seen in the upper
 right of RStudio. If we ever want to remove objects from the environment,
 we can use the <code>rm()</code> function. In general, this is not necessary, but it can
 help with keeping the list from getting cluttered.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="R1.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(the_answer)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="R1.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(the_answer)</span></code></pre></div>
 </div>
-<div id="vectors" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Vectors</h2>
+<div id="vectors" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Vectors<a href="R1.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When we assigned a number to an object, we actually created a vector. A vector
 is a one-dimensional data structure that can contain multiple elements. The
 number of elements determine the length of the vector. So a vector with only
@@ -509,95 +543,101 @@ one element is still a vector, but with a length of 1.
 To assign multiple elements to a vector, we use the combine function <code>c()</code>. All
 values inside the parentheses, separated by <code>,</code>, are combined as elements to
 form the vector.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="R1.html#cb24-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</span>
-<span id="cb24-2"><a href="R1.html#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="R1.html#cb24-3" aria-hidden="true" tabindex="-1"></a>v</span>
-<span id="cb24-4"><a href="R1.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 8 9</span></span></code></pre></div>
-<div id="subsetting" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> Subsetting</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="R1.html#cb25-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</span>
+<span id="cb25-2"><a href="R1.html#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="R1.html#cb25-3" aria-hidden="true" tabindex="-1"></a>v</span>
+<span id="cb25-4"><a href="R1.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 8 9</span></span></code></pre></div>
+<div id="subsetting" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Subsetting<a href="R1.html#subsetting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If we want to access certain elements of a vector, we have to use subsetting.
 This is achieved by adding square brackets to the object’s name, containing the
 position of the element in its vector. In order to access the first or third
 element, we can write:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="R1.html#cb25-1" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">1</span>]</span>
-<span id="cb25-2"><a href="R1.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7</span></span>
-<span id="cb25-3"><a href="R1.html#cb25-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">3</span>]</span>
-<span id="cb25-4"><a href="R1.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="R1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">1</span>]</span>
+<span id="cb26-2"><a href="R1.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7</span></span>
+<span id="cb26-3"><a href="R1.html#cb26-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">3</span>]</span>
+<span id="cb26-4"><a href="R1.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9</span></span></code></pre></div>
 <p>We can also access multiple elements at once, using <code>c()</code> inside the brackets or
 by defining a range of positions using <code>:</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="R1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>v[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span>
-<span id="cb26-2"><a href="R1.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 9</span></span>
-<span id="cb26-3"><a href="R1.html#cb26-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
-<span id="cb26-4"><a href="R1.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="R1.html#cb27-1" aria-hidden="true" tabindex="-1"></a>v[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span>
+<span id="cb27-2"><a href="R1.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 7 9</span></span>
+<span id="cb27-3"><a href="R1.html#cb27-3" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb27-4"><a href="R1.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 8 9</span></span></code></pre></div>
 </div>
-<div id="types-of-vectors" class="section level3" number="2.5.2">
-<h3><span class="header-section-number">2.5.2</span> Types of vectors</h3>
+<div id="types-of-vectors" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Types of vectors<a href="R1.html#types-of-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Observing the vector <code>v</code> we created in the environment, we notice that RStudio
 writes <code>num [1:3]</code> before listing the values of the elements. The second part,
 indicates the length of 3, while the first part shows the type of the vector we
 created. In this case the type is <em>numeric</em>. Numeric vectors, as you might have
 guessed, contain numbers. We can also use <code>str()</code> to receive info on type,
 length and content of a vector.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="R1.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(v)</span>
-<span id="cb27-2"><a href="R1.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 7 8 9</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="R1.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(v)</span>
+<span id="cb28-2"><a href="R1.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 7 8 9</span></span></code></pre></div>
 <p>There are a number of other types of vectors, the two most important – besides
 numeric vectors – being logical and character vectors.</p>
 <p><em>Logical</em> vectors can only contain the values <code>TRUE</code> and <code>FALSE</code>. Strictly
 speaking, they – as the other types of vectors – can also contain <code>NA</code>,
-indicating a missing value. We will talk more about NAs later on. Logical
+indicating a missing value. We will talk more about <code>NA</code>s later on. Logical
 vectors are often created when we test for something. For example, we can test,
 if the elements in a numerical vector are larger or equal to 5 and receive a
 logical vector containing the test results.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="R1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb28-2"><a href="R1.html#cb28-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;=</span> <span class="dv">5</span></span>
-<span id="cb28-3"><a href="R1.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE  TRUE FALSE  TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="R1.html#cb29-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb29-2"><a href="R1.html#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;=</span> <span class="dv">5</span></span>
+<span id="cb29-3"><a href="R1.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE  TRUE FALSE  TRUE</span></span></code></pre></div>
 <p><em>Character</em> vectors contain <em>strings</em> of characters. When assigning strings,
 they have to be enclosed in quotation marks.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="R1.html#cb29-1" aria-hidden="true" tabindex="-1"></a>char_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;vector!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="R1.html#cb30-1" aria-hidden="true" tabindex="-1"></a>char_v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;vector!&quot;</span>)</span>
+<span id="cb30-2"><a href="R1.html#cb30-2" aria-hidden="true" tabindex="-1"></a>char_v</span>
+<span id="cb30-3"><a href="R1.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This&quot;      &quot;is&quot;        &quot;a&quot;         &quot;character&quot; &quot;vector!&quot;</span></span>
+<span id="cb30-4"><a href="R1.html#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="R1.html#cb30-5" aria-hidden="true" tabindex="-1"></a>char_v_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;This is also&quot;</span>, <span class="st">&quot;a character vector!&quot;</span>)</span>
+<span id="cb30-6"><a href="R1.html#cb30-6" aria-hidden="true" tabindex="-1"></a>char_v_2</span>
+<span id="cb30-7"><a href="R1.html#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is also&quot;        &quot;a character vector!&quot;</span></span></code></pre></div>
 <p>We can compare character vectors only for (non-)equality, not for being smaller
 or larger.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="R1.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;same&quot;</span></span>
-<span id="cb30-2"><a href="R1.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb30-3"><a href="R1.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;not the same&quot;</span></span>
-<span id="cb30-4"><a href="R1.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
-<span id="cb30-5"><a href="R1.html#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">!=</span> <span class="st">&quot;not the same&quot;</span></span>
-<span id="cb30-6"><a href="R1.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="R1.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;same&quot;</span></span>
+<span id="cb31-2"><a href="R1.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb31-3"><a href="R1.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">==</span> <span class="st">&quot;not the same&quot;</span></span>
+<span id="cb31-4"><a href="R1.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] FALSE</span></span>
+<span id="cb31-5"><a href="R1.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;same&quot;</span> <span class="sc">!=</span> <span class="st">&quot;not the same&quot;</span></span>
+<span id="cb31-6"><a href="R1.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 <p>Character vectors also cannot be used to calculate. This can get problematic, if
 numbers are stored as characters, which arises frequently when Web Scraping.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="R1.html#cb31-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb31-2"><a href="R1.html#cb31-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;7&quot;</span>, <span class="st">&quot;8&quot;</span>, <span class="st">&quot;9&quot;</span>)</span>
-<span id="cb31-3"><a href="R1.html#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="R1.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(a)</span>
-<span id="cb31-5"><a href="R1.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 1 2 3</span></span>
-<span id="cb31-6"><a href="R1.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(b)</span>
-<span id="cb31-7"><a href="R1.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  chr [1:3] &quot;7&quot; &quot;8&quot; &quot;9&quot;</span></span>
-<span id="cb31-8"><a href="R1.html#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="R1.html#cb31-9" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> b</span>
-<span id="cb31-10"><a href="R1.html#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in a + b: non-numeric argument to binary operator</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="R1.html#cb32-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb32-2"><a href="R1.html#cb32-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;7&quot;</span>, <span class="st">&quot;8&quot;</span>, <span class="st">&quot;9&quot;</span>)</span>
+<span id="cb32-3"><a href="R1.html#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="R1.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(a)</span>
+<span id="cb32-5"><a href="R1.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  num [1:3] 1 2 3</span></span>
+<span id="cb32-6"><a href="R1.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(b)</span>
+<span id="cb32-7"><a href="R1.html#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  chr [1:3] &quot;7&quot; &quot;8&quot; &quot;9&quot;</span></span>
+<span id="cb32-8"><a href="R1.html#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="R1.html#cb32-9" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> b</span>
+<span id="cb32-10"><a href="R1.html#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in a + b: non-numeric argument to binary operator</span></span></code></pre></div>
 <p>As we enclosed the elements of vector <code>b</code> in quotation marks, R interprets the
 data as characters instead of numbers. Since characters cannot be used for
 calculations, we received an error message. But we can make R interpret the
 characters as numbers by using <code>as.numeric()</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="R1.html#cb32-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> <span class="fu">as.numeric</span>(b)</span>
-<span id="cb32-2"><a href="R1.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  8 10 12</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="R1.html#cb33-1" aria-hidden="true" tabindex="-1"></a>a <span class="sc">+</span> <span class="fu">as.numeric</span>(b)</span>
+<span id="cb33-2"><a href="R1.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  8 10 12</span></span></code></pre></div>
 </div>
-<div id="a-brief-look-at-lists" class="section level3" number="2.5.3">
-<h3><span class="header-section-number">2.5.3</span> A brief look at lists</h3>
+<div id="a-brief-look-at-lists" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> A brief look at lists<a href="R1.html#a-brief-look-at-lists" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Note that a vector of a certain type, can only contain elements of that type. So
 we cannot mix data types in the same vector. If we want to mix data types, we
 can use lists instead of vectors.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="R1.html#cb33-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span><span class="fu">list</span>(<span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="st">&quot;Hello World!&quot;</span>)</span>
-<span id="cb33-2"><a href="R1.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l)</span>
-<span id="cb33-3"><a href="R1.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
-<span id="cb33-4"><a href="R1.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num 1</span></span>
-<span id="cb33-5"><a href="R1.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : logi TRUE</span></span>
-<span id="cb33-6"><a href="R1.html#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : chr &quot;Hello World!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="R1.html#cb34-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span><span class="fu">list</span>(<span class="dv">1</span>, <span class="cn">TRUE</span>, <span class="st">&quot;Hello World!&quot;</span>)</span>
+<span id="cb34-2"><a href="R1.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l)</span>
+<span id="cb34-3"><a href="R1.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 3</span></span>
+<span id="cb34-4"><a href="R1.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : num 1</span></span>
+<span id="cb34-5"><a href="R1.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : logi TRUE</span></span>
+<span id="cb34-6"><a href="R1.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : chr &quot;Hello World!&quot;</span></span></code></pre></div>
 <p>Lists can also contain other lists to represent hierarchical data structures.
 We will see lists “in action” later on in this course.</p>
 </div>
 </div>
-<div id="functions" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Functions</h2>
+<div id="functions" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Functions<a href="R1.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Functions provide an easy and concise way of performing more or less complex
 tasks using predefined bits of R code that are provided in “base R” – i.e.
 that come with the basic R installation – or in the various additional packages
@@ -609,8 +649,8 @@ argument. For example, <code>print()</code> writes the text provided as argument
 output. More complex functions often allow for more than one argument. Sometimes
 these are required, but more often these additional arguments are optional and
 can be used to change some options from the default value to the one desired.</p>
-<div id="help" class="section level3" number="2.6.1">
-<h3><span class="header-section-number">2.6.1</span> Help</h3>
+<div id="help" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Help<a href="R1.html#help" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>But how do we know which arguments can or have to be provide to use a function
 and what their effects are? We can check the documentation on CRAN or use Google
 to find additional information. Another often more convenient way, is to use the
@@ -618,7 +658,7 @@ help functionality build into R. By writing <code>?</code> in front of the funct
 into the console and executing the line by pressing “Enter”, the help file is
 opened in the lower right of the RStudio window. Let’s try this for the
 function <code>rnorm()</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="R1.html#cb34-1" aria-hidden="true" tabindex="-1"></a>?<span class="fu">rnorm</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="R1.html#cb35-1" aria-hidden="true" tabindex="-1"></a>?<span class="fu">rnorm</span>()</span></code></pre></div>
 <p>The help file tells us several things. <code>rnorm()</code> is part of a family of
 functions that are related to the normal distribution, each providing a distinct
 functionality. The functionality of <code>rnorm()</code> being the generation of random
@@ -629,242 +669,48 @@ distribution to be drawn from. We also see that <code>mean</code> and <code>sd</
 with the standard values 0 and 1 respectively, indicated by the <code>=</code>. We also see
 that <code>n</code> has no standard value. So we have to provide a value for <code>n</code>, but not
 for <code>mean</code> and <code>sd</code>. Just writing <code>rnorm()</code> will result in an error.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="R1.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>()</span>
-<span id="cb35-2"><a href="R1.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in rnorm(): argument &quot;n&quot; is missing, with no default</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="R1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>()</span>
+<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in rnorm(): argument &quot;n&quot; is missing, with no default</span></span></code></pre></div>
 <p>To provide an argument to a function, we write the name of the argument,
 followed by <code>=</code> and the value to be provided. Note that, since <code>rnorm()</code> draws
 random numbers, your output will differ from the output presented here.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="R1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb36-2"><a href="R1.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.9536784 -1.7869952  0.9081572  0.6752944 -0.5935582 -1.5253821</span></span>
-<span id="cb36-3"><a href="R1.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -1.0646667 -1.0885872 -1.0620062 -0.4097539</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="R1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1.39080907 -0.47353984 -0.67206730 -0.35978381  0.03697366 -0.52596035</span></span>
+<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  0.28334426 -0.78915929 -0.48655634 -0.05768890</span></span></code></pre></div>
 <p>In the same vein, additional arguments that are allowed by the function can
 be defined, instead of using their default values.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="R1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb37-2"><a href="R1.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.437122  9.684778  9.891459  9.722530 10.142810 10.208368 10.453979</span></span>
-<span id="cb37-3"><a href="R1.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8]  9.785268 10.114224  9.355369</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="R1.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb38-2"><a href="R1.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.442620 10.097360 10.296432  9.418301 10.313980 10.007247  9.668164</span></span>
+<span id="cb38-3"><a href="R1.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.853480 10.157117 10.745619</span></span></code></pre></div>
 <p>We can also skip writing the names of arguments in many cases. As the <code>n</code>
 argument is the first listed in the function’s parentheses, R also understands
 the call, if we just provide the value to be used as the first argument. You
 will often encounter the convention that the first argument is written without
 its name and any further arguments are written in full.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="R1.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb38-2"><a href="R1.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.215647  9.234822  9.917779  9.947024 10.380677  9.812325  9.023497</span></span>
-<span id="cb38-3"><a href="R1.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.203344 10.453516  9.694109</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="R1.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb39-2"><a href="R1.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  9.312331 10.245548 10.225661 11.209308  9.902050  9.457866  9.938323</span></span>
+<span id="cb39-3"><a href="R1.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] 10.533465 10.982940 10.431897</span></span></code></pre></div>
 </div>
-<div id="examples-basic-statistical-functions" class="section level3" number="2.6.2">
-<h3><span class="header-section-number">2.6.2</span> Examples: Basic statistical functions</h3>
+<div id="examples-basic-statistical-functions" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Examples: Basic statistical functions<a href="R1.html#examples-basic-statistical-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Base R provides us with some basic statistical functions that are used for
 data analysis.</p>
 <p>We should start with defining a numerical vector that contains some data to be
 analysed.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="R1.html#cb39-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">23</span>, <span class="dv">42</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="R1.html#cb40-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">23</span>, <span class="dv">42</span>)</span></code></pre></div>
 <p>We could be interested in describing this data by its arithmetic mean, median
 and standard deviation. For this purpose we can use the functions <code>mean()</code>,
 <code>median()</code>, and <code>sd()</code> provided by base R. All three do not require additional
 arguments besides the data to be analysed which we can provide using the
 object <code>data</code> we created beforehand.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="R1.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data)</span>
-<span id="cb40-2"><a href="R1.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 18</span></span>
-<span id="cb40-3"><a href="R1.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data)</span>
-<span id="cb40-4"><a href="R1.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 15.5</span></span>
-<span id="cb40-5"><a href="R1.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(data)</span>
-<span id="cb40-6"><a href="R1.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13.49074</span></span></code></pre></div>
-</div>
-</div>
-<div id="ifelse-statements" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> If/Else statements</h2>
-<p>Often we want to write code that reacts to the value of a certain object and
-thus “decides” by itself which action to perform, based on this value. To
-achieve this, we can use <em>conditional execution</em> by using <code>if</code> and <code>else</code>
-statements. The basic syntax look as follows:</p>
-<pre><code>if (condition) {
-  code to be executed when the condition is TRUE
-} else {
-  code to be executed when the condition is FALSE
-}</code></pre>
-<p><code>if</code> and <code>else</code> are both followed by <code>{}</code>, which enclose the code to be
-executed. While it is not strictly necessary to stretch the code over multiple
-lines, I would highly recommend doing this. It increases readability of your
-code for yourself and anyone you share it with, which makes it easier to
-understand and also makes it easier to spot mistakes and correct them. For the
-same reasons, it is also recommended to indent the code to be executed.</p>
-<p>Conditions are created by applying comparison operators, like <code>==</code>, <code>&lt;</code>, <code>&gt;</code>,
-<code>!=</code> and so on. Thus the condition compares two values and returns <code>TRUE</code> if the
-condition is met, and <code>FALSE</code> if it is not met. When the condition for the <code>if</code>
-statement is <code>TRUE</code>, the code between the <code>{}</code> following it is executed. If it
-is <code>FALSE</code>, the code between the <code>{}</code> following the <code>else</code> statement is
-executed instead.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R1.html#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb42-2"><a href="R1.html#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="R1.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb42-4"><a href="R1.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb42-5"><a href="R1.html#cb42-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb42-6"><a href="R1.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is not the answer&quot;</span>)</span>
-<span id="cb42-7"><a href="R1.html#cb42-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-8"><a href="R1.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is the answer&quot;</span></span>
-<span id="cb42-9"><a href="R1.html#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="R1.html#cb42-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb42-11"><a href="R1.html#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-12"><a href="R1.html#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb42-13"><a href="R1.html#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb42-14"><a href="R1.html#cb42-14" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb42-15"><a href="R1.html#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is not the answer&quot;</span>)</span>
-<span id="cb42-16"><a href="R1.html#cb42-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-17"><a href="R1.html#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is not the answer&quot;</span></span></code></pre></div>
-<p>In the code above, we first asign a value to the object <code>x</code> and follow this with
-an <code>if</code> statement that checks if the value equals <code>42</code> and returns a string to
-the console, indicating if the condition was met or not.</p>
-<p>We can also chain multiple <code>if</code> and <code>else</code> statements to create more complex
-decisions. While it is possible to chain a high number of statements in this
-way, it is not recommended to overuse this technique. The code will get long,
-hard to understand and thus mistakes get more likely.</p>
-<p>To chain statements, we use <code>else if</code> statements after the first <code>if</code> and before
-the last <code>else</code>. The basic syntac stays the same. Contemplate the example below.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R1.html#cb43-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb43-2"><a href="R1.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="R1.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb43-4"><a href="R1.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb43-5"><a href="R1.html#cb43-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
-<span id="cb43-6"><a href="R1.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is too low to be the answer&quot;</span>)</span>
-<span id="cb43-7"><a href="R1.html#cb43-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb43-8"><a href="R1.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is too high to be the answer&quot;</span>)</span>
-<span id="cb43-9"><a href="R1.html#cb43-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb43-10"><a href="R1.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;This is the answer&quot;</span></span>
-<span id="cb43-11"><a href="R1.html#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-12"><a href="R1.html#cb43-12" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb43-13"><a href="R1.html#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-14"><a href="R1.html#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb43-15"><a href="R1.html#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb43-16"><a href="R1.html#cb43-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
-<span id="cb43-17"><a href="R1.html#cb43-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
-<span id="cb43-18"><a href="R1.html#cb43-18" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb43-19"><a href="R1.html#cb43-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
-<span id="cb43-20"><a href="R1.html#cb43-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb43-21"><a href="R1.html#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The value is to low to be the answer&quot;</span></span>
-<span id="cb43-22"><a href="R1.html#cb43-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-23"><a href="R1.html#cb43-23" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">84</span></span>
-<span id="cb43-24"><a href="R1.html#cb43-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-25"><a href="R1.html#cb43-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb43-26"><a href="R1.html#cb43-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;This is the answer&quot;</span>)</span>
-<span id="cb43-27"><a href="R1.html#cb43-27" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">42</span>) {</span>
-<span id="cb43-28"><a href="R1.html#cb43-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to low to be the answer&quot;</span>)</span>
-<span id="cb43-29"><a href="R1.html#cb43-29" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb43-30"><a href="R1.html#cb43-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;The value is to high to be the answer&quot;</span>)</span>
-<span id="cb43-31"><a href="R1.html#cb43-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb43-32"><a href="R1.html#cb43-32" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;The value is to high to be the answer&quot;</span></span></code></pre></div>
-<p>In the first case, the <code>if</code> condition is met and the code following the <code>if</code>
-statement is executed. In the second case, the <code>if</code> condition is not met, so the
-code checks if the condition for the <code>else if</code> statement is <code>TRUE</code>. It is in
-this case, so the code following it is executed. In the third case, both
-conditions return <code>FALSE</code> and thus the code following the <code>else</code> statement is
-run.</p>
-<p>We can also combine conditions by applying <em>logical operators</em> to create more
-complex conditions. <code>&amp;&amp;</code> – <em>AND</em> – checks if both conditions combined by it
-are <code>TRUE</code> and only returns <code>TRUE</code> if both are at the same time. <code>||</code> – <em>OR</em> –
-checks if at least on of the conditions is <code>TRUE</code> and returns <code>TRUE</code> if one or
-both are. When combining two conditions, we thus have these possibilities:</p>
-<ul>
-<li><code>TRUE &amp;&amp; TRUE</code> returns <code>TRUE</code></li>
-<li><code>TRUE &amp;&amp; FALSE</code>, <code>FALSE &amp;&amp; TRUE</code> and <code>FALSE &amp;&amp; FALSE</code> all return <code>FALSE</code></li>
-<li><code>TRUE || TRUE</code>, <code>TRUE || FALSE</code> and <code>FALSE || TRUE</code> all return <code>TRUE</code></li>
-<li><code>FALSE || FALSE</code> returns <code>FALSE</code></li>
-</ul>
-<p>In most cases, you could also use single <code>&amp;</code> and <code>|</code> operators, to combine
-conditions. <code>&amp;&amp;</code> and <code>||</code> are the safer alternatives, as they always return a
-single <code>TRUE</code> or <code>FALSE</code> and <code>if</code> statements can not interpret a logical vector
-containing multiple values. <code>&amp;</code> and <code>|</code> can return such a vector if at least
-one object used for comparison is a vector of a length longer than 1. For more
-details on this, you can read the corresponding chapter in “R for Data Science”
-by Wickham &amp; Grolemund:
-<a href="https://r4ds.had.co.nz/functions.html#conditional-execution" target="_blank">https://r4ds.had.co.nz/functions.html#conditional-execution</a>.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="R1.html#cb44-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb44-2"><a href="R1.html#cb44-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb44-3"><a href="R1.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="R1.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb44-5"><a href="R1.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb44-6"><a href="R1.html#cb44-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb44-7"><a href="R1.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is not the answer&quot;</span>)</span>
-<span id="cb44-8"><a href="R1.html#cb44-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-9"><a href="R1.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are the answer&quot;</span></span>
-<span id="cb44-10"><a href="R1.html#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-11"><a href="R1.html#cb44-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb44-12"><a href="R1.html#cb44-12" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb44-13"><a href="R1.html#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-14"><a href="R1.html#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb44-15"><a href="R1.html#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb44-16"><a href="R1.html#cb44-16" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb44-17"><a href="R1.html#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is not the answer&quot;</span>)</span>
-<span id="cb44-18"><a href="R1.html#cb44-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-19"><a href="R1.html#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;At least one of x and y is not the answer&quot;</span></span>
-<span id="cb44-20"><a href="R1.html#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-21"><a href="R1.html#cb44-21" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb44-22"><a href="R1.html#cb44-22" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb44-23"><a href="R1.html#cb44-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-24"><a href="R1.html#cb44-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">||</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb44-25"><a href="R1.html#cb44-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is the answer&quot;</span>)</span>
-<span id="cb44-26"><a href="R1.html#cb44-26" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb44-27"><a href="R1.html#cb44-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb44-28"><a href="R1.html#cb44-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-29"><a href="R1.html#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;At least one of x and y is the answer&quot;</span></span>
-<span id="cb44-30"><a href="R1.html#cb44-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-31"><a href="R1.html#cb44-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-32"><a href="R1.html#cb44-32" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb44-33"><a href="R1.html#cb44-33" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb44-34"><a href="R1.html#cb44-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-35"><a href="R1.html#cb44-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">||</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb44-36"><a href="R1.html#cb44-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;At least one of x and y is the answer&quot;</span>)</span>
-<span id="cb44-37"><a href="R1.html#cb44-37" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb44-38"><a href="R1.html#cb44-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb44-39"><a href="R1.html#cb44-39" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-40"><a href="R1.html#cb44-40" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are not the answer&quot;</span></span></code></pre></div>
-<p>We can use combined conditions and chaining to create more complex decisions.
-But be wary to not overuse both techniques, for the same reasons as stated
-above.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="R1.html#cb45-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb45-2"><a href="R1.html#cb45-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb45-3"><a href="R1.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="R1.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-5"><a href="R1.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb45-6"><a href="R1.html#cb45-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-7"><a href="R1.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
-<span id="cb45-8"><a href="R1.html#cb45-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-9"><a href="R1.html#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
-<span id="cb45-10"><a href="R1.html#cb45-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb45-11"><a href="R1.html#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb45-12"><a href="R1.html#cb45-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb45-13"><a href="R1.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are the answer&quot;</span></span>
-<span id="cb45-14"><a href="R1.html#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-15"><a href="R1.html#cb45-15" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb45-16"><a href="R1.html#cb45-16" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb45-17"><a href="R1.html#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-18"><a href="R1.html#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-19"><a href="R1.html#cb45-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb45-20"><a href="R1.html#cb45-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-21"><a href="R1.html#cb45-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
-<span id="cb45-22"><a href="R1.html#cb45-22" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-23"><a href="R1.html#cb45-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
-<span id="cb45-24"><a href="R1.html#cb45-24" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb45-25"><a href="R1.html#cb45-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb45-26"><a href="R1.html#cb45-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb45-27"><a href="R1.html#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;x is the answer&quot;</span></span>
-<span id="cb45-28"><a href="R1.html#cb45-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-29"><a href="R1.html#cb45-29" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">24</span></span>
-<span id="cb45-30"><a href="R1.html#cb45-30" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb45-31"><a href="R1.html#cb45-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-32"><a href="R1.html#cb45-32" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span> <span class="sc">&amp;&amp;</span> y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-33"><a href="R1.html#cb45-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are the answer&quot;</span>)</span>
-<span id="cb45-34"><a href="R1.html#cb45-34" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-35"><a href="R1.html#cb45-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;x is the answer&quot;</span>)</span>
-<span id="cb45-36"><a href="R1.html#cb45-36" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (y <span class="sc">==</span> <span class="dv">42</span>) {</span>
-<span id="cb45-37"><a href="R1.html#cb45-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;y is the answer&quot;</span>)</span>
-<span id="cb45-38"><a href="R1.html#cb45-38" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb45-39"><a href="R1.html#cb45-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;Both x and y are not the answer&quot;</span>)</span>
-<span id="cb45-40"><a href="R1.html#cb45-40" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb45-41"><a href="R1.html#cb45-41" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Both x and y are not the answer&quot;</span></span></code></pre></div>
-<p>Please note, that the code following the statements can be more complex than the
-code used in these introductory examples and can be comprised of anything that
-is valid R code. Also, each <code>{}</code>can hold multiple lines of code.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="R1.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data)</span>
+<span id="cb41-2"><a href="R1.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 18</span></span>
+<span id="cb41-3"><a href="R1.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data)</span>
+<span id="cb41-4"><a href="R1.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 15.5</span></span>
+<span id="cb41-5"><a href="R1.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(data)</span>
+<span id="cb41-6"><a href="R1.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 13.49074</span></span></code></pre></div>
 
+</div>
 </div>
 </div>
             </section>
@@ -877,7 +723,6 @@ is valid R code. Also, each <code>{}</code>can hold multiple lines of code.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -907,6 +752,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Scraping of tables &amp; dynamic websites | Web Scraping using R</title>
   <meta name="description" content="6 Scraping of tables &amp; dynamic websites | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Scraping of tables &amp; dynamic websites | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
   
-  <meta name="github-repo" content="webscraping-tures/webscraping-tures.github.io" />
+  <meta name="github-repo" content="jakobtures.github.io/web-scraping/" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="6 Scraping of tables &amp; dynamic websites | Web Scraping using R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2021-06-30" />
+<meta name="date" content="2022-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="css-selectors-developer-tools.html"/>
 <link rel="next" href="rvest3.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,18 +51,21 @@
 
 
 
-
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
-<script src="libs/echarts4r-binding-0.4.0/echarts4r.js"></script>
+<script src="libs/echarts4r-binding-0.4.2/echarts4r.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -122,6 +126,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -137,201 +142,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Web Scraping using R
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
+<li><a href="index.html#introduction">Introduction<span></span></a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-is-web-scraping"><i class="fa fa-check"></i>What is web scraping?</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-contents"><i class="fa fa-check"></i>Course contents</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-requirements"><i class="fa fa-check"></i>Technical requirements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
+<li><a href="index.html#what-is-web-scraping">What is web scraping?<span></span></a></li>
+<li><a href="index.html#course-contents">Course contents<span></span></a></li>
+<li><a href="index.html#technical-requirements">Technical requirements<span></span></a></li>
+<li><a href="index.html#conventions">Conventions<span></span></a></li>
+<li><a href="index.html#acknowledgements">Acknowledgements<span></span></a></li>
+<li><a href="index.html#colophon">Colophon<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<li class="part"><span><b>I Basics<span></span></b></span></li>
+<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html<span></span></a></li>
+<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes<span></span></a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links<span></span></a></li>
+<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities<span></span></a></li>
 </ul></li>
-<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<li class="part"><span><b>II R Basics &amp; Tidyverse<span></span></b></span></li>
+<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
+<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators<span></span></a></li>
+<li class="chapter" data-level="2.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>2.3.3</b> Logical operators<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
-<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
+<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects<span></span></a></li>
+<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
-<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
+<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors<span></span></a></li>
+<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
-<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
-</ul></li>
-<li class="chapter" data-level="2.7" data-path="R1.html"><a href="R1.html#ifelse-statements"><i class="fa fa-check"></i><b>2.7</b> If/Else statements</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
-<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
-<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
-<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
-</ul></li>
-<li class="part"><span><b>III Scraping</b></span></li>
-<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
-<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()</a></li>
-<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_nodes"><i class="fa fa-check"></i><b>4.2.2</b> html_nodes()</a></li>
-<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names</a></li>
-<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area</a></li>
-<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble</a></li>
+<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help<span></span></a></li>
+<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools</a>
+<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors</a>
+<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes</a></li>
-<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs</a></li>
-<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes</a></li>
-<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels</a></li>
-<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors</a></li>
+<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects<span></span></a></li>
+<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools</a></li>
+<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites</a>
+<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
-<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamische-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamische Websites</a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries</a></li>
-<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
-<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
-<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources<span></span></a></li>
 </ul></li>
+<li class="part"><span><b>III Scraping<span></span></b></span></li>
+<li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="rvest1.html"><a href="rvest1.html#hello_world.html-1"><i class="fa fa-check"></i><b>4.2</b> hello_world.html<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="rvest1.html"><a href="rvest1.html#read_html"><i class="fa fa-check"></i><b>4.2.1</b> read_html()<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="rvest1.html"><a href="rvest1.html#html_elements"><i class="fa fa-check"></i><b>4.2.2</b> html_elements()<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="rvest1.html"><a href="rvest1.html#html_text"><i class="fa fa-check"></i><b>4.2.3</b> html_text()<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
+<li class="chapter" data-level="4.3" data-path="rvest1.html"><a href="rvest1.html#countries-of-the-world"><i class="fa fa-check"></i><b>4.3</b> Countries of the World<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages</a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index</a></li>
-<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()</a></li>
-<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query</a></li>
-<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages</a></li>
+<li class="chapter" data-level="4.3.1" data-path="rvest1.html"><a href="rvest1.html#country-names"><i class="fa fa-check"></i><b>4.3.1</b> Country names<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="rvest1.html"><a href="rvest1.html#capitals-population-and-area"><i class="fa fa-check"></i><b>4.3.2</b> Capitals, population and area<span></span></a></li>
+<li class="chapter" data-level="4.3.3" data-path="rvest1.html"><a href="rvest1.html#merge-into-one-tibble"><i class="fa fa-check"></i><b>4.3.3</b> Merge into one tibble<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files</a>
+<li class="chapter" data-level="5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html"><i class="fa fa-check"></i><b>5</b> CSS selectors &amp; Developer Tools<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#csv-files"><i class="fa fa-check"></i><b>8.1</b> CSV files</a>
+<li class="chapter" data-level="5.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#css"><i class="fa fa-check"></i><b>5.1</b> CSS selectors<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file</a></li>
+<li class="chapter" data-level="5.1.1" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#classes"><i class="fa fa-check"></i><b>5.1.1</b> Classes<span></span></a></li>
+<li class="chapter" data-level="5.1.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#ids"><i class="fa fa-check"></i><b>5.1.2</b> IDs<span></span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#attributes"><i class="fa fa-check"></i><b>5.1.3</b> Attributes<span></span></a></li>
+<li class="chapter" data-level="5.1.4" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#hierarchy-levels"><i class="fa fa-check"></i><b>5.1.4</b> Hierarchy levels<span></span></a></li>
+<li class="chapter" data-level="5.1.5" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#further-selectors"><i class="fa fa-check"></i><b>5.1.5</b> Further selectors<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files</a>
-<ul>
-<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the csv files</a></li>
+<li class="chapter" data-level="5.2" data-path="css-selectors-developer-tools.html"><a href="css-selectors-developer-tools.html#developer-tools"><i class="fa fa-check"></i><b>5.2</b> Developer Tools<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files</a></li>
+<li class="chapter" data-level="6" data-path="rvest2.html"><a href="rvest2.html"><i class="fa fa-check"></i><b>6</b> Scraping of tables &amp; dynamic websites<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rvest2.html"><a href="rvest2.html#scraping-of-tables"><i class="fa fa-check"></i><b>6.1</b> Scraping of tables<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables<span></span></a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice</a>
+<li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites<span></span></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers</a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files</a></li>
-</ul></li>
-<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic</a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action</a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
-</ul></li>
-<li class="part"><span><b>IV Data analysis</b></span></li>
-<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.1</b> Gathering the links</a></li>
-<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2</b> Downloading the subpages</a></li>
-<li class="chapter" data-level="10.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.3</b> Extracting the data of interest</a>
-<ul>
-<li class="chapter" data-level="10.3.1" data-path="scraping.html"><a href="scraping.html#dealing-with-missing-data-in-lists"><i class="fa fa-check"></i><b>10.3.1</b> Dealing with missing data in lists</a></li>
-</ul></li>
-<li class="chapter" data-level="10.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.4</b> Saving the data</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code></a>
-<ul>
-<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones</a></li>
-<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#cleaning-the-data-on-police-reports"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports</a></li>
-</ul></li>
-<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code></a></li>
-<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code></a>
-<ul>
-<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups</a></li>
-<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time</a></li>
+<li class="chapter" data-level="6.2.1" data-path="rvest2.html"><a href="rvest2.html#html-forms-and-html-queries"><i class="fa fa-check"></i><b>6.2.1</b> HTML forms and HTML queries<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query<span></span></a></li>
+<li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result<span></span></a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot</a>
+<li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax</a></li>
-<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics</a>
+<li class="chapter" data-level="7.1" data-path="rvest3.html"><a href="rvest3.html#index-pages"><i class="fa fa-check"></i><b>7.1</b> Index-pages<span></span></a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y</a></li>
-<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports</a></li>
+<li class="chapter" data-level="7.1.1" data-path="rvest3.html"><a href="rvest3.html#scraping-of-the-index"><i class="fa fa-check"></i><b>7.1.1</b> Scraping of the index<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="rvest3.html"><a href="rvest3.html#iteration-with-map"><i class="fa fa-check"></i><b>7.1.2</b> Iteration with map()<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="rvest3.html"><a href="rvest3.html#scraping-the-sub-pages"><i class="fa fa-check"></i><b>7.1.3</b> Scraping the sub-pages<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="rvest3.html"><a href="rvest3.html#pagination"><i class="fa fa-check"></i><b>7.2</b> Pagination<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="rvest3.html"><a href="rvest3.html#the-query-1"><i class="fa fa-check"></i><b>7.2.1</b> The query<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="rvest3.html"><a href="rvest3.html#sub-pgs"><i class="fa fa-check"></i><b>7.2.2</b> Scraping the sub-pages<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
+<li class="chapter" data-level="8" data-path="files.html"><a href="files.html"><i class="fa fa-check"></i><b>8</b> Downloading and saving files<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
-<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-and-counting-robberies-from-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting and counting robberies from police reports</a></li>
-<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#parsing-two-numbers-from-a-string"><i class="fa fa-check"></i><b>13.3</b> Parsing two numbers from a string</a></li>
+<li class="chapter" data-level="8.1" data-path="files.html"><a href="files.html#CSV"><i class="fa fa-check"></i><b>8.1</b> CSV files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="files.html"><a href="files.html#parsing-a-csv-file"><i class="fa fa-check"></i><b>8.1.1</b> Parsing a CSV file<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="files.html"><a href="files.html#downloading-files"><i class="fa fa-check"></i><b>8.2</b> Downloading files<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="files.html"><a href="files.html#parsing-the-csv-files"><i class="fa fa-check"></i><b>8.2.1</b> Parsing the CSV files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="files.html"><a href="files.html#saving-data-files"><i class="fa fa-check"></i><b>8.3</b> Saving data files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="goodpractice.html"><a href="goodpractice.html"><i class="fa fa-check"></i><b>9</b> Good practice<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="goodpractice.html"><a href="goodpractice.html#we-aint-no-web-crawlers"><i class="fa fa-check"></i><b>9.1</b> We ain’t no web crawlers<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="goodpractice.html"><a href="goodpractice.html#on-robots.txt-files"><i class="fa fa-check"></i><b>9.1.1</b> On robots.txt files<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="goodpractice.html"><a href="goodpractice.html#reduce-traffic"><i class="fa fa-check"></i><b>9.2</b> Reduce traffic<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="goodpractice.html"><a href="goodpractice.html#waiting-times-in-action"><i class="fa fa-check"></i><b>9.2.1</b> Waiting times in action<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>IV Sample project<span></span></b></span></li>
+<li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#topic-and-data"><i class="fa fa-check"></i><b>10.1</b> Topic and data<span></span></a></li>
+<li class="chapter" data-level="10.2" data-path="scraping.html"><a href="scraping.html#scraping-the-data"><i class="fa fa-check"></i><b>10.2</b> Scraping the data<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="scraping.html"><a href="scraping.html#gathering-the-links"><i class="fa fa-check"></i><b>10.2.1</b> Gathering the links<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="scraping.html"><a href="scraping.html#downloading-the-subpages"><i class="fa fa-check"></i><b>10.2.2</b> Downloading the subpages<span></span></a></li>
+<li class="chapter" data-level="10.2.3" data-path="scraping.html"><a href="scraping.html#extracting-the-data-of-interest"><i class="fa fa-check"></i><b>10.2.3</b> Extracting the data of interest<span></span></a></li>
+<li class="chapter" data-level="10.2.4" data-path="scraping.html"><a href="scraping.html#saving-the-data"><i class="fa fa-check"></i><b>10.2.4</b> Saving the data<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>11</b> Transformation with dplyr<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>11.1</b> <code>mutate()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="dplyr.html"><a href="dplyr.html#computing-new-variables-from-existing-ones"><i class="fa fa-check"></i><b>11.1.1</b> Computing new variables from existing ones<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="dplyr.html"><a href="dplyr.html#clean"><i class="fa fa-check"></i><b>11.1.2</b> Cleaning the data on police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>11.2</b> <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="dplyr.html"><a href="dplyr.html#rename"><i class="fa fa-check"></i><b>11.3</b> <code>rename()</code><span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>11.4</b> <code>filter()</code><span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="dplyr.html"><a href="dplyr.html#summarise-group_by"><i class="fa fa-check"></i><b>11.5</b> <code>summarise()</code> &amp; <code>group_by()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="dplyr.html"><a href="dplyr.html#number-of-reports-by-groups"><i class="fa fa-check"></i><b>11.5.1</b> Number of reports by groups<span></span></a></li>
+<li class="chapter" data-level="11.5.2" data-path="dplyr.html"><a href="dplyr.html#summary-statistics-on-the-time"><i class="fa fa-check"></i><b>11.5.2</b> Summary statistics on the time<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="dplyr.html"><a href="dplyr.html#exporting-tables"><i class="fa fa-check"></i><b>11.6</b> Exporting tables<span></span></a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="dplyr.html"><a href="dplyr.html#further-resources"><i class="fa fa-check"></i><b>11.6.1</b> Further resources<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ggplot.html"><a href="ggplot.html"><i class="fa fa-check"></i><b>12</b> Graphical analysis with ggplot<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ggplot.html"><a href="ggplot.html#ggplot2-syntax"><i class="fa fa-check"></i><b>12.1</b> ggplot2 syntax<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="ggplot.html"><a href="ggplot.html#geoms-and-aesthetics"><i class="fa fa-check"></i><b>12.2</b> Geoms and aesthetics<span></span></a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ggplot.html"><a href="ggplot.html#continuous-x-continuous-y"><i class="fa fa-check"></i><b>12.2.1</b> Continuous x, continuous y<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="ggplot.html"><a href="ggplot.html#graphical-analysis-of-berlin-police-reports"><i class="fa fa-check"></i><b>12.2.2</b> Graphical analysis of Berlin police reports<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#exporting-plots"><i class="fa fa-check"></i><b>12.3</b> Exporting plots<span></span></a></li>
+</ul></li>
+<li class="part"><span><b>V Regular expressions<span></span></b></span></li>
+<li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column<span></span></a></li>
+<li class="chapter" data-level="13.2" data-path="regex.html"><a href="regex.html#detecting-robberies-in-police-reports"><i class="fa fa-check"></i><b>13.2</b> Detecting robberies in police reports<span></span></a></li>
+<li class="chapter" data-level="13.3" data-path="regex.html"><a href="regex.html#extracting-details-from-a-list-of-names"><i class="fa fa-check"></i><b>13.3</b> Extracting details from a list of names<span></span></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -353,14 +365,14 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rvest2" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Scraping of tables &amp; dynamic websites</h1>
-<div id="scraping-of-tables" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Scraping of tables</h2>
+<div id="rvest2" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Scraping of tables &amp; dynamic websites<a href="rvest2.html#rvest2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="scraping-of-tables" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Scraping of tables<a href="rvest2.html#scraping-of-tables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In web scraping, we will often pursue the goal of transferring the extracted
 data into a tibble or data frame in order to be able to analyse it further. It
 is particularly helpful if the data we are interested in is already stored in an
-HTML table. Because rvest allows us to read out complete tables quickly and
+HTML table. Because <strong>rvest</strong> allows us to read out complete tables quickly and
 easily with the function <code>html_table()</code>.</p>
 <p>As a reminder, the basic structure of the HTML code for tables is as follows:</p>
 <pre><code>&lt;table&gt;
@@ -373,8 +385,8 @@ headings with <code>&lt;th&gt;</code> and cells with <code>&lt;td&gt;</code>.</p
 <p>Before we start scraping, we load the necessary packages as usual:</p>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="rvest2.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb109-2"><a href="rvest2.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
-<div id="table-with-css-selectors-from-wikipedia" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Table with CSS selectors from Wikipedia</h3>
+<div id="table-with-css-selectors-from-wikipedia" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Table with CSS selectors from Wikipedia<a href="rvest2.html#table-with-css-selectors-from-wikipedia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>On the
 <a href="https://en.wikipedia.org/wiki/CSS" target="_blank">Wikipedia page on “CSS”</a>,
 there is also a table with CSS selectors. This is our scraping target.</p>
@@ -387,89 +399,63 @@ elements that are recognisable at first glance as “classic” tables, but also
 among other things, the “info boxes” at the top right edge of the article or the
 fold-out lists of further links at the bottom. If you want to look at this more
 closely, the Web Developer Tools can be very helpful here.</p>
-<p>Instead of simply selecting all <code>&lt;table&gt;</code> nodes on the page, one strategy might
+<p>Instead of simply selecting all <code>&lt;table&gt;</code> elements on the page, one strategy might
 be to use the WDTs to create a CSS selector for that specific table:
-<code>"table.wikitable:nth-child(28)"</code>. We thus select the table of class
-<code>"wikitable"</code> which is the 28th child of the parent hierarchy level –
+<code>"table.wikitable:nth-child(32)"</code>. We thus select the table of class
+<code>"wikitable"</code> which is the 32nd child of the parent hierarchy level –
 <code>&lt;div class="mw-parser-output"&gt;</code>.</p>
 <p>If we only want to select a single HTML element, it can be helpful to use the
-function <code>html_node()</code> instead of <code>html_nodes()</code>.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="rvest2.html#cb111-1" aria-hidden="true" tabindex="-1"></a>node <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb111-2"><a href="rvest2.html#cb111-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="at">css =</span> <span class="st">&quot;table.wikitable:nth-child(28)&quot;</span>)</span>
-<span id="cb111-3"><a href="rvest2.html#cb111-3" aria-hidden="true" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb111-4"><a href="rvest2.html#cb111-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;table.wikitable:nth-child(28)&quot;</span>)</span>
-<span id="cb111-5"><a href="rvest2.html#cb111-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-6"><a href="rvest2.html#cb111-6" aria-hidden="true" tabindex="-1"></a>nodes</span>
-<span id="cb111-7"><a href="rvest2.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
-<span id="cb111-8"><a href="rvest2.html#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;table class=&quot;wikitable&quot;&gt;&lt;tbody&gt;\n&lt;tr&gt;\n&lt;th&gt;Pattern&lt;/th&gt;\n&lt;th&gt;Matches&lt;/th ...</span></span>
-<span id="cb111-9"><a href="rvest2.html#cb111-9" aria-hidden="true" tabindex="-1"></a>node</span>
+function <code>html_element()</code> instead of <code>html_elements()</code>.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="rvest2.html#cb111-1" aria-hidden="true" tabindex="-1"></a>elements <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb111-2"><a href="rvest2.html#cb111-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;table.wikitable:nth-child(32)&quot;</span>)</span>
+<span id="cb111-3"><a href="rvest2.html#cb111-3" aria-hidden="true" tabindex="-1"></a>elements</span>
+<span id="cb111-4"><a href="rvest2.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="do">## {xml_nodeset (1)}</span></span>
+<span id="cb111-5"><a href="rvest2.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;table class=&quot;wikitable&quot;&gt;&lt;tbody&gt;\n&lt;tr&gt;\n&lt;th&gt;Pattern&lt;/th&gt;\n&lt;th&gt;Matches&lt;/th ...</span></span>
+<span id="cb111-6"><a href="rvest2.html#cb111-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-7"><a href="rvest2.html#cb111-7" aria-hidden="true" tabindex="-1"></a>element <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb111-8"><a href="rvest2.html#cb111-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_element</span>(<span class="at">css =</span> <span class="st">&quot;table.wikitable:nth-child(32)&quot;</span>)</span>
+<span id="cb111-9"><a href="rvest2.html#cb111-9" aria-hidden="true" tabindex="-1"></a>element</span>
 <span id="cb111-10"><a href="rvest2.html#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="do">## {html_node}</span></span>
 <span id="cb111-11"><a href="rvest2.html#cb111-11" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;table class=&quot;wikitable&quot;&gt;</span></span>
 <span id="cb111-12"><a href="rvest2.html#cb111-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &lt;tbody&gt;\n&lt;tr&gt;\n&lt;th&gt;Pattern&lt;/th&gt;\n&lt;th&gt;Matches&lt;/th&gt;\n&lt;th&gt;First defined&lt;br&gt;i ...</span></span></code></pre></div>
 <p>The difference is mainly in the output of the function. This is recognisable by
 the entry inside the { } in the output. In the first case, we get a list of HTML
 elements – an “xml_nodeset” – even if this list, as here, consists of only one
-entry. <code>html_node()</code> returns the HTML element itself – the “html_node” – as
+entry. <code>html_element()</code> returns the HTML element itself – the “html_element” – as
 the function’s output. Why is this relevant? In many cases it can be easier to
 work directly with the HTML element instead of a list of HTML elements, for
 example when transferring tables into data frames and tibbles, but more on that
 later.</p>
 <p>To read out the table selected in this way, we only need to apply the function
-<code>html_table()</code> to the HTML node.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="rvest2.html#cb112-1" aria-hidden="true" tabindex="-1"></a>css_table_df <span class="ot">&lt;-</span> node <span class="sc">%&gt;%</span> </span>
+<code>html_table()</code> to the HTML element.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="rvest2.html#cb112-1" aria-hidden="true" tabindex="-1"></a>css_table <span class="ot">&lt;-</span> element <span class="sc">%&gt;%</span> </span>
 <span id="cb112-2"><a href="rvest2.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>()</span>
 <span id="cb112-3"><a href="rvest2.html#cb112-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb112-4"><a href="rvest2.html#cb112-4" aria-hidden="true" tabindex="-1"></a>css_table_df <span class="sc">%&gt;%</span> </span>
+<span id="cb112-4"><a href="rvest2.html#cb112-4" aria-hidden="true" tabindex="-1"></a>css_table <span class="sc">%&gt;%</span> </span>
 <span id="cb112-5"><a href="rvest2.html#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
-<span id="cb112-6"><a href="rvest2.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">##         Pattern</span></span>
-<span id="cb112-7"><a href="rvest2.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1             E</span></span>
-<span id="cb112-8"><a href="rvest2.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2        E:link</span></span>
-<span id="cb112-9"><a href="rvest2.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      E:active</span></span>
-<span id="cb112-10"><a href="rvest2.html#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 E::first-line</span></span>
-<span id="cb112-11"><a href="rvest2.html#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="do">##                                                                                                                         Matches</span></span>
-<span id="cb112-12"><a href="rvest2.html#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                                                                                                          an element of type E</span></span>
-<span id="cb112-13"><a href="rvest2.html#cb112-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 an E element is the source anchor of a hyperlink of which the target is not yet visited (:link) or already visited (:visited)</span></span>
-<span id="cb112-14"><a href="rvest2.html#cb112-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3                                                                                      an E element during certain user actions</span></span>
-<span id="cb112-15"><a href="rvest2.html#cb112-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 4                                                                                      the first formatted line of an E element</span></span>
-<span id="cb112-16"><a href="rvest2.html#cb112-16" aria-hidden="true" tabindex="-1"></a><span class="do">##   First definedin CSS level</span></span>
-<span id="cb112-17"><a href="rvest2.html#cb112-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                         1</span></span>
-<span id="cb112-18"><a href="rvest2.html#cb112-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 2                         1</span></span>
-<span id="cb112-19"><a href="rvest2.html#cb112-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 3                         1</span></span>
-<span id="cb112-20"><a href="rvest2.html#cb112-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 4                         1</span></span></code></pre></div>
-<p>The result is a data frame that contains the scraped contents of the HTML table
-and adopts the column names stored in the <code>&lt;th&gt;</code> tags for the columns of the
-data frame. Due to the very long cells in the “Matches” column, the output of
-the RStudio console is unfortunately not particularly helpful. Another advantage
-of using tibbles instead of data frames is that long cell contents are
-automatically abbreviated in the output. To convert a data frame into a tibble,
-we can use the function <code>as_tibble()</code>.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="rvest2.html#cb113-1" aria-hidden="true" tabindex="-1"></a>css_table_tbl <span class="ot">&lt;-</span> node <span class="sc">%&gt;%</span> </span>
-<span id="cb113-2"><a href="rvest2.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb113-3"><a href="rvest2.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb113-4"><a href="rvest2.html#cb113-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-5"><a href="rvest2.html#cb113-5" aria-hidden="true" tabindex="-1"></a>css_table_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb113-6"><a href="rvest2.html#cb113-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
-<span id="cb113-7"><a href="rvest2.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 x 3</span></span>
-<span id="cb113-8"><a href="rvest2.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   Pattern     Matches                                      `First definedin CSS…</span></span>
-<span id="cb113-9"><a href="rvest2.html#cb113-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;       &lt;chr&gt;                                                        &lt;int&gt;</span></span>
-<span id="cb113-10"><a href="rvest2.html#cb113-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 E           an element of type E                                             1</span></span>
-<span id="cb113-11"><a href="rvest2.html#cb113-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 E:link      an E element is the source anchor of a hype…                     1</span></span>
-<span id="cb113-12"><a href="rvest2.html#cb113-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 E:active    an E element during certain user actions                         1</span></span>
-<span id="cb113-13"><a href="rvest2.html#cb113-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 E::first-l… the first formatted line of an E element                         1</span></span></code></pre></div>
+<span id="cb112-6"><a href="rvest2.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 × 3</span></span>
+<span id="cb112-7"><a href="rvest2.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Pattern       Matches                                    `First definedin CSS…</span></span>
+<span id="cb112-8"><a href="rvest2.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;         &lt;chr&gt;                                                      &lt;int&gt;</span></span>
+<span id="cb112-9"><a href="rvest2.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 E             an element of type E                                           1</span></span>
+<span id="cb112-10"><a href="rvest2.html#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 E:link        an E element is the source anchor of a hy…                     1</span></span>
+<span id="cb112-11"><a href="rvest2.html#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 E:active      an E element during certain user actions                       1</span></span>
+<span id="cb112-12"><a href="rvest2.html#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 E::first-line the first formatted line of an E element                       1</span></span></code></pre></div>
+<p>The result is a tibble that contains the scraped contents of the HTML table
+and adopts the column names stored in the <code>&lt;th&gt;</code> tags for the columns.</p>
 </div>
-<div id="scraping-multiple-tables" class="section level3" number="6.1.2">
-<h3><span class="header-section-number">6.1.2</span> Scraping multiple tables</h3>
+<div id="scraping-multiple-tables" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Scraping multiple tables<a href="rvest2.html#scraping-multiple-tables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It could also be our scraping goal to scrape not only the first, but all four
 content tables of the Wikipedia article. If we look at the four tables in the
 source code and/or the WDTs, we see that they all carry the class <code>"wikitable"</code>.
 This allows us to select them easily. Please note that the function
-<code>html_nodes()</code> must be used again, as we no longer need just one element, but a
+<code>html_elements()</code> must be used again, as we no longer need just one element, but a
 list of several selected elements.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="rvest2.html#cb114-1" aria-hidden="true" tabindex="-1"></a>tables <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb114-2"><a href="rvest2.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;table.wikitable&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb114-3"><a href="rvest2.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>()</span></code></pre></div>
-<p>The result is a list of four data frames, each of which contains one of the four
-tables. If we want to select an individual data frame from the list, for
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="rvest2.html#cb113-1" aria-hidden="true" tabindex="-1"></a>tables <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb113-2"><a href="rvest2.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;table.wikitable&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb113-3"><a href="rvest2.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>()</span></code></pre></div>
+<p>The result is a list of four tibbles, each of which contains one of the four
+tables. If we want to select an individual tibble from the list, for
 example, to transfer it into a new object, we have to rely on <em>subsetting</em>.</p>
 <p>We have learned about basic subsetting for vectors using <code>[#]</code>, in chapter
 <a href="R1.html#R1">2</a>. For lists, things can get a little bit more complicated.
@@ -478,74 +464,80 @@ There are basically two ways of subsetting lists in R: <code>list_name[#]</code>
 returns to us. In the first case, the returned object is always a list, even if
 it may only consist of one element. Using double square brackets, on the other
 hand, returns a single element directly. So the difference is not dissimilar to
-that between <code>html_nodes()</code> and <code>html_node()</code>.</p>
-<p>For example, if our goal is to select the third data frame from the list of four
+that between <code>html_elements()</code> and <code>html_element()</code>.</p>
+<p>For example, if our goal is to select the third tibble from the list of four
 data frames, which subsetting should we use?</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="rvest2.html#cb115-1" aria-hidden="true" tabindex="-1"></a>tables[<span class="dv">3</span>] <span class="sc">%&gt;%</span> </span>
-<span id="cb115-2"><a href="rvest2.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
-<span id="cb115-3"><a href="rvest2.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 1</span></span>
-<span id="cb115-4"><a href="rvest2.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :&#39;data.frame&#39;:    7 obs. of  2 variables:</span></span>
-<span id="cb115-5"><a href="rvest2.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Selectors  : chr [1:7] &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
-<span id="cb115-6"><a href="rvest2.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Specificity: chr [1:7] &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span>
-<span id="cb115-7"><a href="rvest2.html#cb115-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-8"><a href="rvest2.html#cb115-8" aria-hidden="true" tabindex="-1"></a>tables[[<span class="dv">3</span>]] <span class="sc">%&gt;%</span> </span>
-<span id="cb115-9"><a href="rvest2.html#cb115-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
-<span id="cb115-10"><a href="rvest2.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="do">## &#39;data.frame&#39;:    7 obs. of  2 variables:</span></span>
-<span id="cb115-11"><a href="rvest2.html#cb115-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Selectors  : chr  &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
-<span id="cb115-12"><a href="rvest2.html#cb115-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Specificity: chr  &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span></code></pre></div>
-<p>In the first case, we see that we have a list of length 1, which contains a data
-frame with 7 lines and 2 variables, as well as further information about these
-variables. In the second case, we get the data frame directly, i.e. no longer as
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="rvest2.html#cb114-1" aria-hidden="true" tabindex="-1"></a>tables[<span class="dv">3</span>] <span class="sc">%&gt;%</span> </span>
+<span id="cb114-2"><a href="rvest2.html#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
+<span id="cb114-3"><a href="rvest2.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 1</span></span>
+<span id="cb114-4"><a href="rvest2.html#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : tibble [7 × 2] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb114-5"><a href="rvest2.html#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Selectors  : chr [1:7] &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
+<span id="cb114-6"><a href="rvest2.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Specificity: chr [1:7] &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span>
+<span id="cb114-7"><a href="rvest2.html#cb114-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-8"><a href="rvest2.html#cb114-8" aria-hidden="true" tabindex="-1"></a>tables[[<span class="dv">3</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb114-9"><a href="rvest2.html#cb114-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
+<span id="cb114-10"><a href="rvest2.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="do">## tibble [7 × 2] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb114-11"><a href="rvest2.html#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Selectors  : chr [1:7] &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
+<span id="cb114-12"><a href="rvest2.html#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ Specificity: chr [1:7] &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span></code></pre></div>
+<p>In the first case, we see that we have a list of length 1, which contains a
+tibble with 7 lines and 2 variables, as well as further information about these
+variables. In the second case, we get the tibble directly, i.e. no longer as
 an element of a list. So we have to use <code>list_name[[]]</code> to directly select a
-single data frame from a list of data frames.</p>
+single tibble from a list of tibbles.</p>
 <p>If we are interested in selecting several elements from a list instead, this is
 only possible with <code>list_name[]</code>. Instead of selecting an element with a single
 number, we can select several with a vector of numbers in one step.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="rvest2.html#cb116-1" aria-hidden="true" tabindex="-1"></a>tables[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="sc">%&gt;%</span> </span>
-<span id="cb116-2"><a href="rvest2.html#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
-<span id="cb116-3"><a href="rvest2.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 2</span></span>
-<span id="cb116-4"><a href="rvest2.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :&#39;data.frame&#39;:    42 obs. of  3 variables:</span></span>
-<span id="cb116-5"><a href="rvest2.html#cb116-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Pattern                  : chr [1:42] &quot;E&quot; &quot;E:link&quot; &quot;E:active&quot; &quot;E::first-line&quot; ...</span></span>
-<span id="cb116-6"><a href="rvest2.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Matches                  : chr [1:42] &quot;an element of type E&quot; &quot;an E element is the source anchor of a hyperlink of which the target is not yet visited (:link) or already visited (:visited)&quot; &quot;an E element during certain user actions&quot; &quot;the first formatted line of an E element&quot; ...</span></span>
-<span id="cb116-7"><a href="rvest2.html#cb116-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ First definedin CSS level: int [1:42] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span id="cb116-8"><a href="rvest2.html#cb116-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :&#39;data.frame&#39;:    7 obs. of  2 variables:</span></span>
-<span id="cb116-9"><a href="rvest2.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Selectors  : chr [1:7] &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
-<span id="cb116-10"><a href="rvest2.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Specificity: chr [1:7] &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span></code></pre></div>
-<p>As a result, we get a list again that contains the two elements selected here.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="rvest2.html#cb115-1" aria-hidden="true" tabindex="-1"></a>tables[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb115-2"><a href="rvest2.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span>
+<span id="cb115-3"><a href="rvest2.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 2</span></span>
+<span id="cb115-4"><a href="rvest2.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : tibble [42 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb115-5"><a href="rvest2.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Pattern                  : chr [1:42] &quot;E&quot; &quot;E:link&quot; &quot;E:active&quot; &quot;E::first-line&quot; ...</span></span>
+<span id="cb115-6"><a href="rvest2.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Matches                  : chr [1:42] &quot;an element of type E&quot; &quot;an E element is the source anchor of a hyperlink of which the target is not yet visited (:link) or already visited (:visited)&quot; &quot;an E element during certain user actions&quot; &quot;the first formatted line of an E element&quot; ...</span></span>
+<span id="cb115-7"><a href="rvest2.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ First definedin CSS level: int [1:42] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb115-8"><a href="rvest2.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ : tibble [7 × 2] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb115-9"><a href="rvest2.html#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Selectors  : chr [1:7] &quot;h1 {color: white;}&quot; &quot;p em {color: green;}&quot; &quot;.grape {color: red;}&quot; &quot;p.bright {color: blue;}&quot; ...</span></span>
+<span id="cb115-10"><a href="rvest2.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ Specificity: chr [1:7] &quot;0, 0, 0, 1&quot; &quot;0, 0, 0, 2&quot; &quot;0, 0, 1, 0&quot; &quot;0, 0, 1, 1&quot; ...</span></span></code></pre></div>
+<p>As a result, we get a list again that contains the two tibbles selected here.</p>
 </div>
-<div id="tabellen-mit-nas" class="section level3" number="6.1.3">
-<h3><span class="header-section-number">6.1.3</span> Tabellen mit NAs</h3>
+<div id="tabellen-mit-nas" class="section level3 hasAnchor" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Tabellen mit NAs<a href="rvest2.html#tabellen-mit-nas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>What happens when we try to read a table with missing values? Consider the
 following example:
-<a href="https://webscraping-tures.github.io/table_na.html" target="_blank">https://webscraping-tures.github.io/table_na.html</a></p>
+<a href="https://jakobtures.github.io/web-scraping/table_na.html" target="_blank">https://jakobtures.github.io/web-scraping/table_na.html</a></p>
 <p>At first glance, it is already obvious that several cells of the table are
 unoccupied here. Values are missing. Let’s try to read in the table anyway.</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="rvest2.html#cb117-1" aria-hidden="true" tabindex="-1"></a>table_na <span class="ot">&lt;-</span> <span class="st">&quot;https://webscraping-tures.github.io/table_na.html&quot;</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb117-2"><a href="rvest2.html#cb117-2" aria-hidden="true" tabindex="-1"></a>  read_html <span class="sc">%&gt;%</span> </span>
-<span id="cb117-3"><a href="rvest2.html#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="at">css =</span> <span class="st">&quot;table&quot;</span>)</span>
-<span id="cb117-4"><a href="rvest2.html#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-5"><a href="rvest2.html#cb117-5" aria-hidden="true" tabindex="-1"></a>table_na <span class="sc">%&gt;%</span> </span>
-<span id="cb117-6"><a href="rvest2.html#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>()</span>
-<span id="cb117-7"><a href="rvest2.html#cb117-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: Table has inconsistent number of columns. Do you want fill = TRUE?</span></span></code></pre></div>
-<p>We get a helpful error message informing us that the number of columns is not
-constant across the entire table. We are also kindly offered a possible solution
-directly. The function <code>html_table()</code> can be instructed with the argument
-<code>fill = TRUE</code> to automatically fill rows with a different number of columns with
-<code>NA</code>. This stands for “Not Available” and represents missing values in R.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="rvest2.html#cb118-1" aria-hidden="true" tabindex="-1"></a>wahlbet <span class="ot">&lt;-</span> table_na <span class="sc">%&gt;%</span> </span>
-<span id="cb118-2"><a href="rvest2.html#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>(<span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb118-3"><a href="rvest2.html#cb118-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb118-4"><a href="rvest2.html#cb118-4" aria-hidden="true" tabindex="-1"></a>wahlbet <span class="sc">%&gt;%</span> </span>
-<span id="cb118-5"><a href="rvest2.html#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
-<span id="cb118-6"><a href="rvest2.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="do">##          Bundesland Wahljahr Wahlbeteiligung</span></span>
-<span id="cb118-7"><a href="rvest2.html#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Baden-Württemberg   2016.0              NA</span></span>
-<span id="cb118-8"><a href="rvest2.html#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2            Bayern   2018.0              NA</span></span>
-<span id="cb118-9"><a href="rvest2.html#cb118-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3            Berlin       NA            66.9</span></span>
-<span id="cb118-10"><a href="rvest2.html#cb118-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       Brandenburg     61.3              NA</span></span></code></pre></div>
-<p>As we can see, <code>html_table</code> was able to fill the four cells with missing values
-with <code>NA</code> and read the table despite the problems. However, there are two
-different types of problems in the HTML source code, which the automatic repair
-handles differently. Let’s first look at the source code of the first two lines:</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="rvest2.html#cb116-1" aria-hidden="true" tabindex="-1"></a>table_na <span class="ot">&lt;-</span> <span class="st">&quot;https://jakobtures.github.io/web-scraping/table_na.html&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb116-2"><a href="rvest2.html#cb116-2" aria-hidden="true" tabindex="-1"></a>  read_html <span class="sc">%&gt;%</span> </span>
+<span id="cb116-3"><a href="rvest2.html#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_element</span>(<span class="at">css =</span> <span class="st">&quot;table&quot;</span>)</span>
+<span id="cb116-4"><a href="rvest2.html#cb116-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-5"><a href="rvest2.html#cb116-5" aria-hidden="true" tabindex="-1"></a>turnout <span class="ot">&lt;-</span> table_na <span class="sc">%&gt;%</span> </span>
+<span id="cb116-6"><a href="rvest2.html#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>()</span>
+<span id="cb116-7"><a href="rvest2.html#cb116-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-8"><a href="rvest2.html#cb116-8" aria-hidden="true" tabindex="-1"></a>turnout</span>
+<span id="cb116-9"><a href="rvest2.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 16 × 3</span></span>
+<span id="cb116-10"><a href="rvest2.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="do">##    Bundesland             Wahljahr Wahlbeteiligung</span></span>
+<span id="cb116-11"><a href="rvest2.html#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                     &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span id="cb116-12"><a href="rvest2.html#cb116-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Baden-Württemberg        2016              NA  </span></span>
+<span id="cb116-13"><a href="rvest2.html#cb116-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Bayern                   2018              NA  </span></span>
+<span id="cb116-14"><a href="rvest2.html#cb116-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Berlin                     NA              66.9</span></span>
+<span id="cb116-15"><a href="rvest2.html#cb116-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Brandenburg                61.3            NA  </span></span>
+<span id="cb116-16"><a href="rvest2.html#cb116-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Bremen                   2019              64.1</span></span>
+<span id="cb116-17"><a href="rvest2.html#cb116-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hamurg                   2020              63.2</span></span>
+<span id="cb116-18"><a href="rvest2.html#cb116-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hessen                   2018              67.3</span></span>
+<span id="cb116-19"><a href="rvest2.html#cb116-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Mecklenburg-Vorpommern   2016              61.6</span></span>
+<span id="cb116-20"><a href="rvest2.html#cb116-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Niedersachsen            2017              63.1</span></span>
+<span id="cb116-21"><a href="rvest2.html#cb116-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Nordrhein-Westfalen      2017              65.2</span></span>
+<span id="cb116-22"><a href="rvest2.html#cb116-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Rheinland-Pfalz          2016              70.4</span></span>
+<span id="cb116-23"><a href="rvest2.html#cb116-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Saarland                 2017              69.7</span></span>
+<span id="cb116-24"><a href="rvest2.html#cb116-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Sachsen                  2019              66.6</span></span>
+<span id="cb116-25"><a href="rvest2.html#cb116-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Sachsen-Anhalt           2016              61.1</span></span>
+<span id="cb116-26"><a href="rvest2.html#cb116-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Schleswig-Holstein       2017              64.2</span></span>
+<span id="cb116-27"><a href="rvest2.html#cb116-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 Thüringen                2019              64.9</span></span></code></pre></div>
+<p>As we can see, <code>html_table</code> filled four cells with with <code>NA</code>. This stands for
+“Not Available” and represents missing values in R. However, there are
+different types of missing values in the HTML source code, which the automatic
+repair implemented in <code>html_table()</code> handles differently. Let’s first look at
+the source code of the first two lines:</p>
 <pre><code>&lt;tr&gt;
   &lt;td&gt;Baden-Württemberg&lt;/td&gt;
   &lt;td&gt;2016&lt;/td&gt;
@@ -556,14 +548,14 @@ handles differently. Let’s first look at the source code of the first two line
   &lt;td&gt;Bayern&lt;/td&gt;
   &lt;td&gt;2018&lt;/td&gt;
 &lt;/tr&gt;</code></pre>
-<p>For “Baden-Württemberg”, we see that the third column is created in the source
-code, but there is no content in this cell. <code>html_table()</code> could have read this
-without <code>fill = TRUE</code> and would have filled the cell with a <code>NA</code>. In contrast,
-for “Bayern” the cell is completely missing. This means that the second row of
-the table consists of only two columns, while the rest of the table has three
-columns. This is the problem that the error message pointed out to us. As a
-result, R was able to draw the correct conclusion in both cases and fill the
-cell in both rows with an <code>NA</code>.</p>
+<p>In both cases the value for turnout is missing.
+For “Baden-Württemberg”, we see that the third column is created in the HTML
+code, but there is no content in this cell. <code>html_table()</code> knows, that this
+empty cell has to be filled with a <code>NA</code>. In contrast, for “Bayern” the cell is
+completely missing. This means that the second row of the table consists of only
+two columns, while the rest of the table has three columns. In this case,
+<code>html_table()</code> could draw the correct conclusion and filled the missing third
+column with an <code>NA</code>.</p>
 <p>But let’s also look at the third and fourth rows in the source code:</p>
 <pre><code>&lt;tr&gt;
   &lt;td&gt;Berlin&lt;/td&gt;
@@ -581,34 +573,32 @@ again handle it without any problems. For “Brandenburg”, however, the functi
 reaches its limits. We, as human observers, quickly realise that the last state
 election in Brandenburg did not take place in 61.3 and that this must therefore
 be the turnout. R cannot distinguish this so easily and takes 61.3 as the value
-for the column “Election year” and inserts a <code>NA</code> for “Voter turnout”.</p>
-<p>What to do? First of all, we should be aware that such problems exist. So if
-<code>html_table()</code> gives this error message, we should not simply set <code>fill = TRUE</code>,
-but try to find out why the problem exists and whether the option to have it
-fixed automatically will actually get us there. If this is not the case, one
-approach could be to write our own <em>extractor function</em> that fixes the problems
-directly during scraping. However, this is a rather advanced method and outside
-the scope of what is feasible in this introduction. However, we can at least
-correct the problems that arise afterwards.</p>
+for the column “Election year” and inserts a <code>NA</code> in the third column.</p>
+<p>What to do? First of all, we should be aware that such problems exist. So we
+should check if such a problem exists and whether the option to have it
+fixed automatically will actually get us there. If this is not the case, we can
+at least correct the problems that arise after extraction.</p>
 <p>Our problem lies exclusively in row four. Its second column must be moved to the
 third and the second must then itself be set as <code>NA</code>. For this we need
-subsetting again. In the case of a data frame, we need to specify the row and
-column in the form <code>df[row, column]</code> to select a cell. So we can tell R: “Write
+subsetting again. In the case of a tibble, we need to specify the row and
+column in the form <code>tbl[row, column]</code> to select a cell. So we can tell R: “Write
 in cell three the content of cell two, and then write in cell two <code>NA</code>”.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="rvest2.html#cb121-1" aria-hidden="true" tabindex="-1"></a>wahlbet[<span class="dv">4</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> wahlbet[<span class="dv">4</span>, <span class="dv">2</span>]</span>
-<span id="cb121-2"><a href="rvest2.html#cb121-2" aria-hidden="true" tabindex="-1"></a>wahlbet[<span class="dv">4</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb121-3"><a href="rvest2.html#cb121-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-4"><a href="rvest2.html#cb121-4" aria-hidden="true" tabindex="-1"></a>wahlbet <span class="sc">%&gt;%</span> </span>
-<span id="cb121-5"><a href="rvest2.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
-<span id="cb121-6"><a href="rvest2.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="do">##          Bundesland Wahljahr Wahlbeteiligung</span></span>
-<span id="cb121-7"><a href="rvest2.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Baden-Württemberg     2016              NA</span></span>
-<span id="cb121-8"><a href="rvest2.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2            Bayern     2018              NA</span></span>
-<span id="cb121-9"><a href="rvest2.html#cb121-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3            Berlin       NA            66.9</span></span>
-<span id="cb121-10"><a href="rvest2.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       Brandenburg       NA            61.3</span></span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="rvest2.html#cb119-1" aria-hidden="true" tabindex="-1"></a>turnout[<span class="dv">4</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> turnout[<span class="dv">4</span>, <span class="dv">2</span>]</span>
+<span id="cb119-2"><a href="rvest2.html#cb119-2" aria-hidden="true" tabindex="-1"></a>turnout[<span class="dv">4</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb119-3"><a href="rvest2.html#cb119-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-4"><a href="rvest2.html#cb119-4" aria-hidden="true" tabindex="-1"></a>turnout <span class="sc">%&gt;%</span> </span>
+<span id="cb119-5"><a href="rvest2.html#cb119-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">4</span>)</span>
+<span id="cb119-6"><a href="rvest2.html#cb119-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 4 × 3</span></span>
+<span id="cb119-7"><a href="rvest2.html#cb119-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Bundesland        Wahljahr Wahlbeteiligung</span></span>
+<span id="cb119-8"><a href="rvest2.html#cb119-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span id="cb119-9"><a href="rvest2.html#cb119-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Baden-Württemberg     2016            NA  </span></span>
+<span id="cb119-10"><a href="rvest2.html#cb119-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Bayern                2018            NA  </span></span>
+<span id="cb119-11"><a href="rvest2.html#cb119-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Berlin                  NA            66.9</span></span>
+<span id="cb119-12"><a href="rvest2.html#cb119-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Brandenburg             NA            61.3</span></span></code></pre></div>
 </div>
 </div>
-<div id="dynamische-websites" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Dynamische Websites</h2>
+<div id="dynamic-websites" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Dynamic Websites<a href="rvest2.html#dynamic-websites" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the “reality” of the modern internet, we will increasingly encounter websites
 that are no longer based exclusively on static HTML files, but generate content
 dynamically. You know this, for example, in the form of timelines in social
@@ -616,7 +606,7 @@ media offerings that are generated dynamically based on your user profile. Other
 websites may generate the displayed content with <em>JavaScript</em> functions or in
 response to input in HTML forms.</p>
 <p>In many of these cases, it is no longer sufficient from a web scraping
-perspective to read in an HTML page and extract the data you are looking for, as
+perspective to parse an HTML page and extract the data you are looking for, as
 this is often not contained in the HTML source code but is loaded dynamically in
 the background. The good news is that there are usually ways of scraping the
 information anyway.</p>
@@ -630,22 +620,27 @@ window and scrape what the browser “sees”.</p>
 <p>However, all of these approaches are advanced methods that are beyond the scope
 of this introduction.</p>
 <p>But in cases where an HTML file is dynamically generated based on input into a
-HTML form, we can read it using the methods we already know.</p>
-<div id="html-forms-and-html-queries" class="section level3" number="6.2.1">
-<h3><span class="header-section-number">6.2.1</span> HTML forms and HTML queries</h3>
+HTML form, we can <em>often</em> (not always) read it using the methods we already know.</p>
+<div id="html-forms-and-html-queries" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> HTML forms and HTML queries<a href="rvest2.html#html-forms-and-html-queries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As an example, let’s first look at the OPAC catalogue of the Potsdam University
 Library <a href="https://opac.ub.uni-potsdam.de/" target="_blank">https://opac.ub.uni-potsdam.de/</a> in the browser.</p>
 <p>If we enter the term “test” in the search field and click on Search, the browser
 window will show us the results of the search query. But what actually interests
 us here is the browser’s address bar. Instead of the URL
-“<a href="https://opac.ub.uni-potsdam.de/" class="uri">https://opac.ub.uni-potsdam.de/</a>”, there is now a much longer URL in the form: “<a href="https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test" class="uri">https://opac.ub.uni-potsdam.de/DB=1/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</a>”.
-The first part is obviously still the URL of the website called up, let’s call
-this the base URL. However, the part “CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test”
-was added to the end of the URL. This is the <em>HTML query</em> we are interested in
-here. Between the base URL and the query there are one or more components, which
+“<a href="https://opac.ub.uni-potsdam.de/" class="uri">https://opac.ub.uni-potsdam.de/</a>”, there is now a much longer URL.
+Note that the exact URL may very well differ for you, but the basic form should
+be similar to:
+“<a href="https://opac.ub.uni-potsdam.de/DB=1/LNG=DU/SID=3f0e2b15-1/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test" class="uri">https://opac.ub.uni-potsdam.de/DB=1/LNG=DU/SID=3f0e2b15-1/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</a>”.</p>
+<p>The first part is obviously still the URL of the website called up:
+“<a href="https://opac.ub.uni-potsdam.de/" class="uri">https://opac.ub.uni-potsdam.de/</a>”. Let’s call this the base URL.
+However, the part “CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test” was added to the end
+of the URL. This is the <em>HTML query</em> we are interested in here.
+Between the base URL and the query there are one or more components, which
 in this case may also differ depending on your browser. However, these are also
-irrelevant for the actual search query. The shortened URL: “<a href="https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test" class="uri">https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</a>”
-leads to the same result.</p>
+irrelevant for the actual search query. We can shorten the URL to
+“<a href="https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test" class="uri">https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</a>”
+and receive the same result.</p>
 <p>A query is a request in which data from an HTML form is sent to the server. In
 response, the server generates a new website, which is sent back to the user and
 displayed in the browser. In this case, the query was triggered by clicking on
@@ -653,8 +648,8 @@ the “Search” button. If we understand what the components of the query do, w
 could manipulate it and use it specifically to have a website of interest
 created and parsed.</p>
 </div>
-<div id="html-forms" class="section level3" number="6.2.2">
-<h3><span class="header-section-number">6.2.2</span> HTML forms</h3>
+<div id="html-forms" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> HTML forms<a href="rvest2.html#html-forms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To do this, we first need to take a look at the HTML code of the search form. To
 understand this, you should display the source code of the page and search for
 “&lt;form” or use the WDTs to look at the form and its components.</p>
@@ -671,38 +666,51 @@ placed.</p>
 attribute of interest to us is the <code>method="GET"</code> attribute. This specifies the
 method of data transfer between client and server. It is important to note that
 the method “GET” uses queries in the URL for the transmission of data and the
-method “POST” does not. We can therefore only manipulate queries if the “GET”
-method is used. If no method is specified in the <code>&lt;form&gt;</code> tag, “GET” is also
-used as the default.</p>
+method “POST” does not. We can therefore only manipulate queries in this way, if
+the “GET” method is used. If no method is specified in the <code>&lt;form&gt;</code> tag, “GET”
+is also used as the default.</p>
 <p>The second attribute of interest to us is <code>action="CMD"</code>. This specifies which
 action should be triggered after the form has been submitted. Often the value of
 <code>action=</code> is the name of a file on the server to which the data will be sent and
 which then returns a dynamically generated HTML page back to the user.</p>
-<p>Let us now look at the elements of the form. For this, the rvest function
+<p>Let us now look at the elements of the form. For this, the <strong>rvest</strong> function
 <code>html_form()</code> can be helpful.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="rvest2.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb123-2"><a href="rvest2.html#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb123-3"><a href="rvest2.html#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="at">css =</span> <span class="st">&quot;form&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb123-4"><a href="rvest2.html#cb123-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_form</span>()</span>
-<span id="cb123-5"><a href="rvest2.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;form&gt; &#39;SearchForm&#39; (GET CMD)</span></span>
-<span id="cb123-6"><a href="rvest2.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;select&gt; &#39;ACT&#39; [1/3]</span></span>
-<span id="cb123-7"><a href="rvest2.html#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;select&gt; &#39;IKT&#39; [0/13]</span></span>
-<span id="cb123-8"><a href="rvest2.html#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;select&gt; &#39;SRT&#39; [0/4]</span></span>
-<span id="cb123-9"><a href="rvest2.html#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;input checkbox&gt; &#39;FUZZY&#39;: Y</span></span>
-<span id="cb123-10"><a href="rvest2.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;input text&gt; &#39;TRM&#39;: </span></span>
-<span id="cb123-11"><a href="rvest2.html#cb123-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;input submit&gt; &#39;&#39;:  Suchen</span></span></code></pre></div>
-<p>The output shows us in the first line again the values for <code>method=</code> and
-<code>action=</code> as well as the name of the form. The other six lines show that the
-form consists of three <code>&lt;select&gt;</code> and three <code>&lt;input&gt;</code> elements. We also see the
-names of these elements as well as the default value that is sent when the form
-is submitted, as long as no other value is selected or entered.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="rvest2.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb121-2"><a href="rvest2.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb121-3"><a href="rvest2.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_element</span>(<span class="at">css =</span> <span class="st">&quot;form&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb121-4"><a href="rvest2.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_form</span>()</span>
+<span id="cb121-5"><a href="rvest2.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;form&gt; &#39;SearchForm&#39; (GET https://opac.ub.uni-potsdam.de/CMD)</span></span>
+<span id="cb121-6"><a href="rvest2.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;field&gt; (select) ACT: SRCHA</span></span>
+<span id="cb121-7"><a href="rvest2.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;field&gt; (select) IKT: </span></span>
+<span id="cb121-8"><a href="rvest2.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;field&gt; (select) SRT: </span></span>
+<span id="cb121-9"><a href="rvest2.html#cb121-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;field&gt; (checkbox) FUZZY: Y</span></span>
+<span id="cb121-10"><a href="rvest2.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;field&gt; (text) TRM: </span></span>
+<span id="cb121-11"><a href="rvest2.html#cb121-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;field&gt; (submit) :  Suchen</span></span></code></pre></div>
+<p>The output shows us in the first line the name of the form and the action that
+is performed on submit: “GET <a href="https://opac.ub.uni-potsdam.de/CMD" class="uri">https://opac.ub.uni-potsdam.de/CMD</a>”.
+The other six lines show the form components:</p>
+<ul>
+<li>The three drop-down selections for:
+<ul>
+<li>type of search</li>
+<li>which fields should be searched</li>
+<li>how results should be ordered</li>
+</ul></li>
+<li>The Checkbox for “unscharfe Suche”</li>
+<li>The text field where we enter terms to be searched</li>
+<li>The search button itself</li>
+</ul>
+<p>We also see the names of these components as well as in some cases the default
+value that is sent when the form is submitted, as long as no other value is
+selected or entered.</p>
 <p>Let’s look at some of these elements. <code>&lt;select&gt;</code> elements are drop-down lists of
 options that can be selected. This is the source code for the first <code>&lt;select&gt;</code>
 element in our example:</p>
 <pre><code>&lt;select name=&quot;ACT&quot;&gt;
-  &lt;OPTION VALUE=&quot;SRCH&quot;&gt;suchen [oder]
-  &lt;OPTION VALUE=&quot;SRCHA&quot; SELECTED&gt;suchen [und]
-  &lt;OPTION value=&quot;BRWS&quot;&gt;Index bl&amp;auml;ttern
+        &lt;OPTION VALUE=&quot;SRCH&quot;&gt;suchen [oder]
+        &lt;OPTION VALUE=&quot;SRCHA&quot; SELECTED&gt;suchen [und]
+        
+        &lt;OPTION value=&quot;BRWS&quot;&gt;Index bl&amp;auml;ttern
 &lt;/select&gt;</code></pre>
 <p>The attribute <code>name="ACT"</code> defines the elements name, which is used when
 transmitting the data from the form via the query. The <code>&lt;option&gt;</code> tags define
@@ -716,10 +724,9 @@ specified via the attribute <code>type=""</code>. These can be, for example, tex
 (<code>type="text"</code>) or checkboxes (<code>input="checkbox"</code>), but there are many more
 options available. A comprehensive list can be found at:
 <a href="https://www.w3schools.com/html/html_form_input_types.asp" target="_blank">https://www.w3schools.com/html/html_form_input_types.asp</a>.
-Here is the source code for two of the three <code>&lt;input&gt;</code> elements on the example
-page:</p>
+Here is the source code for two of the three <code>&lt;input&gt;</code> elements on the example page:</p>
 <pre><code>&lt;input type=&quot;text&quot; name=&quot;TRM&quot; value=&quot;&quot; size=&quot;50&quot;&gt;
-
+...
 &lt;input type=&quot;submit&quot; class=&quot;button&quot; value=&quot; Suchen &quot;&gt;</code></pre>
 <p>The first tag is of the type “text”, i.e. a text field, in this case the text
 field into which the search term is entered. In addition to the name of the
@@ -728,8 +735,8 @@ the default value is an empty field. The second tag is of the type “submit”.
 This is the “Search” button, which triggers the transmission of the form data
 via the query by clicking on it.</p>
 </div>
-<div id="the-query" class="section level3" number="6.2.3">
-<h3><span class="header-section-number">6.2.3</span> The query</h3>
+<div id="the-query" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> The query<a href="rvest2.html#the-query" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>But what exactly is being transmitted? Let’s look again at the example query
 from above:</p>
 <pre><code>CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test</code></pre>
@@ -738,42 +745,43 @@ appended after the base URL. The value of the attribute tells the server what to
 do with the other transmitted data. This is followed by a <code>?</code>, which introduces
 the data to be transmitted as several pairs of <code>name=""</code> and <code>value=""</code>
 attributes of the individual elements. The pairs are connected with <code>&amp;</code>.
-<code>ACT=SRCHA</code> thus stands for the fact that the option “SRCHA” has been selected
+<code>ACT=SRCHA</code> thus stands for the fact that the (default) value “SRCHA” has been selected
 in the element with the name “ACT”. What the values of the two other <code>&lt;select&gt;</code>
 elements “IKT” and “SRT” stand for, you can understand yourself with a look into
-the source code or the WDTs. The text entered in the field is transmitted as the
-value of the <code>&lt;input type="text"&gt;</code> with the name “TRM”. Here “test”.</p>
+the source code or the WDTs. These are not important for our endeavour.
+The text entered in the field is transmitted as the value of the
+<code>&lt;input type="text"&gt;</code> tag with the name “TRM”. Here the value was “test”.</p>
 <p>The server receives the form data in this way, can then take a decision on the
 basis of the <code>action=""</code> attribute, here “CMD”, how the data is to be processed
 and constructs the website accordingly, which it sends back to us and which is
 displayed in our browser.</p>
 </div>
-<div id="manipulating-the-query-and-scraping-the-result" class="section level3" number="6.2.4">
-<h3><span class="header-section-number">6.2.4</span> Manipulating the query and scraping the result</h3>
+<div id="manipulating-the-query-and-scraping-the-result" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> Manipulating the query and scraping the result<a href="rvest2.html#manipulating-the-query-and-scraping-the-result" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now that we know what the components of the query mean, we can manipulate them.
 Instead of writing queries by hand, we should use R to combine them for us. We
 will also encounter the technique of manipulating URLs directly in the R code
 more often. So we should learn it early.</p>
-<p>The function <code>str_c()</code> assembles the strings listed as arguments, i.e. sequences
-of letters, into a single string. Strings stored in other R objects can also be
+<p>The function <code>str_c()</code> from <strong>stringr</strong> (core tidyverse) combines the strings
+listed as arguments into a single string. Strings stored in other R objects can also be
 included. If we have the goal of manipulating both the search method and the
-search handle, we could achieve this in this way:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="rvest2.html#cb127-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span></span>
-<span id="cb127-2"><a href="rvest2.html#cb127-2" aria-hidden="true" tabindex="-1"></a>method <span class="ot">&lt;-</span> <span class="st">&quot;SRCHA&quot;</span></span>
-<span id="cb127-3"><a href="rvest2.html#cb127-3" aria-hidden="true" tabindex="-1"></a>term <span class="ot">&lt;-</span> <span class="st">&quot;test&quot;</span></span>
-<span id="cb127-4"><a href="rvest2.html#cb127-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb127-5"><a href="rvest2.html#cb127-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, <span class="st">&quot;CMD?ACT=&quot;</span>, method, <span class="st">&quot;&amp;IKT=1016&amp;SRT=YOP&amp;TRM=&quot;</span>, term)</span>
-<span id="cb127-6"><a href="rvest2.html#cb127-6" aria-hidden="true" tabindex="-1"></a>url</span>
-<span id="cb127-7"><a href="rvest2.html#cb127-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test&quot;</span></span></code></pre></div>
+search term, we could achieve this in this way:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="rvest2.html#cb125-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span></span>
+<span id="cb125-2"><a href="rvest2.html#cb125-2" aria-hidden="true" tabindex="-1"></a>method <span class="ot">&lt;-</span> <span class="st">&quot;SRCHA&quot;</span></span>
+<span id="cb125-3"><a href="rvest2.html#cb125-3" aria-hidden="true" tabindex="-1"></a>term <span class="ot">&lt;-</span> <span class="st">&quot;test&quot;</span></span>
+<span id="cb125-4"><a href="rvest2.html#cb125-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-5"><a href="rvest2.html#cb125-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, <span class="st">&quot;CMD?ACT=&quot;</span>, method, <span class="st">&quot;&amp;IKT=1016&amp;SRT=YOP&amp;TRM=&quot;</span>, term)</span>
+<span id="cb125-6"><a href="rvest2.html#cb125-6" aria-hidden="true" tabindex="-1"></a>url</span>
+<span id="cb125-7"><a href="rvest2.html#cb125-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=test&quot;</span></span></code></pre></div>
 <p>If we now change the strings stored in the <code>method</code> and <code>term</code> objects and
 generate the complete URL again, these components of the query are manipulated
 accordingly.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="rvest2.html#cb128-1" aria-hidden="true" tabindex="-1"></a>method <span class="ot">&lt;-</span> <span class="st">&quot;SRCH&quot;</span></span>
-<span id="cb128-2"><a href="rvest2.html#cb128-2" aria-hidden="true" tabindex="-1"></a>term <span class="ot">&lt;-</span> <span class="st">&quot;web+scraping&quot;</span></span>
-<span id="cb128-3"><a href="rvest2.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-4"><a href="rvest2.html#cb128-4" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, <span class="st">&quot;CMD?ACT=&quot;</span>, method, <span class="st">&quot;&amp;IKT=1016&amp;SRT=YOP&amp;TRM=&quot;</span>, term)</span>
-<span id="cb128-5"><a href="rvest2.html#cb128-5" aria-hidden="true" tabindex="-1"></a>url</span>
-<span id="cb128-6"><a href="rvest2.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://opac.ub.uni-potsdam.de/CMD?ACT=SRCH&amp;IKT=1016&amp;SRT=YOP&amp;TRM=web+scraping&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="rvest2.html#cb126-1" aria-hidden="true" tabindex="-1"></a>method <span class="ot">&lt;-</span> <span class="st">&quot;SRCH&quot;</span></span>
+<span id="cb126-2"><a href="rvest2.html#cb126-2" aria-hidden="true" tabindex="-1"></a>term <span class="ot">&lt;-</span> <span class="st">&quot;web+scraping&quot;</span></span>
+<span id="cb126-3"><a href="rvest2.html#cb126-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-4"><a href="rvest2.html#cb126-4" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, <span class="st">&quot;CMD?ACT=&quot;</span>, method, <span class="st">&quot;&amp;IKT=1016&amp;SRT=YOP&amp;TRM=&quot;</span>, term)</span>
+<span id="cb126-5"><a href="rvest2.html#cb126-5" aria-hidden="true" tabindex="-1"></a>url</span>
+<span id="cb126-6"><a href="rvest2.html#cb126-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://opac.ub.uni-potsdam.de/CMD?ACT=SRCH&amp;IKT=1016&amp;SRT=YOP&amp;TRM=web+scraping&quot;</span></span></code></pre></div>
 <p>The search method was set to the value “SRCH”, i.e. an “OR” search, the search
 term to “web scraping”. It is important to note that no spaces may appear in the
 query and that these are replaced by “+” when the form is submitted. So instead
@@ -781,57 +789,57 @@ of “web scraping” we have to use the string “web+scraping”.</p>
 <p>As an example application, we can now have the server perform an “AND” search
 for the term “web scraping”, read out the HTML page generated by the server and
 extract the 10 titles displayed.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="rvest2.html#cb129-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span></span>
-<span id="cb129-2"><a href="rvest2.html#cb129-2" aria-hidden="true" tabindex="-1"></a>method <span class="ot">&lt;-</span> <span class="st">&quot;SRCHA&quot;</span></span>
-<span id="cb129-3"><a href="rvest2.html#cb129-3" aria-hidden="true" tabindex="-1"></a>term <span class="ot">&lt;-</span> <span class="st">&quot;web+scraping&quot;</span></span>
-<span id="cb129-4"><a href="rvest2.html#cb129-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-5"><a href="rvest2.html#cb129-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, <span class="st">&quot;CMD?ACT=&quot;</span>, method, <span class="st">&quot;&amp;IKT=1016&amp;SRT=YOP&amp;TRM=&quot;</span>, term)</span>
-<span id="cb129-6"><a href="rvest2.html#cb129-6" aria-hidden="true" tabindex="-1"></a>url</span>
-<span id="cb129-7"><a href="rvest2.html#cb129-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=web+scraping&quot;</span></span>
-<span id="cb129-8"><a href="rvest2.html#cb129-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-9"><a href="rvest2.html#cb129-9" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span> </span>
-<span id="cb129-10"><a href="rvest2.html#cb129-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="rvest2.html#cb127-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="ot">&lt;-</span> <span class="st">&quot;https://opac.ub.uni-potsdam.de/&quot;</span></span>
+<span id="cb127-2"><a href="rvest2.html#cb127-2" aria-hidden="true" tabindex="-1"></a>method <span class="ot">&lt;-</span> <span class="st">&quot;SRCHA&quot;</span></span>
+<span id="cb127-3"><a href="rvest2.html#cb127-3" aria-hidden="true" tabindex="-1"></a>term <span class="ot">&lt;-</span> <span class="st">&quot;web+scraping&quot;</span></span>
+<span id="cb127-4"><a href="rvest2.html#cb127-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-5"><a href="rvest2.html#cb127-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">str_c</span>(base_url, <span class="st">&quot;CMD?ACT=&quot;</span>, method, <span class="st">&quot;&amp;IKT=1016&amp;SRT=YOP&amp;TRM=&quot;</span>, term)</span>
+<span id="cb127-6"><a href="rvest2.html#cb127-6" aria-hidden="true" tabindex="-1"></a>url</span>
+<span id="cb127-7"><a href="rvest2.html#cb127-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;https://opac.ub.uni-potsdam.de/CMD?ACT=SRCHA&amp;IKT=1016&amp;SRT=YOP&amp;TRM=web+scraping&quot;</span></span>
+<span id="cb127-8"><a href="rvest2.html#cb127-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-9"><a href="rvest2.html#cb127-9" aria-hidden="true" tabindex="-1"></a>website <span class="ot">&lt;-</span> url <span class="sc">%&gt;%</span> </span>
+<span id="cb127-10"><a href="rvest2.html#cb127-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
 <p>The search results are displayed as tables in the generated HTML file. The
 <code>&lt;table&gt;</code> tag has the attribute-value combination <code>summary="hitlist"</code>, which we
 can use for our CSS selector:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="rvest2.html#cb130-1" aria-hidden="true" tabindex="-1"></a>hits <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb130-2"><a href="rvest2.html#cb130-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="at">css =</span> <span class="st">&quot;table[summary=&#39;hitlist&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb130-3"><a href="rvest2.html#cb130-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb130-4"><a href="rvest2.html#cb130-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb130-5"><a href="rvest2.html#cb130-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb130-6"><a href="rvest2.html#cb130-6" aria-hidden="true" tabindex="-1"></a>hits <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
-<span id="cb130-7"><a href="rvest2.html#cb130-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 x 4</span></span>
-<span id="cb130-8"><a href="rvest2.html#cb130-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    X1       X2 X3                                                          X4   </span></span>
-<span id="cb130-9"><a href="rvest2.html#cb130-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;                                                       &lt;lgl&gt;</span></span>
-<span id="cb130-10"><a href="rvest2.html#cb130-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 NA       NA &quot;&quot;                                                          NA   </span></span>
-<span id="cb130-11"><a href="rvest2.html#cb130-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 NA        1 &quot;Introduction to Data Systems : Building from Python/ Bres… NA   </span></span>
-<span id="cb130-12"><a href="rvest2.html#cb130-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 NA       NA &quot;&quot;                                                          NA   </span></span>
-<span id="cb130-13"><a href="rvest2.html#cb130-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 NA        2 &quot;An Introduction to Data Analysis in R : Hands-on Coding, … NA   </span></span>
-<span id="cb130-14"><a href="rvest2.html#cb130-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 NA       NA &quot;&quot;                                                          NA   </span></span>
-<span id="cb130-15"><a href="rvest2.html#cb130-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 NA        3 &quot;Quantitative portfolio management : with applications in … NA   </span></span>
-<span id="cb130-16"><a href="rvest2.html#cb130-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 NA       NA &quot;&quot;                                                          NA   </span></span>
-<span id="cb130-17"><a href="rvest2.html#cb130-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 NA        4 &quot;Automate the boring stuff with Python : practical program… NA   </span></span>
-<span id="cb130-18"><a href="rvest2.html#cb130-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 NA       NA &quot;&quot;                                                          NA   </span></span>
-<span id="cb130-19"><a href="rvest2.html#cb130-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 NA        5 &quot;Spotify teardown : inside the black box of streaming musi… NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="rvest2.html#cb128-1" aria-hidden="true" tabindex="-1"></a>hits <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb128-2"><a href="rvest2.html#cb128-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_element</span>(<span class="at">css =</span> <span class="st">&quot;table[summary=&#39;hitlist&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb128-3"><a href="rvest2.html#cb128-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb128-4"><a href="rvest2.html#cb128-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb128-5"><a href="rvest2.html#cb128-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-6"><a href="rvest2.html#cb128-6" aria-hidden="true" tabindex="-1"></a>hits <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb128-7"><a href="rvest2.html#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 10 × 4</span></span>
+<span id="cb128-8"><a href="rvest2.html#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    X1       X2 X3                                                          X4   </span></span>
+<span id="cb128-9"><a href="rvest2.html#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;                                                       &lt;lgl&gt;</span></span>
+<span id="cb128-10"><a href="rvest2.html#cb128-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 NA       NA &quot;&quot;                                                          NA   </span></span>
+<span id="cb128-11"><a href="rvest2.html#cb128-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 NA        1 &quot;Disaggregating China, Inc : State Strategies in the Liber… NA   </span></span>
+<span id="cb128-12"><a href="rvest2.html#cb128-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 NA       NA &quot;&quot;                                                          NA   </span></span>
+<span id="cb128-13"><a href="rvest2.html#cb128-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 NA        2 &quot;Introduction to Data Systems : Building from Python/ Bres… NA   </span></span>
+<span id="cb128-14"><a href="rvest2.html#cb128-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 NA       NA &quot;&quot;                                                          NA   </span></span>
+<span id="cb128-15"><a href="rvest2.html#cb128-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 NA        3 &quot;An Introduction to Data Analysis in R : Hands-on Coding, … NA   </span></span>
+<span id="cb128-16"><a href="rvest2.html#cb128-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 NA       NA &quot;&quot;                                                          NA   </span></span>
+<span id="cb128-17"><a href="rvest2.html#cb128-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 NA        4 &quot;Quantitative portfolio management : with applications in … NA   </span></span>
+<span id="cb128-18"><a href="rvest2.html#cb128-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 NA       NA &quot;&quot;                                                          NA   </span></span>
+<span id="cb128-19"><a href="rvest2.html#cb128-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 NA        5 &quot;Automate the boring stuff with Python : practical program… NA</span></span></code></pre></div>
 <p>This worked, but we see that the table consists mainly of empty rows and cells.
 These are invisible on the website, but are used to format the display.
 Instead of repairing the table afterwards, it makes more sense to extract only
 the cells that contain the information we are looking for. These are the <code>&lt;td&gt;</code>
 tags with <code>class="hit"</code> and the attribute-value combination <code>align="left"</code>.
 On this basis, we can construct a unique CSS selector.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="rvest2.html#cb131-1" aria-hidden="true" tabindex="-1"></a>hits <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb131-2"><a href="rvest2.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">css =</span> <span class="st">&quot;td.hit[align=&#39;left&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb131-3"><a href="rvest2.html#cb131-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb131-4"><a href="rvest2.html#cb131-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb131-5"><a href="rvest2.html#cb131-5" aria-hidden="true" tabindex="-1"></a>hits <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb131-6"><a href="rvest2.html#cb131-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Introduction to Data Systems : Building from Python/ Bressoud, Thomas. - 1st ed. 2020. - Cham : Springer International Publishing, 2020&quot;                                                                </span></span>
-<span id="cb131-7"><a href="rvest2.html#cb131-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;An Introduction to Data Analysis in R : Hands-on Coding, Data Mining, Visualization and Statistics from Scratch/ Zamora Saiz, Alfonso. - 1st ed. 2020. - Cham : Springer International Publishing, 2020&quot;</span></span>
-<span id="cb131-8"><a href="rvest2.html#cb131-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;Quantitative portfolio management : with applications in Python/ Brugière, Pierre. - Cham : Springer, [2020]&quot;                                                                                           </span></span>
-<span id="cb131-9"><a href="rvest2.html#cb131-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;Automate the boring stuff with Python : practical programming for total beginners/ Sweigart, Albert. - 2nd edition. - San Francisco : No Starch Press, [2020]&quot;                                          </span></span>
-<span id="cb131-10"><a href="rvest2.html#cb131-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;Spotify teardown : inside the black box of streaming music/ Eriksson, Maria. - Cambridge, Massachusetts : The MIT Press, [2019]&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="rvest2.html#cb129-1" aria-hidden="true" tabindex="-1"></a>hits <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb129-2"><a href="rvest2.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;td.hit[align=&#39;left&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb129-3"><a href="rvest2.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb129-4"><a href="rvest2.html#cb129-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-5"><a href="rvest2.html#cb129-5" aria-hidden="true" tabindex="-1"></a>hits <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb129-6"><a href="rvest2.html#cb129-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;Disaggregating China, Inc : State Strategies in the Liberal Economic Order/ Tan, Yeling. -  [Online-Ausgabe]. - Ithaca, NY : Cornell University Press, [2022]&quot;                                          </span></span>
+<span id="cb129-7"><a href="rvest2.html#cb129-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [2] &quot;Introduction to Data Systems : Building from Python/ Bressoud, Thomas. - 1st ed. 2020. - Cham : Springer International Publishing, 2020&quot;                                                                </span></span>
+<span id="cb129-8"><a href="rvest2.html#cb129-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [3] &quot;An Introduction to Data Analysis in R : Hands-on Coding, Data Mining, Visualization and Statistics from Scratch/ Zamora Saiz, Alfonso. - 1st ed. 2020. - Cham : Springer International Publishing, 2020&quot;</span></span>
+<span id="cb129-9"><a href="rvest2.html#cb129-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [4] &quot;Quantitative portfolio management : with applications in Python/ Brugière, Pierre. - Cham : Springer, [2020]&quot;                                                                                           </span></span>
+<span id="cb129-10"><a href="rvest2.html#cb129-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [5] &quot;Automate the boring stuff with Python : practical programming for total beginners/ Sweigart, Al. - 2nd edition. - San Francisco : No Starch Press, [2020]&quot;</span></span></code></pre></div>
 </div>
-<div id="additional-resources-1" class="section level3" number="6.2.5">
-<h3><span class="header-section-number">6.2.5</span> Additional resources</h3>
+<div id="additional-resources-1" class="section level3 hasAnchor" number="6.2.5">
+<h3><span class="header-section-number">6.2.5</span> Additional resources<a href="rvest2.html#additional-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In order to process this information further and, for example, separate it into
 data on author, title, year, etc., advanced knowledge in dealing with strings is
 necessary, which unfortunately goes beyond the scope of this introduction. A
@@ -854,7 +862,6 @@ Science” by Wickham and Grolemund:
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -884,6 +891,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

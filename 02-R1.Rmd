@@ -13,6 +13,7 @@ library(knitr)
 # R & R Studio {#R1}
 
 ## Installing R
+
 *R* is a freely available programming language used predominantly for data 
 science and statistical computations. For more information on the language and 
 to access the documentation, visit: 
@@ -30,17 +31,17 @@ installation advice for some of the more popular distributions. In any case, you
 can check the package manager of your choice for the latest available release
 for your system.
 
-All examples used on this Website were written and tested with R version 4.0.4
-"Lost Library Book". While it is not to be expected, they might, nonetheless,
-return errors in newer versions of R.
+All examples used on this Website were written and tested with R version 4.1.3
+"One Push-Up". While it is not to be expected, they might, nonetheless,
+return errors in newer or older versions of R.
 
 
 ## RStudio
 
-The basic R installation provides a simple GUI -- Graphical User Interface -- 
+The basic R installation provides a terminal
 that could in principle be used to follow the contents of this introduction to
-Web Scraping. The widely more common approach is to use an external IDE 
--- Integrated Development Environment --, the most popular being RStudio. 
+Web Scraping. The widely more common approach is to use an external *IDE*
+-- *Integrated Development Environment* --, the most popular being *RStudio*.
 Using an IDE will dramatically improve your workflow and I would strongly
 recommend using RStudio for this purpose.
 
@@ -53,6 +54,7 @@ will work "out of the box".
 
 
 ### Overview
+
 ``` {r, echo = FALSE, fig.retina = 1}
 include_graphics("rstudio/RStudio.png")
 ```
@@ -72,13 +74,14 @@ and requested "Help" on packages and functions.
 
 
 ## Hello World!
+
 So, let's begin with putting R & RStudio to use. For now, we will write our
 commands directly into the console.
 You will notice a `>` sign at the beginning of the last line in the console. 
-This is a prompt, as in "write commands here". Try writing this and executing
-the command with the "Enter" key:
+This is a prompt, as in "write commands here". Try writing this command and
+executing it with the "Enter" key:
 
-``` {r}
+``` {r hello_world}
 print("Hello World!")
 ```
 
@@ -97,11 +100,11 @@ indicate that a line is a comment, and thus is not evaluated as a command by R.
 R understands the basic arithmetic symbols `+ - * /` and thus the console can be
 used as a calculator. Many functions for more involved calculations, e.g. 
 `sqrt()` for taking a square root of the content enclosed in the parenthesis, 
-are available. `x^y` can be used to write x to the power of y. For now, you 
+are available. `x^y` can be used to write $x^y$. For now, you 
 should write the code below line for line into the R console and execute each
 line with the "Enter" key.
 
-``` {r}
+``` {r calculator}
 17 + 25
 99 - 57
 4 * 10.5
@@ -116,7 +119,7 @@ We can use comparison operators to compare two values and receive the test
 result as output. To test if two values are equal, we write `==`. To test if 
 they are not equal, we can use `!=`
 
-``` {r}
+``` {r comparison_1}
 42 == 42
 42 != 42
 ```
@@ -124,21 +127,43 @@ they are not equal, we can use `!=`
 We can also compare if the first value is less `<`, less or equal `<=`, 
 larger `>` or larger or equal `>=`, compared to the second value.
 
-``` {r}
+``` {r comparison_2}
 10 < 42
 42 <= 42
 10 > 42
 90 >= 42
 ```
 
+### Logical operators
+
+We can also combine tests by applying *logical operators* to create more
+complex conditions. `&` -- *AND* -- checks if both tests combined by it
+are `TRUE` and only returns `TRUE` if both are at the same time. `|` -- *OR* --
+checks if at least on of the tests is `TRUE` and returns `TRUE` if one or
+both are. When combining two tests, we thus have these possibilities:
+
+* `TRUE & TRUE` returns `TRUE`
+* `TRUE & FALSE`, `FALSE & TRUE` and `FALSE & FALSE` all return `FALSE`
+* `TRUE | TRUE`, `TRUE | FALSE` and `FALSE | TRUE` all return `TRUE`
+* `FALSE | FALSE` returns `FALSE`
+
+``` {r logical_operators}
+1 < 2 & 3 != 4  # TRUE & TRUE
+1 > 2 & 3 != 4  # FALSE & TRUE
+1 > 2 | 3 != 4  # FALSE | TRUE
+1 > 2 | 3 == 4  # FALSE | FALSE
+```
+
+
 ## Objects
+
 Some of the power of using a language like R for computation, comes from the 
 ability to store data or results for later use and further analysis.
 In R, all types of data are stored in objects.
 On a basic level, an object is a name that we define that has some form of data
 assigned to it. To assign data to a name, we use the assignment operator `<-`.
 
-``` {r}
+``` {r objects_1}
 the_answer <- 42
 ```
 
@@ -149,7 +174,7 @@ on a lot of typing and keyboard gymnastics.
 After we assigned a value to an object, we can recall that value, by writing the
 object's name.
 
-``` {r}
+``` {r objects_2}
 the_answer
 ```
 
@@ -157,7 +182,7 @@ We can also use defined objects in calculations and function calls (more on
 those later). Note, that if we assign a value to an already defined object, the
 stored value is overwritten by the new one.
 
-``` {r}
+``` {r objects_3}
 the_answer <- the_answer / 2
 the_answer
 
@@ -172,7 +197,7 @@ right of RStudio. If we ever want to remove objects from the environment,
 we can use the `rm()` function. In general, this is not necessary, but it can
 help with keeping the list from getting cluttered.
 
-``` {r}
+``` {r environment_rm}
 rm(the_answer)
 ```
 
@@ -187,7 +212,7 @@ To assign multiple elements to a vector, we use the combine function `c()`. All
 values inside the parentheses, separated by `,`, are combined as elements to 
 form the vector.
 
-``` {r}
+``` {r combine}
 v <- c(7, 8, 9)
 
 v
@@ -200,7 +225,7 @@ This is achieved by adding square brackets to the object's name, containing the
 position of the element in its vector. In order to access the first or third
 element, we can write:
 
-``` {r}
+``` {r subset_vector_1}
 v[1]
 v[3]
 ```
@@ -208,7 +233,7 @@ v[3]
 We can also access multiple elements at once, using `c()` inside the brackets or
 by defining a range of positions using `:`.
 
-``` {r}
+``` {r subset_vector_2}
 v[c(1, 3)]
 v[2:3]
 ```
@@ -222,7 +247,7 @@ created. In this case the type is *numeric*. Numeric vectors, as you might have
 guessed, contain numbers. We can also use `str()` to receive info on type,
 length and content of a vector.
 
-``` {r}
+``` {r numeric_v}
 str(v)
 ```
 
@@ -231,12 +256,12 @@ numeric vectors -- being logical and character vectors.
 
 *Logical* vectors can only contain the values `TRUE` and `FALSE`. Strictly
 speaking, they -- as the other types of vectors -- can also contain `NA`, 
-indicating a missing value. We will talk more about NAs later on. Logical
+indicating a missing value. We will talk more about `NA`s later on. Logical
 vectors are often created when we test for something. For example, we can test, 
 if the elements in a numerical vector are larger or equal to 5 and receive a 
 logical vector containing the test results.
 
-``` {r}
+``` {r logical_v}
 x <- c(1, 7, 3, 5)
 x >= 5
 ```
@@ -244,14 +269,18 @@ x >= 5
 *Character* vectors contain *strings* of characters. When assigning strings, 
 they have to be enclosed in quotation marks.
 
-``` {r}
+``` {r char_v_1}
 char_v <- c("This", "is", "a", "character", "vector!")
+char_v
+
+char_v_2 <- c("This is also", "a character vector!")
+char_v_2
 ```
 
 We can compare character vectors only for (non-)equality, not for being smaller
 or larger.
 
-``` {r}
+``` {r char_v_2}
 "same" == "same"
 "same" == "not the same"
 "same" != "not the same"
@@ -260,7 +289,7 @@ or larger.
 Character vectors also cannot be used to calculate. This can get problematic, if
 numbers are stored as characters, which arises frequently when Web Scraping.
 
-``` {r, error=TRUE}
+``` {r char_v_3, error=TRUE}
 a <- c(1, 2, 3)
 b <- c("7", "8", "9")
 
@@ -275,7 +304,7 @@ data as characters instead of numbers. Since characters cannot be used for
 calculations, we received an error message. But we can make R interpret the
 characters as numbers by using `as.numeric()`.
 
-``` {r}
+``` {r char_v_4}
 a + as.numeric(b)
 ```
 
@@ -286,7 +315,7 @@ Note that a vector of a certain type, can only contain elements of that type. So
 we cannot mix data types in the same vector. If we want to mix data types, we
 can use lists instead of vectors.
 
-``` {r}
+``` {r lists}
 l <-list(1, TRUE, "Hello World!")
 str(l)
 ```
@@ -301,7 +330,7 @@ Functions provide an easy and concise way of performing more or less complex
 tasks using predefined bits of R code that are provided in "base R" -- i.e.
 that come with the basic R installation -- or in the various additional packages
 that are available for installation.  We have already used a number of functions
-up to this point, e.g. `print()`.  To "call" a function, we write its name,
+up to this point, e.g. `print()`. To "call" a function, we write its name,
 followed by parentheses. Inside the parentheses additional arguments are
 provided to R. In most cases, some data has to be entered as the first
 argument. For example, `print()` writes the text provided as argument to the
@@ -319,7 +348,7 @@ into the console and executing the line by pressing "Enter", the help file is
 opened in the lower right of the RStudio window. Let's try this for the
 function `rnorm()`. 
 
-``` {r}
+``` {r help}
 ?rnorm()
 ```
 
@@ -334,7 +363,7 @@ with the standard values 0 and 1 respectively, indicated by the `=`. We also see
 that `n` has no standard value. So we have to provide a value for `n`, but not
 for `mean` and `sd`. Just writing `rnorm()` will result in an error.
 
-``` {r, error=TRUE}
+``` {r rnorm_1, error=TRUE}
 rnorm()
 ```
 
@@ -342,14 +371,14 @@ To provide an argument to a function, we write the name of the argument,
 followed by `=` and the value to be provided. Note that, since `rnorm()` draws
 random numbers, your output will differ from the output presented here.
 
-``` {r}
+``` {r rnorm_2}
 rnorm(n = 10)
 ```
 
 In the same vein, additional arguments that are allowed by the function can 
 be defined, instead of using their default values.
 
-``` {r}
+``` {r rnorm_3}
 rnorm(n = 10, mean = 10, sd = 0.5)
 ```
 
@@ -359,7 +388,7 @@ the call, if we just provide the value to be used as the first argument. You
 will often encounter the convention that the first argument is written without
 its name and any further arguments are written in full.
 
-``` {r}
+``` {r rnorm_4}
 rnorm(10, mean = 10, sd = 0.5)
 ```
 
@@ -371,7 +400,7 @@ data analysis.
 We should start with defining a numerical vector that contains some data to be
 analysed.
 
-``` {r}
+``` {r smpl_fcts_1}
 data <- c(4, 8, 15, 16, 23, 42)
 ```
 
@@ -381,214 +410,10 @@ and standard deviation. For this purpose we can use the functions `mean()`,
 arguments besides the data to be analysed which we can provide using the 
 object `data` we created beforehand.
 
-``` {r}
+``` {r smpl_fcts_2}
 mean(data)
 median(data)
 sd(data)
 ```
 
 
-## If/Else statements
-Often we want to write code that reacts to the value of a certain object and 
-thus "decides" by itself which action to perform, based on this value. To 
-achieve this, we can use *conditional execution* by using `if` and `else` 
-statements. The basic syntax look as follows:
-
-```
-if (condition) {
-  code to be executed when the condition is TRUE
-} else {
-  code to be executed when the condition is FALSE
-}
-```
-
-`if` and `else` are both followed by `{}`, which enclose the code to be
-executed. While it is not strictly necessary to stretch the code over multiple
-lines, I would highly recommend doing this. It increases readability of your
-code for yourself and anyone you share it with, which makes it easier to
-understand and also makes it easier to spot mistakes and correct them. For the
-same reasons, it is also recommended to indent the code to be executed.
-
-Conditions are created by applying comparison operators, like `==`, `<`, `>`, 
-`!=` and so on. Thus the condition compares two values and returns `TRUE` if the
-condition is met, and `FALSE` if it is not met. When the condition for the `if`
-statement is `TRUE`, the code between the `{}` following it is executed. If it
-is `FALSE`, the code between the `{}` following the `else` statement is
-executed instead.
-
-``` {r}
-x <- 42
-
-if (x == 42) {
-  print("This is the answer")
-} else {
-  print("This is not the answer")
-}
-
-x <- 24
-
-if (x == 42) {
-  print("This is the answer")
-} else {
-  print("This is not the answer")
-}
-```
-
-In the code above, we first asign a value to the object `x` and follow this with
-an `if` statement that checks if the value equals `42` and returns a string to
-the console, indicating if the condition was met or not.
-
-We can also chain multiple `if` and `else` statements to create more complex
-decisions. While it is possible to chain a high number of statements in this
-way, it is not recommended to overuse this technique. The code will get long,
-hard to understand and thus mistakes get more likely.
-
-To chain statements, we use `else if` statements after the first `if` and before
-the last `else`. The basic syntac stays the same. Contemplate the example below.
-
-``` {r}
-x <- 42
-
-if (x == 42) {
-  print("This is the answer")
-} else if (x < 42) {
-  print("The value is too low to be the answer")
-} else {
-  print("The value is too high to be the answer")
-}
-
-x <- 24
-
-if (x == 42) {
-  print("This is the answer")
-} else if (x < 42) {
-  print("The value is to low to be the answer")
-} else {
-  print("The value is to high to be the answer")
-}
-
-x <- 84
-
-if (x == 42) {
-  print("This is the answer")
-} else if (x < 42) {
-  print("The value is to low to be the answer")
-} else {
-  print("The value is to high to be the answer")
-}
-```
-
-In the first case, the `if` condition is met and the code following the `if`
-statement is executed. In the second case, the `if` condition is not met, so the
-code checks if the condition for the `else if` statement is `TRUE`. It is in
-this case, so the code following it is executed. In the third case, both
-conditions return `FALSE` and thus the code following the `else` statement is
-run.
-
-We can also combine conditions by applying *logical operators* to create more
-complex conditions. `&&` -- *AND* -- checks if both conditions combined by it
-are `TRUE` and only returns `TRUE` if both are at the same time. `||` -- *OR* --
-checks if at least on of the conditions is `TRUE` and returns `TRUE` if one or 
-both are. When combining two conditions, we thus have these possibilities:
-
-* `TRUE && TRUE` returns `TRUE`
-* `TRUE && FALSE`, `FALSE && TRUE` and `FALSE && FALSE` all return `FALSE`
-* `TRUE || TRUE`, `TRUE || FALSE` and `FALSE || TRUE` all return `TRUE`
-* `FALSE || FALSE` returns `FALSE`
-
-In most cases, you could also use single `&` and `|` operators, to combine
-conditions. `&&` and `||` are the safer alternatives, as they always return a
-single `TRUE` or `FALSE` and `if` statements can not interpret a logical vector
-containing multiple values. `&` and `|` can return such a vector if at least
-one object used for comparison is a vector of a length longer than 1. For more
-details on this, you can read the corresponding chapter in "R for Data Science"
-by Wickham & Grolemund:
-<https://r4ds.had.co.nz/functions.html#conditional-execution>{target="_blank"}.
-
-``` {r}
-x <- 42
-y <- 42
-
-if (x == 42 && y == 42) {
-  print("Both x and y are the answer")
-} else {
-  print("At least one of x and y is not the answer")
-}
-
-x <- 42
-y <- 24
-
-if (x == 42 && y == 42) {
-  print("Both x and y are the answer")
-} else {
-  print("At least one of x and y is not the answer")
-}
-
-x <- 42
-y <- 24
-
-if (x == 42 || y == 42) {
-  print("At least one of x and y is the answer")
-} else {
-  print("Both x and y are not the answer")
-}
-
-
-x <- 12
-y <- 24
-
-if (x == 42 || y == 42) {
-  print("At least one of x and y is the answer")
-} else {
-  print("Both x and y are not the answer")
-}
-```
-
-We can use combined conditions and chaining to create more complex decisions.
-But be wary to not overuse both techniques, for the same reasons as stated
-above.
-
-``` {r}
-x <- 42
-y <- 42
-
-if (x == 42 && y == 42) {
-  print("Both x and y are the answer")
-} else if (x == 42) {
-  print("x is the answer")
-} else if (y == 42) {
-  print("y is the answer")
-} else {
-  print("Both x and y are not the answer")
-}
-
-x <- 42
-y <- 24
-
-if (x == 42 && y == 42) {
-  print("Both x and y are the answer")
-} else if (x == 42) {
-  print("x is the answer")
-} else if (y == 42) {
-  print("y is the answer")
-} else {
-  print("Both x and y are not the answer")
-}
-
-x <- 24
-y <- 12
-
-if (x == 42 && y == 42) {
-  print("Both x and y are the answer")
-} else if (x == 42) {
-  print("x is the answer")
-} else if (y == 42) {
-  print("y is the answer")
-} else {
-  print("Both x and y are not the answer")
-}
-```
-
-Please note, that the code following the statements can be more complex than the
-code used in these introductory examples and can be comprised of anything that
-is valid R code. Also, each `{}`can hold multiple lines of code.
