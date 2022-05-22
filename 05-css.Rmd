@@ -15,7 +15,7 @@ were not developed with web scraping applications in mind, yet we can still make
 use of them, because we also want to select individual elements of a website in 
 order to extract them.
 
-CSS selectors are used in **rvest** as an argument of the `read_html()` function. 
+CSS selectors are used in **rvest** as an argument of the `html_elements()` function. 
 As a second argument -- the first one determines which data the function should
 be applied to -- we specify a selector in the form `css = "selector"`. This
 determines which elements of the HTML code we want to extract. It is important
@@ -67,7 +67,7 @@ website %>%
 
 The first variation of the selector says, 
 *select all elements of the class `"state-name"`*. The second variation 
-says, *select all <span> elements of the class `"state-name"`*. For this 
+says, *select all `<span>` elements of the class `"state-name"`*. For this 
 website, both variations are equivalent in result, since all elements assigned 
 the class `"state-name"` are also `<span>` tags. However, this does not 
 always have to be the case. Different tags with different content may very well
