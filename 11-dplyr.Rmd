@@ -42,7 +42,7 @@ exmpl_tbl <- tibble(
 exmpl_tbl
 ```
 
-Here we have different columns for people who were eligible to vot,  who voted in person and who voted by
+Here we have different columns for people who were eligible to vote,  who voted in person and who voted by
 mail, by their year of birth. We do not actually care about the difference in
 the voting method in this example and want one column that combines both. We can
 get there by using `mutate()`. The function takes the data to be manipulated as
@@ -397,7 +397,7 @@ case that the crimes in the inner ring are more interesting than in other
 districts and that the data does not necessarily point to a higher number of
 crimes in central Berlin. To get a more complete picture, we would also have to
 relate the number of reports to the citizens or even tourists per district. For
-this we woulkd need additional external data though.
+this we would need additional external data though.
 
 Using `group_by()` we can also group by multiple columns. "Mitte" and
 "Friedrichshain-Kreuzberg" showed the highest numbers among all districts. Let
