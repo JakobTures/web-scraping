@@ -43,7 +43,7 @@ there is also a table with CSS selectors. This is our scraping target.
 
 First we parse the website:
 
-``` {r load_wikip_css}
+``` {r load_wikip_css, cahe = FALSE}
 website <- "https://en.wikipedia.org/wiki/CSS" %>% 
   read_html()
 ```
@@ -57,8 +57,8 @@ closely, the Web Developer Tools can be very helpful here.
 
 Instead of simply selecting all `<table>` elements on the page, one strategy might
 be to use the WDTs to create a CSS selector for that specific table:
-`"table.wikitable:nth-child(32)"`. We thus select the table of class 
-`"wikitable"` which is the 32nd child of the parent hierarchy level -- 
+`"table.wikitable:nth-child(42)"`. We thus select the table of class 
+`"wikitable"` which is the 42nd child of the parent hierarchy level -- 
 `<div class="mw-parser-output">`.
 
 If we only want to select a single HTML element, it can be helpful to use the 
@@ -66,11 +66,11 @@ function `html_element()` instead of `html_elements()`.
 
 ``` {r select_css_table}
 elements <- website %>% 
-  html_elements(css = "table.wikitable:nth-child(32)")
+  html_elements(css = "table.wikitable:nth-child(42)")
 elements
 
 element <- website %>% 
-  html_element(css = "table.wikitable:nth-child(32)")
+  html_element(css = "table.wikitable:nth-child(42)")
 element
 ```
 
@@ -374,10 +374,15 @@ element in our example:
 
 ```
 <select name="ACT">
-	    <OPTION VALUE="SRCH">suchen [oder]
-	    <OPTION VALUE="SRCHA" SELECTED>suchen [und]
+    <OPTION VALUE="SRCH">suchen [oder]
+	  <OPTION VALUE="SRCHA" SELECTED>suchen [und]
 	    
-	    <OPTION value="BRWS">Index bl&auml;ttern
+		<OPTION value="AND">eingrenzen
+		<OPTION value="OR">erweitern
+		<OPTION value="NOT">ausgenommen
+		<OPTION value="RLV">neu ordnen
+	    
+	  <OPTION value="BRWS">Index bl&auml;ttern
 </select>
 ```
 

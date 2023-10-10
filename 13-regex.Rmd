@@ -275,7 +275,7 @@ reports$Report %>%
   mean()
 ```
 
-So about $9.5$% of police reports deal with robberies if we apply the regular
+So about $9.4$% of police reports deal with robberies if we apply the regular
 expression constructed above. Remember, that we might still match some words
 that we do not want to match, while missing others that also relate to robberies.
 Thus the actual percentage may differ.

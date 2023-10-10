@@ -268,7 +268,7 @@ assign the result to a new object for later use.
 
 ``` {r filter_years_positive}
 reports_fyears <- reports %>% 
-  filter(year %in% 2015:2021)
+  filter(year %in% 2015:2022)
 ```
 
 While the `,` behaves like the logical operator `&`, we can also use `|` for
@@ -470,8 +470,8 @@ reports %>%
   )
 ```
 
-The mean time of day over all police reports is about 11:57 while the median is
-11:05. This may indicate that the mean is biased towards a later time by a high
+The mean time of day over all police reports is about 11:59 while the median is
+11:13. This may indicate that the mean is biased towards a later time by a high
 number of very late reports. We will explore this further graphically in the next
 chapter. Again, the results may represent the time when crimes occur, but it is
 more likely, that we are actually analysing the time when the PR team posts

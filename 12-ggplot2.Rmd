@@ -36,7 +36,7 @@ reports_fyears <- reports %>%
          ) %>% 
   select(-c(Date, Report, date_cmpl)) %>% 
   rename(district = District) %>% 
-  filter(year %in% 2015:2021) %>% 
+  filter(year %in% 2015:2022) %>% 
   mutate(district = str_remove_all(district, pattern = " "))
 ```
 
@@ -360,10 +360,10 @@ on the streets of Berlin at night time, but rather that the working hours of the
 people responsible for communicating the police reports range from about 08:00
 to 19:00-20:00.
 
-We can also see that the mean we calculated in chapter \@ref(dplyr) -- 11:57 --
+We can also see that the mean we calculated in chapter \@ref(dplyr) -- 11:59 --
 is misleading. As a relevant number of reports are filed in the time span of late
-afternoon to early evening, the mean is biased to the right. 11:57 is not the
-peak of the distribution; actually, half of all reports are filed before 11:05, as
+afternoon to early evening, the mean is biased to the right. 11:59 is not the
+peak of the distribution; actually, half of all reports are filed before 11:13, as
 indicated by the median, which in general is more robust to skewed
 distributions. There seems to be a short period of high activity in the early to
 late morning hours. From this data, we can again infer more about the working

@@ -74,7 +74,7 @@ divided by pagination; to gather the links to all the subpages, we have to
 understand how the pagination works. In this case, the URL for the yearly
 archive is simply appended with the query "?page_at_1_0=" and a value indicating
 the number of the subpage we want to access.
-So "https://www.berlin.de/polizei/polizeimeldungen/archiv/2022/?page_at_1_0=13"
+So "https://www.berlin.de/polizei/polizeimeldungen/archiv/2022/?page_at_1_0=5"
 for example gives access to the fifth page for 2022. 
 
 The number of police reports is not constant over the years; the number of
@@ -183,7 +183,7 @@ data type assigned, you can also use `empty_vector <- NULL`.
 
 Now that the links to all subpages are gathered, we can finally download
 them. Please note that the download will take up to 20 minutes due to the number
-of subpages (377 at the time of writing), and the additional waiting time of 2
+of subpages (443 at the time of writing), and the additional waiting time of 2
 seconds between each iteration.
 
 ``` {r parse_all_subpages}

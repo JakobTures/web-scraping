@@ -12,7 +12,7 @@ github-repo: jakobtures.github.io/web-scraping/
 # Introduction {-}
 
 This is an introduction to web scraping using R, designed to accompany a seminar
-held at the University of Potsdam in summer 2022.
+held at the University of Potsdam in winter 2023/24.
 
 ## What is web scraping? {-}
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Good practice | Web Scraping using R</title>
   <meta name="description" content="9 Good practice | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Good practice | Web Scraping using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2022-05-22" />
+<meta name="date" content="2023-10-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,11 +52,11 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
-<script src="libs/echarts4r-binding-0.4.2/echarts4r.js"></script>
+<script src="libs/echarts4r-binding-0.4.5/echarts4r.js"></script>
 
 
 <style type="text/css">
@@ -97,7 +97,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -110,7 +110,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -124,6 +124,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 </head>
 
@@ -524,13 +528,13 @@ how to set waiting times in practice when downloading multiple pages with
 <code>read_html()</code>.</p>
 <p>First, let us generate the list of links we want to download like we did in
 chapter <a href="rvest3.html#rvest3">7</a>.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="goodpractice.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb172-2"><a href="goodpractice.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb172-3"><a href="goodpractice.html#cb172-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb172-4"><a href="goodpractice.html#cb172-4" aria-hidden="true" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="st">&quot;https://www.tidyverse.org/packages/&quot;</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb172-5"><a href="goodpractice.html#cb172-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb172-6"><a href="goodpractice.html#cb172-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb172-7"><a href="goodpractice.html#cb172-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="goodpractice.html#cb172-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb172-2"><a href="goodpractice.html#cb172-2" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb172-3"><a href="goodpractice.html#cb172-3" tabindex="-1"></a></span>
+<span id="cb172-4"><a href="goodpractice.html#cb172-4" tabindex="-1"></a>links <span class="ot">&lt;-</span> <span class="st">&quot;https://www.tidyverse.org/packages/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb172-5"><a href="goodpractice.html#cb172-5" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb172-6"><a href="goodpractice.html#cb172-6" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb172-7"><a href="goodpractice.html#cb172-7" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span></code></pre></div>
 <p>To let R wait for several seconds, we can use the base R function <code>Sys.sleep()</code>
 which takes the seconds to wait as its only argument. Since we want the <code>map()</code>
 function to add the waiting time before each <code>read_html()</code> iteration, we have to
@@ -543,11 +547,11 @@ Note, that we have to refer to the element of <code>links</code> in this formula
 by writing <code>.</code> between the parentheses of <code>read_html()</code>. So on the first
 iteration the <code>.</code> stands for the first element of <code>links</code>, on the second for the
 second element and so on.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="goodpractice.html#cb173-1" aria-hidden="true" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
-<span id="cb173-2"><a href="goodpractice.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
-<span id="cb173-3"><a href="goodpractice.html#cb173-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
-<span id="cb173-4"><a href="goodpractice.html#cb173-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_html</span>(.)</span>
-<span id="cb173-5"><a href="goodpractice.html#cb173-5" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="goodpractice.html#cb173-1" tabindex="-1"></a>pages <span class="ot">&lt;-</span> links <span class="sc">%&gt;%</span> </span>
+<span id="cb173-2"><a href="goodpractice.html#cb173-2" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
+<span id="cb173-3"><a href="goodpractice.html#cb173-3" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb173-4"><a href="goodpractice.html#cb173-4" tabindex="-1"></a>    <span class="fu">read_html</span>(.)</span>
+<span id="cb173-5"><a href="goodpractice.html#cb173-5" tabindex="-1"></a>  })</span></code></pre></div>
 <p>We successfully added a waiting time of two seconds between each iteration. Note
 that <code>read_html()</code> has to come last if we want this short notation to work
 because only the return value of the last function within the braces is assigned
@@ -627,7 +631,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
