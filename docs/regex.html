@@ -405,18 +405,18 @@ approaches here.</p>
 <span id="cb241-2"><a href="regex.html#cb241-2" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span></span>
 <span id="cb241-3"><a href="regex.html#cb241-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb241-4"><a href="regex.html#cb241-4" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
-<span id="cb241-5"><a href="regex.html#cb241-5" tabindex="-1"></a><span class="do">##    District                             </span></span>
-<span id="cb241-6"><a href="regex.html#cb241-6" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                </span></span>
-<span id="cb241-7"><a href="regex.html#cb241-7" tabindex="-1"></a><span class="do">##  1 Ereignisort: Spandau                 </span></span>
-<span id="cb241-8"><a href="regex.html#cb241-8" tabindex="-1"></a><span class="do">##  2 Ereignisort: Neukölln                </span></span>
-<span id="cb241-9"><a href="regex.html#cb241-9" tabindex="-1"></a><span class="do">##  3 Ereignisort: Friedrichshain-Kreuzberg</span></span>
-<span id="cb241-10"><a href="regex.html#cb241-10" tabindex="-1"></a><span class="do">##  4 Ereignisort: Friedrichshain-Kreuzberg</span></span>
-<span id="cb241-11"><a href="regex.html#cb241-11" tabindex="-1"></a><span class="do">##  5 Ereignisort: Spandau                 </span></span>
-<span id="cb241-12"><a href="regex.html#cb241-12" tabindex="-1"></a><span class="do">##  6 Ereignisort: Marzahn-Hellersdorf     </span></span>
-<span id="cb241-13"><a href="regex.html#cb241-13" tabindex="-1"></a><span class="do">##  7 Ereignisort: Treptow-Köpenick        </span></span>
-<span id="cb241-14"><a href="regex.html#cb241-14" tabindex="-1"></a><span class="do">##  8 Ereignisort: Steglitz-Zehlendorf     </span></span>
-<span id="cb241-15"><a href="regex.html#cb241-15" tabindex="-1"></a><span class="do">##  9 Ereignisort: Tempelhof-Schöneberg    </span></span>
-<span id="cb241-16"><a href="regex.html#cb241-16" tabindex="-1"></a><span class="do">## 10 Ereignisort: Lichtenberg</span></span></code></pre></div>
+<span id="cb241-5"><a href="regex.html#cb241-5" tabindex="-1"></a><span class="do">##    District                               </span></span>
+<span id="cb241-6"><a href="regex.html#cb241-6" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                  </span></span>
+<span id="cb241-7"><a href="regex.html#cb241-7" tabindex="-1"></a><span class="do">##  1 Ereignisort: Treptow-Köpenick          </span></span>
+<span id="cb241-8"><a href="regex.html#cb241-8" tabindex="-1"></a><span class="do">##  2 Ereignisort: Charlottenburg-Wilmersdorf</span></span>
+<span id="cb241-9"><a href="regex.html#cb241-9" tabindex="-1"></a><span class="do">##  3 Ereignisort: berlinweit                </span></span>
+<span id="cb241-10"><a href="regex.html#cb241-10" tabindex="-1"></a><span class="do">##  4 Ereignisort: Friedrichshain-Kreuzberg  </span></span>
+<span id="cb241-11"><a href="regex.html#cb241-11" tabindex="-1"></a><span class="do">##  5 Ereignisort: Marzahn-Hellersdorf       </span></span>
+<span id="cb241-12"><a href="regex.html#cb241-12" tabindex="-1"></a><span class="do">##  6 Ereignisort: Friedrichshain-Kreuzberg  </span></span>
+<span id="cb241-13"><a href="regex.html#cb241-13" tabindex="-1"></a><span class="do">##  7 Ereignisort: Mitte                     </span></span>
+<span id="cb241-14"><a href="regex.html#cb241-14" tabindex="-1"></a><span class="do">##  8 Ereignisort: Charlottenburg-Wilmersdorf</span></span>
+<span id="cb241-15"><a href="regex.html#cb241-15" tabindex="-1"></a><span class="do">##  9 Ereignisort: Neukölln                  </span></span>
+<span id="cb241-16"><a href="regex.html#cb241-16" tabindex="-1"></a><span class="do">## 10 Ereignisort: berlinweit</span></span></code></pre></div>
 <p>One problem we encounter here is that each string begins with “Ereignisort:”.
 We want to get rid of this substring, as it does not contain any useful
 information. With <code>str_remove()</code> we can remove substrings from a string. Like
@@ -433,18 +433,18 @@ following <code>:</code> is part of the regular expression.</p>
 <span id="cb242-3"><a href="regex.html#cb242-3" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
 <span id="cb242-4"><a href="regex.html#cb242-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb242-5"><a href="regex.html#cb242-5" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
-<span id="cb242-6"><a href="regex.html#cb242-6" tabindex="-1"></a><span class="do">##    District                </span></span>
-<span id="cb242-7"><a href="regex.html#cb242-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                   </span></span>
-<span id="cb242-8"><a href="regex.html#cb242-8" tabindex="-1"></a><span class="do">##  1 Spandau                 </span></span>
-<span id="cb242-9"><a href="regex.html#cb242-9" tabindex="-1"></a><span class="do">##  2 Neukölln                </span></span>
-<span id="cb242-10"><a href="regex.html#cb242-10" tabindex="-1"></a><span class="do">##  3 Friedrichshain-Kreuzberg</span></span>
-<span id="cb242-11"><a href="regex.html#cb242-11" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg</span></span>
-<span id="cb242-12"><a href="regex.html#cb242-12" tabindex="-1"></a><span class="do">##  5 Spandau                 </span></span>
-<span id="cb242-13"><a href="regex.html#cb242-13" tabindex="-1"></a><span class="do">##  6 Marzahn-Hellersdorf     </span></span>
-<span id="cb242-14"><a href="regex.html#cb242-14" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick        </span></span>
-<span id="cb242-15"><a href="regex.html#cb242-15" tabindex="-1"></a><span class="do">##  8 Steglitz-Zehlendorf     </span></span>
-<span id="cb242-16"><a href="regex.html#cb242-16" tabindex="-1"></a><span class="do">##  9 Tempelhof-Schöneberg    </span></span>
-<span id="cb242-17"><a href="regex.html#cb242-17" tabindex="-1"></a><span class="do">## 10 Lichtenberg</span></span></code></pre></div>
+<span id="cb242-6"><a href="regex.html#cb242-6" tabindex="-1"></a><span class="do">##    District                  </span></span>
+<span id="cb242-7"><a href="regex.html#cb242-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                     </span></span>
+<span id="cb242-8"><a href="regex.html#cb242-8" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick          </span></span>
+<span id="cb242-9"><a href="regex.html#cb242-9" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf</span></span>
+<span id="cb242-10"><a href="regex.html#cb242-10" tabindex="-1"></a><span class="do">##  3 berlinweit                </span></span>
+<span id="cb242-11"><a href="regex.html#cb242-11" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg  </span></span>
+<span id="cb242-12"><a href="regex.html#cb242-12" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf       </span></span>
+<span id="cb242-13"><a href="regex.html#cb242-13" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg  </span></span>
+<span id="cb242-14"><a href="regex.html#cb242-14" tabindex="-1"></a><span class="do">##  7 Mitte                     </span></span>
+<span id="cb242-15"><a href="regex.html#cb242-15" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf</span></span>
+<span id="cb242-16"><a href="regex.html#cb242-16" tabindex="-1"></a><span class="do">##  9 Neukölln                  </span></span>
+<span id="cb242-17"><a href="regex.html#cb242-17" tabindex="-1"></a><span class="do">## 10 berlinweit</span></span></code></pre></div>
 <p>We could also keep the substring but translate it to English. For this, we use
 <code>str_replace()</code> which also matches a regular expression, but replaces it with a
 string specified in <code>replacement =</code>. Here, the pattern is shortened to
@@ -454,36 +454,36 @@ string specified in <code>replacement =</code>. Here, the pattern is shortened t
 <span id="cb243-3"><a href="regex.html#cb243-3" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
 <span id="cb243-4"><a href="regex.html#cb243-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb243-5"><a href="regex.html#cb243-5" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
-<span id="cb243-6"><a href="regex.html#cb243-6" tabindex="-1"></a><span class="do">##    District                          </span></span>
-<span id="cb243-7"><a href="regex.html#cb243-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                             </span></span>
-<span id="cb243-8"><a href="regex.html#cb243-8" tabindex="-1"></a><span class="do">##  1 District: Spandau                 </span></span>
-<span id="cb243-9"><a href="regex.html#cb243-9" tabindex="-1"></a><span class="do">##  2 District: Neukölln                </span></span>
-<span id="cb243-10"><a href="regex.html#cb243-10" tabindex="-1"></a><span class="do">##  3 District: Friedrichshain-Kreuzberg</span></span>
-<span id="cb243-11"><a href="regex.html#cb243-11" tabindex="-1"></a><span class="do">##  4 District: Friedrichshain-Kreuzberg</span></span>
-<span id="cb243-12"><a href="regex.html#cb243-12" tabindex="-1"></a><span class="do">##  5 District: Spandau                 </span></span>
-<span id="cb243-13"><a href="regex.html#cb243-13" tabindex="-1"></a><span class="do">##  6 District: Marzahn-Hellersdorf     </span></span>
-<span id="cb243-14"><a href="regex.html#cb243-14" tabindex="-1"></a><span class="do">##  7 District: Treptow-Köpenick        </span></span>
-<span id="cb243-15"><a href="regex.html#cb243-15" tabindex="-1"></a><span class="do">##  8 District: Steglitz-Zehlendorf     </span></span>
-<span id="cb243-16"><a href="regex.html#cb243-16" tabindex="-1"></a><span class="do">##  9 District: Tempelhof-Schöneberg    </span></span>
-<span id="cb243-17"><a href="regex.html#cb243-17" tabindex="-1"></a><span class="do">## 10 District: Lichtenberg</span></span></code></pre></div>
+<span id="cb243-6"><a href="regex.html#cb243-6" tabindex="-1"></a><span class="do">##    District                            </span></span>
+<span id="cb243-7"><a href="regex.html#cb243-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                               </span></span>
+<span id="cb243-8"><a href="regex.html#cb243-8" tabindex="-1"></a><span class="do">##  1 District: Treptow-Köpenick          </span></span>
+<span id="cb243-9"><a href="regex.html#cb243-9" tabindex="-1"></a><span class="do">##  2 District: Charlottenburg-Wilmersdorf</span></span>
+<span id="cb243-10"><a href="regex.html#cb243-10" tabindex="-1"></a><span class="do">##  3 District: berlinweit                </span></span>
+<span id="cb243-11"><a href="regex.html#cb243-11" tabindex="-1"></a><span class="do">##  4 District: Friedrichshain-Kreuzberg  </span></span>
+<span id="cb243-12"><a href="regex.html#cb243-12" tabindex="-1"></a><span class="do">##  5 District: Marzahn-Hellersdorf       </span></span>
+<span id="cb243-13"><a href="regex.html#cb243-13" tabindex="-1"></a><span class="do">##  6 District: Friedrichshain-Kreuzberg  </span></span>
+<span id="cb243-14"><a href="regex.html#cb243-14" tabindex="-1"></a><span class="do">##  7 District: Mitte                     </span></span>
+<span id="cb243-15"><a href="regex.html#cb243-15" tabindex="-1"></a><span class="do">##  8 District: Charlottenburg-Wilmersdorf</span></span>
+<span id="cb243-16"><a href="regex.html#cb243-16" tabindex="-1"></a><span class="do">##  9 District: Neukölln                  </span></span>
+<span id="cb243-17"><a href="regex.html#cb243-17" tabindex="-1"></a><span class="do">## 10 District: berlinweit</span></span></code></pre></div>
 <p>In the same way, we can replace the <code>": "</code> substring with a dash.</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="regex.html#cb244-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
 <span id="cb244-2"><a href="regex.html#cb244-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">str_replace</span>(District, <span class="at">pattern =</span> <span class="st">&quot;: &quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;-&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb244-3"><a href="regex.html#cb244-3" tabindex="-1"></a>  <span class="fu">select</span>(District) <span class="sc">%&gt;%</span> </span>
 <span id="cb244-4"><a href="regex.html#cb244-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
 <span id="cb244-5"><a href="regex.html#cb244-5" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
-<span id="cb244-6"><a href="regex.html#cb244-6" tabindex="-1"></a><span class="do">##    District                            </span></span>
-<span id="cb244-7"><a href="regex.html#cb244-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                               </span></span>
-<span id="cb244-8"><a href="regex.html#cb244-8" tabindex="-1"></a><span class="do">##  1 Ereignisort-Spandau                 </span></span>
-<span id="cb244-9"><a href="regex.html#cb244-9" tabindex="-1"></a><span class="do">##  2 Ereignisort-Neukölln                </span></span>
-<span id="cb244-10"><a href="regex.html#cb244-10" tabindex="-1"></a><span class="do">##  3 Ereignisort-Friedrichshain-Kreuzberg</span></span>
-<span id="cb244-11"><a href="regex.html#cb244-11" tabindex="-1"></a><span class="do">##  4 Ereignisort-Friedrichshain-Kreuzberg</span></span>
-<span id="cb244-12"><a href="regex.html#cb244-12" tabindex="-1"></a><span class="do">##  5 Ereignisort-Spandau                 </span></span>
-<span id="cb244-13"><a href="regex.html#cb244-13" tabindex="-1"></a><span class="do">##  6 Ereignisort-Marzahn-Hellersdorf     </span></span>
-<span id="cb244-14"><a href="regex.html#cb244-14" tabindex="-1"></a><span class="do">##  7 Ereignisort-Treptow-Köpenick        </span></span>
-<span id="cb244-15"><a href="regex.html#cb244-15" tabindex="-1"></a><span class="do">##  8 Ereignisort-Steglitz-Zehlendorf     </span></span>
-<span id="cb244-16"><a href="regex.html#cb244-16" tabindex="-1"></a><span class="do">##  9 Ereignisort-Tempelhof-Schöneberg    </span></span>
-<span id="cb244-17"><a href="regex.html#cb244-17" tabindex="-1"></a><span class="do">## 10 Ereignisort-Lichtenberg</span></span></code></pre></div>
+<span id="cb244-6"><a href="regex.html#cb244-6" tabindex="-1"></a><span class="do">##    District                              </span></span>
+<span id="cb244-7"><a href="regex.html#cb244-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                 </span></span>
+<span id="cb244-8"><a href="regex.html#cb244-8" tabindex="-1"></a><span class="do">##  1 Ereignisort-Treptow-Köpenick          </span></span>
+<span id="cb244-9"><a href="regex.html#cb244-9" tabindex="-1"></a><span class="do">##  2 Ereignisort-Charlottenburg-Wilmersdorf</span></span>
+<span id="cb244-10"><a href="regex.html#cb244-10" tabindex="-1"></a><span class="do">##  3 Ereignisort-berlinweit                </span></span>
+<span id="cb244-11"><a href="regex.html#cb244-11" tabindex="-1"></a><span class="do">##  4 Ereignisort-Friedrichshain-Kreuzberg  </span></span>
+<span id="cb244-12"><a href="regex.html#cb244-12" tabindex="-1"></a><span class="do">##  5 Ereignisort-Marzahn-Hellersdorf       </span></span>
+<span id="cb244-13"><a href="regex.html#cb244-13" tabindex="-1"></a><span class="do">##  6 Ereignisort-Friedrichshain-Kreuzberg  </span></span>
+<span id="cb244-14"><a href="regex.html#cb244-14" tabindex="-1"></a><span class="do">##  7 Ereignisort-Mitte                     </span></span>
+<span id="cb244-15"><a href="regex.html#cb244-15" tabindex="-1"></a><span class="do">##  8 Ereignisort-Charlottenburg-Wilmersdorf</span></span>
+<span id="cb244-16"><a href="regex.html#cb244-16" tabindex="-1"></a><span class="do">##  9 Ereignisort-Neukölln                  </span></span>
+<span id="cb244-17"><a href="regex.html#cb244-17" tabindex="-1"></a><span class="do">## 10 Ereignisort-berlinweit</span></span></code></pre></div>
 <p>In chapter <a href="dplyr.html#dplyr">11</a> we saw district names with two parts that are sometimes
 written with and sometimes without whitespace around the dash, as seen here:</p>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="regex.html#cb245-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
@@ -493,15 +493,15 @@ written with and sometimes without whitespace around the dash, as seen here:</p>
 <span id="cb245-5"><a href="regex.html#cb245-5" tabindex="-1"></a><span class="do">##    District                                  reports</span></span>
 <span id="cb245-6"><a href="regex.html#cb245-6" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                       &lt;int&gt;</span></span>
 <span id="cb245-7"><a href="regex.html#cb245-7" tabindex="-1"></a><span class="do">##  1 Ereignisort: Charlottenburg - Wilmersdorf     579</span></span>
-<span id="cb245-8"><a href="regex.html#cb245-8" tabindex="-1"></a><span class="do">##  2 Ereignisort: Charlottenburg-Wilmersdorf      1421</span></span>
+<span id="cb245-8"><a href="regex.html#cb245-8" tabindex="-1"></a><span class="do">##  2 Ereignisort: Charlottenburg-Wilmersdorf      1427</span></span>
 <span id="cb245-9"><a href="regex.html#cb245-9" tabindex="-1"></a><span class="do">##  3 Ereignisort: Friedrichshain - Kreuzberg       661</span></span>
-<span id="cb245-10"><a href="regex.html#cb245-10" tabindex="-1"></a><span class="do">##  4 Ereignisort: Friedrichshain-Kreuzberg        1694</span></span>
-<span id="cb245-11"><a href="regex.html#cb245-11" tabindex="-1"></a><span class="do">##  5 Ereignisort: Lichtenberg                     1231</span></span>
+<span id="cb245-10"><a href="regex.html#cb245-10" tabindex="-1"></a><span class="do">##  4 Ereignisort: Friedrichshain-Kreuzberg        1701</span></span>
+<span id="cb245-11"><a href="regex.html#cb245-11" tabindex="-1"></a><span class="do">##  5 Ereignisort: Lichtenberg                     1232</span></span>
 <span id="cb245-12"><a href="regex.html#cb245-12" tabindex="-1"></a><span class="do">##  6 Ereignisort: Marzahn - Hellersdorf            253</span></span>
-<span id="cb245-13"><a href="regex.html#cb245-13" tabindex="-1"></a><span class="do">##  7 Ereignisort: Marzahn-Hellersdorf              878</span></span>
-<span id="cb245-14"><a href="regex.html#cb245-14" tabindex="-1"></a><span class="do">##  8 Ereignisort: Mitte                           3303</span></span>
-<span id="cb245-15"><a href="regex.html#cb245-15" tabindex="-1"></a><span class="do">##  9 Ereignisort: Neukölln                        1949</span></span>
-<span id="cb245-16"><a href="regex.html#cb245-16" tabindex="-1"></a><span class="do">## 10 Ereignisort: Pankow                          1624</span></span>
+<span id="cb245-13"><a href="regex.html#cb245-13" tabindex="-1"></a><span class="do">##  7 Ereignisort: Marzahn-Hellersdorf              881</span></span>
+<span id="cb245-14"><a href="regex.html#cb245-14" tabindex="-1"></a><span class="do">##  8 Ereignisort: Mitte                           3314</span></span>
+<span id="cb245-15"><a href="regex.html#cb245-15" tabindex="-1"></a><span class="do">##  9 Ereignisort: Neukölln                        1952</span></span>
+<span id="cb245-16"><a href="regex.html#cb245-16" tabindex="-1"></a><span class="do">## 10 Ereignisort: Pankow                          1629</span></span>
 <span id="cb245-17"><a href="regex.html#cb245-17" tabindex="-1"></a><span class="do">## # ℹ 12 more rows</span></span></code></pre></div>
 <p>We can easily unify those names using <code>str_replace</code> and regular expressions.</p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="regex.html#cb246-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
@@ -511,21 +511,21 @@ written with and sometimes without whitespace around the dash, as seen here:</p>
 <span id="cb246-5"><a href="regex.html#cb246-5" tabindex="-1"></a><span class="do">## # A tibble: 16 × 2</span></span>
 <span id="cb246-6"><a href="regex.html#cb246-6" tabindex="-1"></a><span class="do">##    District                                reports</span></span>
 <span id="cb246-7"><a href="regex.html#cb246-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                     &lt;int&gt;</span></span>
-<span id="cb246-8"><a href="regex.html#cb246-8" tabindex="-1"></a><span class="do">##  1 Ereignisort: Charlottenburg-Wilmersdorf    2000</span></span>
-<span id="cb246-9"><a href="regex.html#cb246-9" tabindex="-1"></a><span class="do">##  2 Ereignisort: Friedrichshain-Kreuzberg      2355</span></span>
-<span id="cb246-10"><a href="regex.html#cb246-10" tabindex="-1"></a><span class="do">##  3 Ereignisort: Lichtenberg                   1231</span></span>
-<span id="cb246-11"><a href="regex.html#cb246-11" tabindex="-1"></a><span class="do">##  4 Ereignisort: Marzahn-Hellersdorf           1131</span></span>
-<span id="cb246-12"><a href="regex.html#cb246-12" tabindex="-1"></a><span class="do">##  5 Ereignisort: Mitte                         3303</span></span>
-<span id="cb246-13"><a href="regex.html#cb246-13" tabindex="-1"></a><span class="do">##  6 Ereignisort: Neukölln                      1949</span></span>
-<span id="cb246-14"><a href="regex.html#cb246-14" tabindex="-1"></a><span class="do">##  7 Ereignisort: Pankow                        1624</span></span>
+<span id="cb246-8"><a href="regex.html#cb246-8" tabindex="-1"></a><span class="do">##  1 Ereignisort: Charlottenburg-Wilmersdorf    2006</span></span>
+<span id="cb246-9"><a href="regex.html#cb246-9" tabindex="-1"></a><span class="do">##  2 Ereignisort: Friedrichshain-Kreuzberg      2362</span></span>
+<span id="cb246-10"><a href="regex.html#cb246-10" tabindex="-1"></a><span class="do">##  3 Ereignisort: Lichtenberg                   1232</span></span>
+<span id="cb246-11"><a href="regex.html#cb246-11" tabindex="-1"></a><span class="do">##  4 Ereignisort: Marzahn-Hellersdorf           1134</span></span>
+<span id="cb246-12"><a href="regex.html#cb246-12" tabindex="-1"></a><span class="do">##  5 Ereignisort: Mitte                         3314</span></span>
+<span id="cb246-13"><a href="regex.html#cb246-13" tabindex="-1"></a><span class="do">##  6 Ereignisort: Neukölln                      1952</span></span>
+<span id="cb246-14"><a href="regex.html#cb246-14" tabindex="-1"></a><span class="do">##  7 Ereignisort: Pankow                        1629</span></span>
 <span id="cb246-15"><a href="regex.html#cb246-15" tabindex="-1"></a><span class="do">##  8 Ereignisort: Reinickendorf                 1193</span></span>
 <span id="cb246-16"><a href="regex.html#cb246-16" tabindex="-1"></a><span class="do">##  9 Ereignisort: Spandau                       1170</span></span>
 <span id="cb246-17"><a href="regex.html#cb246-17" tabindex="-1"></a><span class="do">## 10 Ereignisort: Steglitz-Zehlendorf           1045</span></span>
-<span id="cb246-18"><a href="regex.html#cb246-18" tabindex="-1"></a><span class="do">## 11 Ereignisort: Tempelhof-Schöneberg          1735</span></span>
-<span id="cb246-19"><a href="regex.html#cb246-19" tabindex="-1"></a><span class="do">## 12 Ereignisort: Treptow-Köpenick              1345</span></span>
-<span id="cb246-20"><a href="regex.html#cb246-20" tabindex="-1"></a><span class="do">## 13 Ereignisort: berlinweit                     386</span></span>
-<span id="cb246-21"><a href="regex.html#cb246-21" tabindex="-1"></a><span class="do">## 14 Ereignisort: bezirksübergreifend            951</span></span>
-<span id="cb246-22"><a href="regex.html#cb246-22" tabindex="-1"></a><span class="do">## 15 Ereignisort: bundesweit                      60</span></span>
+<span id="cb246-18"><a href="regex.html#cb246-18" tabindex="-1"></a><span class="do">## 11 Ereignisort: Tempelhof-Schöneberg          1737</span></span>
+<span id="cb246-19"><a href="regex.html#cb246-19" tabindex="-1"></a><span class="do">## 12 Ereignisort: Treptow-Köpenick              1346</span></span>
+<span id="cb246-20"><a href="regex.html#cb246-20" tabindex="-1"></a><span class="do">## 13 Ereignisort: berlinweit                     389</span></span>
+<span id="cb246-21"><a href="regex.html#cb246-21" tabindex="-1"></a><span class="do">## 14 Ereignisort: bezirksübergreifend            953</span></span>
+<span id="cb246-22"><a href="regex.html#cb246-22" tabindex="-1"></a><span class="do">## 15 Ereignisort: bundesweit                      63</span></span>
 <span id="cb246-23"><a href="regex.html#cb246-23" tabindex="-1"></a><span class="do">## 16 &lt;NA&gt;                                        427</span></span></code></pre></div>
 <p>If we want to remove the whitespace and unify the names in the process, we use
 <code>str_remove()</code> and the regular expression <code>"\\s"</code>, being a shortcut for matching
@@ -555,15 +555,15 @@ to use:</p>
 <span id="cb247-6"><a href="regex.html#cb247-6" tabindex="-1"></a><span class="do">##    District                                 reports</span></span>
 <span id="cb247-7"><a href="regex.html#cb247-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                      &lt;int&gt;</span></span>
 <span id="cb247-8"><a href="regex.html#cb247-8" tabindex="-1"></a><span class="do">##  1 Ereignisort:Charlottenburg - Wilmersdorf     579</span></span>
-<span id="cb247-9"><a href="regex.html#cb247-9" tabindex="-1"></a><span class="do">##  2 Ereignisort:Charlottenburg-Wilmersdorf      1421</span></span>
+<span id="cb247-9"><a href="regex.html#cb247-9" tabindex="-1"></a><span class="do">##  2 Ereignisort:Charlottenburg-Wilmersdorf      1427</span></span>
 <span id="cb247-10"><a href="regex.html#cb247-10" tabindex="-1"></a><span class="do">##  3 Ereignisort:Friedrichshain - Kreuzberg       661</span></span>
-<span id="cb247-11"><a href="regex.html#cb247-11" tabindex="-1"></a><span class="do">##  4 Ereignisort:Friedrichshain-Kreuzberg        1694</span></span>
-<span id="cb247-12"><a href="regex.html#cb247-12" tabindex="-1"></a><span class="do">##  5 Ereignisort:Lichtenberg                     1231</span></span>
+<span id="cb247-11"><a href="regex.html#cb247-11" tabindex="-1"></a><span class="do">##  4 Ereignisort:Friedrichshain-Kreuzberg        1701</span></span>
+<span id="cb247-12"><a href="regex.html#cb247-12" tabindex="-1"></a><span class="do">##  5 Ereignisort:Lichtenberg                     1232</span></span>
 <span id="cb247-13"><a href="regex.html#cb247-13" tabindex="-1"></a><span class="do">##  6 Ereignisort:Marzahn - Hellersdorf            253</span></span>
-<span id="cb247-14"><a href="regex.html#cb247-14" tabindex="-1"></a><span class="do">##  7 Ereignisort:Marzahn-Hellersdorf              878</span></span>
-<span id="cb247-15"><a href="regex.html#cb247-15" tabindex="-1"></a><span class="do">##  8 Ereignisort:Mitte                           3303</span></span>
-<span id="cb247-16"><a href="regex.html#cb247-16" tabindex="-1"></a><span class="do">##  9 Ereignisort:Neukölln                        1949</span></span>
-<span id="cb247-17"><a href="regex.html#cb247-17" tabindex="-1"></a><span class="do">## 10 Ereignisort:Pankow                          1624</span></span>
+<span id="cb247-14"><a href="regex.html#cb247-14" tabindex="-1"></a><span class="do">##  7 Ereignisort:Marzahn-Hellersdorf              881</span></span>
+<span id="cb247-15"><a href="regex.html#cb247-15" tabindex="-1"></a><span class="do">##  8 Ereignisort:Mitte                           3314</span></span>
+<span id="cb247-16"><a href="regex.html#cb247-16" tabindex="-1"></a><span class="do">##  9 Ereignisort:Neukölln                        1952</span></span>
+<span id="cb247-17"><a href="regex.html#cb247-17" tabindex="-1"></a><span class="do">## 10 Ereignisort:Pankow                          1629</span></span>
 <span id="cb247-18"><a href="regex.html#cb247-18" tabindex="-1"></a><span class="do">## # ℹ 12 more rows</span></span></code></pre></div>
 <p>This did not work as expected. The whitespace following the <code>":"</code> was removed,
 but not the whitespace around the dashes. This is the case because most of the
@@ -578,21 +578,21 @@ first match, ending in <code>_all</code>: e.g. <code>str_replace_all()</code>. 
 <span id="cb248-5"><a href="regex.html#cb248-5" tabindex="-1"></a><span class="do">## # A tibble: 16 × 2</span></span>
 <span id="cb248-6"><a href="regex.html#cb248-6" tabindex="-1"></a><span class="do">##    District                               reports</span></span>
 <span id="cb248-7"><a href="regex.html#cb248-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                    &lt;int&gt;</span></span>
-<span id="cb248-8"><a href="regex.html#cb248-8" tabindex="-1"></a><span class="do">##  1 Ereignisort:Charlottenburg-Wilmersdorf    2000</span></span>
-<span id="cb248-9"><a href="regex.html#cb248-9" tabindex="-1"></a><span class="do">##  2 Ereignisort:Friedrichshain-Kreuzberg      2355</span></span>
-<span id="cb248-10"><a href="regex.html#cb248-10" tabindex="-1"></a><span class="do">##  3 Ereignisort:Lichtenberg                   1231</span></span>
-<span id="cb248-11"><a href="regex.html#cb248-11" tabindex="-1"></a><span class="do">##  4 Ereignisort:Marzahn-Hellersdorf           1131</span></span>
-<span id="cb248-12"><a href="regex.html#cb248-12" tabindex="-1"></a><span class="do">##  5 Ereignisort:Mitte                         3303</span></span>
-<span id="cb248-13"><a href="regex.html#cb248-13" tabindex="-1"></a><span class="do">##  6 Ereignisort:Neukölln                      1949</span></span>
-<span id="cb248-14"><a href="regex.html#cb248-14" tabindex="-1"></a><span class="do">##  7 Ereignisort:Pankow                        1624</span></span>
+<span id="cb248-8"><a href="regex.html#cb248-8" tabindex="-1"></a><span class="do">##  1 Ereignisort:Charlottenburg-Wilmersdorf    2006</span></span>
+<span id="cb248-9"><a href="regex.html#cb248-9" tabindex="-1"></a><span class="do">##  2 Ereignisort:Friedrichshain-Kreuzberg      2362</span></span>
+<span id="cb248-10"><a href="regex.html#cb248-10" tabindex="-1"></a><span class="do">##  3 Ereignisort:Lichtenberg                   1232</span></span>
+<span id="cb248-11"><a href="regex.html#cb248-11" tabindex="-1"></a><span class="do">##  4 Ereignisort:Marzahn-Hellersdorf           1134</span></span>
+<span id="cb248-12"><a href="regex.html#cb248-12" tabindex="-1"></a><span class="do">##  5 Ereignisort:Mitte                         3314</span></span>
+<span id="cb248-13"><a href="regex.html#cb248-13" tabindex="-1"></a><span class="do">##  6 Ereignisort:Neukölln                      1952</span></span>
+<span id="cb248-14"><a href="regex.html#cb248-14" tabindex="-1"></a><span class="do">##  7 Ereignisort:Pankow                        1629</span></span>
 <span id="cb248-15"><a href="regex.html#cb248-15" tabindex="-1"></a><span class="do">##  8 Ereignisort:Reinickendorf                 1193</span></span>
 <span id="cb248-16"><a href="regex.html#cb248-16" tabindex="-1"></a><span class="do">##  9 Ereignisort:Spandau                       1170</span></span>
 <span id="cb248-17"><a href="regex.html#cb248-17" tabindex="-1"></a><span class="do">## 10 Ereignisort:Steglitz-Zehlendorf           1045</span></span>
-<span id="cb248-18"><a href="regex.html#cb248-18" tabindex="-1"></a><span class="do">## 11 Ereignisort:Tempelhof-Schöneberg          1735</span></span>
-<span id="cb248-19"><a href="regex.html#cb248-19" tabindex="-1"></a><span class="do">## 12 Ereignisort:Treptow-Köpenick              1345</span></span>
-<span id="cb248-20"><a href="regex.html#cb248-20" tabindex="-1"></a><span class="do">## 13 Ereignisort:berlinweit                     386</span></span>
-<span id="cb248-21"><a href="regex.html#cb248-21" tabindex="-1"></a><span class="do">## 14 Ereignisort:bezirksübergreifend            951</span></span>
-<span id="cb248-22"><a href="regex.html#cb248-22" tabindex="-1"></a><span class="do">## 15 Ereignisort:bundesweit                      60</span></span>
+<span id="cb248-18"><a href="regex.html#cb248-18" tabindex="-1"></a><span class="do">## 11 Ereignisort:Tempelhof-Schöneberg          1737</span></span>
+<span id="cb248-19"><a href="regex.html#cb248-19" tabindex="-1"></a><span class="do">## 12 Ereignisort:Treptow-Köpenick              1346</span></span>
+<span id="cb248-20"><a href="regex.html#cb248-20" tabindex="-1"></a><span class="do">## 13 Ereignisort:berlinweit                     389</span></span>
+<span id="cb248-21"><a href="regex.html#cb248-21" tabindex="-1"></a><span class="do">## 14 Ereignisort:bezirksübergreifend            953</span></span>
+<span id="cb248-22"><a href="regex.html#cb248-22" tabindex="-1"></a><span class="do">## 15 Ereignisort:bundesweit                      63</span></span>
 <span id="cb248-23"><a href="regex.html#cb248-23" tabindex="-1"></a><span class="do">## 16 &lt;NA&gt;                                       427</span></span></code></pre></div>
 </div>
 <div id="detecting-robberies-in-police-reports" class="section level2 hasAnchor" number="13.2">
@@ -613,7 +613,7 @@ to <span class="math inline">\(1\)</span>, <code>FALSE</code> equal to <span cla
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="regex.html#cb249-1" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
 <span id="cb249-2"><a href="regex.html#cb249-2" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;raub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb249-3"><a href="regex.html#cb249-3" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb249-4"><a href="regex.html#cb249-4" tabindex="-1"></a><span class="do">## [1] 520</span></span></code></pre></div>
+<span id="cb249-4"><a href="regex.html#cb249-4" tabindex="-1"></a><span class="do">## [1] 522</span></span></code></pre></div>
 <p>But what if a text begins with “Raub”. In this case the “R” will be upper case.
 Pattern matching is case sensitive and that means that “Raub” is not equal to
 “raub”. If we want both ways of writing the term to be counted as equal, we have
@@ -625,14 +625,14 @@ characters from the class is matched.</p>
 <div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="regex.html#cb250-1" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
 <span id="cb250-2"><a href="regex.html#cb250-2" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[Rr]aub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb250-3"><a href="regex.html#cb250-3" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb250-4"><a href="regex.html#cb250-4" tabindex="-1"></a><span class="do">## [1] 1162</span></span></code></pre></div>
+<span id="cb250-4"><a href="regex.html#cb250-4" tabindex="-1"></a><span class="do">## [1] 1166</span></span></code></pre></div>
 <p>If we also want to detect terms like “Räuber” or “räuberische”, we have to allow
 for an “ä” instead of the “a” as the second character by defining a class for
 the second position in the term:</p>
 <div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="regex.html#cb251-1" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
 <span id="cb251-2"><a href="regex.html#cb251-2" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;[rR][aä]ub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb251-3"><a href="regex.html#cb251-3" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb251-4"><a href="regex.html#cb251-4" tabindex="-1"></a><span class="do">## [1] 1492</span></span></code></pre></div>
+<span id="cb251-4"><a href="regex.html#cb251-4" tabindex="-1"></a><span class="do">## [1] 1498</span></span></code></pre></div>
 <p>Let us have a look at some of the strings which returned a <code>TRUE</code> match, using
 <code>str_detect()</code> in <code>filter()</code>: telling R we want to see only lines from <code>reports</code>
 for which the pattern could be found, and only the first <span class="math inline">\(10\)</span> of those.</p>
@@ -641,18 +641,18 @@ for which the pattern could be found, and only the first <span class="math inlin
 <span id="cb252-3"><a href="regex.html#cb252-3" tabindex="-1"></a>  <span class="fu">select</span>(Report) <span class="sc">%&gt;%</span> </span>
 <span id="cb252-4"><a href="regex.html#cb252-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
 <span id="cb252-5"><a href="regex.html#cb252-5" tabindex="-1"></a><span class="do">## # A tibble: 10 × 1</span></span>
-<span id="cb252-6"><a href="regex.html#cb252-6" tabindex="-1"></a><span class="do">##    Report                                                           </span></span>
-<span id="cb252-7"><a href="regex.html#cb252-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                                            </span></span>
-<span id="cb252-8"><a href="regex.html#cb252-8" tabindex="-1"></a><span class="do">##  1 Raub auf Tankstelle - Wer kennt diesen Mann?                     </span></span>
-<span id="cb252-9"><a href="regex.html#cb252-9" tabindex="-1"></a><span class="do">##  2 Nachtportier beraubt                                             </span></span>
-<span id="cb252-10"><a href="regex.html#cb252-10" tabindex="-1"></a><span class="do">##  3 Ausgeraubt und mit Pistole bedroht                               </span></span>
-<span id="cb252-11"><a href="regex.html#cb252-11" tabindex="-1"></a><span class="do">##  4 Raub auf Hotel - Rezeptionist wird bedroht und verletzt          </span></span>
-<span id="cb252-12"><a href="regex.html#cb252-12" tabindex="-1"></a><span class="do">##  5 Raub in Hotel                                                    </span></span>
-<span id="cb252-13"><a href="regex.html#cb252-13" tabindex="-1"></a><span class="do">##  6 Mutmaßlicher Räuber auf frischer Tat festgenommen                </span></span>
-<span id="cb252-14"><a href="regex.html#cb252-14" tabindex="-1"></a><span class="do">##  7 Raubüberfall auf Filiale eines Lieferdienstes                    </span></span>
-<span id="cb252-15"><a href="regex.html#cb252-15" tabindex="-1"></a><span class="do">##  8 Mann beraubt - Zeugin gesucht                                    </span></span>
-<span id="cb252-16"><a href="regex.html#cb252-16" tabindex="-1"></a><span class="do">##  9 Haftbefehle wegen Raubtaten gegen zwei Tatverdächtige vollstreckt</span></span>
-<span id="cb252-17"><a href="regex.html#cb252-17" tabindex="-1"></a><span class="do">## 10 Seniorin wird die Handtasche geraubt</span></span></code></pre></div>
+<span id="cb252-6"><a href="regex.html#cb252-6" tabindex="-1"></a><span class="do">##    Report                                                              </span></span>
+<span id="cb252-7"><a href="regex.html#cb252-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                                               </span></span>
+<span id="cb252-8"><a href="regex.html#cb252-8" tabindex="-1"></a><span class="do">##  1 Festnahme nach räuberischem Diebstahl                               </span></span>
+<span id="cb252-9"><a href="regex.html#cb252-9" tabindex="-1"></a><span class="do">##  2 Raub im Juweliergeschäft                                            </span></span>
+<span id="cb252-10"><a href="regex.html#cb252-10" tabindex="-1"></a><span class="do">##  3 Räuber festgenommen                                                 </span></span>
+<span id="cb252-11"><a href="regex.html#cb252-11" tabindex="-1"></a><span class="do">##  4 Seniorin in ihrer Wohnung beraubt und schwer verletzt zurückgelassen</span></span>
+<span id="cb252-12"><a href="regex.html#cb252-12" tabindex="-1"></a><span class="do">##  5 Tankstelle beraubt                                                  </span></span>
+<span id="cb252-13"><a href="regex.html#cb252-13" tabindex="-1"></a><span class="do">##  6 Gemeinschaftlicher Raub in Wohnung – Wer kennt diesen Mann?         </span></span>
+<span id="cb252-14"><a href="regex.html#cb252-14" tabindex="-1"></a><span class="do">##  7 Raub auf Tankstelle - Wer kennt diesen Mann?                        </span></span>
+<span id="cb252-15"><a href="regex.html#cb252-15" tabindex="-1"></a><span class="do">##  8 Nachtportier beraubt                                                </span></span>
+<span id="cb252-16"><a href="regex.html#cb252-16" tabindex="-1"></a><span class="do">##  9 Ausgeraubt und mit Pistole bedroht                                  </span></span>
+<span id="cb252-17"><a href="regex.html#cb252-17" tabindex="-1"></a><span class="do">## 10 Raub auf Hotel - Rezeptionist wird bedroht und verletzt</span></span></code></pre></div>
 <p>This looks good at a first glance, but consider this result:</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="regex.html#cb253-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span></span>
 <span id="cb253-2"><a href="regex.html#cb253-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Report, <span class="at">pattern =</span> <span class="st">&quot;[Rr][aä]ub&quot;</span>)) <span class="sc">%&gt;%</span> </span>
@@ -682,7 +682,7 @@ by <code>|</code>, is found in a string and is then followed up by either “a�
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="regex.html#cb254-1" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
 <span id="cb254-2"><a href="regex.html#cb254-2" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb254-3"><a href="regex.html#cb254-3" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb254-4"><a href="regex.html#cb254-4" tabindex="-1"></a><span class="do">## [1] 1289</span></span></code></pre></div>
+<span id="cb254-4"><a href="regex.html#cb254-4" tabindex="-1"></a><span class="do">## [1] 1294</span></span></code></pre></div>
 <p>There are other words in the German language that are used to describe the
 concept of robberies. Adding all of them and the several individual pre- and/or
 suffixes that have to be taken into account to reliably select the terms we want
@@ -694,7 +694,7 @@ ways of writing “raub” and “dieb” we allowed for.</p>
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="regex.html#cb255-1" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
 <span id="cb255-2"><a href="regex.html#cb255-2" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb255-3"><a href="regex.html#cb255-3" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
-<span id="cb255-4"><a href="regex.html#cb255-4" tabindex="-1"></a><span class="do">## [1] 2052</span></span></code></pre></div>
+<span id="cb255-4"><a href="regex.html#cb255-4" tabindex="-1"></a><span class="do">## [1] 2061</span></span></code></pre></div>
 <p>Now that we have constructed a provisional regular expression that can detect
 reports that are related to robberies, we can also compute their relative
 proportion. Remember, we are dealing with a logical vector of ones and zeros:
@@ -704,7 +704,7 @@ the relative proportion.</p>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="regex.html#cb256-1" tabindex="-1"></a>reports<span class="sc">$</span>Report <span class="sc">%&gt;%</span></span>
 <span id="cb256-2"><a href="regex.html#cb256-2" tabindex="-1"></a>  <span class="fu">str_detect</span>(<span class="at">pattern =</span> <span class="st">&quot;(R|ger|ber|zur)[aä]ub|[Dd]ieb&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb256-3"><a href="regex.html#cb256-3" tabindex="-1"></a>  <span class="fu">mean</span>()</span>
-<span id="cb256-4"><a href="regex.html#cb256-4" tabindex="-1"></a><span class="do">## [1] 0.09367724</span></span></code></pre></div>
+<span id="cb256-4"><a href="regex.html#cb256-4" tabindex="-1"></a><span class="do">## [1] 0.09388666</span></span></code></pre></div>
 <p>So about <span class="math inline">\(9.4\)</span>% of police reports deal with robberies if we apply the regular
 expression constructed above. Remember, that we might still match some words
 that we do not want to match, while missing others that also relate to robberies.

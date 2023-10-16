@@ -682,21 +682,21 @@ for <code>mean</code> and <code>sd</code>. Just writing <code>rnorm()</code> wil
 followed by <code>=</code> and the value to be provided. Note that, since <code>rnorm()</code> draws
 random numbers, your output will differ from the output presented here.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="R1.html#cb24-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb24-2"><a href="R1.html#cb24-2" tabindex="-1"></a><span class="do">##  [1]  0.3611483 -0.5780864 -0.3860730  0.7675457 -0.5723054 -1.5781583</span></span>
-<span id="cb24-3"><a href="R1.html#cb24-3" tabindex="-1"></a><span class="do">##  [7]  1.5502005  0.5733364 -0.2185449  0.9633530</span></span></code></pre></div>
+<span id="cb24-2"><a href="R1.html#cb24-2" tabindex="-1"></a><span class="do">##  [1] -0.4825981 -0.1270875 -1.3090852  0.7795997  0.2651731  0.8898682</span></span>
+<span id="cb24-3"><a href="R1.html#cb24-3" tabindex="-1"></a><span class="do">##  [7]  0.4773540  0.1411927  0.3071022 -0.8846552</span></span></code></pre></div>
 <p>In the same vein, additional arguments that are allowed by the function can
 be defined, instead of using their default values.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="R1.html#cb25-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb25-2"><a href="R1.html#cb25-2" tabindex="-1"></a><span class="do">##  [1] 10.125632 10.625800 10.040874  9.438319 10.193144  9.805181 10.252983</span></span>
-<span id="cb25-3"><a href="R1.html#cb25-3" tabindex="-1"></a><span class="do">##  [8] 10.783192 10.021839  9.328904</span></span></code></pre></div>
+<span id="cb25-2"><a href="R1.html#cb25-2" tabindex="-1"></a><span class="do">##  [1]  9.403351 10.580990 10.447558 10.223672  9.916762  9.357506 10.537004</span></span>
+<span id="cb25-3"><a href="R1.html#cb25-3" tabindex="-1"></a><span class="do">##  [8]  8.619759 10.252021  9.831583</span></span></code></pre></div>
 <p>We can also skip writing the names of arguments in many cases. As the <code>n</code>
 argument is the first listed in the function’s parentheses, R also understands
 the call, if we just provide the value to be used as the first argument. You
 will often encounter the convention that the first argument is written without
 its name and any further arguments are written in full.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="R1.html#cb26-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb26-2"><a href="R1.html#cb26-2" tabindex="-1"></a><span class="do">##  [1]  9.750260 10.233027 10.839203 10.121290  9.959700 10.107716  9.660383</span></span>
-<span id="cb26-3"><a href="R1.html#cb26-3" tabindex="-1"></a><span class="do">##  [8] 10.252242  9.560656  9.671925</span></span></code></pre></div>
+<span id="cb26-2"><a href="R1.html#cb26-2" tabindex="-1"></a><span class="do">##  [1] 10.155440  8.682634 10.205253  9.339411 10.166834 10.121625  9.889124</span></span>
+<span id="cb26-3"><a href="R1.html#cb26-3" tabindex="-1"></a><span class="do">##  [8]  9.715910 10.972416  9.446602</span></span></code></pre></div>
 </div>
 <div id="examples-basic-statistical-functions" class="section level3 hasAnchor" number="1.6.2">
 <h3><span class="header-section-number">1.6.2</span> Examples: Basic statistical functions<a href="R1.html#examples-basic-statistical-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>

@@ -609,7 +609,8 @@ by using <code>as.numeric()</code> or <code>period_to_seconds()</code> (also see
 <a href="dplyr.html#dplyr">11</a>).</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="ggplot.html#cb235-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
 <span id="cb235-2"><a href="ggplot.html#cb235-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
-<span id="cb235-3"><a href="ggplot.html#cb235-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<span id="cb235-3"><a href="ggplot.html#cb235-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
+<span id="cb235-4"><a href="ggplot.html#cb235-4" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/time_histo-1.png" width="672" /></p>
 <p>We immediately see that the number of reports is not evenly distributed
 throughout the day. It is also not normally distributed, as the distribution is
@@ -656,7 +657,8 @@ thus colouring the data by the values of a third variable.</p>
 <span id="cb236-12"><a href="ggplot.html#cb236-12" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
 <span id="cb236-13"><a href="ggplot.html#cb236-13" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day&quot;</span>) <span class="sc">+</span></span>
 <span id="cb236-14"><a href="ggplot.html#cb236-14" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> mean_time), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb236-15"><a href="ggplot.html#cb236-15" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<span id="cb236-15"><a href="ggplot.html#cb236-15" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
+<span id="cb236-16"><a href="ggplot.html#cb236-16" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/time_histo_nice-1.png" width="672" /></p>
 <p>With readable labels and the line representing the mean as reference points, the
 distribution of the time of day becomes more apparent. We see that there are no
@@ -694,7 +696,8 @@ number of rows to be displayed.</p>
 <span id="cb237-7"><a href="ggplot.html#cb237-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
 <span id="cb237-8"><a href="ggplot.html#cb237-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
 <span id="cb237-9"><a href="ggplot.html#cb237-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day by year&quot;</span>)</span>
-<span id="cb237-10"><a href="ggplot.html#cb237-10" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<span id="cb237-10"><a href="ggplot.html#cb237-10" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
+<span id="cb237-11"><a href="ggplot.html#cb237-11" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/time_histo_facets-1.png" width="672" /></p>
 <p>Looking at the high numbers of very early reports and their maximum, we can see
 a gradual and moderate shift from the early to the late morning, which is
@@ -734,7 +737,8 @@ an .eps file. We could also provide a path argument. If we do not, the file is
 saved in the current working directory.</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="ggplot.html#cb238-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;distr_preports.eps&quot;</span>)</span>
 <span id="cb238-2"><a href="ggplot.html#cb238-2" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span>
-<span id="cb238-3"><a href="ggplot.html#cb238-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
+<span id="cb238-3"><a href="ggplot.html#cb238-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
+<span id="cb238-4"><a href="ggplot.html#cb238-4" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
 <p>If we want to export graphics in this manner, we have to use <code>ggsave()</code> directly
 after creating a plot. An alternative would be to assign plots to objects which
 can then be exported at a later point in the code. Here we assign two plots to
@@ -763,9 +767,10 @@ then assign it to an object.</p>
 <span id="cb239-18"><a href="ggplot.html#cb239-18" tabindex="-1"></a></span>
 <span id="cb239-19"><a href="ggplot.html#cb239-19" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_timeofday.eps&quot;</span>, <span class="at">plot =</span> distr_reports_day)</span>
 <span id="cb239-20"><a href="ggplot.html#cb239-20" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span>
-<span id="cb239-21"><a href="ggplot.html#cb239-21" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span>
-<span id="cb239-22"><a href="ggplot.html#cb239-22" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_per_district.eps&quot;</span>, <span class="at">plot =</span> n_reports_district)</span>
-<span id="cb239-23"><a href="ggplot.html#cb239-23" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span></code></pre></div>
+<span id="cb239-21"><a href="ggplot.html#cb239-21" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
+<span id="cb239-22"><a href="ggplot.html#cb239-22" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span>
+<span id="cb239-23"><a href="ggplot.html#cb239-23" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_per_district.eps&quot;</span>, <span class="at">plot =</span> n_reports_district)</span>
+<span id="cb239-24"><a href="ggplot.html#cb239-24" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span></code></pre></div>
 <p>There are additional arguments that can be set. Arguments that control the size
 and resolution of the output may be of particular interest when saving a file in
 a format that is based on pixels. For more information see <code>?ggsave()</code>.</p>

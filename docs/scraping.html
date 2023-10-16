@@ -560,10 +560,11 @@ appropriate CSS selectors like this:</p>
 <span id="cb188-13"><a href="scraping.html#cb188-13" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
 <span id="cb188-14"><a href="scraping.html#cb188-14" tabindex="-1"></a>)</span>
 <span id="cb188-15"><a href="scraping.html#cb188-15" tabindex="-1"></a><span class="do">## Error in `tibble()`:</span></span>
-<span id="cb188-16"><a href="scraping.html#cb188-16" tabindex="-1"></a><span class="do">## ! Tibble columns must have compatible sizes.</span></span>
-<span id="cb188-17"><a href="scraping.html#cb188-17" tabindex="-1"></a><span class="do">## • Size 21905: Existing data.</span></span>
-<span id="cb188-18"><a href="scraping.html#cb188-18" tabindex="-1"></a><span class="do">## • Size 21478: Column `District`.</span></span>
-<span id="cb188-19"><a href="scraping.html#cb188-19" tabindex="-1"></a><span class="do">## ℹ Only values of size one are recycled.</span></span></code></pre></div>
+<span id="cb188-16"><a href="scraping.html#cb188-16" tabindex="-1"></a><span class="do">## ! Tibble columns must have compatible</span></span>
+<span id="cb188-17"><a href="scraping.html#cb188-17" tabindex="-1"></a><span class="do">##   sizes.</span></span>
+<span id="cb188-18"><a href="scraping.html#cb188-18" tabindex="-1"></a><span class="do">## • Size 21952: Existing data.</span></span>
+<span id="cb188-19"><a href="scraping.html#cb188-19" tabindex="-1"></a><span class="do">## • Size 21525: Column `District`.</span></span>
+<span id="cb188-20"><a href="scraping.html#cb188-20" tabindex="-1"></a><span class="do">## ℹ Only values of size one are recycled.</span></span></code></pre></div>
 <p>That did not work. But why? Let us look at the error message we received. It
 informs us that the column “District” we tried to create, is shorter in length
 compared to the other two. Since we can not create tibbles out of columns with
@@ -611,14 +612,14 @@ returned, as illustrated here:</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="scraping.html#cb190-1" tabindex="-1"></a>list_items[[<span class="dv">1</span>]]</span>
 <span id="cb190-2"><a href="scraping.html#cb190-2" tabindex="-1"></a><span class="do">## {html_node}</span></span>
 <span id="cb190-3"><a href="scraping.html#cb190-3" tabindex="-1"></a><span class="do">## &lt;li&gt;</span></span>
-<span id="cb190-4"><a href="scraping.html#cb190-4" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;10.10.2023 12:54 Uhr&lt;/div&gt;\n</span></span>
+<span id="cb190-4"><a href="scraping.html#cb190-4" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;16.10.2023 17:55 Uhr&lt;/div&gt;\n</span></span>
 <span id="cb190-5"><a href="scraping.html#cb190-5" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2023/pressemi ...</span></span>
 <span id="cb190-6"><a href="scraping.html#cb190-6" tabindex="-1"></a></span>
 <span id="cb190-7"><a href="scraping.html#cb190-7" tabindex="-1"></a>list_items[<span class="dv">1</span>]</span>
 <span id="cb190-8"><a href="scraping.html#cb190-8" tabindex="-1"></a><span class="do">## [[1]]</span></span>
 <span id="cb190-9"><a href="scraping.html#cb190-9" tabindex="-1"></a><span class="do">## {html_node}</span></span>
 <span id="cb190-10"><a href="scraping.html#cb190-10" tabindex="-1"></a><span class="do">## &lt;li&gt;</span></span>
-<span id="cb190-11"><a href="scraping.html#cb190-11" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;10.10.2023 12:54 Uhr&lt;/div&gt;\n</span></span>
+<span id="cb190-11"><a href="scraping.html#cb190-11" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;16.10.2023 17:55 Uhr&lt;/div&gt;\n</span></span>
 <span id="cb190-12"><a href="scraping.html#cb190-12" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2023/pressemi ...</span></span></code></pre></div>
 <p>We can now make R examine every element of this list one after the other and
 extract all the data they contain. But what happens when we try to extract a
@@ -651,20 +652,20 @@ and extract the data contained, which will take several minutes to complete.</p>
 <span id="cb192-14"><a href="scraping.html#cb192-14" tabindex="-1"></a>}</span></code></pre></div>
 <p>Let’s look at the tibble we just constructed:</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="scraping.html#cb193-1" tabindex="-1"></a>reports</span>
-<span id="cb193-2"><a href="scraping.html#cb193-2" tabindex="-1"></a><span class="do">## # A tibble: 21,905 × 3</span></span>
+<span id="cb193-2"><a href="scraping.html#cb193-2" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 3</span></span>
 <span id="cb193-3"><a href="scraping.html#cb193-3" tabindex="-1"></a><span class="do">##    Date                 Report                                          District</span></span>
 <span id="cb193-4"><a href="scraping.html#cb193-4" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                                           &lt;chr&gt;   </span></span>
-<span id="cb193-5"><a href="scraping.html#cb193-5" tabindex="-1"></a><span class="do">##  1 10.10.2023 12:54 Uhr &quot;Raub auf Tankstelle - Wer kennt diesen Mann?&quot;  Ereigni…</span></span>
-<span id="cb193-6"><a href="scraping.html#cb193-6" tabindex="-1"></a><span class="do">##  2 10.10.2023 12:47 Uhr &quot;Festnahme und Platzverweise im Zusammenhang m… Ereigni…</span></span>
-<span id="cb193-7"><a href="scraping.html#cb193-7" tabindex="-1"></a><span class="do">##  3 10.10.2023 11:43 Uhr &quot;Brennende Gegenstände auf der Straße und Angr… Ereigni…</span></span>
-<span id="cb193-8"><a href="scraping.html#cb193-8" tabindex="-1"></a><span class="do">##  4 10.10.2023 11:08 Uhr &quot;Mann nach Verkehrsunfall verstorben&quot;           Ereigni…</span></span>
-<span id="cb193-9"><a href="scraping.html#cb193-9" tabindex="-1"></a><span class="do">##  5 10.10.2023 11:03 Uhr &quot;Mann bei Verkehrsunfall verstorben&quot;            Ereigni…</span></span>
-<span id="cb193-10"><a href="scraping.html#cb193-10" tabindex="-1"></a><span class="do">##  6 10.10.2023 10:51 Uhr &quot;Familien auf Spielplatz antisemitisch beschim… Ereigni…</span></span>
-<span id="cb193-11"><a href="scraping.html#cb193-11" tabindex="-1"></a><span class="do">##  7 10.10.2023 10:49 Uhr &quot;Brand in Tiefgarage&quot;                           Ereigni…</span></span>
-<span id="cb193-12"><a href="scraping.html#cb193-12" tabindex="-1"></a><span class="do">##  8 10.10.2023 10:10 Uhr &quot;Fußgängerin nach Verkehrsunfall verletzt&quot;      Ereigni…</span></span>
-<span id="cb193-13"><a href="scraping.html#cb193-13" tabindex="-1"></a><span class="do">##  9 10.10.2023 08:50 Uhr &quot;Sachbeschädigung an Beratungsstelle&quot;           Ereigni…</span></span>
-<span id="cb193-14"><a href="scraping.html#cb193-14" tabindex="-1"></a><span class="do">## 10 09.10.2023 14:21 Uhr &quot;Streitigkeiten zwischen zwei Männern enden im… Ereigni…</span></span>
-<span id="cb193-15"><a href="scraping.html#cb193-15" tabindex="-1"></a><span class="do">## # ℹ 21,895 more rows</span></span></code></pre></div>
+<span id="cb193-5"><a href="scraping.html#cb193-5" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeliktes - Mordkommissio… Ereigni…</span></span>
+<span id="cb193-6"><a href="scraping.html#cb193-6" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzung durch Schuss - Du… Ereigni…</span></span>
+<span id="cb193-7"><a href="scraping.html#cb193-7" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenhang mit dem Nahost-Ko… Ereigni…</span></span>
+<span id="cb193-8"><a href="scraping.html#cb193-8" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberischem Diebstahl           Ereigni…</span></span>
+<span id="cb193-9"><a href="scraping.html#cb193-9" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in Krankenhaus verstorben Ereigni…</span></span>
+<span id="cb193-10"><a href="scraping.html#cb193-10" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren Fahrzeugen            Ereigni…</span></span>
+<span id="cb193-11"><a href="scraping.html#cb193-11" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder- und Wegerechten      Ereigni…</span></span>
+<span id="cb193-12"><a href="scraping.html#cb193-12" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft                        Ereigni…</span></span>
+<span id="cb193-13"><a href="scraping.html#cb193-13" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus geworfen - Mordkomm… Ereigni…</span></span>
+<span id="cb193-14"><a href="scraping.html#cb193-14" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenhang mit den weltweite… Ereigni…</span></span>
+<span id="cb193-15"><a href="scraping.html#cb193-15" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
 <p>This looks good, but we should also confirm, that <code>NA</code>s were handled correctly.
 We can examine the entry for “31.12.2014 13:21 Uhr” that we saw on
 <a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/</a>,

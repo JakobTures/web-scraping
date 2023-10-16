@@ -422,7 +422,7 @@ example.</p>
 <span id="cb159-5"><a href="files.html#cb159-5" tabindex="-1"></a><span class="st">data3_1, data3_2, data3_3&quot;</span></span>
 <span id="cb159-6"><a href="files.html#cb159-6" tabindex="-1"></a>)</span>
 <span id="cb159-7"><a href="files.html#cb159-7" tabindex="-1"></a><span class="do">## Rows: 3 Columns: 3</span></span>
-<span id="cb159-8"><a href="files.html#cb159-8" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────</span></span>
+<span id="cb159-8"><a href="files.html#cb159-8" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────</span></span>
 <span id="cb159-9"><a href="files.html#cb159-9" tabindex="-1"></a><span class="do">## Delimiter: &quot;,&quot;</span></span>
 <span id="cb159-10"><a href="files.html#cb159-10" tabindex="-1"></a><span class="do">## chr (3): column1, column2, column3</span></span>
 <span id="cb159-11"><a href="files.html#cb159-11" tabindex="-1"></a><span class="do">## </span></span>
@@ -445,7 +445,7 @@ types:</p>
 <span id="cb160-5"><a href="files.html#cb160-5" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span></span>
 <span id="cb160-6"><a href="files.html#cb160-6" tabindex="-1"></a>)</span>
 <span id="cb160-7"><a href="files.html#cb160-7" tabindex="-1"></a><span class="do">## Rows: 3 Columns: 4</span></span>
-<span id="cb160-8"><a href="files.html#cb160-8" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────</span></span>
+<span id="cb160-8"><a href="files.html#cb160-8" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────</span></span>
 <span id="cb160-9"><a href="files.html#cb160-9" tabindex="-1"></a><span class="do">## Delimiter: &quot;,&quot;</span></span>
 <span id="cb160-10"><a href="files.html#cb160-10" tabindex="-1"></a><span class="do">## chr (1): name</span></span>
 <span id="cb160-11"><a href="files.html#cb160-11" tabindex="-1"></a><span class="do">## dbl (2): age, size</span></span>
@@ -475,7 +475,7 @@ line?</p>
 <span id="cb161-4"><a href="files.html#cb161-4" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span></span>
 <span id="cb161-5"><a href="files.html#cb161-5" tabindex="-1"></a>)</span>
 <span id="cb161-6"><a href="files.html#cb161-6" tabindex="-1"></a><span class="do">## Rows: 2 Columns: 4</span></span>
-<span id="cb161-7"><a href="files.html#cb161-7" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────</span></span>
+<span id="cb161-7"><a href="files.html#cb161-7" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────</span></span>
 <span id="cb161-8"><a href="files.html#cb161-8" tabindex="-1"></a><span class="do">## Delimiter: &quot;,&quot;</span></span>
 <span id="cb161-9"><a href="files.html#cb161-9" tabindex="-1"></a><span class="do">## chr (1): Peter</span></span>
 <span id="cb161-10"><a href="files.html#cb161-10" tabindex="-1"></a><span class="do">## dbl (2): 42, 1.68</span></span>
@@ -500,7 +500,7 @@ columns, which can be changed later on.</p>
 <span id="cb162-4"><a href="files.html#cb162-4" tabindex="-1"></a><span class="st">Mary, 24, 1.74, FALSE&quot;</span>,</span>
 <span id="cb162-5"><a href="files.html#cb162-5" tabindex="-1"></a><span class="at">col_names =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb162-6"><a href="files.html#cb162-6" tabindex="-1"></a><span class="do">## Rows: 3 Columns: 4</span></span>
-<span id="cb162-7"><a href="files.html#cb162-7" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────</span></span>
+<span id="cb162-7"><a href="files.html#cb162-7" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────</span></span>
 <span id="cb162-8"><a href="files.html#cb162-8" tabindex="-1"></a><span class="do">## Delimiter: &quot;,&quot;</span></span>
 <span id="cb162-9"><a href="files.html#cb162-9" tabindex="-1"></a><span class="do">## chr (1): X1</span></span>
 <span id="cb162-10"><a href="files.html#cb162-10" tabindex="-1"></a><span class="do">## dbl (2): X2, X3</span></span>
@@ -607,7 +607,7 @@ the <code>#</code> as the identifier for comments, which then will be ignored.</
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="files.html#cb166-1" tabindex="-1"></a>eligible_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;eligible.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
 <span id="cb166-2"><a href="files.html#cb166-2" tabindex="-1"></a><span class="do">## ℹ Using &quot;&#39;,&#39;&quot; as decimal and &quot;&#39;.&#39;&quot; as grouping mark. Use `read_delim()` for more control.</span></span>
 <span id="cb166-3"><a href="files.html#cb166-3" tabindex="-1"></a><span class="do">## Rows: 627 Columns: 10</span></span>
-<span id="cb166-4"><a href="files.html#cb166-4" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────────────────────────</span></span>
+<span id="cb166-4"><a href="files.html#cb166-4" tabindex="-1"></a><span class="do">## ── Column specification ────────────────────────</span></span>
 <span id="cb166-5"><a href="files.html#cb166-5" tabindex="-1"></a><span class="do">## Delimiter: &quot;;&quot;</span></span>
 <span id="cb166-6"><a href="files.html#cb166-6" tabindex="-1"></a><span class="do">## chr (3): Land, Geschlecht, Geburtsjahresgruppe</span></span>
 <span id="cb166-7"><a href="files.html#cb166-7" tabindex="-1"></a><span class="do">## dbl (7): Wahlberechtigte, Wahlberechtigte ohne Wahlscheinvermerk, Wahlberech...</span></span>
@@ -637,7 +637,7 @@ the <code>#</code> as the identifier for comments, which then will be ignored.</
 <span id="cb166-31"><a href="files.html#cb166-31" tabindex="-1"></a></span>
 <span id="cb166-32"><a href="files.html#cb166-32" tabindex="-1"></a>turnout_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;turnout.csv&quot;</span>, <span class="at">comment =</span> <span class="st">&quot;#&quot;</span>)</span>
 <span id="cb166-33"><a href="files.html#cb166-33" tabindex="-1"></a><span class="do">## ℹ Using &quot;&#39;,&#39;&quot; as decimal and &quot;&#39;.&#39;&quot; as grouping mark. Use `read_delim()` for more control.</span></span>
-<span id="cb166-34"><a href="files.html#cb166-34" tabindex="-1"></a><span class="do">## Rows: 798 Columns: 16── Column specification ────────────────────────────────────────────</span></span>
+<span id="cb166-34"><a href="files.html#cb166-34" tabindex="-1"></a><span class="do">## Rows: 798 Columns: 16── Column specification ────────────────────────</span></span>
 <span id="cb166-35"><a href="files.html#cb166-35" tabindex="-1"></a><span class="do">## Delimiter: &quot;;&quot;</span></span>
 <span id="cb166-36"><a href="files.html#cb166-36" tabindex="-1"></a><span class="do">## chr  (3): Land, Geschlecht, Geburtsjahresgruppe</span></span>
 <span id="cb166-37"><a href="files.html#cb166-37" tabindex="-1"></a><span class="do">## dbl (13): Erst-/Zweitstimme, Summe, Ungültig, CDU, SPD, DIE LINKE, GRÜNE, CS...</span></span>
