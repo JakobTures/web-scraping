@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 HTML as a cornerstone of the internet | Web Scraping using R</title>
-  <meta name="description" content="1 HTML as a cornerstone of the internet | Web Scraping using R" />
+  <title>3 HTML as a cornerstone of the internet | Web Scraping using R</title>
+  <meta name="description" content="3 HTML as a cornerstone of the internet | Web Scraping using R" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 HTML as a cornerstone of the internet | Web Scraping using R" />
+  <meta property="og:title" content="3 HTML as a cornerstone of the internet | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="jakobtures.github.io/web-scraping/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 HTML as a cornerstone of the internet | Web Scraping using R" />
+  <meta name="twitter:title" content="3 HTML as a cornerstone of the internet | Web Scraping using R" />
   
   
   
@@ -23,15 +23,15 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2023-10-10" />
+<meta name="date" content="2023-10-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="R1.html"/>
+<link rel="prev" href="R2.html"/>
+<link rel="next" href="rvest1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -153,68 +153,73 @@ Web Scraping using R
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
-<li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<li class="part"><span><b>I R Basics, tidyverse &amp; R Markdown</b></span></li>
+<li class="chapter" data-level="1" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>1</b> R &amp; R Studio</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<li class="chapter" data-level="1.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>1.1</b> Installing R</a></li>
+<li class="chapter" data-level="1.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>1.2</b> RStudio</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+<li class="chapter" data-level="1.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>1.2.1</b> Overview</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<li class="chapter" data-level="1.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>1.3</b> Hello World!</a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+<li class="chapter" data-level="1.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>1.3.1</b> Calculating with R</a></li>
+<li class="chapter" data-level="1.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>1.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="1.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>1.3.3</b> Logical operators</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="1.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>1.4</b> Objects</a></li>
+<li class="chapter" data-level="1.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>1.5</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>1.5.1</b> Subsetting</a></li>
+<li class="chapter" data-level="1.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>1.5.2</b> Types of vectors</a></li>
+<li class="chapter" data-level="1.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>1.5.3</b> A brief look at lists</a></li>
 </ul></li>
-<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<li class="chapter" data-level="1.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>1.6</b> Functions</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+<li class="chapter" data-level="1.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>1.6.1</b> Help</a></li>
+<li class="chapter" data-level="1.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>1.6.2</b> Examples: Basic statistical functions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<li class="chapter" data-level="1.7" data-path="R1.html"><a href="R1.html#rstudio-workflow"><i class="fa fa-check"></i><b>1.7</b> RStudio Workflow</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
-<li class="chapter" data-level="2.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>2.3.3</b> Logical operators</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
-<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
-<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
-</ul></li>
-<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
-<ul>
-<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
-<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
+<li class="chapter" data-level="1.7.1" data-path="R1.html"><a href="R1.html#r-scripts"><i class="fa fa-check"></i><b>1.7.1</b> R Scripts</a></li>
+<li class="chapter" data-level="1.7.2" data-path="R1.html"><a href="R1.html#projects"><i class="fa fa-check"></i><b>1.7.2</b> Projects</a></li>
+<li class="chapter" data-level="1.7.3" data-path="R1.html"><a href="R1.html#comments"><i class="fa fa-check"></i><b>1.7.3</b> Comments</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
+<li class="chapter" data-level="2" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>2</b> Packages, the tidyverse and R Markdown</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
+<li class="chapter" data-level="2.1" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>2.1</b> R packages</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
-<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
-<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
+<li class="chapter" data-level="2.1.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>2.1.1</b> Installing and loading packages</a></li>
+<li class="chapter" data-level="2.1.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>2.1.2</b> Namespaces</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
+<li class="chapter" data-level="2.2" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>2.2</b> Tidyverse</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
-<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
+<li class="chapter" data-level="2.2.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>2.2.1</b> Tibbles</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
+<li class="chapter" data-level="2.3" data-path="R2.html"><a href="R2.html#additional-r-resources"><i class="fa fa-check"></i><b>2.3</b> Additional R resources</a></li>
+<li class="chapter" data-level="2.4" data-path="R2.html"><a href="R2.html#intro-to-r-markdown"><i class="fa fa-check"></i><b>2.4</b> Intro to R Markdown</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
+<li class="chapter" data-level="2.4.1" data-path="R2.html"><a href="R2.html#what-is-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> What is R Markdown?</a></li>
+<li class="chapter" data-level="2.4.2" data-path="R2.html"><a href="R2.html#creating-a-r-markdown-file"><i class="fa fa-check"></i><b>2.4.2</b> Creating a R Markdown file</a></li>
+<li class="chapter" data-level="2.4.3" data-path="R2.html"><a href="R2.html#writing-in-r-markdown"><i class="fa fa-check"></i><b>2.4.3</b> Writing in R Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
 </ul></li>
-<li class="part"><span><b>III Scraping</b></span></li>
+<li class="part"><span><b>II Scraping</b></span></li>
+<li class="chapter" data-level="3" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>3</b> HTML as a cornerstone of the internet</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>3.1</b> HTML-Tags</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>3.1.1</b> hello_world.html</a></li>
+<li class="chapter" data-level="3.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>3.1.2</b> Important tags</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>3.2</b> Attributes</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>3.2.1</b> Links</a></li>
+<li class="chapter" data-level="3.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>3.2.2</b> Images</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>3.3</b> Entities</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
@@ -257,7 +262,7 @@ Web Scraping using R
 <li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
 <li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
 <li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
@@ -298,7 +303,7 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
 </ul></li>
-<li class="part"><span><b>IV Sample project</b></span></li>
+<li class="part"><span><b>III Sample project</b></span></li>
 <li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#topic-and-data"><i class="fa fa-check"></i><b>10.1</b> Topic and data</a></li>
@@ -340,7 +345,7 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#exporting-plots"><i class="fa fa-check"></i><b>12.3</b> Exporting plots</a></li>
 </ul></li>
-<li class="part"><span><b>V Regular expressions</b></span></li>
+<li class="part"><span><b>IV Regular expressions</b></span></li>
 <li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
 <ul>
 <li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
@@ -367,8 +372,8 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="html" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> HTML as a cornerstone of the internet<a href="html.html#html" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="html" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> HTML as a cornerstone of the internet<a href="html.html#html" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>What happens when we call up a URL such as
 <a href="https://jakobtures.github.io/web-scraping/" target="_blank">https://jakobtures.github.io/web-scraping/</a>
 in a browser? We will get a visualisation of the page in our browser window.
@@ -399,8 +404,8 @@ go.</p>
 <p>At the end of this first section, you will have a basic understanding of the
 structure and components of an HTML document and the source code will already
 seem way less intimidating.</p>
-<div id="html-tags" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> HTML-Tags<a href="html.html#html-tags" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="html-tags" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> HTML-Tags<a href="html.html#html-tags" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The “language” that HTML-files have been written in, is the
 <strong>Hypertext Markup Language</strong>, HTML for short. The basics of this language are
 the so-called <em>Tags</em>, the HTML “vocabulary”. These terms are used to structure
@@ -426,8 +431,8 @@ meaning of the tag.</p>
 <code>Hello World!</code>. The text will be interpreted according to the tag, which means
 in bold:</p>
 <p><b>Hello World!</b></p>
-<div id="hello_world.html" class="section level3 hasAnchor" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> hello_world.html<a href="html.html#hello_world.html" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="hello_world.html" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> hello_world.html<a href="html.html#hello_world.html" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let us have a look at a full HTML-document now:</p>
 <pre><code>&lt;!DOCTYPE html&gt;
 
@@ -490,13 +495,13 @@ design websites. For example, the page you are looking at was written directly
 in RStudio using the <strong>bookdown</strong> package, which automates most of the layout
 decisions.</p>
 </div>
-<div id="important-tags" class="section level3 hasAnchor" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Important tags<a href="html.html#important-tags" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="important-tags" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Important tags<a href="html.html#important-tags" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We cannot look at all the tags available in HTML at this point, but will
 initially limit ourselves to those that we encounter very frequently and that
 will be particularly relevant for our first web scraping projects.</p>
-<div id="page-structure" class="section level4 hasAnchor" number="1.1.2.1">
-<h4><span class="header-section-number">1.1.2.1</span> Page structure<a href="html.html#page-structure" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="page-structure" class="section level4 hasAnchor" number="3.1.2.1">
+<h4><span class="header-section-number">3.1.2.1</span> Page structure<a href="html.html#page-structure" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>One tag that relates to the structure of the page, we have already met above.
 The <code>&lt;body&gt;</code> tag communicates that everything encompassed by it is part of the
 content displayed in the browser window.</p>
@@ -537,8 +542,8 @@ HTML code:</p>
 &lt;/div&gt;
 This sentence is not part of the div tag.</code></pre>
 </div>
-<div id="formatting" class="section level4 hasAnchor" number="1.1.2.2">
-<h4><span class="header-section-number">1.1.2.2</span> Formatting<a href="html.html#formatting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="formatting-1" class="section level4 hasAnchor" number="3.1.2.2">
+<h4><span class="header-section-number">3.1.2.2</span> Formatting<a href="html.html#formatting-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>HTML provides a variety of tags for formatting the displayed text. In the
 following we will look at some of the most common ones.</p>
 <p>The <code>&lt;p&gt;</code> tag defines the enclosed text as a <em>paragraph</em> and is accordingly
@@ -573,8 +578,8 @@ As can be seen here.</p>
 <p>These tags can be used to render words, sentences and paragraphs <b>bold</b> or <i>italic</i>.</p>
 <p><br></p>
 </div>
-<div id="lists" class="section level4 hasAnchor" number="1.1.2.3">
-<h4><span class="header-section-number">1.1.2.3</span> Lists<a href="html.html#lists" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="lists-1" class="section level4 hasAnchor" number="3.1.2.3">
+<h4><span class="header-section-number">3.1.2.3</span> Lists<a href="html.html#lists-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We will often encounter lists in HTML documents. The two most common variants
 being the <em>unordered list</em>, introduced by <code>&lt;ul&gt;</code>, and the <em>ordered list</em>,
 <code>&lt;ol&gt;</code>. The opening and closing list-tag covers the entire list, while each
@@ -615,8 +620,8 @@ Third ordered list element
 </li>
 </ol>
 </div>
-<div id="tables" class="section level4 hasAnchor" number="1.1.2.4">
-<h4><span class="header-section-number">1.1.2.4</span> Tables<a href="html.html#tables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="tables" class="section level4 hasAnchor" number="3.1.2.4">
+<h4><span class="header-section-number">3.1.2.4</span> Tables<a href="html.html#tables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>HTML can also be used to display tables, without further adjustments of the
 display via CSS admittedly not very attractive tables. These are opened by a
 <code>&lt;table&gt;</code> tag and closed accordingly. Within the table, lines are defined by
@@ -727,8 +732,8 @@ italics
 </div>
 </div>
 </div>
-<div id="attribute" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Attributes<a href="html.html#attribute" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="attribute" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Attributes<a href="html.html#attribute" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Many HTML tags can be further adapted in their functionality and presentation by
 using so-called <em>attributes</em>. The basic syntax is:
 <code>&lt;tag attribute="value"&gt;...&lt;/tag&gt;</code>. In the opening (never in the closing) tag,
@@ -740,8 +745,8 @@ to be interpreted correctly.</p>
 <p>A variety of tags can be modified with a multitude of attributes. Two of the
 most common and illustrative applications are the inclusion of links and images,
 two further frequently encountered HTML tags.</p>
-<div id="links" class="section level3 hasAnchor" number="1.2.1">
-<h3><span class="header-section-number">1.2.1</span> Links<a href="html.html#links" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="links" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Links<a href="html.html#links" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Links are included using the <code>&lt;a&gt;</code> (<em>anchor</em>) tag. The first intuitive attempt
 <code>&lt;a&gt;This is a link&lt;/a&gt;</code> is unfortunately unsuccessful:</p>
 <p><a>This is (not) a link</a></p>
@@ -767,8 +772,8 @@ But more about that later.</p>
 <p>One more note: the <code>&lt;link&gt;</code> tag is not to be confused with <code>&lt;a&gt;</code> and is used to
 integrate external files, such as the JavaScript or CSS files already mentioned.</p>
 </div>
-<div id="images" class="section level3 hasAnchor" number="1.2.2">
-<h3><span class="header-section-number">1.2.2</span> Images<a href="html.html#images" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="images" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Images<a href="html.html#images" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Images and graphics are integrated in HTML with <code>&lt;img&gt;</code>, another tag that does
 not have to be explicitly closed. The URL of the image to be included is
 specified via the <code>src</code> (<em>source</em>) attribute of the tag. Thus
@@ -789,8 +794,8 @@ specified link:</p>
 </a></p>
 </div>
 </div>
-<div id="entities" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Entities<a href="html.html#entities" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="entities" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Entities<a href="html.html#entities" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A number of characters are reserved for the HTML code. We have already seen that
 the characters <code>&lt; &gt; "</code> are part of the code to define tags and values of
 attributes. In many cases, more current HTML versions allow for the usage of
@@ -824,16 +829,13 @@ Displayed with four    spaces</p>
 
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="R1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="R2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rvest1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -854,7 +856,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/01-html.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/03-html.Rmd",
 "text": "Edit"
 },
 "history": {

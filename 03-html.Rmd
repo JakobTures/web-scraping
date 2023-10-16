@@ -1,4 +1,5 @@
-# (PART) Basics {-}
+# (PART) Scraping {-}
+
 
 # HTML as a cornerstone of the internet {#html}
 

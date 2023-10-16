@@ -1,159 +1,10 @@
-# RStudio in practice & the tidyverse {#R2}
+# Packages, the tidyverse and R Markdown {#R2}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(cache.path = 'cache/')
 ```
-
-## RStudio Workflow
-
-Up until now, we wrote our code directly into the RStudio console, pressed
-"Enter" and received the desired output. This works but will not satisfy our
-needs in the long run. The main problem is, that the code we wrote essentially
-disappears after running it. Imagine that you want to rerun your code a week
-from now or even tomorrow. Maybe you took notes and can recreate it, but that
-means a lot of unsatisfying and error prone work. Also, maybe at some point you
-want to share code with colleagues, fellow students, or the R community in
-general. At the same time, as our code gets more complex, spans multiple lines
-and consists of many interdependent blocks of code, you will inevitably run into
-the situation where you realise you made a mistake or have to change some code
-at the very beginning of your R session. This would mean, recreating and
-rerunning most or all of the code you have already written.
-
-These are some of the reasons why we should start writing our code into so 
-called R Scripts.
-
-### R Scripts
-
-To create a new R Script, you can click on "File" > "New File" > "R Script", or
-more conveniently press "CTRL" + "Shift" + "N" simultaneously. This creates an
-untitled script that we can write our code into.
-
-Let's start with something simple by recreating some of the code from last week.
-
-``` {r smpls_script}
-a <- 17
-b <- 4
-
-the_answer <- (a + b) * 2
-
-the_answer
-```
-
-We assign two numerical values two the objects `a` and `b`, assign a calculation
-based on these objects to the new object `the_answer` and prompt R to return its
-value to us. Instead of writing the code line by line into the console, now we
-write the whole block into the newly created script. We can now run the complete
-script by clicking on "Source" or, to also get output, "Source with Echo" in the
-upper toolbar attached to the script's tab.
-In most cases I prefer running the script line by line though. This allows
-full control of the process and enables you to stop in certain lines to
-e.g. contemplate what the code is doing, check for errors or change details of
-the code before moving on to the next line. You can do this either by clicking
-on "Run" in the toolbar or pressing "CTRL" + "Enter" simultaneously.  In both
-cases, RStudio copies the line of code where your text cursor is currently
-residing into the console and runs it for you. The text cursor then conveniently
-jumps to the next line in the script. In this way you can quickly run your
-script line by line, while having full control over when to stop.
-
-You can decide for yourself what the right approach to running your code is,
-based on any given situation. But remember that R always assumes that you know
-what you're doing. There will be no warning prompts if you are about to
-overwrite work you have previously done.
-
-When you are done writing your script, you might want to save it to the hard
-drive, preserving your work for later re-runs or for sharing. By clicking on
-"File" > "Save" or presing "CTRL" + "S" you can save the file with a name of
-your choosing. The file extension for R Scripts is always ".R".
-
-One problem -- that you will run into sooner or later -- is that you will try to
-run incomplete code from a script, most commonly a missing closing bracket.  In
-this case, RStudio puts the code to be run into the console and begins a new
-line, starting with `+`, and then nothing happens. R assumes that your code will
-continue in a further line and waits for you to enter it after the `+`. In most
-cases the right approach is to cancel the entered command, fix your code and
-re-run it afterwards. To cancel an already entered command, you have to click
-into the "Console" tab and press "Esc" on your keyboard. The `>`
-prompt will reappear in the console and you can continue with your work.
-
-
-### Projects
-
-In many cases, your work will consist of multiple scripts, data files, graphics
-saved to the disk or additional output. So it makes sense to assign your files
-to a place on your hard drive. You can do this "by hand" but a convenient
-approach might be to use RStudio's project functionality.
-
-By clicking on "File" > "New Project", you can start the project creation
-wizard. If you have already created a folder on your hard drive that shall
-contain the project, you can click on "Existing Directory", select the folder
-and click on "Create Project". You can also create the folder on the fly by
-clicking on "New Directory" > "New Project" and then choosing a folder name and
-the sub-folder where it should be placed, before creating the project.
-
-RStudio will now close all files currently open and switch to your newly created
-project. The name you chose for the project's folder will also be its name, seen
-in RStudio's title bar. When you look at the "File" tab (lower right), you will
-also see that you are now in the project's folder. This is your current
-*working directory*, a concept we will talk about momentarily. All scripts you
-create while working in your project will become a part of it. So when you want
-to return to continuing your work, you can now click on "File" > "Open Project".
-All files opened the last time you worked on the project will be reopened and
-you will again be in the project's working directory. This is an easy and
-convenient way to keep your work tidy.
-
-At this point, I would advise you to create a project for this introduction to
-web scraping and create R scripts for each chapter as parts of the project. The
-name and sub-folder you choose is not important from the point of view of
-functionality, but it should make sense to you.
-
-We should now briefly talk about the working directory. If you try to open or
-save a file directly from an R script -- without specifying a complete path -- R
-will always assume you refer to your working directory. If you created a
-project, this automatically set the project's folder as the working directory.
-You can always check for your current working directory by entering `getwd()`
-into the console. You can change your current working directory by clicking on
-"Session" > "Set Working Directory" > "Choose Directory..." or by using the
-function `setwd()` with the desired path enclosed by `"` as the function's
-argument.
-
-
-### Comments
-
-You should get into the habit of commenting your code as early as possible.
-Comments are started with one or multiple `#`. All code following the `#` will
-not be evaluated by R and thus serves as the perfect place to comment on what
-you were doing and thinking while writing the code. Why do this? When you reopen
-a script that you have not been working on in a while, it can be hard to
-understand what you tried to do in the first place. Commented code makes this
-much easier. This is even more true if you share your code with other people.
-They may have very different approaches to certain R problems and clearly
-commented code will help them to quickly understand it. You should see this as a
-sign of respect towards the time your peers may invest in helping you with your
-coding problems.
-
-
-``` {r comments}
-# assigning objects
-a <- 17
-b <- 4
-
-# calculating the answer
-the_answer <- (a + b) * 2
-
-the_answer
-# but what is the question?
-```
-
-If you plan on using `setwd()` in your script, it is a good idea to comment this
-line before sharing your script. Other people will have different folder
-structures and will want to decide for themselves. The same goes for all lines
-that will save something to the hard drive, e.g. data sets or exported graphics.
-The R and RStudio communities are very welcoming and you will always find people
-that are willing to lend you their help, so you should return the favour and be
-polite in your code. This includes writing clear comments and not cluttering
-anyone's hard drive with files they may not want to have.
 
 
 ## R packages
@@ -381,7 +232,7 @@ exmpl_tbl$strings
 ```
 
 
-## Additional resources
+## Additional R resources
 
 When learning R and when using functions and packages that are new to you, you
 will regularly run into situations where you need help in understanding what is
@@ -444,3 +295,146 @@ Available under: <https://rc2e.com/>{target="_blank"}
 * *R for Data Science* by Hadley Wickham and Garrett Grolemund.
 An introduction to data science using (almost) exclusively the tidyverse
 packages. Available under: <https://r4ds.had.co.nz/>{target="_blank"}
+
+
+## Intro to R Markdown
+
+The following is an excerpt from another seminar that I have written with Prof.
+Jasper Tjaden and Niaz Morshed, **Data Analysis with R for Social Scientists**,
+available under: <https://jaspertjaden.github.io/DataAnalysisR/>{target="_blank"}
+
+It is a short introduction to using R Markdown for documenting your work and writing
+reports and papers with it.
+
+### What is R Markdown?
+
+R Markdown allows you to combine written text that is easy to format with R Code that is executed when *knitting* or *compiling* the document into the chosen output format. This allows us to describe our research, analyse our data, display results as tables or plots and interpret these, all in one file. In this way we can not only create reports on seminar exercises but also write websites - like the one your are looking at in this very moment -, seminar papers, articles or create presentations.
+
+It is also a great notebook for projects you are working on. More often than not, our work on a specific analysis will span multiple days, weeks or even months and it is often hard to remember what we were thinking the last time we worked on our code.
+
+> "I am sure I had my reasons for writing this piece of code, but I can not for the life of me remember any of them..."
+>
+> --- Anonymous Coder 2023
+
+If we use R Markdown to document our work we can add text that explains our reasons, thoughts, ideas and plans at that very moment and pick up our work from there the next time we open the file.
+
+R Markdown allows output to different file formats, including `html`, `docx`, `pptx` and `pdf`. Note that you need a LaTeX installation to knit to `pdf`. LaTeX is a typesetting language and used for producing high quality `pdf` documents. For simple `pdf` reports or presentations - sidenote: if you bring a `pptx` to a talk something will most probably go wrong or stop working... - you do not really need to know how LaTeX works, you just need an installed distribution. For these purposes the package `tinytex` gives you all you need and is easy to install from within R. [This site](https://bookdown.org/yihui/rmarkdown/installation.html#installation) explains how to install it. You can also get an overview of all possible output formats [here](https://rmarkdown.rstudio.com/lesson-9.html).
+
+### Creating a R Markdown file
+
+Before you can create and compile R Markdown documents, you first have to install the package by writing `install.packages("rmarkdown")` in your console.
+
+Creating a new R Markdown file is as straightforward as it can be. In RStudio you can click of `File > New File > R Markdown...`. In the new window you can set up some basic information on the document - which will be displayed in the output - and chose your desired format. You can basically write R Markdown files in any text editor, just make sure that the file extension is saved as `.Rmd`. We still recommend using RStudio because it gives you some convenient options that a text editor will not, e.g. displaying a preview of your document and easy knitting of the final file.
+
+### Writing in R Markdown
+
+#### Document components
+
+When you followed the steps above, a new R Markdown file will have been created. It basically consists of two main parts:
+
+-   A `YAML` header - surrounded by three dashes `---` - where options for the document can be set. The good news is that you do not have to do anything here until you get more profound with using R Markdown. For now it is enough that all the options you set when creating the new file - the title, author, date and format of the output - are present and will be included in your output file.
+
+-   A body that contains the actual content of your document. Text is directly written in the body at the location where it is to be displayed in the output. We can use the simple Markdown syntax for formatting using a set of symbols, some of which we will explain below. We can also include R code in so called `chunks`, specifying if we also want it and/or the results to be displayed or "just" to be executed in the background. The code chunks will be executed when we compile the final document and everything that we want to include in the output - e.g. tables, plots or code examples - will be displayed where it occurs.
+
+#### Formatting
+
+Here are some of the more common formatting elements you will need when starting out using R Markdown:
+
+##### Headers
+
+To include sections in a document we use `#` followed by the header we want to be displayed. We can define levels for sections by using multiple `#` in this way:
+
+```         
+# Section 1
+## Section 1.1
+## Section 1.2
+### Section 1.2.1
+### Section 1.2.2
+## Section 1.3
+# Section 2
+```
+
+##### Text
+
+We write the text between the section headers at the place where it should be displayed in the final document. We can insert line breaks at any point but these will not be rendered in the output. To include an actual paragraph we will have to include a blank line between between two blocks of text. Two emphasize certain words or phrases, we can wrap them in `*` for italics or `**` for bold face.
+
+Consider this Markdown code:
+
+```         
+This is the first paragraph.
+This still is the first paragraph.
+
+Here begins the second paragraph.
+It includes emphasis, by using *italics* and also **bold face** words.
+```
+
+It is rendered as:
+
+This is the first paragraph. This still is the first paragraph.
+
+Here begins the second paragraph. It includes emphasis, by using *italics* and also **bold face** words.
+
+##### Lists
+
+Unordered lists or bullet points can be inserted by adding a `-`, `*` or `+` at the beginning of a line. To create levels, we have to indent lines using tab stops.
+
+```         
+* Level 1
+* Level 1
+  * Level 2
+    * Level 3
+  * Level 2
+    * Level 3
+* Level 1
+```
+
+The above will be rendered as:
+
+-   Level 1
+-   Level 1
+    -   Level 2
+        -   Level 3
+    -   Level 2
+        -   Level 3
+-   Level 1
+
+We can also create ordered lists by using numbers followed by a `.` instead of the `*` etc.
+
+```         
+1.  Bulletpoint 1
+2.  Bulletpoint 2
+3.  Bulletpoint 3
+```
+
+1.  Bulletpoint 1
+2.  Bulletpoint 2
+3.  Bulletpoint 3
+
+##### Hyperlinks
+
+Hyperlinks can be included as `<url>` or `[text](url)`.
+
+```         
+To include a plain url we can use <https://jaspertjaden.github.io/DataAnalysisR/>.
+We can also [link](https://jaspertjaden.github.io/DataAnalysisR/) in this way.
+```
+
+To include a plain url we can use <https://jaspertjaden.github.io/DataAnalysisR/>. We can also [link](https://jaspertjaden.github.io/DataAnalysisR/) in this way.
+
+#### Code chunks
+
+Codechunks have to be started and ended with three backticks ```` ``` ````. After the first set of backticks we also have to include `{r}` to let Markdown know that we want to run the code as R code. The code that is written after this and up to the second set of backticks will be executed when knitting the file.
+
+You can see some examples of this in the newly created R Markdown file if you followed the steps above.
+
+We can also always run the code in a chunk before knitting by clicking on the green arrow in the upper right corner of the chunk. We can also execute individual lines of code by placing our keyboard cursor in the line and pressing `Shift + Enter`.
+
+##### Chunk options
+
+We can change the way code chunks are handled when knitting by adding one or multiple chunk options between the curly brackets like this: `{r option=value}`. If we want to use multiple options they have to be written like this: `{r option1=value1, option2=value2}`.
+
+There are many options available but most are not needed when starting out. The ones that may be of interest to you are:
+
+-   `{r echo=FALSE}`: This prevents the code to be displayed in the output while the results will be included. This is useful if you want to show the results of a computation or a plot but do not want the document to be cluttered with the underlying code.
+-   `{r include=FALSE}`: This prevents the code as well as the output from being displayed. The code is still run in the background.
+-   `{r eval=FALSE}`: This prevents the code from being run but displays it. This can be useful if you want to show code examples for illustrative purposes.

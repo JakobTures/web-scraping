@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 RStudio in practice &amp; the tidyverse | Web Scraping using R</title>
-  <meta name="description" content="3 RStudio in practice &amp; the tidyverse | Web Scraping using R" />
+  <title>2 Packages, the tidyverse and R Markdown | Web Scraping using R</title>
+  <meta name="description" content="2 Packages, the tidyverse and R Markdown | Web Scraping using R" />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 RStudio in practice &amp; the tidyverse | Web Scraping using R" />
+  <meta property="og:title" content="2 Packages, the tidyverse and R Markdown | Web Scraping using R" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="jakobtures.github.io/web-scraping/" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 RStudio in practice &amp; the tidyverse | Web Scraping using R" />
+  <meta name="twitter:title" content="2 Packages, the tidyverse and R Markdown | Web Scraping using R" />
   
   
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2023-10-10" />
+<meta name="date" content="2023-10-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="R1.html"/>
-<link rel="next" href="rvest1.html"/>
+<link rel="next" href="html.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -153,68 +153,73 @@ Web Scraping using R
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#colophon"><i class="fa fa-check"></i>Colophon</a></li>
 </ul></li>
-<li class="part"><span><b>I Basics</b></span></li>
-<li class="chapter" data-level="1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>1</b> HTML as a cornerstone of the internet</a>
+<li class="part"><span><b>I R Basics, tidyverse &amp; R Markdown</b></span></li>
+<li class="chapter" data-level="1" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>1</b> R &amp; R Studio</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>1.1</b> HTML-Tags</a>
+<li class="chapter" data-level="1.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>1.1</b> Installing R</a></li>
+<li class="chapter" data-level="1.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>1.2</b> RStudio</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>1.1.1</b> hello_world.html</a></li>
-<li class="chapter" data-level="1.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>1.1.2</b> Important tags</a></li>
+<li class="chapter" data-level="1.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>1.2.1</b> Overview</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>1.2</b> Attributes</a>
+<li class="chapter" data-level="1.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>1.3</b> Hello World!</a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>1.2.1</b> Links</a></li>
-<li class="chapter" data-level="1.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>1.2.2</b> Images</a></li>
+<li class="chapter" data-level="1.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>1.3.1</b> Calculating with R</a></li>
+<li class="chapter" data-level="1.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>1.3.2</b> Comparison operators</a></li>
+<li class="chapter" data-level="1.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>1.3.3</b> Logical operators</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>1.3</b> Entities</a></li>
+<li class="chapter" data-level="1.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>1.4</b> Objects</a></li>
+<li class="chapter" data-level="1.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>1.5</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>1.5.1</b> Subsetting</a></li>
+<li class="chapter" data-level="1.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>1.5.2</b> Types of vectors</a></li>
+<li class="chapter" data-level="1.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>1.5.3</b> A brief look at lists</a></li>
 </ul></li>
-<li class="part"><span><b>II R Basics &amp; Tidyverse</b></span></li>
-<li class="chapter" data-level="2" data-path="R1.html"><a href="R1.html"><i class="fa fa-check"></i><b>2</b> R &amp; R Studio</a>
+<li class="chapter" data-level="1.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>1.6</b> Functions</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="R1.html"><a href="R1.html#installing-r"><i class="fa fa-check"></i><b>2.1</b> Installing R</a></li>
-<li class="chapter" data-level="2.2" data-path="R1.html"><a href="R1.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> RStudio</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="R1.html"><a href="R1.html#overview"><i class="fa fa-check"></i><b>2.2.1</b> Overview</a></li>
+<li class="chapter" data-level="1.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>1.6.1</b> Help</a></li>
+<li class="chapter" data-level="1.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>1.6.2</b> Examples: Basic statistical functions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="R1.html"><a href="R1.html#hello-world"><i class="fa fa-check"></i><b>2.3</b> Hello World!</a>
+<li class="chapter" data-level="1.7" data-path="R1.html"><a href="R1.html#rstudio-workflow"><i class="fa fa-check"></i><b>1.7</b> RStudio Workflow</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="R1.html"><a href="R1.html#calculating-with-r"><i class="fa fa-check"></i><b>2.3.1</b> Calculating with R</a></li>
-<li class="chapter" data-level="2.3.2" data-path="R1.html"><a href="R1.html#comparison"><i class="fa fa-check"></i><b>2.3.2</b> Comparison operators</a></li>
-<li class="chapter" data-level="2.3.3" data-path="R1.html"><a href="R1.html#logical-operators"><i class="fa fa-check"></i><b>2.3.3</b> Logical operators</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="R1.html"><a href="R1.html#objects"><i class="fa fa-check"></i><b>2.4</b> Objects</a></li>
-<li class="chapter" data-level="2.5" data-path="R1.html"><a href="R1.html#vectors"><i class="fa fa-check"></i><b>2.5</b> Vectors</a>
-<ul>
-<li class="chapter" data-level="2.5.1" data-path="R1.html"><a href="R1.html#subsetting"><i class="fa fa-check"></i><b>2.5.1</b> Subsetting</a></li>
-<li class="chapter" data-level="2.5.2" data-path="R1.html"><a href="R1.html#types-of-vectors"><i class="fa fa-check"></i><b>2.5.2</b> Types of vectors</a></li>
-<li class="chapter" data-level="2.5.3" data-path="R1.html"><a href="R1.html#a-brief-look-at-lists"><i class="fa fa-check"></i><b>2.5.3</b> A brief look at lists</a></li>
-</ul></li>
-<li class="chapter" data-level="2.6" data-path="R1.html"><a href="R1.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
-<ul>
-<li class="chapter" data-level="2.6.1" data-path="R1.html"><a href="R1.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
-<li class="chapter" data-level="2.6.2" data-path="R1.html"><a href="R1.html#examples-basic-statistical-functions"><i class="fa fa-check"></i><b>2.6.2</b> Examples: Basic statistical functions</a></li>
+<li class="chapter" data-level="1.7.1" data-path="R1.html"><a href="R1.html#r-scripts"><i class="fa fa-check"></i><b>1.7.1</b> R Scripts</a></li>
+<li class="chapter" data-level="1.7.2" data-path="R1.html"><a href="R1.html#projects"><i class="fa fa-check"></i><b>1.7.2</b> Projects</a></li>
+<li class="chapter" data-level="1.7.3" data-path="R1.html"><a href="R1.html#comments"><i class="fa fa-check"></i><b>1.7.3</b> Comments</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>3</b> RStudio in practice &amp; the tidyverse</a>
+<li class="chapter" data-level="2" data-path="R2.html"><a href="R2.html"><i class="fa fa-check"></i><b>2</b> Packages, the tidyverse and R Markdown</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="R2.html"><a href="R2.html#rstudio-workflow"><i class="fa fa-check"></i><b>3.1</b> RStudio Workflow</a>
+<li class="chapter" data-level="2.1" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>2.1</b> R packages</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="R2.html"><a href="R2.html#r-scripts"><i class="fa fa-check"></i><b>3.1.1</b> R Scripts</a></li>
-<li class="chapter" data-level="3.1.2" data-path="R2.html"><a href="R2.html#projects"><i class="fa fa-check"></i><b>3.1.2</b> Projects</a></li>
-<li class="chapter" data-level="3.1.3" data-path="R2.html"><a href="R2.html#comments"><i class="fa fa-check"></i><b>3.1.3</b> Comments</a></li>
+<li class="chapter" data-level="2.1.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>2.1.1</b> Installing and loading packages</a></li>
+<li class="chapter" data-level="2.1.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>2.1.2</b> Namespaces</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="R2.html"><a href="R2.html#r-packages"><i class="fa fa-check"></i><b>3.2</b> R packages</a>
+<li class="chapter" data-level="2.2" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>2.2</b> Tidyverse</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="R2.html"><a href="R2.html#installing-and-loading-packages"><i class="fa fa-check"></i><b>3.2.1</b> Installing and loading packages</a></li>
-<li class="chapter" data-level="3.2.2" data-path="R2.html"><a href="R2.html#namespaces"><i class="fa fa-check"></i><b>3.2.2</b> Namespaces</a></li>
+<li class="chapter" data-level="2.2.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>2.2.1</b> Tibbles</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="R2.html"><a href="R2.html#tidyverse"><i class="fa fa-check"></i><b>3.3</b> Tidyverse</a>
+<li class="chapter" data-level="2.3" data-path="R2.html"><a href="R2.html#additional-r-resources"><i class="fa fa-check"></i><b>2.3</b> Additional R resources</a></li>
+<li class="chapter" data-level="2.4" data-path="R2.html"><a href="R2.html#intro-to-r-markdown"><i class="fa fa-check"></i><b>2.4</b> Intro to R Markdown</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="R2.html"><a href="R2.html#tibbles"><i class="fa fa-check"></i><b>3.3.1</b> Tibbles</a></li>
+<li class="chapter" data-level="2.4.1" data-path="R2.html"><a href="R2.html#what-is-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> What is R Markdown?</a></li>
+<li class="chapter" data-level="2.4.2" data-path="R2.html"><a href="R2.html#creating-a-r-markdown-file"><i class="fa fa-check"></i><b>2.4.2</b> Creating a R Markdown file</a></li>
+<li class="chapter" data-level="2.4.3" data-path="R2.html"><a href="R2.html#writing-in-r-markdown"><i class="fa fa-check"></i><b>2.4.3</b> Writing in R Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="R2.html"><a href="R2.html#additional-resources"><i class="fa fa-check"></i><b>3.4</b> Additional resources</a></li>
 </ul></li>
-<li class="part"><span><b>III Scraping</b></span></li>
+<li class="part"><span><b>II Scraping</b></span></li>
+<li class="chapter" data-level="3" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>3</b> HTML as a cornerstone of the internet</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="html.html"><a href="html.html#html-tags"><i class="fa fa-check"></i><b>3.1</b> HTML-Tags</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="html.html"><a href="html.html#hello_world.html"><i class="fa fa-check"></i><b>3.1.1</b> hello_world.html</a></li>
+<li class="chapter" data-level="3.1.2" data-path="html.html"><a href="html.html#important-tags"><i class="fa fa-check"></i><b>3.1.2</b> Important tags</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="html.html"><a href="html.html#attribute"><i class="fa fa-check"></i><b>3.2</b> Attributes</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="html.html"><a href="html.html#links"><i class="fa fa-check"></i><b>3.2.1</b> Links</a></li>
+<li class="chapter" data-level="3.2.2" data-path="html.html"><a href="html.html#images"><i class="fa fa-check"></i><b>3.2.2</b> Images</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="html.html"><a href="html.html#entities"><i class="fa fa-check"></i><b>3.3</b> Entities</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="rvest1.html"><a href="rvest1.html"><i class="fa fa-check"></i><b>4</b> First scraping with rvest</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="rvest1.html"><a href="rvest1.html#the-rvest-package"><i class="fa fa-check"></i><b>4.1</b> The rvest package</a></li>
@@ -257,7 +262,7 @@ Web Scraping using R
 <li class="chapter" data-level="6.2.2" data-path="rvest2.html"><a href="rvest2.html#html-forms"><i class="fa fa-check"></i><b>6.2.2</b> HTML forms</a></li>
 <li class="chapter" data-level="6.2.3" data-path="rvest2.html"><a href="rvest2.html#the-query"><i class="fa fa-check"></i><b>6.2.3</b> The query</a></li>
 <li class="chapter" data-level="6.2.4" data-path="rvest2.html"><a href="rvest2.html#manipulating-the-query-and-scraping-the-result"><i class="fa fa-check"></i><b>6.2.4</b> Manipulating the query and scraping the result</a></li>
-<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources-1"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
+<li class="chapter" data-level="6.2.5" data-path="rvest2.html"><a href="rvest2.html#additional-resources"><i class="fa fa-check"></i><b>6.2.5</b> Additional resources</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="rvest3.html"><a href="rvest3.html"><i class="fa fa-check"></i><b>7</b> Scraping of multi-page websites</a>
@@ -298,7 +303,7 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="goodpractice.html"><a href="goodpractice.html#citation-and-an-additional-resource"><i class="fa fa-check"></i><b>9.3</b> Citation and an additional resource</a></li>
 </ul></li>
-<li class="part"><span><b>IV Sample project</b></span></li>
+<li class="part"><span><b>III Sample project</b></span></li>
 <li class="chapter" data-level="10" data-path="scraping.html"><a href="scraping.html"><i class="fa fa-check"></i><b>10</b> Scraping Berlin police reports</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="scraping.html"><a href="scraping.html#topic-and-data"><i class="fa fa-check"></i><b>10.1</b> Topic and data</a></li>
@@ -340,7 +345,7 @@ Web Scraping using R
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="ggplot.html"><a href="ggplot.html#exporting-plots"><i class="fa fa-check"></i><b>12.3</b> Exporting plots</a></li>
 </ul></li>
-<li class="part"><span><b>V Regular expressions</b></span></li>
+<li class="part"><span><b>IV Regular expressions</b></span></li>
 <li class="chapter" data-level="13" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>13</b> Regular expressions</a>
 <ul>
 <li class="chapter" data-level="13.1" data-path="regex.html"><a href="regex.html#cleaning-the-district-column"><i class="fa fa-check"></i><b>13.1</b> Cleaning the <code>district</code> column</a></li>
@@ -367,141 +372,10 @@ Web Scraping using R
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="R2" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">3</span> RStudio in practice &amp; the tidyverse<a href="R2.html#R2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="rstudio-workflow" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> RStudio Workflow<a href="R2.html#rstudio-workflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Up until now, we wrote our code directly into the RStudio console, pressed
-“Enter” and received the desired output. This works but will not satisfy our
-needs in the long run. The main problem is, that the code we wrote essentially
-disappears after running it. Imagine that you want to rerun your code a week
-from now or even tomorrow. Maybe you took notes and can recreate it, but that
-means a lot of unsatisfying and error prone work. Also, maybe at some point you
-want to share code with colleagues, fellow students, or the R community in
-general. At the same time, as our code gets more complex, spans multiple lines
-and consists of many interdependent blocks of code, you will inevitably run into
-the situation where you realise you made a mistake or have to change some code
-at the very beginning of your R session. This would mean, recreating and
-rerunning most or all of the code you have already written.</p>
-<p>These are some of the reasons why we should start writing our code into so
-called R Scripts.</p>
-<div id="r-scripts" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> R Scripts<a href="R2.html#r-scripts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To create a new R Script, you can click on “File” &gt; “New File” &gt; “R Script”, or
-more conveniently press “CTRL” + “Shift” + “N” simultaneously. This creates an
-untitled script that we can write our code into.</p>
-<p>Let’s start with something simple by recreating some of the code from last week.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R2.html#cb42-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
-<span id="cb42-2"><a href="R2.html#cb42-2" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb42-3"><a href="R2.html#cb42-3" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="R2.html#cb42-4" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb42-5"><a href="R2.html#cb42-5" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="R2.html#cb42-6" tabindex="-1"></a>the_answer</span>
-<span id="cb42-7"><a href="R2.html#cb42-7" tabindex="-1"></a><span class="do">## [1] 42</span></span></code></pre></div>
-<p>We assign two numerical values two the objects <code>a</code> and <code>b</code>, assign a calculation
-based on these objects to the new object <code>the_answer</code> and prompt R to return its
-value to us. Instead of writing the code line by line into the console, now we
-write the whole block into the newly created script. We can now run the complete
-script by clicking on “Source” or, to also get output, “Source with Echo” in the
-upper toolbar attached to the script’s tab.
-In most cases I prefer running the script line by line though. This allows
-full control of the process and enables you to stop in certain lines to
-e.g. contemplate what the code is doing, check for errors or change details of
-the code before moving on to the next line. You can do this either by clicking
-on “Run” in the toolbar or pressing “CTRL” + “Enter” simultaneously. In both
-cases, RStudio copies the line of code where your text cursor is currently
-residing into the console and runs it for you. The text cursor then conveniently
-jumps to the next line in the script. In this way you can quickly run your
-script line by line, while having full control over when to stop.</p>
-<p>You can decide for yourself what the right approach to running your code is,
-based on any given situation. But remember that R always assumes that you know
-what you’re doing. There will be no warning prompts if you are about to
-overwrite work you have previously done.</p>
-<p>When you are done writing your script, you might want to save it to the hard
-drive, preserving your work for later re-runs or for sharing. By clicking on
-“File” &gt; “Save” or presing “CTRL” + “S” you can save the file with a name of
-your choosing. The file extension for R Scripts is always “.R”.</p>
-<p>One problem – that you will run into sooner or later – is that you will try to
-run incomplete code from a script, most commonly a missing closing bracket. In
-this case, RStudio puts the code to be run into the console and begins a new
-line, starting with <code>+</code>, and then nothing happens. R assumes that your code will
-continue in a further line and waits for you to enter it after the <code>+</code>. In most
-cases the right approach is to cancel the entered command, fix your code and
-re-run it afterwards. To cancel an already entered command, you have to click
-into the “Console” tab and press “Esc” on your keyboard. The <code>&gt;</code>
-prompt will reappear in the console and you can continue with your work.</p>
-</div>
-<div id="projects" class="section level3 hasAnchor" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Projects<a href="R2.html#projects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In many cases, your work will consist of multiple scripts, data files, graphics
-saved to the disk or additional output. So it makes sense to assign your files
-to a place on your hard drive. You can do this “by hand” but a convenient
-approach might be to use RStudio’s project functionality.</p>
-<p>By clicking on “File” &gt; “New Project”, you can start the project creation
-wizard. If you have already created a folder on your hard drive that shall
-contain the project, you can click on “Existing Directory”, select the folder
-and click on “Create Project”. You can also create the folder on the fly by
-clicking on “New Directory” &gt; “New Project” and then choosing a folder name and
-the sub-folder where it should be placed, before creating the project.</p>
-<p>RStudio will now close all files currently open and switch to your newly created
-project. The name you chose for the project’s folder will also be its name, seen
-in RStudio’s title bar. When you look at the “File” tab (lower right), you will
-also see that you are now in the project’s folder. This is your current
-<em>working directory</em>, a concept we will talk about momentarily. All scripts you
-create while working in your project will become a part of it. So when you want
-to return to continuing your work, you can now click on “File” &gt; “Open Project”.
-All files opened the last time you worked on the project will be reopened and
-you will again be in the project’s working directory. This is an easy and
-convenient way to keep your work tidy.</p>
-<p>At this point, I would advise you to create a project for this introduction to
-web scraping and create R scripts for each chapter as parts of the project. The
-name and sub-folder you choose is not important from the point of view of
-functionality, but it should make sense to you.</p>
-<p>We should now briefly talk about the working directory. If you try to open or
-save a file directly from an R script – without specifying a complete path – R
-will always assume you refer to your working directory. If you created a
-project, this automatically set the project’s folder as the working directory.
-You can always check for your current working directory by entering <code>getwd()</code>
-into the console. You can change your current working directory by clicking on
-“Session” &gt; “Set Working Directory” &gt; “Choose Directory…” or by using the
-function <code>setwd()</code> with the desired path enclosed by <code>"</code> as the function’s
-argument.</p>
-</div>
-<div id="comments" class="section level3 hasAnchor" number="3.1.3">
-<h3><span class="header-section-number">3.1.3</span> Comments<a href="R2.html#comments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>You should get into the habit of commenting your code as early as possible.
-Comments are started with one or multiple <code>#</code>. All code following the <code>#</code> will
-not be evaluated by R and thus serves as the perfect place to comment on what
-you were doing and thinking while writing the code. Why do this? When you reopen
-a script that you have not been working on in a while, it can be hard to
-understand what you tried to do in the first place. Commented code makes this
-much easier. This is even more true if you share your code with other people.
-They may have very different approaches to certain R problems and clearly
-commented code will help them to quickly understand it. You should see this as a
-sign of respect towards the time your peers may invest in helping you with your
-coding problems.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="R2.html#cb43-1" tabindex="-1"></a><span class="co"># assigning objects</span></span>
-<span id="cb43-2"><a href="R2.html#cb43-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">17</span></span>
-<span id="cb43-3"><a href="R2.html#cb43-3" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb43-4"><a href="R2.html#cb43-4" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="R2.html#cb43-5" tabindex="-1"></a><span class="co"># calculating the answer</span></span>
-<span id="cb43-6"><a href="R2.html#cb43-6" tabindex="-1"></a>the_answer <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb43-7"><a href="R2.html#cb43-7" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="R2.html#cb43-8" tabindex="-1"></a>the_answer</span>
-<span id="cb43-9"><a href="R2.html#cb43-9" tabindex="-1"></a><span class="do">## [1] 42</span></span>
-<span id="cb43-10"><a href="R2.html#cb43-10" tabindex="-1"></a><span class="co"># but what is the question?</span></span></code></pre></div>
-<p>If you plan on using <code>setwd()</code> in your script, it is a good idea to comment this
-line before sharing your script. Other people will have different folder
-structures and will want to decide for themselves. The same goes for all lines
-that will save something to the hard drive, e.g. data sets or exported graphics.
-The R and RStudio communities are very welcoming and you will always find people
-that are willing to lend you their help, so you should return the favour and be
-polite in your code. This includes writing clear comments and not cluttering
-anyone’s hard drive with files they may not want to have.</p>
-</div>
-</div>
-<div id="r-packages" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> R packages<a href="R2.html#r-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="R2" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Packages, the tidyverse and R Markdown<a href="R2.html#R2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="r-packages" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> R packages<a href="R2.html#r-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The R world is open and collaborative by nature. Besides the packages that come
 with your R installation – <em>base R</em> – an ever growing number of additional
 packages, written by professionals and users, is available for download by
@@ -514,8 +388,8 @@ complicated.</p>
 hosted at CRAN – “Comprehensive R Archive Network”– which you already got to
 know during the installation of R. If you install a package directly from
 RStudio, it uses CRAN to find and download the package and the associated files.</p>
-<div id="installing-and-loading-packages" class="section level3 hasAnchor" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Installing and loading packages<a href="R2.html#installing-and-loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="installing-and-loading-packages" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Installing and loading packages<a href="R2.html#installing-and-loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To install a package we can use the R function <code>install.packages()</code> where the
 name of the package to be installed is written enclosed by <code>"</code> between the
 parentheses. Normally we do this using the console. Installing packages from
@@ -525,7 +399,7 @@ installation every time we run a script. At the same time, if we share our
 script, it is impolite to force an (re)installation on somebody else.</p>
 <p>For this introduction we will focus on the packages of the <strong>tidyverse</strong> – more
 on them below. To install the core <strong>tidyverse</strong> package, you should type:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="R2.html#cb44-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="R2.html#cb31-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>R will output a lot of information concerning the installation process, and
 close with a satisfying <code>DONE (tidyverse)</code> if everything went according to plan.</p>
 <p>Please note, that R is <em>case sensitive</em>. This means that “Tidyverse” is not the
@@ -539,15 +413,15 @@ are loaded at the beginning of running a script and other users that see your
 code also immediately see which packages are required. Loading a package is done
 with <code>library()</code> with the name of the package in the parentheses, this time
 without the need for enclosing it in <code>"</code>.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="R2.html#cb45-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="R2.html#cb32-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>Loading the <strong>tidyverse</strong> package returns a lot of information to us, some of which
 we will look at in more detail during the course of this chapter. Please note
 that not all packages are that verbose in their loading process. Often you will
 get no output at all which is a good sign, as this also means that the package
 loaded correctly. If anything goes wrong, R will return an error message.</p>
 </div>
-<div id="namespaces" class="section level3 hasAnchor" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Namespaces<a href="R2.html#namespaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="namespaces" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Namespaces<a href="R2.html#namespaces" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Looking at the last lines of the returned message when loading the tidyverse
 package, we’re informed that there are two conflicts. These arise when two or
 more loaded packages include functions with the same name. Here we can see that
@@ -566,12 +440,12 @@ while the function is masked by the similarly named function from <strong>dplyr<
 could write <code>stats::filter()</code>. As the function will not work without further
 arguments, we can’t try this out directly, but the same principle applies to
 loading the help files:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="R2.html#cb46-1" tabindex="-1"></a>?dplyr<span class="sc">::</span><span class="fu">filter</span>()</span>
-<span id="cb46-2"><a href="R2.html#cb46-2" tabindex="-1"></a>?stats<span class="sc">::</span><span class="fu">filter</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="R2.html#cb33-1" tabindex="-1"></a>?dplyr<span class="sc">::</span><span class="fu">filter</span>()</span>
+<span id="cb33-2"><a href="R2.html#cb33-2" tabindex="-1"></a>?stats<span class="sc">::</span><span class="fu">filter</span>()</span></code></pre></div>
 </div>
 </div>
-<div id="tidyverse" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Tidyverse<a href="R2.html#tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="tidyverse" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Tidyverse<a href="R2.html#tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>While we will use some base R functions throughout this course, our main focus
 will lie on the <strong>tidyverse</strong> packages.</p>
 <p>The <strong>tidyverse</strong> is a collection of R packages, all following a shared philosophy
@@ -598,8 +472,8 @@ throughout the course.</p>
 <p>For a full list of <strong>tidyverse</strong> packages and the corresponding descriptions of
 their functionality, you can visit:
 <a href="https://www.tidyverse.org/packages/" target="_blank">https://www.tidyverse.org/packages/</a></p>
-<div id="tibbles" class="section level3 hasAnchor" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Tibbles<a href="R2.html#tibbles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="tibbles" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Tibbles<a href="R2.html#tibbles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <strong>tibble</strong> package is part of the core tidyverse and offers an alternative to
 <em>data frames</em> that are used in base R to represent data in
 tabular form. The differences between data frames and <em>tibbles</em> are relatively
@@ -616,26 +490,26 @@ we can create tibbles vector by vector or variable by variable, using the
 function <code>tibble()</code>. We assign a name to the variable followed by <code>=</code> and the
 data to be assigned to the variable. The variable-data pairs are separated by
 <code>,</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="R2.html#cb47-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
-<span id="cb47-2"><a href="R2.html#cb47-2" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
-<span id="cb47-3"><a href="R2.html#cb47-3" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
-<span id="cb47-4"><a href="R2.html#cb47-4" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb47-5"><a href="R2.html#cb47-5" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
-<span id="cb47-6"><a href="R2.html#cb47-6" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
-<span id="cb47-7"><a href="R2.html#cb47-7" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="R2.html#cb34-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>), <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>))</span>
+<span id="cb34-2"><a href="R2.html#cb34-2" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
+<span id="cb34-3"><a href="R2.html#cb34-3" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb34-4"><a href="R2.html#cb34-4" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb34-5"><a href="R2.html#cb34-5" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
+<span id="cb34-6"><a href="R2.html#cb34-6" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
+<span id="cb34-7"><a href="R2.html#cb34-7" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
 <p>For longer code like this, it is advisable to use multiple lines and a more
 clear formatting to create code that is readable and intuitive:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="R2.html#cb48-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb48-2"><a href="R2.html#cb48-2" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb48-3"><a href="R2.html#cb48-3" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
-<span id="cb48-4"><a href="R2.html#cb48-4" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb48-5"><a href="R2.html#cb48-5" tabindex="-1"></a>)</span>
-<span id="cb48-6"><a href="R2.html#cb48-6" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
-<span id="cb48-7"><a href="R2.html#cb48-7" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
-<span id="cb48-8"><a href="R2.html#cb48-8" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb48-9"><a href="R2.html#cb48-9" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
-<span id="cb48-10"><a href="R2.html#cb48-10" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
-<span id="cb48-11"><a href="R2.html#cb48-11" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="R2.html#cb35-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb35-2"><a href="R2.html#cb35-2" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb35-3"><a href="R2.html#cb35-3" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb35-4"><a href="R2.html#cb35-4" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb35-5"><a href="R2.html#cb35-5" tabindex="-1"></a>)</span>
+<span id="cb35-6"><a href="R2.html#cb35-6" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
+<span id="cb35-7"><a href="R2.html#cb35-7" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb35-8"><a href="R2.html#cb35-8" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb35-9"><a href="R2.html#cb35-9" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE   </span></span>
+<span id="cb35-10"><a href="R2.html#cb35-10" tabindex="-1"></a><span class="do">## 2       1 one     TRUE    </span></span>
+<span id="cb35-11"><a href="R2.html#cb35-11" tabindex="-1"></a><span class="do">## 3       2 two     TRUE</span></span></code></pre></div>
 <p>R understands that all five lines are part of one command as it evaluates
 everything between the opening and closing bracket of the <code>tibbles()</code> function
 together. We just have to make sure, that we don’t miss the closing bracket or a
@@ -644,74 +518,74 @@ errors and will be high on your list of things to check if something does not
 work as planned.</p>
 <p>We can also use calculations and functions directly in tibble creation,
 circumventing the need to assign the results to an object first:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="R2.html#cb49-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb49-2"><a href="R2.html#cb49-2" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb49-3"><a href="R2.html#cb49-3" tabindex="-1"></a>  <span class="at">roots =</span> <span class="fu">sqrt</span>(numbers),</span>
-<span id="cb49-4"><a href="R2.html#cb49-4" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots)</span>
-<span id="cb49-5"><a href="R2.html#cb49-5" tabindex="-1"></a>)</span>
-<span id="cb49-6"><a href="R2.html#cb49-6" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
-<span id="cb49-7"><a href="R2.html#cb49-7" tabindex="-1"></a><span class="do">##   numbers roots rounded</span></span>
-<span id="cb49-8"><a href="R2.html#cb49-8" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb49-9"><a href="R2.html#cb49-9" tabindex="-1"></a><span class="do">## 1       1  1          1</span></span>
-<span id="cb49-10"><a href="R2.html#cb49-10" tabindex="-1"></a><span class="do">## 2       2  1.41       1</span></span>
-<span id="cb49-11"><a href="R2.html#cb49-11" tabindex="-1"></a><span class="do">## 3       3  1.73       2</span></span></code></pre></div>
-<div id="subsetting-tibbles" class="section level4 hasAnchor" number="3.3.1.1">
-<h4><span class="header-section-number">3.3.1.1</span> Subsetting tibbles<a href="R2.html#subsetting-tibbles" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="R2.html#cb36-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb36-2"><a href="R2.html#cb36-2" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb36-3"><a href="R2.html#cb36-3" tabindex="-1"></a>  <span class="at">roots =</span> <span class="fu">sqrt</span>(numbers),</span>
+<span id="cb36-4"><a href="R2.html#cb36-4" tabindex="-1"></a>  <span class="at">rounded =</span> <span class="fu">round</span>(roots)</span>
+<span id="cb36-5"><a href="R2.html#cb36-5" tabindex="-1"></a>)</span>
+<span id="cb36-6"><a href="R2.html#cb36-6" tabindex="-1"></a><span class="do">## # A tibble: 3 × 3</span></span>
+<span id="cb36-7"><a href="R2.html#cb36-7" tabindex="-1"></a><span class="do">##   numbers roots rounded</span></span>
+<span id="cb36-8"><a href="R2.html#cb36-8" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb36-9"><a href="R2.html#cb36-9" tabindex="-1"></a><span class="do">## 1       1  1          1</span></span>
+<span id="cb36-10"><a href="R2.html#cb36-10" tabindex="-1"></a><span class="do">## 2       2  1.41       1</span></span>
+<span id="cb36-11"><a href="R2.html#cb36-11" tabindex="-1"></a><span class="do">## 3       3  1.73       2</span></span></code></pre></div>
+<div id="subsetting-tibbles" class="section level4 hasAnchor" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Subsetting tibbles<a href="R2.html#subsetting-tibbles" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>When subsetting two dimensional objects like data frames and tibbles, we have to
 supply an index for the row(s) as well as for the column(s) we want to subset.
 Those are written in the form <code>object[row_index, column_index]</code> Let us first
 assign a sample tibble to an object.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="R2.html#cb50-1" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb50-2"><a href="R2.html#cb50-2" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb50-3"><a href="R2.html#cb50-3" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
-<span id="cb50-4"><a href="R2.html#cb50-4" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb50-5"><a href="R2.html#cb50-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="R2.html#cb37-1" tabindex="-1"></a>exmpl_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb37-2"><a href="R2.html#cb37-2" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb37-3"><a href="R2.html#cb37-3" tabindex="-1"></a>  <span class="at">strings =</span> <span class="fu">c</span>(<span class="st">&quot;zero&quot;</span>, <span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>),</span>
+<span id="cb37-4"><a href="R2.html#cb37-4" tabindex="-1"></a>  <span class="at">logicals =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb37-5"><a href="R2.html#cb37-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>We can now subset this tibble. Note that if we want to subset a complete row or
 column, we can leave the place before or after the <code>,</code> empty to indicate that we
 want to see all rows or columns.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="R2.html#cb51-1" tabindex="-1"></a>exmpl_tbl[<span class="dv">1</span>, <span class="dv">2</span>]   <span class="co"># first row, second column</span></span>
-<span id="cb51-2"><a href="R2.html#cb51-2" tabindex="-1"></a><span class="do">## # A tibble: 1 × 1</span></span>
-<span id="cb51-3"><a href="R2.html#cb51-3" tabindex="-1"></a><span class="do">##   strings</span></span>
-<span id="cb51-4"><a href="R2.html#cb51-4" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  </span></span>
-<span id="cb51-5"><a href="R2.html#cb51-5" tabindex="-1"></a><span class="do">## 1 zero</span></span>
-<span id="cb51-6"><a href="R2.html#cb51-6" tabindex="-1"></a>exmpl_tbl[<span class="dv">1</span>, ]    <span class="co"># first row, all columns</span></span>
-<span id="cb51-7"><a href="R2.html#cb51-7" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
-<span id="cb51-8"><a href="R2.html#cb51-8" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
-<span id="cb51-9"><a href="R2.html#cb51-9" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
-<span id="cb51-10"><a href="R2.html#cb51-10" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE</span></span>
-<span id="cb51-11"><a href="R2.html#cb51-11" tabindex="-1"></a>exmpl_tbl[, <span class="dv">2</span>]   <span class="co"># all rows, second column</span></span>
-<span id="cb51-12"><a href="R2.html#cb51-12" tabindex="-1"></a><span class="do">## # A tibble: 3 × 1</span></span>
-<span id="cb51-13"><a href="R2.html#cb51-13" tabindex="-1"></a><span class="do">##   strings</span></span>
-<span id="cb51-14"><a href="R2.html#cb51-14" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  </span></span>
-<span id="cb51-15"><a href="R2.html#cb51-15" tabindex="-1"></a><span class="do">## 1 zero   </span></span>
-<span id="cb51-16"><a href="R2.html#cb51-16" tabindex="-1"></a><span class="do">## 2 one    </span></span>
-<span id="cb51-17"><a href="R2.html#cb51-17" tabindex="-1"></a><span class="do">## 3 two</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="R2.html#cb38-1" tabindex="-1"></a>exmpl_tbl[<span class="dv">1</span>, <span class="dv">2</span>]   <span class="co"># first row, second column</span></span>
+<span id="cb38-2"><a href="R2.html#cb38-2" tabindex="-1"></a><span class="do">## # A tibble: 1 × 1</span></span>
+<span id="cb38-3"><a href="R2.html#cb38-3" tabindex="-1"></a><span class="do">##   strings</span></span>
+<span id="cb38-4"><a href="R2.html#cb38-4" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  </span></span>
+<span id="cb38-5"><a href="R2.html#cb38-5" tabindex="-1"></a><span class="do">## 1 zero</span></span>
+<span id="cb38-6"><a href="R2.html#cb38-6" tabindex="-1"></a>exmpl_tbl[<span class="dv">1</span>, ]    <span class="co"># first row, all columns</span></span>
+<span id="cb38-7"><a href="R2.html#cb38-7" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
+<span id="cb38-8"><a href="R2.html#cb38-8" tabindex="-1"></a><span class="do">##   numbers strings logicals</span></span>
+<span id="cb38-9"><a href="R2.html#cb38-9" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;   </span></span>
+<span id="cb38-10"><a href="R2.html#cb38-10" tabindex="-1"></a><span class="do">## 1       0 zero    FALSE</span></span>
+<span id="cb38-11"><a href="R2.html#cb38-11" tabindex="-1"></a>exmpl_tbl[, <span class="dv">2</span>]   <span class="co"># all rows, second column</span></span>
+<span id="cb38-12"><a href="R2.html#cb38-12" tabindex="-1"></a><span class="do">## # A tibble: 3 × 1</span></span>
+<span id="cb38-13"><a href="R2.html#cb38-13" tabindex="-1"></a><span class="do">##   strings</span></span>
+<span id="cb38-14"><a href="R2.html#cb38-14" tabindex="-1"></a><span class="do">##   &lt;chr&gt;  </span></span>
+<span id="cb38-15"><a href="R2.html#cb38-15" tabindex="-1"></a><span class="do">## 1 zero   </span></span>
+<span id="cb38-16"><a href="R2.html#cb38-16" tabindex="-1"></a><span class="do">## 2 one    </span></span>
+<span id="cb38-17"><a href="R2.html#cb38-17" tabindex="-1"></a><span class="do">## 3 two</span></span></code></pre></div>
 <p>You may note that in each of those cases, R returns a tibble to us. Even when
 there is only one value, as in the first example, we get a 1x1 tibble. This is
 because subsetting tibbles with <code>[]</code> always returns a tibble. If we are
 interested in extracting an actual value from a cell in a tibble, we have to use
 <code>[[]]</code> subsetting instead.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="R2.html#cb52-1" tabindex="-1"></a>exmpl_tbl[[<span class="dv">1</span>, <span class="dv">2</span>]]   <span class="co"># first row, second column</span></span>
-<span id="cb52-2"><a href="R2.html#cb52-2" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot;</span></span>
-<span id="cb52-3"><a href="R2.html#cb52-3" tabindex="-1"></a>exmpl_tbl[[<span class="dv">3</span>, <span class="dv">1</span>]]   <span class="co"># third row, first column</span></span>
-<span id="cb52-4"><a href="R2.html#cb52-4" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="R2.html#cb39-1" tabindex="-1"></a>exmpl_tbl[[<span class="dv">1</span>, <span class="dv">2</span>]]   <span class="co"># first row, second column</span></span>
+<span id="cb39-2"><a href="R2.html#cb39-2" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot;</span></span>
+<span id="cb39-3"><a href="R2.html#cb39-3" tabindex="-1"></a>exmpl_tbl[[<span class="dv">3</span>, <span class="dv">1</span>]]   <span class="co"># third row, first column</span></span>
+<span id="cb39-4"><a href="R2.html#cb39-4" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 <p>If our goal is to extract a column as a vector, we have several options. We can
 write <code>object[[column_index]]</code>. In this case, R knows that we are only interested
 in columns as we have only provided one index to a two dimensional object. We
 couls also use the column’s name instead of the index, enclosed in <code>""</code>.
 Another popular option is to use the <span class="math inline">\(-notation. Here we also use the column&#39;s name but write it like this: `object\)</span>column_name`. Which option to use is up to
 taste, as the results are identical:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="R2.html#cb53-1" tabindex="-1"></a>exmpl_tbl[[<span class="dv">2</span>]]</span>
-<span id="cb53-2"><a href="R2.html#cb53-2" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot; &quot;one&quot;  &quot;two&quot;</span></span>
-<span id="cb53-3"><a href="R2.html#cb53-3" tabindex="-1"></a>exmpl_tbl[[<span class="st">&quot;strings&quot;</span>]]</span>
-<span id="cb53-4"><a href="R2.html#cb53-4" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot; &quot;one&quot;  &quot;two&quot;</span></span>
-<span id="cb53-5"><a href="R2.html#cb53-5" tabindex="-1"></a>exmpl_tbl<span class="sc">$</span>strings</span>
-<span id="cb53-6"><a href="R2.html#cb53-6" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot; &quot;one&quot;  &quot;two&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="R2.html#cb40-1" tabindex="-1"></a>exmpl_tbl[[<span class="dv">2</span>]]</span>
+<span id="cb40-2"><a href="R2.html#cb40-2" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot; &quot;one&quot;  &quot;two&quot;</span></span>
+<span id="cb40-3"><a href="R2.html#cb40-3" tabindex="-1"></a>exmpl_tbl[[<span class="st">&quot;strings&quot;</span>]]</span>
+<span id="cb40-4"><a href="R2.html#cb40-4" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot; &quot;one&quot;  &quot;two&quot;</span></span>
+<span id="cb40-5"><a href="R2.html#cb40-5" tabindex="-1"></a>exmpl_tbl<span class="sc">$</span>strings</span>
+<span id="cb40-6"><a href="R2.html#cb40-6" tabindex="-1"></a><span class="do">## [1] &quot;zero&quot; &quot;one&quot;  &quot;two&quot;</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="additional-resources" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Additional resources<a href="R2.html#additional-resources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="additional-r-resources" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Additional R resources<a href="R2.html#additional-r-resources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When learning R and when using functions and packages that are new to you, you
 will regularly run into situations where you need help in understanding what is
 happening and what you can do. Luckily, there a lot of resources that will help
@@ -720,11 +594,11 @@ you on your R journey.</p>
 packages also come with so called <em>vignettes</em> which offer more in-depth
 introductions to the packages. Let’s see if the tibble package comes with
 vignettes. To do this we can write:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="R2.html#cb54-1" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;tibble&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="R2.html#cb41-1" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package =</span> <span class="st">&quot;tibble&quot;</span>)</span></code></pre></div>
 <p>We get a list of all vignettes available for the specific package. To access a
 specific vignette, we also use the <code>vignette()</code> function, this time with the
 specific name of the vignette as the function’s argument:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="R2.html#cb55-1" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;types&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="R2.html#cb42-1" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;types&quot;</span>)</span></code></pre></div>
 <p>You can also always check the CRAN page for the package in question. Here you
 can access the documentation as well as available vignettes, e.g.:
 <a href="https://cran.r-project.org/web/packages/tibble/index.html" target="_blank">https://cran.r-project.org/web/packages/tibble/index.html</a>.</p>
@@ -759,7 +633,129 @@ Available under: <a href="https://rc2e.com/" target="_blank">https://rc2e.com/</
 An introduction to data science using (almost) exclusively the tidyverse
 packages. Available under: <a href="https://r4ds.had.co.nz/" target="_blank">https://r4ds.had.co.nz/</a></p></li>
 </ul>
+</div>
+<div id="intro-to-r-markdown" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Intro to R Markdown<a href="R2.html#intro-to-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The following is an excerpt from another seminar that I have written with Prof.
+Jasper Tjaden and Niaz Morshed, <strong>Data Analysis with R for Social Scientists</strong>,
+available under: <a href="https://jaspertjaden.github.io/DataAnalysisR/" target="_blank">https://jaspertjaden.github.io/DataAnalysisR/</a></p>
+<p>It is a short introduction to using R Markdown for documenting your work and writing
+reports and papers with it.</p>
+<div id="what-is-r-markdown" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> What is R Markdown?<a href="R2.html#what-is-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R Markdown allows you to combine written text that is easy to format with R Code that is executed when <em>knitting</em> or <em>compiling</em> the document into the chosen output format. This allows us to describe our research, analyse our data, display results as tables or plots and interpret these, all in one file. In this way we can not only create reports on seminar exercises but also write websites - like the one your are looking at in this very moment -, seminar papers, articles or create presentations.</p>
+<p>It is also a great notebook for projects you are working on. More often than not, our work on a specific analysis will span multiple days, weeks or even months and it is often hard to remember what we were thinking the last time we worked on our code.</p>
+<blockquote>
+<p>“I am sure I had my reasons for writing this piece of code, but I can not for the life of me remember any of them…”</p>
+<p>— Anonymous Coder 2023</p>
+</blockquote>
+<p>If we use R Markdown to document our work we can add text that explains our reasons, thoughts, ideas and plans at that very moment and pick up our work from there the next time we open the file.</p>
+<p>R Markdown allows output to different file formats, including <code>html</code>, <code>docx</code>, <code>pptx</code> and <code>pdf</code>. Note that you need a LaTeX installation to knit to <code>pdf</code>. LaTeX is a typesetting language and used for producing high quality <code>pdf</code> documents. For simple <code>pdf</code> reports or presentations - sidenote: if you bring a <code>pptx</code> to a talk something will most probably go wrong or stop working… - you do not really need to know how LaTeX works, you just need an installed distribution. For these purposes the package <code>tinytex</code> gives you all you need and is easy to install from within R. <a href="https://bookdown.org/yihui/rmarkdown/installation.html#installation">This site</a> explains how to install it. You can also get an overview of all possible output formats <a href="https://rmarkdown.rstudio.com/lesson-9.html">here</a>.</p>
+</div>
+<div id="creating-a-r-markdown-file" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Creating a R Markdown file<a href="R2.html#creating-a-r-markdown-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before you can create and compile R Markdown documents, you first have to install the package by writing <code>install.packages("rmarkdown")</code> in your console.</p>
+<p>Creating a new R Markdown file is as straightforward as it can be. In RStudio you can click of <code>File &gt; New File &gt; R Markdown...</code>. In the new window you can set up some basic information on the document - which will be displayed in the output - and chose your desired format. You can basically write R Markdown files in any text editor, just make sure that the file extension is saved as <code>.Rmd</code>. We still recommend using RStudio because it gives you some convenient options that a text editor will not, e.g. displaying a preview of your document and easy knitting of the final file.</p>
+</div>
+<div id="writing-in-r-markdown" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Writing in R Markdown<a href="R2.html#writing-in-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="document-components" class="section level4 hasAnchor" number="2.4.3.1">
+<h4><span class="header-section-number">2.4.3.1</span> Document components<a href="R2.html#document-components" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>When you followed the steps above, a new R Markdown file will have been created. It basically consists of two main parts:</p>
+<ul>
+<li><p>A <code>YAML</code> header - surrounded by three dashes <code>---</code> - where options for the document can be set. The good news is that you do not have to do anything here until you get more profound with using R Markdown. For now it is enough that all the options you set when creating the new file - the title, author, date and format of the output - are present and will be included in your output file.</p></li>
+<li><p>A body that contains the actual content of your document. Text is directly written in the body at the location where it is to be displayed in the output. We can use the simple Markdown syntax for formatting using a set of symbols, some of which we will explain below. We can also include R code in so called <code>chunks</code>, specifying if we also want it and/or the results to be displayed or “just” to be executed in the background. The code chunks will be executed when we compile the final document and everything that we want to include in the output - e.g. tables, plots or code examples - will be displayed where it occurs.</p></li>
+</ul>
+</div>
+<div id="formatting" class="section level4 hasAnchor" number="2.4.3.2">
+<h4><span class="header-section-number">2.4.3.2</span> Formatting<a href="R2.html#formatting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Here are some of the more common formatting elements you will need when starting out using R Markdown:</p>
+<div id="headers" class="section level5 hasAnchor" number="2.4.3.2.1">
+<h5><span class="header-section-number">2.4.3.2.1</span> Headers<a href="R2.html#headers" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>To include sections in a document we use <code>#</code> followed by the header we want to be displayed. We can define levels for sections by using multiple <code>#</code> in this way:</p>
+<pre><code># Section 1
+## Section 1.1
+## Section 1.2
+### Section 1.2.1
+### Section 1.2.2
+## Section 1.3
+# Section 2</code></pre>
+</div>
+<div id="text" class="section level5 hasAnchor" number="2.4.3.2.2">
+<h5><span class="header-section-number">2.4.3.2.2</span> Text<a href="R2.html#text" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>We write the text between the section headers at the place where it should be displayed in the final document. We can insert line breaks at any point but these will not be rendered in the output. To include an actual paragraph we will have to include a blank line between between two blocks of text. Two emphasize certain words or phrases, we can wrap them in <code>*</code> for italics or <code>**</code> for bold face.</p>
+<p>Consider this Markdown code:</p>
+<pre><code>This is the first paragraph.
+This still is the first paragraph.
 
+Here begins the second paragraph.
+It includes emphasis, by using *italics* and also **bold face** words.</code></pre>
+<p>It is rendered as:</p>
+<p>This is the first paragraph. This still is the first paragraph.</p>
+<p>Here begins the second paragraph. It includes emphasis, by using <em>italics</em> and also <strong>bold face</strong> words.</p>
+</div>
+<div id="lists" class="section level5 hasAnchor" number="2.4.3.2.3">
+<h5><span class="header-section-number">2.4.3.2.3</span> Lists<a href="R2.html#lists" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Unordered lists or bullet points can be inserted by adding a <code>-</code>, <code>*</code> or <code>+</code> at the beginning of a line. To create levels, we have to indent lines using tab stops.</p>
+<pre><code>* Level 1
+* Level 1
+  * Level 2
+    * Level 3
+  * Level 2
+    * Level 3
+* Level 1</code></pre>
+<p>The above will be rendered as:</p>
+<ul>
+<li>Level 1</li>
+<li>Level 1
+<ul>
+<li>Level 2
+<ul>
+<li>Level 3</li>
+</ul></li>
+<li>Level 2
+<ul>
+<li>Level 3</li>
+</ul></li>
+</ul></li>
+<li>Level 1</li>
+</ul>
+<p>We can also create ordered lists by using numbers followed by a <code>.</code> instead of the <code>*</code> etc.</p>
+<pre><code>1.  Bulletpoint 1
+2.  Bulletpoint 2
+3.  Bulletpoint 3</code></pre>
+<ol style="list-style-type: decimal">
+<li>Bulletpoint 1</li>
+<li>Bulletpoint 2</li>
+<li>Bulletpoint 3</li>
+</ol>
+</div>
+<div id="hyperlinks" class="section level5 hasAnchor" number="2.4.3.2.4">
+<h5><span class="header-section-number">2.4.3.2.4</span> Hyperlinks<a href="R2.html#hyperlinks" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Hyperlinks can be included as <code>&lt;url&gt;</code> or <code>[text](url)</code>.</p>
+<pre><code>To include a plain url we can use &lt;https://jaspertjaden.github.io/DataAnalysisR/&gt;.
+We can also [link](https://jaspertjaden.github.io/DataAnalysisR/) in this way.</code></pre>
+<p>To include a plain url we can use <a href="https://jaspertjaden.github.io/DataAnalysisR/" class="uri">https://jaspertjaden.github.io/DataAnalysisR/</a>. We can also <a href="https://jaspertjaden.github.io/DataAnalysisR/">link</a> in this way.</p>
+</div>
+</div>
+<div id="code-chunks" class="section level4 hasAnchor" number="2.4.3.3">
+<h4><span class="header-section-number">2.4.3.3</span> Code chunks<a href="R2.html#code-chunks" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Codechunks have to be started and ended with three backticks <code>```</code>. After the first set of backticks we also have to include <code>{r}</code> to let Markdown know that we want to run the code as R code. The code that is written after this and up to the second set of backticks will be executed when knitting the file.</p>
+<p>You can see some examples of this in the newly created R Markdown file if you followed the steps above.</p>
+<p>We can also always run the code in a chunk before knitting by clicking on the green arrow in the upper right corner of the chunk. We can also execute individual lines of code by placing our keyboard cursor in the line and pressing <code>Shift + Enter</code>.</p>
+<div id="chunk-options" class="section level5 hasAnchor" number="2.4.3.3.1">
+<h5><span class="header-section-number">2.4.3.3.1</span> Chunk options<a href="R2.html#chunk-options" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>We can change the way code chunks are handled when knitting by adding one or multiple chunk options between the curly brackets like this: <code>{r option=value}</code>. If we want to use multiple options they have to be written like this: <code>{r option1=value1, option2=value2}</code>.</p>
+<p>There are many options available but most are not needed when starting out. The ones that may be of interest to you are:</p>
+<ul>
+<li><code>{r echo=FALSE}</code>: This prevents the code to be displayed in the output while the results will be included. This is useful if you want to show the results of a computation or a plot but do not want the document to be cluttered with the underlying code.</li>
+<li><code>{r include=FALSE}</code>: This prevents the code as well as the output from being displayed. The code is still run in the background.</li>
+<li><code>{r eval=FALSE}</code>: This prevents the code from being run but displays it. This can be useful if you want to show code examples for illustrative purposes.</li>
+</ul>
+
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -771,7 +767,7 @@ packages. Available under: <a href="https://r4ds.had.co.nz/" target="_blank">htt
         </div>
       </div>
 <a href="R1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rvest1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="html.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -792,7 +788,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/03-R2.Rmd",
+"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/02-R2.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -1,4 +1,4 @@
-# (PART) R Basics & Tidyverse {-}
+# (PART) R Basics, tidyverse & R Markdown {-}
 
 ``` {r, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
@@ -416,4 +416,152 @@ median(data)
 sd(data)
 ```
 
+## RStudio Workflow
+
+Up until now, we wrote our code directly into the RStudio console, pressed
+"Enter" and received the desired output. This works but will not satisfy our
+needs in the long run. The main problem is, that the code we wrote essentially
+disappears after running it. Imagine that you want to rerun your code a week
+from now or even tomorrow. Maybe you took notes and can recreate it, but that
+means a lot of unsatisfying and error prone work. Also, maybe at some point you
+want to share code with colleagues, fellow students, or the R community in
+general. At the same time, as our code gets more complex, spans multiple lines
+and consists of many interdependent blocks of code, you will inevitably run into
+the situation where you realise you made a mistake or have to change some code
+at the very beginning of your R session. This would mean, recreating and
+rerunning most or all of the code you have already written.
+
+These are some of the reasons why we should start writing our code into so 
+called R Scripts.
+
+### R Scripts
+
+To create a new R Script, you can click on "File" > "New File" > "R Script", or
+more conveniently press "CTRL" + "Shift" + "N" simultaneously. This creates an
+untitled script that we can write our code into.
+
+Let's start with something simple by recreating some of the code from last week.
+
+``` {r smpls_script}
+a <- 17
+b <- 4
+
+the_answer <- (a + b) * 2
+
+the_answer
+```
+
+We assign two numerical values two the objects `a` and `b`, assign a calculation
+based on these objects to the new object `the_answer` and prompt R to return its
+value to us. Instead of writing the code line by line into the console, now we
+write the whole block into the newly created script. We can now run the complete
+script by clicking on "Source" or, to also get output, "Source with Echo" in the
+upper toolbar attached to the script's tab.
+In most cases I prefer running the script line by line though. This allows
+full control of the process and enables you to stop in certain lines to
+e.g. contemplate what the code is doing, check for errors or change details of
+the code before moving on to the next line. You can do this either by clicking
+on "Run" in the toolbar or pressing "CTRL" + "Enter" simultaneously.  In both
+cases, RStudio copies the line of code where your text cursor is currently
+residing into the console and runs it for you. The text cursor then conveniently
+jumps to the next line in the script. In this way you can quickly run your
+script line by line, while having full control over when to stop.
+
+You can decide for yourself what the right approach to running your code is,
+based on any given situation. But remember that R always assumes that you know
+what you're doing. There will be no warning prompts if you are about to
+overwrite work you have previously done.
+
+When you are done writing your script, you might want to save it to the hard
+drive, preserving your work for later re-runs or for sharing. By clicking on
+"File" > "Save" or presing "CTRL" + "S" you can save the file with a name of
+your choosing. The file extension for R Scripts is always ".R".
+
+One problem -- that you will run into sooner or later -- is that you will try to
+run incomplete code from a script, most commonly a missing closing bracket.  In
+this case, RStudio puts the code to be run into the console and begins a new
+line, starting with `+`, and then nothing happens. R assumes that your code will
+continue in a further line and waits for you to enter it after the `+`. In most
+cases the right approach is to cancel the entered command, fix your code and
+re-run it afterwards. To cancel an already entered command, you have to click
+into the "Console" tab and press "Esc" on your keyboard. The `>`
+prompt will reappear in the console and you can continue with your work.
+
+
+### Projects
+
+In many cases, your work will consist of multiple scripts, data files, graphics
+saved to the disk or additional output. So it makes sense to assign your files
+to a place on your hard drive. You can do this "by hand" but a convenient
+approach might be to use RStudio's project functionality.
+
+By clicking on "File" > "New Project", you can start the project creation
+wizard. If you have already created a folder on your hard drive that shall
+contain the project, you can click on "Existing Directory", select the folder
+and click on "Create Project". You can also create the folder on the fly by
+clicking on "New Directory" > "New Project" and then choosing a folder name and
+the sub-folder where it should be placed, before creating the project.
+
+RStudio will now close all files currently open and switch to your newly created
+project. The name you chose for the project's folder will also be its name, seen
+in RStudio's title bar. When you look at the "File" tab (lower right), you will
+also see that you are now in the project's folder. This is your current
+*working directory*, a concept we will talk about momentarily. All scripts you
+create while working in your project will become a part of it. So when you want
+to return to continuing your work, you can now click on "File" > "Open Project".
+All files opened the last time you worked on the project will be reopened and
+you will again be in the project's working directory. This is an easy and
+convenient way to keep your work tidy.
+
+At this point, I would advise you to create a project for this introduction to
+web scraping and create R scripts for each chapter as parts of the project. The
+name and sub-folder you choose is not important from the point of view of
+functionality, but it should make sense to you.
+
+We should now briefly talk about the working directory. If you try to open or
+save a file directly from an R script -- without specifying a complete path -- R
+will always assume you refer to your working directory. If you created a
+project, this automatically set the project's folder as the working directory.
+You can always check for your current working directory by entering `getwd()`
+into the console. You can change your current working directory by clicking on
+"Session" > "Set Working Directory" > "Choose Directory..." or by using the
+function `setwd()` with the desired path enclosed by `"` as the function's
+argument.
+
+
+### Comments
+
+You should get into the habit of commenting your code as early as possible.
+Comments are started with one or multiple `#`. All code following the `#` will
+not be evaluated by R and thus serves as the perfect place to comment on what
+you were doing and thinking while writing the code. Why do this? When you reopen
+a script that you have not been working on in a while, it can be hard to
+understand what you tried to do in the first place. Commented code makes this
+much easier. This is even more true if you share your code with other people.
+They may have very different approaches to certain R problems and clearly
+commented code will help them to quickly understand it. You should see this as a
+sign of respect towards the time your peers may invest in helping you with your
+coding problems.
+
+
+``` {r comments}
+# assigning objects
+a <- 17
+b <- 4
+
+# calculating the answer
+the_answer <- (a + b) * 2
+
+the_answer
+# but what is the question?
+```
+
+If you plan on using `setwd()` in your script, it is a good idea to comment this
+line before sharing your script. Other people will have different folder
+structures and will want to decide for themselves. The same goes for all lines
+that will save something to the hard drive, e.g. data sets or exported graphics.
+The R and RStudio communities are very welcoming and you will always find people
+that are willing to lend you their help, so you should return the favour and be
+polite in your code. This includes writing clear comments and not cluttering
+anyone's hard drive with files they may not want to have.
 
