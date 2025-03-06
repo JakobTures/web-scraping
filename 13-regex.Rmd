@@ -30,7 +30,7 @@ RStudio Cheat Sheet on stringr:
 
 ## Cleaning the `district` column
 
-We can use the data on Berlin police reports scraped earlier (\@ref(scraping))
+We can use the (uncleaned) data on Berlin police reports scraped earlier (\@ref(scraping))
 for our examples.
 
 ``` {r load_packages_data, message = FALSE}
@@ -81,7 +81,7 @@ reports %>%
   head(n = 10)
 ```
 
-In the same way, we can replace the `": "` substring with a dash.
+In the same way, we could replace the `": "` substring with a dash.
 
 ``` {r district_replace_dash}
 reports %>%
@@ -89,23 +89,31 @@ reports %>%
   select(District) %>% 
   head(n = 10)
 ```
+Imagine we had scraped some data where district names that consist of two pieces
+were sometimes written with whitespace around the connecting dash and sometimes
+without the whitespace. This actually was the case for parts of the data from the website
+containing the police reports when pre 2020 posts were still included and looked
+similar to this example:
 
-In chapter \@ref(dplyr) we saw district names with two parts that are sometimes
-written with and sometimes without whitespace around the dash, as seen here:
+```{r fake_data}
+test_data <- tibble(
+  District = c(
+    "Ereignisort: Mitte",
+    "Ereignisort: Charlottenburg-Wilmersdorf",
+    "Ereignisort: Charlottenburg - Wilmersdorf",
+    "Ereignisort: Friedrichshain-Kreuzberg",
+    "Ereignisort: Friedrichshain - Kreuzberg"
+  )
+)
 
-``` {r district_names}
-reports %>%
-  group_by(District) %>%
-  summarize(reports = n())
+test_data
 ```
 
 We can easily unify those names using `str_replace` and regular expressions.
 
 ``` {r district_names_fix}
-reports %>%
-  mutate(District = str_replace(District, pattern = " - ", replacement = "-")) %>%
-  group_by(District) %>%
-  summarize(reports = n())
+test_data %>%
+  mutate(District = str_replace(District, pattern = " - ", replacement = "-"))
 ```
 
 If we want to remove the whitespace and unify the names in the process, we use
@@ -134,10 +142,8 @@ interpret it not as an "s" but as the shortcut for whitespace characters we want
 to use:
 
 ``` {r remove_whitespace}
-reports %>%
-  mutate(District = str_remove(District, pattern = "\\s")) %>%
-  group_by(District) %>%
-  summarize(reports = n())
+test_data %>%
+  mutate(District = str_remove(District, pattern = "\\s"))
 ```
 
 This did not work as expected. The whitespace following the `":"` was removed,
@@ -148,10 +154,8 @@ first match, ending in `_all`: e.g. `str_replace_all()`. So if we use
 `str_remove_all()` in our code, all occurrences of whitespace will be removed.
 
 ``` {r remove_whitespaces}
-reports %>%
-  mutate(District = str_remove_all(District, pattern = "\\s")) %>%
-  group_by(District) %>%
-  summarize(reports = n())
+test_data %>%
+  mutate(District = str_remove_all(District, pattern = "\\s"))
 ```
 
 ## Detecting robberies in police reports
@@ -275,7 +279,7 @@ reports$Report %>%
   mean()
 ```
 
-So about $9.4$% of police reports deal with robberies if we apply the regular
+So about $8.6$% of police reports deal with robberies if we apply the regular
 expression constructed above. Remember, that we might still match some words
 that we do not want to match, while missing others that also relate to robberies.
 Thus the actual percentage may differ.
@@ -283,25 +287,34 @@ Thus the actual percentage may differ.
 ## Extracting details from a list of names
 
 The website
-<https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/>{target="_blank"}
+<https://www.bundeswahlleiterin.de/bundestagswahlen/2021/gewaehlte/bund-99.html>{target="_blank"}
 lists all German members of parliament in tables, with the first column holding
 the full names and academic degrees in one character string. A common
 application of regular expressions in the context of web scraping is to extract
 substrings of interest from such text.
 
-We will first scrape the data. The members of parliament are divided into 26
+We will first scrape the data. The members of parliament are divided into 24
 subpages, one for each first letter of their last names, in the form "a.html",
-"b.html" and so on. We construct links to all these pages using the base R
+"b.html" and so on. As there are no names starting with q or x, the subpages
+q.html and x.html also do not exist.
+We construct links to all these pages using the base R
 object `letters`, a character vector conveniently containing all 26 letters of
-the alphabet in lower case. We then read the links and extract the table cells
+the alphabet in lower case. We have to remove the links that would lead to non
+existent subpages for q and x though because `read_html()` would throw an error
+if we did not. We can achieve this by using negative subsetting on the vector of
+links. By writing `links[-c(17, 24)]`, we remove the 17th and 24th element from
+the vector. This happens, because the minus negates the selection and is way 
+more convenient then writing `links[c(1, 2, 3, 4, ...)]` up to 26.
+We then read the links and extract the table cells
 containing the names into a character vector, which is then transformed into a
 tibble.
 
 ``` {r scrape_mdbs}
 library(rvest)
 
-website <- "https://www.bundeswahlleiter.de/bundestagswahlen/2021/gewaehlte/bund-99/"
+website <- "https://www.bundeswahlleiterin.de/bundestagswahlen/2021/gewaehlte/bund-99/"
 links <- str_c(website, letters, ".html")
+links <- links[-c(17, 24)]
 
 pages <- links %>%
   map(~ {
@@ -326,7 +339,7 @@ tibble by row numbers, we can conveniently use `slice()` from **dplyr**:
 
 ``` {r mdbs_looksie}
 names_tbl %>% 
-  slice(186:189)
+  slice(187:189)
 ```
 
 If the members of parliament carry an academic degree, the string begins with
@@ -377,13 +390,13 @@ names_tbl %>%
 ```
 
 We successfully identified a high percentage of doctors, as well as some
-professors. Let us also check, how it worked for the four members of parliament
+professors. Let us also check, how it worked for the three members of parliament
 we examined above. 
 
 ``` {r mdbs_looksie_again}
 names_tbl %>%
   mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.")) %>%
-  slice(186:189)
+  slice(187:189)
 ```
 
 Members of parliament without a degree received an `NA`, which is correct. For
@@ -414,5 +427,5 @@ Let us confirm that it worked correctly:
 ``` {r mdbs_looksie_last}
 names_tbl %>%
   mutate(academic = str_extract(full_name, pattern = "^[:alpha:]+\\.(\\s[:alpha:]+\\.)*")) %>%
-  slice(186:189)
+  slice(187:189)
 ```

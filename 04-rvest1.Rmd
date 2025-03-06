@@ -420,10 +420,10 @@ form of the tibble is suitable for this purpose.
 
 ``` {r ctr_tbl}
 countries <- tibble(
-  Land = country,
-  Hauptstadt = capital,
-  Bevoelkerung = population,
-  Flaeche = area
+  Country = country,
+  Capital = capital,
+  Population = population,
+  Area_sqkm = area
 )
 
 countries
@@ -442,17 +442,17 @@ website <- "https://scrapethissite.com/pages/simple/" %>%
   read_html()
 
 countries_2 <- tibble(
-  Land = website %>%
+  Country = website %>%
     html_elements(css = "h3") %>% 
     html_text(trim = TRUE),
-  Hauptstadt = website %>% 
+  Capital = website %>% 
     html_elements(css = "span.country-capital") %>% 
     html_text(),
-  Bevoelkerung = website %>% 
+  Population = website %>% 
     html_elements(css = "span.country-population") %>% 
     html_text() %>% 
     as.numeric(),
-  Flaeche = website %>% 
+  Area_sqkm = website %>% 
     html_elements(css = "span.country-area") %>% 
     html_text() %>% 
     as.numeric()

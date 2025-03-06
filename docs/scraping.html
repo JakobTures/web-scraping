@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10 Scraping Berlin police reports | Web Scraping using R</title>
   <meta name="description" content="10 Scraping Berlin police reports | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10 Scraping Berlin police reports | Web Scraping using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2023-10-16" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,7 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
@@ -61,7 +62,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -71,7 +72,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -254,7 +255,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
 <li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tables-with-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tables with NAs</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites</a>
 <ul>
@@ -409,21 +410,50 @@ occurred.</p>
 <h2><span class="header-section-number">10.2</span> Scraping the data<a href="scraping.html#scraping-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="gathering-the-links" class="section level3 hasAnchor" number="10.2.1">
 <h3><span class="header-section-number">10.2.1</span> Gathering the links<a href="scraping.html#gathering-the-links" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="scraping.html#cb179-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb179-2"><a href="scraping.html#cb179-2" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="scraping.html#cb178-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb178-2"><a href="scraping.html#cb178-2" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code></pre></div>
 <p>We begin by downloading the mainpage.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="scraping.html#cb180-1" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/&quot;</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb180-2"><a href="scraping.html#cb180-2" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="scraping.html#cb179-1" tabindex="-1"></a>website <span class="ot">&lt;-</span> <span class="st">&quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/&quot;</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb179-2"><a href="scraping.html#cb179-2" tabindex="-1"></a>  <span class="fu">read_html</span>()</span></code></pre></div>
 <p>The next step is to extract the URLs for the yearly archives. All the <code>&lt;a&gt;</code> tags
 that contain those links, have a <code>title=</code> attribute whose value begins with
 “Link”. Also they are contained in a <code>&lt;div&gt;</code> tag with the class <code>textile</code>. We
 can use this in selector construction, extract the value of the <code>href=</code>
 attribute and, as they are incomplete URLs, append them to the base URL.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="scraping.html#cb181-1" tabindex="-1"></a>links <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
-<span id="cb181-2"><a href="scraping.html#cb181-2" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;div.textile a[title^=&#39;Link&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb181-3"><a href="scraping.html#cb181-3" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb181-4"><a href="scraping.html#cb181-4" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;https://www.berlin.de&quot;</span>, .)</span></code></pre></div>
-<p>Each yearly archive page contains several subpages for the reports in that year,
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="scraping.html#cb180-1" tabindex="-1"></a>links <span class="ot">&lt;-</span> website <span class="sc">%&gt;%</span> </span>
+<span id="cb180-2"><a href="scraping.html#cb180-2" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;div.textile a[title^=&#39;Link&#39;]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb180-3"><a href="scraping.html#cb180-3" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb180-4"><a href="scraping.html#cb180-4" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;https://www.berlin.de&quot;</span>, .)</span></code></pre></div>
+<p>Before we continue with gathering the links to all the subpages, we have some
+additional cleaning up to do. Clicking through the yearly archive pages reveals
+that the presented data is incomplete for years before 2020. The archives for
+all earlier years only contain a few entries, some of them even being obvious
+errors.
+This also serves as an example for the realities of web scraping. A website can
+change all the time and these changes can lead to a scraping script that worked a
+year, a month or even a day before breaking down.
+This is the case here. The last time I scraped the website (2023-10-16), the data
+for years before 2020 was present in the archives. Now it is largely gone.
+This is a further argument for saving the results of your scraping projects
+because you may not be able to reproduce the data gathering process at a later
+date.</p>
+<p>We do not know why the data is gone. Maybe it is a technical error on their
+side or they are deliberately removing older posts. In any case, the data before
+2019 is incomplete and does not really lend itself to any analysis. So we do not
+have any reason to scrape it. We should clean up our vector of links before
+moving on, by selecting the first 6 elements from it, the years that seem to be
+complete in the archive.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="scraping.html#cb181-1" tabindex="-1"></a>links <span class="ot">&lt;-</span> links[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb181-2"><a href="scraping.html#cb181-2" tabindex="-1"></a></span>
+<span id="cb181-3"><a href="scraping.html#cb181-3" tabindex="-1"></a>links</span>
+<span id="cb181-4"><a href="scraping.html#cb181-4" tabindex="-1"></a><span class="do">## [1] &quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/2025/&quot;</span></span>
+<span id="cb181-5"><a href="scraping.html#cb181-5" tabindex="-1"></a><span class="do">## [2] &quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/2024/&quot;</span></span>
+<span id="cb181-6"><a href="scraping.html#cb181-6" tabindex="-1"></a><span class="do">## [3] &quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/2023/&quot;</span></span>
+<span id="cb181-7"><a href="scraping.html#cb181-7" tabindex="-1"></a><span class="do">## [4] &quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/2022/&quot;</span></span>
+<span id="cb181-8"><a href="scraping.html#cb181-8" tabindex="-1"></a><span class="do">## [5] &quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/2021/&quot;</span></span>
+<span id="cb181-9"><a href="scraping.html#cb181-9" tabindex="-1"></a><span class="do">## [6] &quot;https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/&quot;</span></span></code></pre></div>
+<p>We can now move on and extract the links to all of the subpages.
+Each yearly archive page contains several subpages for the reports in that year,
 divided by pagination; to gather the links to all the subpages, we have to
 understand how the pagination works. In this case, the URL for the yearly
 archive is simply appended with the query “?page_at_1_0=” and a value indicating
@@ -523,8 +553,8 @@ data type assigned, you can also use <code>empty_vector &lt;- NULL</code>.</p>
 <div id="downloading-the-subpages" class="section level3 hasAnchor" number="10.2.2">
 <h3><span class="header-section-number">10.2.2</span> Downloading the subpages<a href="scraping.html#downloading-the-subpages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now that the links to all subpages are gathered, we can finally download
-them. Please note that the download will take up to 20 minutes due to the number
-of subpages (443 at the time of writing), and the additional waiting time of 2
+them. Please note that the download will take upwards of 10 minutes due to the number
+of subpages (251 at the time of writing), and the additional waiting time of 2
 seconds between each iteration.</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="scraping.html#cb187-1" tabindex="-1"></a>pages <span class="ot">&lt;-</span> pag_links <span class="sc">%&gt;%</span> </span>
 <span id="cb187-2"><a href="scraping.html#cb187-2" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> {</span>
@@ -560,11 +590,10 @@ appropriate CSS selectors like this:</p>
 <span id="cb188-13"><a href="scraping.html#cb188-13" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
 <span id="cb188-14"><a href="scraping.html#cb188-14" tabindex="-1"></a>)</span>
 <span id="cb188-15"><a href="scraping.html#cb188-15" tabindex="-1"></a><span class="do">## Error in `tibble()`:</span></span>
-<span id="cb188-16"><a href="scraping.html#cb188-16" tabindex="-1"></a><span class="do">## ! Tibble columns must have compatible</span></span>
-<span id="cb188-17"><a href="scraping.html#cb188-17" tabindex="-1"></a><span class="do">##   sizes.</span></span>
-<span id="cb188-18"><a href="scraping.html#cb188-18" tabindex="-1"></a><span class="do">## • Size 21952: Existing data.</span></span>
-<span id="cb188-19"><a href="scraping.html#cb188-19" tabindex="-1"></a><span class="do">## • Size 21525: Column `District`.</span></span>
-<span id="cb188-20"><a href="scraping.html#cb188-20" tabindex="-1"></a><span class="do">## ℹ Only values of size one are recycled.</span></span></code></pre></div>
+<span id="cb188-16"><a href="scraping.html#cb188-16" tabindex="-1"></a><span class="do">## ! Tibble columns must have compatible sizes.</span></span>
+<span id="cb188-17"><a href="scraping.html#cb188-17" tabindex="-1"></a><span class="do">## • Size 12412: Existing data.</span></span>
+<span id="cb188-18"><a href="scraping.html#cb188-18" tabindex="-1"></a><span class="do">## • Size 12331: Column `District`.</span></span>
+<span id="cb188-19"><a href="scraping.html#cb188-19" tabindex="-1"></a><span class="do">## ℹ Only values of size one are recycled.</span></span></code></pre></div>
 <p>That did not work. But why? Let us look at the error message we received. It
 informs us that the column “District” we tried to create, is shorter in length
 compared to the other two. Since we can not create tibbles out of columns with
@@ -573,7 +602,7 @@ different lengths, we get this error.</p>
 that there are police reports where the information on the district is not
 listed on the website, which we can confirm by browsing some of the subpages,
 e.g.
-<a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/</a>.</p>
+<a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/</a>.</p>
 <div id="dealing-with-missing-data-in-lists" class="section level4 hasAnchor" number="10.2.3.1">
 <h4><span class="header-section-number">10.2.3.1</span> Dealing with missing data in lists<a href="scraping.html#dealing-with-missing-data-in-lists" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Some of the <code>&lt;span&gt;</code> tags that contain the district are missing. Using the
@@ -612,15 +641,15 @@ returned, as illustrated here:</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="scraping.html#cb190-1" tabindex="-1"></a>list_items[[<span class="dv">1</span>]]</span>
 <span id="cb190-2"><a href="scraping.html#cb190-2" tabindex="-1"></a><span class="do">## {html_node}</span></span>
 <span id="cb190-3"><a href="scraping.html#cb190-3" tabindex="-1"></a><span class="do">## &lt;li&gt;</span></span>
-<span id="cb190-4"><a href="scraping.html#cb190-4" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;16.10.2023 17:55 Uhr&lt;/div&gt;\n</span></span>
-<span id="cb190-5"><a href="scraping.html#cb190-5" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2023/pressemi ...</span></span>
+<span id="cb190-4"><a href="scraping.html#cb190-4" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;06.03.2025 15:01 Uhr&lt;/div&gt;\n</span></span>
+<span id="cb190-5"><a href="scraping.html#cb190-5" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2025/pressemi ...</span></span>
 <span id="cb190-6"><a href="scraping.html#cb190-6" tabindex="-1"></a></span>
 <span id="cb190-7"><a href="scraping.html#cb190-7" tabindex="-1"></a>list_items[<span class="dv">1</span>]</span>
 <span id="cb190-8"><a href="scraping.html#cb190-8" tabindex="-1"></a><span class="do">## [[1]]</span></span>
 <span id="cb190-9"><a href="scraping.html#cb190-9" tabindex="-1"></a><span class="do">## {html_node}</span></span>
 <span id="cb190-10"><a href="scraping.html#cb190-10" tabindex="-1"></a><span class="do">## &lt;li&gt;</span></span>
-<span id="cb190-11"><a href="scraping.html#cb190-11" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;16.10.2023 17:55 Uhr&lt;/div&gt;\n</span></span>
-<span id="cb190-12"><a href="scraping.html#cb190-12" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2023/pressemi ...</span></span></code></pre></div>
+<span id="cb190-11"><a href="scraping.html#cb190-11" tabindex="-1"></a><span class="do">## [1] &lt;div class=&quot;cell nowrap date&quot;&gt;06.03.2025 15:01 Uhr&lt;/div&gt;\n</span></span>
+<span id="cb190-12"><a href="scraping.html#cb190-12" tabindex="-1"></a><span class="do">## [2] &lt;div class=&quot;cell text&quot;&gt;\n&lt;a href=&quot;/polizei/polizeimeldungen/2025/pressemi ...</span></span></code></pre></div>
 <p>We can now make R examine every element of this list one after the other and
 extract all the data they contain. But what happens when we try to extract a
 element that is not present in one of the elements? R returns an <code>NA</code>:</p>
@@ -652,38 +681,38 @@ and extract the data contained, which will take several minutes to complete.</p>
 <span id="cb192-14"><a href="scraping.html#cb192-14" tabindex="-1"></a>}</span></code></pre></div>
 <p>Let’s look at the tibble we just constructed:</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="scraping.html#cb193-1" tabindex="-1"></a>reports</span>
-<span id="cb193-2"><a href="scraping.html#cb193-2" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 3</span></span>
+<span id="cb193-2"><a href="scraping.html#cb193-2" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 3</span></span>
 <span id="cb193-3"><a href="scraping.html#cb193-3" tabindex="-1"></a><span class="do">##    Date                 Report                                          District</span></span>
 <span id="cb193-4"><a href="scraping.html#cb193-4" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                                           &lt;chr&gt;   </span></span>
-<span id="cb193-5"><a href="scraping.html#cb193-5" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeliktes - Mordkommissio… Ereigni…</span></span>
-<span id="cb193-6"><a href="scraping.html#cb193-6" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzung durch Schuss - Du… Ereigni…</span></span>
-<span id="cb193-7"><a href="scraping.html#cb193-7" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenhang mit dem Nahost-Ko… Ereigni…</span></span>
-<span id="cb193-8"><a href="scraping.html#cb193-8" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberischem Diebstahl           Ereigni…</span></span>
-<span id="cb193-9"><a href="scraping.html#cb193-9" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in Krankenhaus verstorben Ereigni…</span></span>
-<span id="cb193-10"><a href="scraping.html#cb193-10" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren Fahrzeugen            Ereigni…</span></span>
-<span id="cb193-11"><a href="scraping.html#cb193-11" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder- und Wegerechten      Ereigni…</span></span>
-<span id="cb193-12"><a href="scraping.html#cb193-12" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft                        Ereigni…</span></span>
-<span id="cb193-13"><a href="scraping.html#cb193-13" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus geworfen - Mordkomm… Ereigni…</span></span>
-<span id="cb193-14"><a href="scraping.html#cb193-14" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenhang mit den weltweite… Ereigni…</span></span>
-<span id="cb193-15"><a href="scraping.html#cb193-15" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb193-5"><a href="scraping.html#cb193-5" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwachsender mit mehreren Stichverletzungen  Ereigni…</span></span>
+<span id="cb193-6"><a href="scraping.html#cb193-6" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi-Fahrer festgenommen                    Ereigni…</span></span>
+<span id="cb193-7"><a href="scraping.html#cb193-7" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere Brände in einer Nacht                   Ereigni…</span></span>
+<span id="cb193-8"><a href="scraping.html#cb193-8" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist bei Verkehrsunfall verletzt             Ereigni…</span></span>
+<span id="cb193-9"><a href="scraping.html#cb193-9" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfriedensbruch begangen und Ladendetektiv b… Ereigni…</span></span>
+<span id="cb193-10"><a href="scraping.html#cb193-10" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrsunfall auf Kreuzung – Fußgänger im Kra… Ereigni…</span></span>
+<span id="cb193-11"><a href="scraping.html#cb193-11" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinandersetzung im Park                      Ereigni…</span></span>
+<span id="cb193-12"><a href="scraping.html#cb193-12" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbeiter von Ladendieb verletzt              Ereigni…</span></span>
+<span id="cb193-13"><a href="scraping.html#cb193-13" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrollerfahrerin bei Verkehrsunfall verletzt Ereigni…</span></span>
+<span id="cb193-14"><a href="scraping.html#cb193-14" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zeigt Hitlergruß und äußert sich volksver… Ereigni…</span></span>
+<span id="cb193-15"><a href="scraping.html#cb193-15" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>This looks good, but we should also confirm, that <code>NA</code>s were handled correctly.
-We can examine the entry for “31.12.2014 13:21 Uhr” that we saw on
-<a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/</a>,
+We can examine the entry for “30.12.2020 11:27 Uhr” that we saw on
+<a href="https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/" target="_blank">https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/</a>,
 and for which the district was missing. We can use subsetting to just look at
 this one observation in our tibble. Remembet that when subsetting two
 dimensional objects like tibbles, we have to supply an index for the row(s) as
 well as for the column(s) we want to subset. Our goal is, to subset the row for which the
-column “Date” holds the value “31.12.2014 13:21 Uhr”. We can thus write our row
-index as <code>reports$Date == "31.12.2014 13:21 Uhr"</code>, which reads as:
-<em>the row(s) for which the value of the column “Date” in the object “reports” is equal to “31.12.2014 13:21 Uhr”</em>.
+column “Date” holds the value “30.12.2020 11:27 Uhr”. We can thus write our row
+index as <code>reports$Date == "30.12.2020 11:27 Uhr"</code>, which reads as:
+<em>the row(s) for which the value of the column “Date” in the object “reports” is equal to “30.12.2020 11:27 Uhr”</em>.
 As we want to see all columns for this observation, we do not need to supply a
 column index. By writing nothing after the <code>,</code> we instruct R to show us all
 columns.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="scraping.html#cb194-1" tabindex="-1"></a>reports[reports<span class="sc">$</span>Date <span class="sc">==</span> <span class="st">&quot;31.12.2014 13:21 Uhr&quot;</span>, ]</span>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="scraping.html#cb194-1" tabindex="-1"></a>reports[reports<span class="sc">$</span>Date <span class="sc">==</span> <span class="st">&quot;30.12.2020 11:27 Uhr&quot;</span>, ]</span>
 <span id="cb194-2"><a href="scraping.html#cb194-2" tabindex="-1"></a><span class="do">## # A tibble: 1 × 3</span></span>
-<span id="cb194-3"><a href="scraping.html#cb194-3" tabindex="-1"></a><span class="do">##   Date                 Report                                           District</span></span>
-<span id="cb194-4"><a href="scraping.html#cb194-4" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                &lt;chr&gt;                                            &lt;chr&gt;   </span></span>
-<span id="cb194-5"><a href="scraping.html#cb194-5" tabindex="-1"></a><span class="do">## 1 31.12.2014 13:21 Uhr Alkoholisiert geflüchtet und die Kontrolle verl… &lt;NA&gt;</span></span></code></pre></div>
+<span id="cb194-3"><a href="scraping.html#cb194-3" tabindex="-1"></a><span class="do">##   Date                 Report                     District</span></span>
+<span id="cb194-4"><a href="scraping.html#cb194-4" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                &lt;chr&gt;                      &lt;chr&gt;   </span></span>
+<span id="cb194-5"><a href="scraping.html#cb194-5" tabindex="-1"></a><span class="do">## 1 30.12.2020 11:27 Uhr Fahrzeuge in Brand gesetzt &lt;NA&gt;</span></span></code></pre></div>
 <p>This also looks good. We now have extracted the data we need to answer our
 questions.</p>
 </div>
@@ -721,33 +750,33 @@ calculating some descriptive statistics on it.</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/10-rvest4.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section",
-"scroll_highlight": true
-}
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/webscraping-tures/webscraping-tures.github.io/10-rvest4.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
 });
 });
 </script>

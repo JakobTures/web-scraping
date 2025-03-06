@@ -69,6 +69,34 @@ links <- website %>%
   str_c("https://www.berlin.de", .)
 ```
 
+Before we continue with gathering the links to all the subpages, we have some 
+additional cleaning up to do. Clicking through the yearly archive pages reveals
+that the presented data is incomplete for years before 2020. The archives for
+all earlier years only contain a few entries, some of them even being obvious
+errors.
+This also serves as an example for the realities of web scraping. A website can 
+change all the time and these changes can lead to a scraping script that worked a
+year, a month or even a day before breaking down.
+This is the case here. The last time I scraped the website (2023-10-16), the data
+for years  before 2020 was present in the archives. Now it is largely gone.
+This is a further argument for saving the results of your scraping projects
+because you may not be able to reproduce the data gathering process at a later 
+date. 
+
+We do not know why the data is gone. Maybe it is a technical error on their
+side or they are deliberately removing older posts. In any case, the data before
+2019 is incomplete and does not really lend itself to any analysis. So we do not
+have any reason to scrape it. We should clean up our vector of links before 
+moving on, by selecting the first 6 elements from it, the years that seem to be
+complete in the archive.
+
+``` {r clean_links}
+links <- links[1:6]
+
+links
+```
+
+We can now move on and extract the links to all of the subpages.
 Each yearly archive page contains several subpages for the reports in that year,
 divided by pagination; to gather the links to all the subpages, we have to
 understand how the pagination works. In this case, the URL for the yearly
@@ -182,8 +210,8 @@ data type assigned, you can also use `empty_vector <- NULL`.
 ### Downloading the subpages
 
 Now that the links to all subpages are gathered, we can finally download
-them. Please note that the download will take up to 20 minutes due to the number
-of subpages (443 at the time of writing), and the additional waiting time of 2
+them. Please note that the download will take upwards of 10 minutes due to the number
+of subpages (251 at the time of writing), and the additional waiting time of 2
 seconds between each iteration.
 
 ``` {r parse_all_subpages}
@@ -235,7 +263,7 @@ The fact that the "District" column is shorter than the other two, must mean
 that there are police reports where the information on the district is not
 listed on the website, which we can confirm by browsing some of the subpages,
 e.g.
-<https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/>{target="_blank"}.
+<https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/>{target="_blank"}.
 
 
 #### Dealing with missing data in lists
@@ -328,21 +356,21 @@ reports
 ```
 
 This looks good, but we should also confirm, that `NA`s were handled correctly.
-We can examine the entry for "31.12.2014 13:21 Uhr" that we saw on
-<https://www.berlin.de/polizei/polizeimeldungen/archiv/2014/>{target="_blank"},
+We can examine the entry for "30.12.2020 11:27 Uhr" that we saw on
+<https://www.berlin.de/polizei/polizeimeldungen/archiv/2020/>{target="_blank"},
 and for which the district was missing. We can use subsetting to just look at
 this one observation in our tibble. Remembet that when subsetting two
 dimensional objects like tibbles, we have to supply an index for the row(s) as
 well as for the column(s) we want to subset. Our goal is, to subset the row for which the
-column "Date" holds the value "31.12.2014 13:21 Uhr". We can thus write our row
-index as `reports$Date == "31.12.2014 13:21 Uhr"`, which reads as:
-*the row(s) for which the value of the column "Date" in the object "reports" is equal to "31.12.2014 13:21 Uhr"*.
+column "Date" holds the value "30.12.2020 11:27 Uhr". We can thus write our row
+index as `reports$Date == "30.12.2020 11:27 Uhr"`, which reads as:
+*the row(s) for which the value of the column "Date" in the object "reports" is equal to "30.12.2020 11:27 Uhr"*.
 As we want to see all columns for this observation, we do not need to supply a
 column index. By writing nothing after the `,` we instruct R to show us all
 columns.
 
 ``` {r report_na}
-reports[reports$Date == "31.12.2014 13:21 Uhr", ]
+reports[reports$Date == "30.12.2020 11:27 Uhr", ]
 ```
 
 This also looks good. We now have extracted the data we need to answer our

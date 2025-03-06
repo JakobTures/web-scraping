@@ -12,32 +12,15 @@ Since we have cleaned our example data in the last chapter, we will now apply
 some graphical analysis to it, using the **ggplot2** package.
 
 To follow most of the examples, we need the object `reports_fyears` from chapter
-\@ref(dplyr). Either you can re-run the relevant code blocks from the last
-chapter, or the condensed block below. We also will need to load the **tidyverse**
-package -- which includes **ggplot2** -- and **lubridate**.
+\@ref(dplyr). We also will need to load the **tidyverse**
+package -- which also includes **ggplot2**.
 
 ``` {r load_packages_12, message = FALSE}
 library(tidyverse)
-library(lubridate)
 ```
 
 ``` {r clean_again}
-load("reports.RData")
-
-reports_fyears <- reports %>% 
-  mutate(District = substr(District, 14, length(District)),
-         date_cmpl = dmy_hm(Date),
-         year = year(date_cmpl),
-         month = month(date_cmpl, label = TRUE),
-         day = wday(date_cmpl, label = TRUE),
-         time = 
-           substr(Date, 12, length(Date)) %>% 
-           hm()
-         ) %>% 
-  select(-c(Date, Report, date_cmpl)) %>% 
-  rename(district = District) %>% 
-  filter(year %in% 2015:2022) %>% 
-  mutate(district = str_remove_all(district, pattern = " "))
+load("reports_cleaned.RData")
 ```
 
 
@@ -352,18 +335,18 @@ ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
 
 With readable labels and the line representing the mean as reference points, the
 distribution of the time of day becomes more apparent. We see that there are no
-reports filed beginning in the late evening to the early morning. This is
+reports filed during the night time. This is
 another indication that the times we scraped do not actually represent the times
 when the event occurred but rather when the report was officially filed or
 uploaded to the website. From this data, we can not conclude that it is safest
 on the streets of Berlin at night time, but rather that the working hours of the
-people responsible for communicating the police reports range from about 08:00
-to 19:00-20:00.
+people responsible for communicating the police reports range from about 07:00
+to 18:00, with few posting by individuals staying somewhat later.
 
-We can also see that the mean we calculated in chapter \@ref(dplyr) -- 11:59 --
+We can also see that the mean we calculated in chapter \@ref(dplyr) -- 12:28 --
 is misleading. As a relevant number of reports are filed in the time span of late
-afternoon to early evening, the mean is biased to the right. 11:59 is not the
-peak of the distribution; actually, half of all reports are filed before 11:13, as
+afternoon to early evening, the mean is biased to the right. 12:28 is not the
+peak of the distribution; actually, half of all reports are filed before 12:01, as
 indicated by the median, which in general is more robust to skewed
 distributions. There seems to be a short period of high activity in the early to
 late morning hours. From this data, we can again infer more about the working
@@ -392,19 +375,14 @@ ggplot(data = reports_fyears, aes(x = period_to_seconds(time))) +
        title = "Distribution of police reports over time of day by year")
 ```
 
-Looking at the high numbers of very early reports and their maximum, we can see
-a gradual and moderate shift from the early to the late morning, which is
-especially apparent from 2019 to 2021. Because there are still reports beginning
-from about 08:00, we can not necessarily infer that the working hours have
-changed, but maybe that the working process has. Maybe the writers started
-favouring the quality of the written reports over the quantity of early reports.
-Maybe new rules have been implemented that require reports to be approved by
-some central authority, which might slow down the rate. One also has to keep in
-mind, that the Corona pandemic started in early 2020, so the small shift to the
-right could be an effect of work in the context of home-office, child-minding
-and home-schooling.
-
-While some of these interpretations may seem reasonable, remember that we do not
+There seems to ba gradual shift from posting most reports in the hours leading
+up to midday towards a more evenly distributed posting behaviour. This is
+especially pronounced in 2024. While the peak still lies between 11:00-12:00, the
+differences for the other core working hours are less pronounced.
+What has not changed over time is that very few postings are made during the very early
+and very late working hours. This means that we can not necessarily infer that the working hours have
+changed, but maybe that the working process has. 
+In what way we can only speculate. But also remember that we do not
 actually have enough information to draw any solid conclusions on either the
 number and distribution of crimes in Berlin or the working hours of the PR team.
 

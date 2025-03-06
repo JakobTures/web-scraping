@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Scraping of multi-page websites | Web Scraping using R</title>
   <meta name="description" content="7 Scraping of multi-page websites | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Scraping of multi-page websites | Web Scraping using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2023-10-16" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,7 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
@@ -61,7 +62,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -71,7 +72,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -254,7 +255,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
 <li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tables-with-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tables with NAs</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites</a>
 <ul>
@@ -413,7 +414,7 @@ the <code>&lt;a&gt;</code> tags that directly follow the individual <code>&lt;di
 <span id="cb137-2"><a href="rvest3.html#cb137-2" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">&quot;div.package &gt; a&quot;</span>)</span>
 <span id="cb137-3"><a href="rvest3.html#cb137-3" tabindex="-1"></a></span>
 <span id="cb137-4"><a href="rvest3.html#cb137-4" tabindex="-1"></a>a_elements</span>
-<span id="cb137-5"><a href="rvest3.html#cb137-5" tabindex="-1"></a><span class="do">## {xml_nodeset (8)}</span></span>
+<span id="cb137-5"><a href="rvest3.html#cb137-5" tabindex="-1"></a><span class="do">## {xml_nodeset (9)}</span></span>
 <span id="cb137-6"><a href="rvest3.html#cb137-6" tabindex="-1"></a><span class="do">## [1] &lt;a href=&quot;https://ggplot2.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span>
 <span id="cb137-7"><a href="rvest3.html#cb137-7" tabindex="-1"></a><span class="do">## [2] &lt;a href=&quot;https://dplyr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
 <span id="cb137-8"><a href="rvest3.html#cb137-8" tabindex="-1"></a><span class="do">## [3] &lt;a href=&quot;https://tidyr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
@@ -421,17 +422,19 @@ the <code>&lt;a&gt;</code> tags that directly follow the individual <code>&lt;di
 <span id="cb137-10"><a href="rvest3.html#cb137-10" tabindex="-1"></a><span class="do">## [5] &lt;a href=&quot;https://purrr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class=&quot; ...</span></span>
 <span id="cb137-11"><a href="rvest3.html#cb137-11" tabindex="-1"></a><span class="do">## [6] &lt;a href=&quot;https://tibble.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class= ...</span></span>
 <span id="cb137-12"><a href="rvest3.html#cb137-12" tabindex="-1"></a><span class="do">## [7] &lt;a href=&quot;https://stringr.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span>
-<span id="cb137-13"><a href="rvest3.html#cb137-13" tabindex="-1"></a><span class="do">## [8] &lt;a href=&quot;https://forcats.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span></code></pre></div>
+<span id="cb137-13"><a href="rvest3.html#cb137-13" tabindex="-1"></a><span class="do">## [8] &lt;a href=&quot;https://forcats.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img class ...</span></span>
+<span id="cb137-14"><a href="rvest3.html#cb137-14" tabindex="-1"></a><span class="do">## [9] &lt;a href=&quot;https://lubridate.tidyverse.org/&quot; target=&quot;_blank&quot;&gt;\n    &lt;img cla ...</span></span></code></pre></div>
 <p>Since we need the actual URLs to be able to read out the sub-pages in the
 following, we should now extract the values of the <code>href=""</code> attributes.</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="rvest3.html#cb138-1" tabindex="-1"></a>links <span class="ot">&lt;-</span> a_elements <span class="sc">%&gt;%</span></span>
 <span id="cb138-2"><a href="rvest3.html#cb138-2" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
 <span id="cb138-3"><a href="rvest3.html#cb138-3" tabindex="-1"></a></span>
 <span id="cb138-4"><a href="rvest3.html#cb138-4" tabindex="-1"></a>links</span>
-<span id="cb138-5"><a href="rvest3.html#cb138-5" tabindex="-1"></a><span class="do">## [1] &quot;https://ggplot2.tidyverse.org/&quot; &quot;https://dplyr.tidyverse.org/&quot;  </span></span>
-<span id="cb138-6"><a href="rvest3.html#cb138-6" tabindex="-1"></a><span class="do">## [3] &quot;https://tidyr.tidyverse.org/&quot;   &quot;https://readr.tidyverse.org/&quot;  </span></span>
-<span id="cb138-7"><a href="rvest3.html#cb138-7" tabindex="-1"></a><span class="do">## [5] &quot;https://purrr.tidyverse.org/&quot;   &quot;https://tibble.tidyverse.org/&quot; </span></span>
-<span id="cb138-8"><a href="rvest3.html#cb138-8" tabindex="-1"></a><span class="do">## [7] &quot;https://stringr.tidyverse.org/&quot; &quot;https://forcats.tidyverse.org/&quot;</span></span></code></pre></div>
+<span id="cb138-5"><a href="rvest3.html#cb138-5" tabindex="-1"></a><span class="do">## [1] &quot;https://ggplot2.tidyverse.org/&quot;   &quot;https://dplyr.tidyverse.org/&quot;    </span></span>
+<span id="cb138-6"><a href="rvest3.html#cb138-6" tabindex="-1"></a><span class="do">## [3] &quot;https://tidyr.tidyverse.org/&quot;     &quot;https://readr.tidyverse.org/&quot;    </span></span>
+<span id="cb138-7"><a href="rvest3.html#cb138-7" tabindex="-1"></a><span class="do">## [5] &quot;https://purrr.tidyverse.org/&quot;     &quot;https://tibble.tidyverse.org/&quot;   </span></span>
+<span id="cb138-8"><a href="rvest3.html#cb138-8" tabindex="-1"></a><span class="do">## [7] &quot;https://stringr.tidyverse.org/&quot;   &quot;https://forcats.tidyverse.org/&quot;  </span></span>
+<span id="cb138-9"><a href="rvest3.html#cb138-9" tabindex="-1"></a><span class="do">## [9] &quot;https://lubridate.tidyverse.org/&quot;</span></span></code></pre></div>
 </div>
 <div id="iteration-with-map" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> Iteration with map()<a href="rvest3.html#iteration-with-map" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -513,8 +516,8 @@ therefore extract the data for each of them using the same CSS selectors.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="rvest3.html#cb144-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
 <span id="cb144-2"><a href="rvest3.html#cb144-2" tabindex="-1"></a>  <span class="fu">map</span>(html_element, <span class="at">css =</span> <span class="st">&quot;a.navbar-brand&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb144-3"><a href="rvest3.html#cb144-3" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_text)</span>
-<span id="cb144-4"><a href="rvest3.html#cb144-4" tabindex="-1"></a><span class="do">## [1] &quot;ggplot2&quot; &quot;dplyr&quot;   &quot;tidyr&quot;   &quot;readr&quot;   &quot;purrr&quot;   &quot;tibble&quot;  &quot;stringr&quot;</span></span>
-<span id="cb144-5"><a href="rvest3.html#cb144-5" tabindex="-1"></a><span class="do">## [8] &quot;forcats&quot;</span></span></code></pre></div>
+<span id="cb144-4"><a href="rvest3.html#cb144-4" tabindex="-1"></a><span class="do">## [1] &quot;ggplot2&quot;   &quot;dplyr&quot;     &quot;tidyr&quot;     &quot;readr&quot;     &quot;purrr&quot;     &quot;tibble&quot;   </span></span>
+<span id="cb144-5"><a href="rvest3.html#cb144-5" tabindex="-1"></a><span class="do">## [7] &quot;stringr&quot;   &quot;forcats&quot;   &quot;lubridate&quot;</span></span></code></pre></div>
 <p>The name of the package is displayed in the menu bar in the upper section of the
 pages. This is enclosed by an <code>&lt;a&gt;</code> tag. For example, for
 <a href="https://ggplot2.tidyverse.org/" target="_blank">https://ggplot2.tidyverse.org/</a>
@@ -533,7 +536,7 @@ character vector is returned as output.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="rvest3.html#cb145-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
 <span id="cb145-2"><a href="rvest3.html#cb145-2" tabindex="-1"></a>  <span class="fu">map</span>(html_element, <span class="at">css =</span> <span class="st">&quot;small.nav-text.text-muted.me-auto&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb145-3"><a href="rvest3.html#cb145-3" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_text)</span>
-<span id="cb145-4"><a href="rvest3.html#cb145-4" tabindex="-1"></a><span class="do">## [1] &quot;3.4.4&quot; &quot;1.1.3&quot; &quot;1.3.0&quot; &quot;2.1.4&quot; &quot;1.0.2&quot; &quot;3.2.1&quot; &quot;1.5.0&quot; &quot;1.0.0&quot;</span></span></code></pre></div>
+<span id="cb145-4"><a href="rvest3.html#cb145-4" tabindex="-1"></a><span class="do">## [1] &quot;3.5.1&quot; &quot;1.1.4&quot; &quot;1.3.1&quot; &quot;2.1.5&quot; &quot;1.0.4&quot; &quot;3.2.1&quot; &quot;1.5.1&quot; &quot;1.0.0&quot; &quot;1.9.4&quot;</span></span></code></pre></div>
 <p>The extraction of the current version number of the packages works the same way.
 For ggplot2, these are contained in the following tag:
 <code>&lt;small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version"&gt;3.3.5&lt;/small&gt;</code>.
@@ -550,26 +553,28 @@ class names, but this is also a matter of taste.</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="rvest3.html#cb146-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
 <span id="cb146-2"><a href="rvest3.html#cb146-2" tabindex="-1"></a>  <span class="fu">map</span>(html_element, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(1) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb146-3"><a href="rvest3.html#cb146-3" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
-<span id="cb146-4"><a href="rvest3.html#cb146-4" tabindex="-1"></a><span class="do">## [1] &quot;https://cloud.r-project.org/package=ggplot2&quot;</span></span>
-<span id="cb146-5"><a href="rvest3.html#cb146-5" tabindex="-1"></a><span class="do">## [2] &quot;https://cloud.r-project.org/package=dplyr&quot;  </span></span>
-<span id="cb146-6"><a href="rvest3.html#cb146-6" tabindex="-1"></a><span class="do">## [3] &quot;https://cloud.r-project.org/package=tidyr&quot;  </span></span>
-<span id="cb146-7"><a href="rvest3.html#cb146-7" tabindex="-1"></a><span class="do">## [4] &quot;https://cloud.r-project.org/package=readr&quot;  </span></span>
-<span id="cb146-8"><a href="rvest3.html#cb146-8" tabindex="-1"></a><span class="do">## [5] &quot;https://cloud.r-project.org/package=purrr&quot;  </span></span>
-<span id="cb146-9"><a href="rvest3.html#cb146-9" tabindex="-1"></a><span class="do">## [6] &quot;https://cloud.r-project.org/package=tibble&quot; </span></span>
-<span id="cb146-10"><a href="rvest3.html#cb146-10" tabindex="-1"></a><span class="do">## [7] &quot;https://cloud.r-project.org/package=stringr&quot;</span></span>
-<span id="cb146-11"><a href="rvest3.html#cb146-11" tabindex="-1"></a><span class="do">## [8] &quot;https://cloud.r-project.org/package=forcats&quot;</span></span>
-<span id="cb146-12"><a href="rvest3.html#cb146-12" tabindex="-1"></a></span>
-<span id="cb146-13"><a href="rvest3.html#cb146-13" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
-<span id="cb146-14"><a href="rvest3.html#cb146-14" tabindex="-1"></a>  <span class="fu">map</span>(html_element, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(4) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb146-15"><a href="rvest3.html#cb146-15" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
-<span id="cb146-16"><a href="rvest3.html#cb146-16" tabindex="-1"></a><span class="do">## [1] &quot;https://r4ds.had.co.nz/data-visualisation.html&quot;</span></span>
-<span id="cb146-17"><a href="rvest3.html#cb146-17" tabindex="-1"></a><span class="do">## [2] &quot;http://r4ds.had.co.nz/transform.html&quot;          </span></span>
-<span id="cb146-18"><a href="rvest3.html#cb146-18" tabindex="-1"></a><span class="do">## [3] &quot;https://r4ds.had.co.nz/tidy-data.html&quot;         </span></span>
-<span id="cb146-19"><a href="rvest3.html#cb146-19" tabindex="-1"></a><span class="do">## [4] &quot;http://r4ds.had.co.nz/data-import.html&quot;        </span></span>
-<span id="cb146-20"><a href="rvest3.html#cb146-20" tabindex="-1"></a><span class="do">## [5] &quot;http://r4ds.had.co.nz/iteration.html&quot;          </span></span>
-<span id="cb146-21"><a href="rvest3.html#cb146-21" tabindex="-1"></a><span class="do">## [6] &quot;https://r4ds.had.co.nz/tibbles.html&quot;           </span></span>
-<span id="cb146-22"><a href="rvest3.html#cb146-22" tabindex="-1"></a><span class="do">## [7] &quot;http://r4ds.had.co.nz/strings.html&quot;            </span></span>
-<span id="cb146-23"><a href="rvest3.html#cb146-23" tabindex="-1"></a><span class="do">## [8] &quot;http://r4ds.had.co.nz/factors.html&quot;</span></span></code></pre></div>
+<span id="cb146-4"><a href="rvest3.html#cb146-4" tabindex="-1"></a><span class="do">## [1] &quot;https://cloud.r-project.org/package=ggplot2&quot;  </span></span>
+<span id="cb146-5"><a href="rvest3.html#cb146-5" tabindex="-1"></a><span class="do">## [2] &quot;https://cloud.r-project.org/package=dplyr&quot;    </span></span>
+<span id="cb146-6"><a href="rvest3.html#cb146-6" tabindex="-1"></a><span class="do">## [3] &quot;https://cloud.r-project.org/package=tidyr&quot;    </span></span>
+<span id="cb146-7"><a href="rvest3.html#cb146-7" tabindex="-1"></a><span class="do">## [4] &quot;https://cloud.r-project.org/package=readr&quot;    </span></span>
+<span id="cb146-8"><a href="rvest3.html#cb146-8" tabindex="-1"></a><span class="do">## [5] &quot;https://cloud.r-project.org/package=purrr&quot;    </span></span>
+<span id="cb146-9"><a href="rvest3.html#cb146-9" tabindex="-1"></a><span class="do">## [6] &quot;https://cloud.r-project.org/package=tibble&quot;   </span></span>
+<span id="cb146-10"><a href="rvest3.html#cb146-10" tabindex="-1"></a><span class="do">## [7] &quot;https://cloud.r-project.org/package=stringr&quot;  </span></span>
+<span id="cb146-11"><a href="rvest3.html#cb146-11" tabindex="-1"></a><span class="do">## [8] &quot;https://cloud.r-project.org/package=forcats&quot;  </span></span>
+<span id="cb146-12"><a href="rvest3.html#cb146-12" tabindex="-1"></a><span class="do">## [9] &quot;https://cloud.r-project.org/package=lubridate&quot;</span></span>
+<span id="cb146-13"><a href="rvest3.html#cb146-13" tabindex="-1"></a></span>
+<span id="cb146-14"><a href="rvest3.html#cb146-14" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb146-15"><a href="rvest3.html#cb146-15" tabindex="-1"></a>  <span class="fu">map</span>(html_element, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(4) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb146-16"><a href="rvest3.html#cb146-16" tabindex="-1"></a>  <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
+<span id="cb146-17"><a href="rvest3.html#cb146-17" tabindex="-1"></a><span class="do">## [1] &quot;https://r4ds.had.co.nz/data-visualisation.html&quot;</span></span>
+<span id="cb146-18"><a href="rvest3.html#cb146-18" tabindex="-1"></a><span class="do">## [2] &quot;http://r4ds.had.co.nz/transform.html&quot;          </span></span>
+<span id="cb146-19"><a href="rvest3.html#cb146-19" tabindex="-1"></a><span class="do">## [3] &quot;https://r4ds.hadley.nz/data-tidy&quot;              </span></span>
+<span id="cb146-20"><a href="rvest3.html#cb146-20" tabindex="-1"></a><span class="do">## [4] &quot;http://r4ds.had.co.nz/data-import.html&quot;        </span></span>
+<span id="cb146-21"><a href="rvest3.html#cb146-21" tabindex="-1"></a><span class="do">## [5] &quot;http://r4ds.had.co.nz/iteration.html&quot;          </span></span>
+<span id="cb146-22"><a href="rvest3.html#cb146-22" tabindex="-1"></a><span class="do">## [6] &quot;https://r4ds.had.co.nz/tibbles.html&quot;           </span></span>
+<span id="cb146-23"><a href="rvest3.html#cb146-23" tabindex="-1"></a><span class="do">## [7] &quot;http://r4ds.hadley.nz/strings.html&quot;            </span></span>
+<span id="cb146-24"><a href="rvest3.html#cb146-24" tabindex="-1"></a><span class="do">## [8] &quot;http://r4ds.had.co.nz/factors.html&quot;            </span></span>
+<span id="cb146-25"><a href="rvest3.html#cb146-25" tabindex="-1"></a><span class="do">## [9] &quot;https://r4ds.had.co.nz/dates-and-times.html&quot;</span></span></code></pre></div>
 <p>The extraction of the links also follows the same basic principle. The selectors
 are a little more complicated, but can easily be understood looking in the source
 code and/or using the WDTs. We select the <code>&lt;a&gt;</code> tags of the first and fourth
@@ -592,17 +597,18 @@ the sub-pages directly during the creation of a tibble:</p>
 <span id="cb147-12"><a href="rvest3.html#cb147-12" tabindex="-1"></a>    <span class="fu">map</span>(html_element, <span class="at">css =</span> <span class="st">&quot;ul.list-unstyled &gt; li:nth-child(4) &gt; a&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb147-13"><a href="rvest3.html#cb147-13" tabindex="-1"></a>    <span class="fu">map_chr</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>)</span>
 <span id="cb147-14"><a href="rvest3.html#cb147-14" tabindex="-1"></a>)</span>
-<span id="cb147-15"><a href="rvest3.html#cb147-15" tabindex="-1"></a><span class="do">## # A tibble: 8 × 4</span></span>
-<span id="cb147-16"><a href="rvest3.html#cb147-16" tabindex="-1"></a><span class="do">##   name    version CRAN                                        Learn             </span></span>
-<span id="cb147-17"><a href="rvest3.html#cb147-17" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;                                       &lt;chr&gt;             </span></span>
-<span id="cb147-18"><a href="rvest3.html#cb147-18" tabindex="-1"></a><span class="do">## 1 ggplot2 3.4.4   https://cloud.r-project.org/package=ggplot2 https://r4ds.had.…</span></span>
-<span id="cb147-19"><a href="rvest3.html#cb147-19" tabindex="-1"></a><span class="do">## 2 dplyr   1.1.3   https://cloud.r-project.org/package=dplyr   http://r4ds.had.c…</span></span>
-<span id="cb147-20"><a href="rvest3.html#cb147-20" tabindex="-1"></a><span class="do">## 3 tidyr   1.3.0   https://cloud.r-project.org/package=tidyr   https://r4ds.had.…</span></span>
-<span id="cb147-21"><a href="rvest3.html#cb147-21" tabindex="-1"></a><span class="do">## 4 readr   2.1.4   https://cloud.r-project.org/package=readr   http://r4ds.had.c…</span></span>
-<span id="cb147-22"><a href="rvest3.html#cb147-22" tabindex="-1"></a><span class="do">## 5 purrr   1.0.2   https://cloud.r-project.org/package=purrr   http://r4ds.had.c…</span></span>
-<span id="cb147-23"><a href="rvest3.html#cb147-23" tabindex="-1"></a><span class="do">## 6 tibble  3.2.1   https://cloud.r-project.org/package=tibble  https://r4ds.had.…</span></span>
-<span id="cb147-24"><a href="rvest3.html#cb147-24" tabindex="-1"></a><span class="do">## 7 stringr 1.5.0   https://cloud.r-project.org/package=stringr http://r4ds.had.c…</span></span>
-<span id="cb147-25"><a href="rvest3.html#cb147-25" tabindex="-1"></a><span class="do">## 8 forcats 1.0.0   https://cloud.r-project.org/package=forcats http://r4ds.had.c…</span></span></code></pre></div>
+<span id="cb147-15"><a href="rvest3.html#cb147-15" tabindex="-1"></a><span class="do">## # A tibble: 9 × 4</span></span>
+<span id="cb147-16"><a href="rvest3.html#cb147-16" tabindex="-1"></a><span class="do">##   name      version CRAN                                          Learn         </span></span>
+<span id="cb147-17"><a href="rvest3.html#cb147-17" tabindex="-1"></a><span class="do">##   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;                                         &lt;chr&gt;         </span></span>
+<span id="cb147-18"><a href="rvest3.html#cb147-18" tabindex="-1"></a><span class="do">## 1 ggplot2   3.5.1   https://cloud.r-project.org/package=ggplot2   https://r4ds.…</span></span>
+<span id="cb147-19"><a href="rvest3.html#cb147-19" tabindex="-1"></a><span class="do">## 2 dplyr     1.1.4   https://cloud.r-project.org/package=dplyr     http://r4ds.h…</span></span>
+<span id="cb147-20"><a href="rvest3.html#cb147-20" tabindex="-1"></a><span class="do">## 3 tidyr     1.3.1   https://cloud.r-project.org/package=tidyr     https://r4ds.…</span></span>
+<span id="cb147-21"><a href="rvest3.html#cb147-21" tabindex="-1"></a><span class="do">## 4 readr     2.1.5   https://cloud.r-project.org/package=readr     http://r4ds.h…</span></span>
+<span id="cb147-22"><a href="rvest3.html#cb147-22" tabindex="-1"></a><span class="do">## 5 purrr     1.0.4   https://cloud.r-project.org/package=purrr     http://r4ds.h…</span></span>
+<span id="cb147-23"><a href="rvest3.html#cb147-23" tabindex="-1"></a><span class="do">## 6 tibble    3.2.1   https://cloud.r-project.org/package=tibble    https://r4ds.…</span></span>
+<span id="cb147-24"><a href="rvest3.html#cb147-24" tabindex="-1"></a><span class="do">## 7 stringr   1.5.1   https://cloud.r-project.org/package=stringr   http://r4ds.h…</span></span>
+<span id="cb147-25"><a href="rvest3.html#cb147-25" tabindex="-1"></a><span class="do">## 8 forcats   1.0.0   https://cloud.r-project.org/package=forcats   http://r4ds.h…</span></span>
+<span id="cb147-26"><a href="rvest3.html#cb147-26" tabindex="-1"></a><span class="do">## 9 lubridate 1.9.4   https://cloud.r-project.org/package=lubridate https://r4ds.…</span></span></code></pre></div>
 </div>
 </div>
 <div id="pagination" class="section level2 hasAnchor" number="7.2">
@@ -708,9 +714,9 @@ and receive a character vector as output.</p>
 <span id="cb150-6"><a href="rvest3.html#cb150-6" tabindex="-1"></a><span class="do">## [1] &quot;30.12.2021&quot; &quot;22.12.2021&quot; &quot;13.12.2021&quot; &quot;13.12.2021&quot; &quot;10.12.2021&quot;</span></span></code></pre></div>
 <p>However, we can go one step further and store the data as a vector of the type
 “Date”. This could be advantageous for potential further analyses. The tidyverse
-package <strong>lubridate</strong> makes it easy to convert dates from character or numeric
-vectors into the “Date” format. The package is not part of the core tidyverse
-and has to be loaded explicitly. Among other things, it offers a number of
+package <strong>lubridate</strong>, which has recently been promoted to be a part of the core
+tidyverse, makes it easy to convert dates from character or numeric vectors
+into the “Date” format. Among other things, it offers a number of
 functions in the form <code>dmy()</code>, <code>mdy()</code>, <code>ymd()</code> and so on. <code>d</code> stands for “day”,
 <code>m</code> for “month” and <code>y</code> for “year”. With the order in which the letters appear
 in the function name, we tell R which format the data we want to convert to the
@@ -721,42 +727,41 @@ which is typical in the USA, we would have to use <code>mdy()</code> accordingly
 irrelevant whether the components of the date are separated with “.”, “/”, “-”
 or spaces. Even written out or abbreviated month names can be processed by
 lubridate.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="rvest3.html#cb151-1" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="rvest3.html#cb152-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
-<span id="cb152-2"><a href="rvest3.html#cb152-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-date&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb152-3"><a href="rvest3.html#cb152-3" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb152-4"><a href="rvest3.html#cb152-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb152-5"><a href="rvest3.html#cb152-5" tabindex="-1"></a>  <span class="fu">dmy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb152-6"><a href="rvest3.html#cb152-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb152-7"><a href="rvest3.html#cb152-7" tabindex="-1"></a><span class="do">## [1] &quot;2021-12-30&quot; &quot;2021-12-22&quot; &quot;2021-12-13&quot; &quot;2021-12-13&quot; &quot;2021-12-10&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="rvest3.html#cb151-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb151-2"><a href="rvest3.html#cb151-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb151-3"><a href="rvest3.html#cb151-3" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb151-4"><a href="rvest3.html#cb151-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb151-5"><a href="rvest3.html#cb151-5" tabindex="-1"></a>  <span class="fu">dmy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb151-6"><a href="rvest3.html#cb151-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb151-7"><a href="rvest3.html#cb151-7" tabindex="-1"></a><span class="do">## [1] &quot;2021-12-30&quot; &quot;2021-12-22&quot; &quot;2021-12-13&quot; &quot;2021-12-13&quot; &quot;2021-12-10&quot;</span></span></code></pre></div>
 <p>More about the handling of dates and times in R as well as the further
 possibilities opened up by <strong>lubridate</strong>, can be found in the corresponding
 chapter in “R for Data Science”:
 <a href="https://r4ds.had.co.nz/dates-and-times.html" target="_blank">https://r4ds.had.co.nz/dates-and-times.html</a></p>
 <p>Next, we can extract the titles of the press releases. These are also enclosed
 by a <code>&lt;div&gt;</code> tag, this time carrying the clas <code>list-entry-title</code>.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="rvest3.html#cb153-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
-<span id="cb153-2"><a href="rvest3.html#cb153-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-title&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb153-3"><a href="rvest3.html#cb153-3" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb153-4"><a href="rvest3.html#cb153-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb153-5"><a href="rvest3.html#cb153-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb153-6"><a href="rvest3.html#cb153-6" tabindex="-1"></a><span class="do">## [1] &quot;Termine des Landtages Brandenburg in der Zeit vom 3. bis 7. Januar 2022&quot;               </span></span>
-<span id="cb153-7"><a href="rvest3.html#cb153-7" tabindex="-1"></a><span class="do">## [2] &quot;Hinweise für Medien zur Sondersitzung des Landtages am 23. Dezember 2021&quot;              </span></span>
-<span id="cb153-8"><a href="rvest3.html#cb153-8" tabindex="-1"></a><span class="do">## [3] &quot;Hinweise für Medien zu den Plenarsitzungen des Landtages vom 15. bis 17. Dezember 2021&quot;</span></span>
-<span id="cb153-9"><a href="rvest3.html#cb153-9" tabindex="-1"></a><span class="do">## [4] &quot;Landtag Brandenburg trauert um seinen ersten Präsidenten Dr. Herbert Knoblich&quot;         </span></span>
-<span id="cb153-10"><a href="rvest3.html#cb153-10" tabindex="-1"></a><span class="do">## [5] &quot;Termine des Landtages Brandenburg in der Zeit vom 13. bis 19. Dezember 2021&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="rvest3.html#cb152-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb152-2"><a href="rvest3.html#cb152-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-title&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb152-3"><a href="rvest3.html#cb152-3" tabindex="-1"></a>  <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb152-4"><a href="rvest3.html#cb152-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb152-5"><a href="rvest3.html#cb152-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb152-6"><a href="rvest3.html#cb152-6" tabindex="-1"></a><span class="do">## [1] &quot;Termine des Landtages Brandenburg in der Zeit vom 3. bis 7. Januar 2022&quot;               </span></span>
+<span id="cb152-7"><a href="rvest3.html#cb152-7" tabindex="-1"></a><span class="do">## [2] &quot;Hinweise für Medien zur Sondersitzung des Landtages am 23. Dezember 2021&quot;              </span></span>
+<span id="cb152-8"><a href="rvest3.html#cb152-8" tabindex="-1"></a><span class="do">## [3] &quot;Hinweise für Medien zu den Plenarsitzungen des Landtages vom 15. bis 17. Dezember 2021&quot;</span></span>
+<span id="cb152-9"><a href="rvest3.html#cb152-9" tabindex="-1"></a><span class="do">## [4] &quot;Landtag Brandenburg trauert um seinen ersten Präsidenten Dr. Herbert Knoblich&quot;         </span></span>
+<span id="cb152-10"><a href="rvest3.html#cb152-10" tabindex="-1"></a><span class="do">## [5] &quot;Termine des Landtages Brandenburg in der Zeit vom 13. bis 19. Dezember 2021&quot;</span></span></code></pre></div>
 <p>The last thing to extract, are the links to the individual messages. These are
 included in <code>&lt;a&gt;</code> tags with the class <code>list-entry</code>.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="rvest3.html#cb154-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
-<span id="cb154-2"><a href="rvest3.html#cb154-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;a.list-entry&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb154-3"><a href="rvest3.html#cb154-3" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb154-4"><a href="rvest3.html#cb154-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb154-5"><a href="rvest3.html#cb154-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb154-6"><a href="rvest3.html#cb154-6" tabindex="-1"></a><span class="do">## [1] &quot;/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_3._bis_7._januar_2022/27018&quot;                </span></span>
-<span id="cb154-7"><a href="rvest3.html#cb154-7" tabindex="-1"></a><span class="do">## [2] &quot;/de/meldungen/hinweise_fuer_medien_zur_sondersitzung_des_landtages_am_23._dezember_2021/26986&quot;              </span></span>
-<span id="cb154-8"><a href="rvest3.html#cb154-8" tabindex="-1"></a><span class="do">## [3] &quot;/de/meldungen/hinweise_fuer_medien_zu_den_plenarsitzungen_des_landtages_vom_15._bis_17._dezember_2021/26897&quot;</span></span>
-<span id="cb154-9"><a href="rvest3.html#cb154-9" tabindex="-1"></a><span class="do">## [4] &quot;/de/meldungen/landtag_brandenburg_trauert_um_seinen_ersten_praesidenten_dr._herbert_knoblich/26894&quot;         </span></span>
-<span id="cb154-10"><a href="rvest3.html#cb154-10" tabindex="-1"></a><span class="do">## [5] &quot;/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_13._bis_19._dezember_2021/26864&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="rvest3.html#cb153-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb153-2"><a href="rvest3.html#cb153-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;a.list-entry&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb153-3"><a href="rvest3.html#cb153-3" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb153-4"><a href="rvest3.html#cb153-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb153-5"><a href="rvest3.html#cb153-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb153-6"><a href="rvest3.html#cb153-6" tabindex="-1"></a><span class="do">## [1] &quot;/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_3._bis_7._januar_2022/27018&quot;                </span></span>
+<span id="cb153-7"><a href="rvest3.html#cb153-7" tabindex="-1"></a><span class="do">## [2] &quot;/de/meldungen/hinweise_fuer_medien_zur_sondersitzung_des_landtages_am_23._dezember_2021/26986&quot;              </span></span>
+<span id="cb153-8"><a href="rvest3.html#cb153-8" tabindex="-1"></a><span class="do">## [3] &quot;/de/meldungen/hinweise_fuer_medien_zu_den_plenarsitzungen_des_landtages_vom_15._bis_17._dezember_2021/26897&quot;</span></span>
+<span id="cb153-9"><a href="rvest3.html#cb153-9" tabindex="-1"></a><span class="do">## [4] &quot;/de/meldungen/landtag_brandenburg_trauert_um_seinen_ersten_praesidenten_dr._herbert_knoblich/26894&quot;         </span></span>
+<span id="cb153-10"><a href="rvest3.html#cb153-10" tabindex="-1"></a><span class="do">## [5] &quot;/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_13._bis_19._dezember_2021/26864&quot;</span></span></code></pre></div>
 <p>But, the links stored in the HTML code only describe a part of the complete URL.
 We could now construct the complete URLs again with <code>str_c()</code>. However, we still
 need a new concept for this. The pipe passes the result of a step along to the
@@ -768,49 +773,49 @@ However, we want this to happen the other way round. To do this, we need to tell
 <code>str_c()</code>, to use the data passed through the pipe as the second argument. We
 can achieve this by using <code>.</code>. <code>.</code> refers to the data passed through the pipe.
 In this way we can combine the URLs correctly:</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="rvest3.html#cb155-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
-<span id="cb155-2"><a href="rvest3.html#cb155-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;a.list-entry&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb155-3"><a href="rvest3.html#cb155-3" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb155-4"><a href="rvest3.html#cb155-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb155-5"><a href="rvest3.html#cb155-5" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;https://www.landtag.brandenburg.de&quot;</span>, .) <span class="sc">%&gt;%</span> </span>
-<span id="cb155-6"><a href="rvest3.html#cb155-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb155-7"><a href="rvest3.html#cb155-7" tabindex="-1"></a><span class="do">## [1] &quot;https://www.landtag.brandenburg.de/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_3._bis_7._januar_2022/27018&quot;                </span></span>
-<span id="cb155-8"><a href="rvest3.html#cb155-8" tabindex="-1"></a><span class="do">## [2] &quot;https://www.landtag.brandenburg.de/de/meldungen/hinweise_fuer_medien_zur_sondersitzung_des_landtages_am_23._dezember_2021/26986&quot;              </span></span>
-<span id="cb155-9"><a href="rvest3.html#cb155-9" tabindex="-1"></a><span class="do">## [3] &quot;https://www.landtag.brandenburg.de/de/meldungen/hinweise_fuer_medien_zu_den_plenarsitzungen_des_landtages_vom_15._bis_17._dezember_2021/26897&quot;</span></span>
-<span id="cb155-10"><a href="rvest3.html#cb155-10" tabindex="-1"></a><span class="do">## [4] &quot;https://www.landtag.brandenburg.de/de/meldungen/landtag_brandenburg_trauert_um_seinen_ersten_praesidenten_dr._herbert_knoblich/26894&quot;         </span></span>
-<span id="cb155-11"><a href="rvest3.html#cb155-11" tabindex="-1"></a><span class="do">## [5] &quot;https://www.landtag.brandenburg.de/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_13._bis_19._dezember_2021/26864&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="rvest3.html#cb154-1" tabindex="-1"></a>pages <span class="sc">%&gt;%</span> </span>
+<span id="cb154-2"><a href="rvest3.html#cb154-2" tabindex="-1"></a>  <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;a.list-entry&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb154-3"><a href="rvest3.html#cb154-3" tabindex="-1"></a>  <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb154-4"><a href="rvest3.html#cb154-4" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb154-5"><a href="rvest3.html#cb154-5" tabindex="-1"></a>  <span class="fu">str_c</span>(<span class="st">&quot;https://www.landtag.brandenburg.de&quot;</span>, .) <span class="sc">%&gt;%</span> </span>
+<span id="cb154-6"><a href="rvest3.html#cb154-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb154-7"><a href="rvest3.html#cb154-7" tabindex="-1"></a><span class="do">## [1] &quot;https://www.landtag.brandenburg.de/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_3._bis_7._januar_2022/27018&quot;                </span></span>
+<span id="cb154-8"><a href="rvest3.html#cb154-8" tabindex="-1"></a><span class="do">## [2] &quot;https://www.landtag.brandenburg.de/de/meldungen/hinweise_fuer_medien_zur_sondersitzung_des_landtages_am_23._dezember_2021/26986&quot;              </span></span>
+<span id="cb154-9"><a href="rvest3.html#cb154-9" tabindex="-1"></a><span class="do">## [3] &quot;https://www.landtag.brandenburg.de/de/meldungen/hinweise_fuer_medien_zu_den_plenarsitzungen_des_landtages_vom_15._bis_17._dezember_2021/26897&quot;</span></span>
+<span id="cb154-10"><a href="rvest3.html#cb154-10" tabindex="-1"></a><span class="do">## [4] &quot;https://www.landtag.brandenburg.de/de/meldungen/landtag_brandenburg_trauert_um_seinen_ersten_praesidenten_dr._herbert_knoblich/26894&quot;         </span></span>
+<span id="cb154-11"><a href="rvest3.html#cb154-11" tabindex="-1"></a><span class="do">## [5] &quot;https://www.landtag.brandenburg.de/de/meldungen/termine_des_landtages_brandenburg_in_der_zeit_vom_13._bis_19._dezember_2021/26864&quot;</span></span></code></pre></div>
 <p>As always, we can perform the complete extraction of the data during the
 construction of a tibble:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="rvest3.html#cb156-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb156-2"><a href="rvest3.html#cb156-2" tabindex="-1"></a>  <span class="at">date =</span> pages <span class="sc">%&gt;%</span> </span>
-<span id="cb156-3"><a href="rvest3.html#cb156-3" tabindex="-1"></a>    <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-date&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-4"><a href="rvest3.html#cb156-4" tabindex="-1"></a>    <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-5"><a href="rvest3.html#cb156-5" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb156-6"><a href="rvest3.html#cb156-6" tabindex="-1"></a>    <span class="fu">dmy</span>(),</span>
-<span id="cb156-7"><a href="rvest3.html#cb156-7" tabindex="-1"></a>  <span class="at">name =</span> pages <span class="sc">%&gt;%</span> </span>
-<span id="cb156-8"><a href="rvest3.html#cb156-8" tabindex="-1"></a>    <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-title&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-9"><a href="rvest3.html#cb156-9" tabindex="-1"></a>    <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-10"><a href="rvest3.html#cb156-10" tabindex="-1"></a>    <span class="fu">unlist</span>(),</span>
-<span id="cb156-11"><a href="rvest3.html#cb156-11" tabindex="-1"></a>  <span class="at">link =</span> pages <span class="sc">%&gt;%</span> </span>
-<span id="cb156-12"><a href="rvest3.html#cb156-12" tabindex="-1"></a>    <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;a.list-entry&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-13"><a href="rvest3.html#cb156-13" tabindex="-1"></a>    <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-14"><a href="rvest3.html#cb156-14" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb156-15"><a href="rvest3.html#cb156-15" tabindex="-1"></a>    <span class="fu">str_c</span>(<span class="st">&quot;https://www.landtag.brandenburg.de&quot;</span>, .)</span>
-<span id="cb156-16"><a href="rvest3.html#cb156-16" tabindex="-1"></a>)</span>
-<span id="cb156-17"><a href="rvest3.html#cb156-17" tabindex="-1"></a><span class="do">## # A tibble: 147 × 3</span></span>
-<span id="cb156-18"><a href="rvest3.html#cb156-18" tabindex="-1"></a><span class="do">##    date       name                                                         link </span></span>
-<span id="cb156-19"><a href="rvest3.html#cb156-19" tabindex="-1"></a><span class="do">##    &lt;date&gt;     &lt;chr&gt;                                                        &lt;chr&gt;</span></span>
-<span id="cb156-20"><a href="rvest3.html#cb156-20" tabindex="-1"></a><span class="do">##  1 2021-12-30 Termine des Landtages Brandenburg in der Zeit vom 3. bis 7.… http…</span></span>
-<span id="cb156-21"><a href="rvest3.html#cb156-21" tabindex="-1"></a><span class="do">##  2 2021-12-22 Hinweise für Medien zur Sondersitzung des Landtages am 23. … http…</span></span>
-<span id="cb156-22"><a href="rvest3.html#cb156-22" tabindex="-1"></a><span class="do">##  3 2021-12-13 Hinweise für Medien zu den Plenarsitzungen des Landtages vo… http…</span></span>
-<span id="cb156-23"><a href="rvest3.html#cb156-23" tabindex="-1"></a><span class="do">##  4 2021-12-13 Landtag Brandenburg trauert um seinen ersten Präsidenten Dr… http…</span></span>
-<span id="cb156-24"><a href="rvest3.html#cb156-24" tabindex="-1"></a><span class="do">##  5 2021-12-10 Termine des Landtages Brandenburg in der Zeit vom 13. bis 1… http…</span></span>
-<span id="cb156-25"><a href="rvest3.html#cb156-25" tabindex="-1"></a><span class="do">##  6 2021-12-09 Hinweise für Medien zur Sondersitzung des Landtages am 13. … http…</span></span>
-<span id="cb156-26"><a href="rvest3.html#cb156-26" tabindex="-1"></a><span class="do">##  7 2021-12-09 Übersichtlich, modern und bürgernah: Landtag Brandenburg mi… http…</span></span>
-<span id="cb156-27"><a href="rvest3.html#cb156-27" tabindex="-1"></a><span class="do">##  8 2021-12-03 Termine des Landtages Brandenburg in der Zeit vom 6. bis 12… http…</span></span>
-<span id="cb156-28"><a href="rvest3.html#cb156-28" tabindex="-1"></a><span class="do">##  9 2021-11-26 Termine des Landtages Brandenburg in der Zeit vom 28. Novem… http…</span></span>
-<span id="cb156-29"><a href="rvest3.html#cb156-29" tabindex="-1"></a><span class="do">## 10 2021-11-25 Mit dem Hissen der UN-Women-Flagge setzt der Landtag ein Ze… http…</span></span>
-<span id="cb156-30"><a href="rvest3.html#cb156-30" tabindex="-1"></a><span class="do">## # ℹ 137 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="rvest3.html#cb155-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb155-2"><a href="rvest3.html#cb155-2" tabindex="-1"></a>  <span class="at">date =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb155-3"><a href="rvest3.html#cb155-3" tabindex="-1"></a>    <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-date&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb155-4"><a href="rvest3.html#cb155-4" tabindex="-1"></a>    <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb155-5"><a href="rvest3.html#cb155-5" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb155-6"><a href="rvest3.html#cb155-6" tabindex="-1"></a>    <span class="fu">dmy</span>(),</span>
+<span id="cb155-7"><a href="rvest3.html#cb155-7" tabindex="-1"></a>  <span class="at">name =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb155-8"><a href="rvest3.html#cb155-8" tabindex="-1"></a>    <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;div.list-entry-title&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb155-9"><a href="rvest3.html#cb155-9" tabindex="-1"></a>    <span class="fu">map</span>(html_text, <span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb155-10"><a href="rvest3.html#cb155-10" tabindex="-1"></a>    <span class="fu">unlist</span>(),</span>
+<span id="cb155-11"><a href="rvest3.html#cb155-11" tabindex="-1"></a>  <span class="at">link =</span> pages <span class="sc">%&gt;%</span> </span>
+<span id="cb155-12"><a href="rvest3.html#cb155-12" tabindex="-1"></a>    <span class="fu">map</span>(html_elements, <span class="at">css =</span> <span class="st">&quot;a.list-entry&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb155-13"><a href="rvest3.html#cb155-13" tabindex="-1"></a>    <span class="fu">map</span>(html_attr, <span class="at">name =</span> <span class="st">&quot;href&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb155-14"><a href="rvest3.html#cb155-14" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb155-15"><a href="rvest3.html#cb155-15" tabindex="-1"></a>    <span class="fu">str_c</span>(<span class="st">&quot;https://www.landtag.brandenburg.de&quot;</span>, .)</span>
+<span id="cb155-16"><a href="rvest3.html#cb155-16" tabindex="-1"></a>)</span>
+<span id="cb155-17"><a href="rvest3.html#cb155-17" tabindex="-1"></a><span class="do">## # A tibble: 147 × 3</span></span>
+<span id="cb155-18"><a href="rvest3.html#cb155-18" tabindex="-1"></a><span class="do">##    date       name                                                         link </span></span>
+<span id="cb155-19"><a href="rvest3.html#cb155-19" tabindex="-1"></a><span class="do">##    &lt;date&gt;     &lt;chr&gt;                                                        &lt;chr&gt;</span></span>
+<span id="cb155-20"><a href="rvest3.html#cb155-20" tabindex="-1"></a><span class="do">##  1 2021-12-30 Termine des Landtages Brandenburg in der Zeit vom 3. bis 7.… http…</span></span>
+<span id="cb155-21"><a href="rvest3.html#cb155-21" tabindex="-1"></a><span class="do">##  2 2021-12-22 Hinweise für Medien zur Sondersitzung des Landtages am 23. … http…</span></span>
+<span id="cb155-22"><a href="rvest3.html#cb155-22" tabindex="-1"></a><span class="do">##  3 2021-12-13 Hinweise für Medien zu den Plenarsitzungen des Landtages vo… http…</span></span>
+<span id="cb155-23"><a href="rvest3.html#cb155-23" tabindex="-1"></a><span class="do">##  4 2021-12-13 Landtag Brandenburg trauert um seinen ersten Präsidenten Dr… http…</span></span>
+<span id="cb155-24"><a href="rvest3.html#cb155-24" tabindex="-1"></a><span class="do">##  5 2021-12-10 Termine des Landtages Brandenburg in der Zeit vom 13. bis 1… http…</span></span>
+<span id="cb155-25"><a href="rvest3.html#cb155-25" tabindex="-1"></a><span class="do">##  6 2021-12-09 Hinweise für Medien zur Sondersitzung des Landtages am 13. … http…</span></span>
+<span id="cb155-26"><a href="rvest3.html#cb155-26" tabindex="-1"></a><span class="do">##  7 2021-12-09 Übersichtlich, modern und bürgernah: Landtag Brandenburg mi… http…</span></span>
+<span id="cb155-27"><a href="rvest3.html#cb155-27" tabindex="-1"></a><span class="do">##  8 2021-12-03 Termine des Landtages Brandenburg in der Zeit vom 6. bis 12… http…</span></span>
+<span id="cb155-28"><a href="rvest3.html#cb155-28" tabindex="-1"></a><span class="do">##  9 2021-11-26 Termine des Landtages Brandenburg in der Zeit vom 28. Novem… http…</span></span>
+<span id="cb155-29"><a href="rvest3.html#cb155-29" tabindex="-1"></a><span class="do">## 10 2021-11-25 Mit dem Hissen der UN-Women-Flagge setzt der Landtag ein Ze… http…</span></span>
+<span id="cb155-30"><a href="rvest3.html#cb155-30" tabindex="-1"></a><span class="do">## # ℹ 137 more rows</span></span></code></pre></div>
 
 </div>
 </div>
@@ -835,33 +840,33 @@ construction of a tibble:</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/07-rvest3.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section",
-"scroll_highlight": true
-}
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/webscraping-tures/webscraping-tures.github.io/07-rvest3.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
 });
 });
 </script>

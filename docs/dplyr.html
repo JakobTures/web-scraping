@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11 Transformation with dplyr | Web Scraping using R</title>
   <meta name="description" content="11 Transformation with dplyr | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11 Transformation with dplyr | Web Scraping using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2023-10-16" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,7 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
@@ -61,7 +62,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -71,7 +72,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -254,7 +255,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
 <li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tables-with-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tables with NAs</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites</a>
 <ul>
@@ -379,10 +380,9 @@ Web Scraping using R
 select the columns and filter the observations (rows) we need, as well as
 compute some grouped summaries of the data.</p>
 <p>First, let us load the required packages. <strong>dplyr</strong> is part of the core tidyverse;
-we will need the package <strong>lubridate</strong> as well, to be able to deal with dates and
+the same is true for the package <strong>lubridate</strong>, which will enable us to deal with dates and
 times.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="dplyr.html#cb196-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb196-2"><a href="dplyr.html#cb196-2" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="dplyr.html#cb196-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <div id="mutate" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> <code>mutate()</code><a href="dplyr.html#mutate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="computing-new-variables-from-existing-ones" class="section level3 hasAnchor" number="11.1.1">
@@ -451,20 +451,20 @@ the data on police reports we scraped in chapter <a href="scraping.html#scraping
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="dplyr.html#cb200-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports.RData&quot;</span>)</span>
 <span id="cb200-2"><a href="dplyr.html#cb200-2" tabindex="-1"></a></span>
 <span id="cb200-3"><a href="dplyr.html#cb200-3" tabindex="-1"></a>reports</span>
-<span id="cb200-4"><a href="dplyr.html#cb200-4" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 3</span></span>
+<span id="cb200-4"><a href="dplyr.html#cb200-4" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 3</span></span>
 <span id="cb200-5"><a href="dplyr.html#cb200-5" tabindex="-1"></a><span class="do">##    Date                 Report                                          District</span></span>
 <span id="cb200-6"><a href="dplyr.html#cb200-6" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                                           &lt;chr&gt;   </span></span>
-<span id="cb200-7"><a href="dplyr.html#cb200-7" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeliktes - Mordkommissio… Ereigni…</span></span>
-<span id="cb200-8"><a href="dplyr.html#cb200-8" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzung durch Schuss - Du… Ereigni…</span></span>
-<span id="cb200-9"><a href="dplyr.html#cb200-9" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenhang mit dem Nahost-Ko… Ereigni…</span></span>
-<span id="cb200-10"><a href="dplyr.html#cb200-10" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberischem Diebstahl           Ereigni…</span></span>
-<span id="cb200-11"><a href="dplyr.html#cb200-11" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in Krankenhaus verstorben Ereigni…</span></span>
-<span id="cb200-12"><a href="dplyr.html#cb200-12" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren Fahrzeugen            Ereigni…</span></span>
-<span id="cb200-13"><a href="dplyr.html#cb200-13" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder- und Wegerechten      Ereigni…</span></span>
-<span id="cb200-14"><a href="dplyr.html#cb200-14" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft                        Ereigni…</span></span>
-<span id="cb200-15"><a href="dplyr.html#cb200-15" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus geworfen - Mordkomm… Ereigni…</span></span>
-<span id="cb200-16"><a href="dplyr.html#cb200-16" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenhang mit den weltweite… Ereigni…</span></span>
-<span id="cb200-17"><a href="dplyr.html#cb200-17" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb200-7"><a href="dplyr.html#cb200-7" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwachsender mit mehreren Stichverletzungen  Ereigni…</span></span>
+<span id="cb200-8"><a href="dplyr.html#cb200-8" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi-Fahrer festgenommen                    Ereigni…</span></span>
+<span id="cb200-9"><a href="dplyr.html#cb200-9" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere Brände in einer Nacht                   Ereigni…</span></span>
+<span id="cb200-10"><a href="dplyr.html#cb200-10" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist bei Verkehrsunfall verletzt             Ereigni…</span></span>
+<span id="cb200-11"><a href="dplyr.html#cb200-11" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfriedensbruch begangen und Ladendetektiv b… Ereigni…</span></span>
+<span id="cb200-12"><a href="dplyr.html#cb200-12" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrsunfall auf Kreuzung – Fußgänger im Kra… Ereigni…</span></span>
+<span id="cb200-13"><a href="dplyr.html#cb200-13" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinandersetzung im Park                      Ereigni…</span></span>
+<span id="cb200-14"><a href="dplyr.html#cb200-14" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbeiter von Ladendieb verletzt              Ereigni…</span></span>
+<span id="cb200-15"><a href="dplyr.html#cb200-15" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrollerfahrerin bei Verkehrsunfall verletzt Ereigni…</span></span>
+<span id="cb200-16"><a href="dplyr.html#cb200-16" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zeigt Hitlergruß und äußert sich volksver… Ereigni…</span></span>
+<span id="cb200-17"><a href="dplyr.html#cb200-17" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>We can leave the column containing the text of the police report as it is, but
 the columns containing the districts, as well as the date and time, could use
 some work.</p>
@@ -480,40 +480,40 @@ character in a string: to begin extraction after “Ereignisort:” we have to
 count the length of this substring including the whitespace after “:”, which is
 <span class="math inline">\(13\)</span> and thus use <span class="math inline">\(14\)</span> as the starting position. For the position to stop
 extraction, we could either use an unrealistically high number or use
-<code>length(District)</code> to determine the exact length of each string.</p>
+<code>str_length(District)</code> to determine the exact length of each string.</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="dplyr.html#cb201-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
 <span id="cb201-2"><a href="dplyr.html#cb201-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="dv">99</span>))</span>
-<span id="cb201-3"><a href="dplyr.html#cb201-3" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 3</span></span>
+<span id="cb201-3"><a href="dplyr.html#cb201-3" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 3</span></span>
 <span id="cb201-4"><a href="dplyr.html#cb201-4" tabindex="-1"></a><span class="do">##    Date                 Report                                          District</span></span>
 <span id="cb201-5"><a href="dplyr.html#cb201-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                                           &lt;chr&gt;   </span></span>
-<span id="cb201-6"><a href="dplyr.html#cb201-6" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeliktes - Mordkommissio… Treptow…</span></span>
-<span id="cb201-7"><a href="dplyr.html#cb201-7" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzung durch Schuss - Du… Charlot…</span></span>
-<span id="cb201-8"><a href="dplyr.html#cb201-8" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenhang mit dem Nahost-Ko… berlinw…</span></span>
-<span id="cb201-9"><a href="dplyr.html#cb201-9" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberischem Diebstahl           Friedri…</span></span>
-<span id="cb201-10"><a href="dplyr.html#cb201-10" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in Krankenhaus verstorben Marzahn…</span></span>
-<span id="cb201-11"><a href="dplyr.html#cb201-11" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren Fahrzeugen            Friedri…</span></span>
-<span id="cb201-12"><a href="dplyr.html#cb201-12" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder- und Wegerechten      Mitte   </span></span>
-<span id="cb201-13"><a href="dplyr.html#cb201-13" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft                        Charlot…</span></span>
-<span id="cb201-14"><a href="dplyr.html#cb201-14" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus geworfen - Mordkomm… Neukölln</span></span>
-<span id="cb201-15"><a href="dplyr.html#cb201-15" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenhang mit den weltweite… berlinw…</span></span>
-<span id="cb201-16"><a href="dplyr.html#cb201-16" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span>
+<span id="cb201-6"><a href="dplyr.html#cb201-6" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwachsender mit mehreren Stichverletzungen  Mitte   </span></span>
+<span id="cb201-7"><a href="dplyr.html#cb201-7" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi-Fahrer festgenommen                    Reinick…</span></span>
+<span id="cb201-8"><a href="dplyr.html#cb201-8" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere Brände in einer Nacht                   Lichten…</span></span>
+<span id="cb201-9"><a href="dplyr.html#cb201-9" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist bei Verkehrsunfall verletzt             Mitte   </span></span>
+<span id="cb201-10"><a href="dplyr.html#cb201-10" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfriedensbruch begangen und Ladendetektiv b… Pankow  </span></span>
+<span id="cb201-11"><a href="dplyr.html#cb201-11" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrsunfall auf Kreuzung – Fußgänger im Kra… Friedri…</span></span>
+<span id="cb201-12"><a href="dplyr.html#cb201-12" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinandersetzung im Park                      Pankow  </span></span>
+<span id="cb201-13"><a href="dplyr.html#cb201-13" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbeiter von Ladendieb verletzt              Charlot…</span></span>
+<span id="cb201-14"><a href="dplyr.html#cb201-14" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrollerfahrerin bei Verkehrsunfall verletzt Mitte   </span></span>
+<span id="cb201-15"><a href="dplyr.html#cb201-15" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zeigt Hitlergruß und äußert sich volksver… Charlot…</span></span>
+<span id="cb201-16"><a href="dplyr.html#cb201-16" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span>
 <span id="cb201-17"><a href="dplyr.html#cb201-17" tabindex="-1"></a></span>
 <span id="cb201-18"><a href="dplyr.html#cb201-18" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
-<span id="cb201-19"><a href="dplyr.html#cb201-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">length</span>(District)))</span>
-<span id="cb201-20"><a href="dplyr.html#cb201-20" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 3</span></span>
+<span id="cb201-19"><a href="dplyr.html#cb201-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">str_length</span>(District)))</span>
+<span id="cb201-20"><a href="dplyr.html#cb201-20" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 3</span></span>
 <span id="cb201-21"><a href="dplyr.html#cb201-21" tabindex="-1"></a><span class="do">##    Date                 Report                                          District</span></span>
 <span id="cb201-22"><a href="dplyr.html#cb201-22" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                                           &lt;chr&gt;   </span></span>
-<span id="cb201-23"><a href="dplyr.html#cb201-23" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeliktes - Mordkommissio… Treptow…</span></span>
-<span id="cb201-24"><a href="dplyr.html#cb201-24" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzung durch Schuss - Du… Charlot…</span></span>
-<span id="cb201-25"><a href="dplyr.html#cb201-25" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenhang mit dem Nahost-Ko… berlinw…</span></span>
-<span id="cb201-26"><a href="dplyr.html#cb201-26" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberischem Diebstahl           Friedri…</span></span>
-<span id="cb201-27"><a href="dplyr.html#cb201-27" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in Krankenhaus verstorben Marzahn…</span></span>
-<span id="cb201-28"><a href="dplyr.html#cb201-28" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren Fahrzeugen            Friedri…</span></span>
-<span id="cb201-29"><a href="dplyr.html#cb201-29" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder- und Wegerechten      Mitte   </span></span>
-<span id="cb201-30"><a href="dplyr.html#cb201-30" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft                        Charlot…</span></span>
-<span id="cb201-31"><a href="dplyr.html#cb201-31" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus geworfen - Mordkomm… Neukölln</span></span>
-<span id="cb201-32"><a href="dplyr.html#cb201-32" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenhang mit den weltweite… berlinw…</span></span>
-<span id="cb201-33"><a href="dplyr.html#cb201-33" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb201-23"><a href="dplyr.html#cb201-23" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwachsender mit mehreren Stichverletzungen  Mitte   </span></span>
+<span id="cb201-24"><a href="dplyr.html#cb201-24" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi-Fahrer festgenommen                    Reinick…</span></span>
+<span id="cb201-25"><a href="dplyr.html#cb201-25" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere Brände in einer Nacht                   Lichten…</span></span>
+<span id="cb201-26"><a href="dplyr.html#cb201-26" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist bei Verkehrsunfall verletzt             Mitte   </span></span>
+<span id="cb201-27"><a href="dplyr.html#cb201-27" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfriedensbruch begangen und Ladendetektiv b… Pankow  </span></span>
+<span id="cb201-28"><a href="dplyr.html#cb201-28" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrsunfall auf Kreuzung – Fußgänger im Kra… Friedri…</span></span>
+<span id="cb201-29"><a href="dplyr.html#cb201-29" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinandersetzung im Park                      Pankow  </span></span>
+<span id="cb201-30"><a href="dplyr.html#cb201-30" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbeiter von Ladendieb verletzt              Charlot…</span></span>
+<span id="cb201-31"><a href="dplyr.html#cb201-31" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrollerfahrerin bei Verkehrsunfall verletzt Mitte   </span></span>
+<span id="cb201-32"><a href="dplyr.html#cb201-32" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zeigt Hitlergruß und äußert sich volksver… Charlot…</span></span>
+<span id="cb201-33"><a href="dplyr.html#cb201-33" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>The column “Date” includes the date and the time of each report as a character
 string. To be able to use this data in analysis, we have to extract the date and
 time in a format R can understand. This is easily achieved using the parsing
@@ -522,20 +522,20 @@ functions from <strong>lubridate</strong>. As the character data are written in 
 column.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="dplyr.html#cb202-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
 <span id="cb202-2"><a href="dplyr.html#cb202-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date_cmpl =</span> <span class="fu">dmy_hm</span>(Date))</span>
-<span id="cb202-3"><a href="dplyr.html#cb202-3" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 4</span></span>
+<span id="cb202-3"><a href="dplyr.html#cb202-3" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 4</span></span>
 <span id="cb202-4"><a href="dplyr.html#cb202-4" tabindex="-1"></a><span class="do">##    Date                 Report                      District date_cmpl          </span></span>
 <span id="cb202-5"><a href="dplyr.html#cb202-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                       &lt;chr&gt;    &lt;dttm&gt;             </span></span>
-<span id="cb202-6"><a href="dplyr.html#cb202-6" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeli… Ereigni… 2023-10-16 17:55:00</span></span>
-<span id="cb202-7"><a href="dplyr.html#cb202-7" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzu… Ereigni… 2023-10-16 17:49:00</span></span>
-<span id="cb202-8"><a href="dplyr.html#cb202-8" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenha… Ereigni… 2023-10-16 14:43:00</span></span>
-<span id="cb202-9"><a href="dplyr.html#cb202-9" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberische… Ereigni… 2023-10-16 11:26:00</span></span>
-<span id="cb202-10"><a href="dplyr.html#cb202-10" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in K… Ereigni… 2023-10-16 10:07:00</span></span>
-<span id="cb202-11"><a href="dplyr.html#cb202-11" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren … Ereigni… 2023-10-16 09:53:00</span></span>
-<span id="cb202-12"><a href="dplyr.html#cb202-12" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder-… Ereigni… 2023-10-15 21:07:00</span></span>
-<span id="cb202-13"><a href="dplyr.html#cb202-13" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft    Ereigni… 2023-10-15 15:46:00</span></span>
-<span id="cb202-14"><a href="dplyr.html#cb202-14" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus… Ereigni… 2023-10-15 14:59:00</span></span>
-<span id="cb202-15"><a href="dplyr.html#cb202-15" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenha… Ereigni… 2023-10-15 14:47:00</span></span>
-<span id="cb202-16"><a href="dplyr.html#cb202-16" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb202-6"><a href="dplyr.html#cb202-6" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwachsender mit mehrer… Ereigni… 2025-03-06 15:01:00</span></span>
+<span id="cb202-7"><a href="dplyr.html#cb202-7" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi-Fahrer festgenomm… Ereigni… 2025-03-06 14:57:00</span></span>
+<span id="cb202-8"><a href="dplyr.html#cb202-8" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere Brände in einer Na… Ereigni… 2025-03-06 14:49:00</span></span>
+<span id="cb202-9"><a href="dplyr.html#cb202-9" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist bei Verkehrsunfall… Ereigni… 2025-03-06 11:40:00</span></span>
+<span id="cb202-10"><a href="dplyr.html#cb202-10" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfriedensbruch begangen… Ereigni… 2025-03-06 10:49:00</span></span>
+<span id="cb202-11"><a href="dplyr.html#cb202-11" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrsunfall auf Kreuzun… Ereigni… 2025-03-06 10:46:00</span></span>
+<span id="cb202-12"><a href="dplyr.html#cb202-12" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinandersetzung im Park  Ereigni… 2025-03-06 10:43:00</span></span>
+<span id="cb202-13"><a href="dplyr.html#cb202-13" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbeiter von Ladendieb … Ereigni… 2025-03-06 09:52:00</span></span>
+<span id="cb202-14"><a href="dplyr.html#cb202-14" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrollerfahrerin bei Ve… Ereigni… 2025-03-06 09:21:00</span></span>
+<span id="cb202-15"><a href="dplyr.html#cb202-15" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zeigt Hitlergruß und … Ereigni… 2025-03-05 16:53:00</span></span>
+<span id="cb202-16"><a href="dplyr.html#cb202-16" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>At a later point we will do some analysis by year, month, weekday and time of
 day. <strong>lubridate</strong> includes functions that extract the subparts of date and time
 data.</p>
@@ -549,69 +549,69 @@ respectively.</p>
 <span id="cb203-4"><a href="dplyr.html#cb203-4" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb203-5"><a href="dplyr.html#cb203-5" tabindex="-1"></a>         <span class="at">day =</span> <span class="fu">wday</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb203-6"><a href="dplyr.html#cb203-6" tabindex="-1"></a>         )</span>
-<span id="cb203-7"><a href="dplyr.html#cb203-7" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 7</span></span>
+<span id="cb203-7"><a href="dplyr.html#cb203-7" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 7</span></span>
 <span id="cb203-8"><a href="dplyr.html#cb203-8" tabindex="-1"></a><span class="do">##    Date                 Report    District date_cmpl            year month day  </span></span>
 <span id="cb203-9"><a href="dplyr.html#cb203-9" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;     &lt;chr&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt;</span></span>
-<span id="cb203-10"><a href="dplyr.html#cb203-10" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht… Ereigni… 2023-10-16 17:55:00  2023 Okt   Mo   </span></span>
-<span id="cb203-11"><a href="dplyr.html#cb203-11" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährli… Ereigni… 2023-10-16 17:49:00  2023 Okt   Mo   </span></span>
-<span id="cb203-12"><a href="dplyr.html#cb203-12" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommn… Ereigni… 2023-10-16 14:43:00  2023 Okt   Mo   </span></span>
-<span id="cb203-13"><a href="dplyr.html#cb203-13" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahm… Ereigni… 2023-10-16 11:26:00  2023 Okt   Mo   </span></span>
-<span id="cb203-14"><a href="dplyr.html#cb203-14" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzt… Ereigni… 2023-10-16 10:07:00  2023 Okt   Mo   </span></span>
-<span id="cb203-15"><a href="dplyr.html#cb203-15" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandsti… Ereigni… 2023-10-16 09:53:00  2023 Okt   Mo   </span></span>
-<span id="cb203-16"><a href="dplyr.html#cb203-16" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrs… Ereigni… 2023-10-15 21:07:00  2023 Okt   So   </span></span>
-<span id="cb203-17"><a href="dplyr.html#cb203-17" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im … Ereigni… 2023-10-15 15:46:00  2023 Okt   So   </span></span>
-<span id="cb203-18"><a href="dplyr.html#cb203-18" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufs… Ereigni… 2023-10-15 14:59:00  2023 Okt   So   </span></span>
-<span id="cb203-19"><a href="dplyr.html#cb203-19" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommn… Ereigni… 2023-10-15 14:47:00  2023 Okt   So   </span></span>
-<span id="cb203-20"><a href="dplyr.html#cb203-20" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb203-10"><a href="dplyr.html#cb203-10" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwac… Ereigni… 2025-03-06 15:01:00  2025 Mär   Do   </span></span>
+<span id="cb203-11"><a href="dplyr.html#cb203-11" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi… Ereigni… 2025-03-06 14:57:00  2025 Mär   Do   </span></span>
+<span id="cb203-12"><a href="dplyr.html#cb203-12" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere … Ereigni… 2025-03-06 14:49:00  2025 Mär   Do   </span></span>
+<span id="cb203-13"><a href="dplyr.html#cb203-13" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist … Ereigni… 2025-03-06 11:40:00  2025 Mär   Do   </span></span>
+<span id="cb203-14"><a href="dplyr.html#cb203-14" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfrie… Ereigni… 2025-03-06 10:49:00  2025 Mär   Do   </span></span>
+<span id="cb203-15"><a href="dplyr.html#cb203-15" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrs… Ereigni… 2025-03-06 10:46:00  2025 Mär   Do   </span></span>
+<span id="cb203-16"><a href="dplyr.html#cb203-16" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinan… Ereigni… 2025-03-06 10:43:00  2025 Mär   Do   </span></span>
+<span id="cb203-17"><a href="dplyr.html#cb203-17" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbei… Ereigni… 2025-03-06 09:52:00  2025 Mär   Do   </span></span>
+<span id="cb203-18"><a href="dplyr.html#cb203-18" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrol… Ereigni… 2025-03-06 09:21:00  2025 Mär   Do   </span></span>
+<span id="cb203-19"><a href="dplyr.html#cb203-19" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zei… Ereigni… 2025-03-05 16:53:00  2025 Mär   Mi   </span></span>
+<span id="cb203-20"><a href="dplyr.html#cb203-20" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>To extract the time of day, we first have to extract the substring of “Date”
 that contains the time and then apply the lubridate function <code>hm()</code> to it.</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="dplyr.html#cb204-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
 <span id="cb204-2"><a href="dplyr.html#cb204-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> </span>
-<span id="cb204-3"><a href="dplyr.html#cb204-3" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">length</span>(Date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb204-3"><a href="dplyr.html#cb204-3" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">str_length</span>(Date)) <span class="sc">%&gt;%</span> </span>
 <span id="cb204-4"><a href="dplyr.html#cb204-4" tabindex="-1"></a>           <span class="fu">hm</span>()</span>
 <span id="cb204-5"><a href="dplyr.html#cb204-5" tabindex="-1"></a>         )</span>
-<span id="cb204-6"><a href="dplyr.html#cb204-6" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 4</span></span>
+<span id="cb204-6"><a href="dplyr.html#cb204-6" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 4</span></span>
 <span id="cb204-7"><a href="dplyr.html#cb204-7" tabindex="-1"></a><span class="do">##    Date                 Report                               District time      </span></span>
 <span id="cb204-8"><a href="dplyr.html#cb204-8" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                &lt;chr&gt;                                &lt;chr&gt;    &lt;Period&gt;  </span></span>
-<span id="cb204-9"><a href="dplyr.html#cb204-9" tabindex="-1"></a><span class="do">##  1 16.10.2023 17:55 Uhr Verdacht eines Tötungsdeliktes - Mo… Ereigni… 17H 55M 0S</span></span>
-<span id="cb204-10"><a href="dplyr.html#cb204-10" tabindex="-1"></a><span class="do">##  2 16.10.2023 17:49 Uhr Gefährliche Körperverletzung durch … Ereigni… 17H 49M 0S</span></span>
-<span id="cb204-11"><a href="dplyr.html#cb204-11" tabindex="-1"></a><span class="do">##  3 16.10.2023 14:43 Uhr Vorkommnisse im Zusammenhang mit de… Ereigni… 14H 43M 0S</span></span>
-<span id="cb204-12"><a href="dplyr.html#cb204-12" tabindex="-1"></a><span class="do">##  4 16.10.2023 11:26 Uhr Festnahme nach räuberischem Diebsta… Ereigni… 11H 26M 0S</span></span>
-<span id="cb204-13"><a href="dplyr.html#cb204-13" tabindex="-1"></a><span class="do">##  5 16.10.2023 10:07 Uhr Verletzte Radfahrerin in Krankenhau… Ereigni… 10H 7M 0S </span></span>
-<span id="cb204-14"><a href="dplyr.html#cb204-14" tabindex="-1"></a><span class="do">##  6 16.10.2023 09:53 Uhr Brandstiftung an mehreren Fahrzeugen Ereigni… 9H 53M 0S </span></span>
-<span id="cb204-15"><a href="dplyr.html#cb204-15" tabindex="-1"></a><span class="do">##  7 15.10.2023 21:07 Uhr Verkehrsunfall mit Sonder- und Wege… Ereigni… 21H 7M 0S </span></span>
-<span id="cb204-16"><a href="dplyr.html#cb204-16" tabindex="-1"></a><span class="do">##  8 15.10.2023 15:46 Uhr Raub im Juweliergeschäft             Ereigni… 15H 46M 0S</span></span>
-<span id="cb204-17"><a href="dplyr.html#cb204-17" tabindex="-1"></a><span class="do">##  9 15.10.2023 14:59 Uhr Einkaufswagen aus Hochhaus geworfen… Ereigni… 14H 59M 0S</span></span>
-<span id="cb204-18"><a href="dplyr.html#cb204-18" tabindex="-1"></a><span class="do">## 10 15.10.2023 14:47 Uhr Vorkommnisse im Zusammenhang mit de… Ereigni… 14H 47M 0S</span></span>
-<span id="cb204-19"><a href="dplyr.html#cb204-19" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb204-9"><a href="dplyr.html#cb204-9" tabindex="-1"></a><span class="do">##  1 06.03.2025 15:01 Uhr Heranwachsender mit mehreren Stichv… Ereigni… 15H 1M 0S </span></span>
+<span id="cb204-10"><a href="dplyr.html#cb204-10" tabindex="-1"></a><span class="do">##  2 06.03.2025 14:57 Uhr Kokstaxi-Fahrer festgenommen         Ereigni… 14H 57M 0S</span></span>
+<span id="cb204-11"><a href="dplyr.html#cb204-11" tabindex="-1"></a><span class="do">##  3 06.03.2025 14:49 Uhr Mehrere Brände in einer Nacht        Ereigni… 14H 49M 0S</span></span>
+<span id="cb204-12"><a href="dplyr.html#cb204-12" tabindex="-1"></a><span class="do">##  4 06.03.2025 11:40 Uhr Tourist bei Verkehrsunfall verletzt  Ereigni… 11H 40M 0S</span></span>
+<span id="cb204-13"><a href="dplyr.html#cb204-13" tabindex="-1"></a><span class="do">##  5 06.03.2025 10:49 Uhr Hausfriedensbruch begangen und Lade… Ereigni… 10H 49M 0S</span></span>
+<span id="cb204-14"><a href="dplyr.html#cb204-14" tabindex="-1"></a><span class="do">##  6 06.03.2025 10:46 Uhr Verkehrsunfall auf Kreuzung – Fußgä… Ereigni… 10H 46M 0S</span></span>
+<span id="cb204-15"><a href="dplyr.html#cb204-15" tabindex="-1"></a><span class="do">##  7 06.03.2025 10:43 Uhr Auseinandersetzung im Park           Ereigni… 10H 43M 0S</span></span>
+<span id="cb204-16"><a href="dplyr.html#cb204-16" tabindex="-1"></a><span class="do">##  8 06.03.2025 09:52 Uhr Mitarbeiter von Ladendieb verletzt   Ereigni… 9H 52M 0S </span></span>
+<span id="cb204-17"><a href="dplyr.html#cb204-17" tabindex="-1"></a><span class="do">##  9 06.03.2025 09:21 Uhr Motorrollerfahrerin bei Verkehrsunf… Ereigni… 9H 21M 0S </span></span>
+<span id="cb204-18"><a href="dplyr.html#cb204-18" tabindex="-1"></a><span class="do">## 10 05.03.2025 16:53 Uhr Mann zeigt Hitlergruß und äußert si… Ereigni… 16H 53M 0S</span></span>
+<span id="cb204-19"><a href="dplyr.html#cb204-19" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>We can combine all these individual steps in one <code>mutate()</code> command and apply
 them to the object <code>reports</code>.</p>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="dplyr.html#cb205-1" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
-<span id="cb205-2"><a href="dplyr.html#cb205-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">length</span>(District)),</span>
+<span id="cb205-2"><a href="dplyr.html#cb205-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">str_length</span>(District)),</span>
 <span id="cb205-3"><a href="dplyr.html#cb205-3" tabindex="-1"></a>         <span class="at">date_cmpl =</span> <span class="fu">dmy_hm</span>(Date),</span>
 <span id="cb205-4"><a href="dplyr.html#cb205-4" tabindex="-1"></a>         <span class="at">year =</span> <span class="fu">year</span>(date_cmpl),</span>
 <span id="cb205-5"><a href="dplyr.html#cb205-5" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb205-6"><a href="dplyr.html#cb205-6" tabindex="-1"></a>         <span class="at">day =</span> <span class="fu">wday</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb205-7"><a href="dplyr.html#cb205-7" tabindex="-1"></a>         <span class="at">time =</span> </span>
-<span id="cb205-8"><a href="dplyr.html#cb205-8" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">length</span>(Date)) <span class="sc">%&gt;%</span> </span>
+<span id="cb205-8"><a href="dplyr.html#cb205-8" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">str_length</span>(Date)) <span class="sc">%&gt;%</span> </span>
 <span id="cb205-9"><a href="dplyr.html#cb205-9" tabindex="-1"></a>           <span class="fu">hm</span>()</span>
 <span id="cb205-10"><a href="dplyr.html#cb205-10" tabindex="-1"></a>         )</span>
 <span id="cb205-11"><a href="dplyr.html#cb205-11" tabindex="-1"></a></span>
 <span id="cb205-12"><a href="dplyr.html#cb205-12" tabindex="-1"></a>reports</span>
-<span id="cb205-13"><a href="dplyr.html#cb205-13" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 8</span></span>
+<span id="cb205-13"><a href="dplyr.html#cb205-13" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 8</span></span>
 <span id="cb205-14"><a href="dplyr.html#cb205-14" tabindex="-1"></a><span class="do">##    Date         Report District date_cmpl            year month day   time      </span></span>
 <span id="cb205-15"><a href="dplyr.html#cb205-15" tabindex="-1"></a><span class="do">##    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;    &lt;dttm&gt;              &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb205-16"><a href="dplyr.html#cb205-16" tabindex="-1"></a><span class="do">##  1 16.10.2023 … Verda… Treptow… 2023-10-16 17:55:00  2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb205-17"><a href="dplyr.html#cb205-17" tabindex="-1"></a><span class="do">##  2 16.10.2023 … Gefäh… Charlot… 2023-10-16 17:49:00  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb205-18"><a href="dplyr.html#cb205-18" tabindex="-1"></a><span class="do">##  3 16.10.2023 … Vorko… berlinw… 2023-10-16 14:43:00  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb205-19"><a href="dplyr.html#cb205-19" tabindex="-1"></a><span class="do">##  4 16.10.2023 … Festn… Friedri… 2023-10-16 11:26:00  2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb205-20"><a href="dplyr.html#cb205-20" tabindex="-1"></a><span class="do">##  5 16.10.2023 … Verle… Marzahn… 2023-10-16 10:07:00  2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb205-21"><a href="dplyr.html#cb205-21" tabindex="-1"></a><span class="do">##  6 16.10.2023 … Brand… Friedri… 2023-10-16 09:53:00  2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb205-22"><a href="dplyr.html#cb205-22" tabindex="-1"></a><span class="do">##  7 15.10.2023 … Verke… Mitte    2023-10-15 21:07:00  2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb205-23"><a href="dplyr.html#cb205-23" tabindex="-1"></a><span class="do">##  8 15.10.2023 … Raub … Charlot… 2023-10-15 15:46:00  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb205-24"><a href="dplyr.html#cb205-24" tabindex="-1"></a><span class="do">##  9 15.10.2023 … Einka… Neukölln 2023-10-15 14:59:00  2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb205-25"><a href="dplyr.html#cb205-25" tabindex="-1"></a><span class="do">## 10 15.10.2023 … Vorko… berlinw… 2023-10-15 14:47:00  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb205-26"><a href="dplyr.html#cb205-26" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb205-16"><a href="dplyr.html#cb205-16" tabindex="-1"></a><span class="do">##  1 06.03.2025 … Heran… Mitte    2025-03-06 15:01:00  2025 Mär   Do    15H 1M 0S </span></span>
+<span id="cb205-17"><a href="dplyr.html#cb205-17" tabindex="-1"></a><span class="do">##  2 06.03.2025 … Kokst… Reinick… 2025-03-06 14:57:00  2025 Mär   Do    14H 57M 0S</span></span>
+<span id="cb205-18"><a href="dplyr.html#cb205-18" tabindex="-1"></a><span class="do">##  3 06.03.2025 … Mehre… Lichten… 2025-03-06 14:49:00  2025 Mär   Do    14H 49M 0S</span></span>
+<span id="cb205-19"><a href="dplyr.html#cb205-19" tabindex="-1"></a><span class="do">##  4 06.03.2025 … Touri… Mitte    2025-03-06 11:40:00  2025 Mär   Do    11H 40M 0S</span></span>
+<span id="cb205-20"><a href="dplyr.html#cb205-20" tabindex="-1"></a><span class="do">##  5 06.03.2025 … Hausf… Pankow   2025-03-06 10:49:00  2025 Mär   Do    10H 49M 0S</span></span>
+<span id="cb205-21"><a href="dplyr.html#cb205-21" tabindex="-1"></a><span class="do">##  6 06.03.2025 … Verke… Friedri… 2025-03-06 10:46:00  2025 Mär   Do    10H 46M 0S</span></span>
+<span id="cb205-22"><a href="dplyr.html#cb205-22" tabindex="-1"></a><span class="do">##  7 06.03.2025 … Ausei… Pankow   2025-03-06 10:43:00  2025 Mär   Do    10H 43M 0S</span></span>
+<span id="cb205-23"><a href="dplyr.html#cb205-23" tabindex="-1"></a><span class="do">##  8 06.03.2025 … Mitar… Charlot… 2025-03-06 09:52:00  2025 Mär   Do    9H 52M 0S </span></span>
+<span id="cb205-24"><a href="dplyr.html#cb205-24" tabindex="-1"></a><span class="do">##  9 06.03.2025 … Motor… Mitte    2025-03-06 09:21:00  2025 Mär   Do    9H 21M 0S </span></span>
+<span id="cb205-25"><a href="dplyr.html#cb205-25" tabindex="-1"></a><span class="do">## 10 05.03.2025 … Mann … Charlot… 2025-03-05 16:53:00  2025 Mär   Mi    16H 53M 0S</span></span>
+<span id="cb205-26"><a href="dplyr.html#cb205-26" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div id="select" class="section level2 hasAnchor" number="11.2">
@@ -625,37 +625,37 @@ and one or several names of columns that should be kept. If columns follow after
 each other in order, we can also use a “from:to” notation.</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="dplyr.html#cb206-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
 <span id="cb206-2"><a href="dplyr.html#cb206-2" tabindex="-1"></a>  <span class="fu">select</span>(District, year, month, day, time)</span>
-<span id="cb206-3"><a href="dplyr.html#cb206-3" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 5</span></span>
+<span id="cb206-3"><a href="dplyr.html#cb206-3" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 5</span></span>
 <span id="cb206-4"><a href="dplyr.html#cb206-4" tabindex="-1"></a><span class="do">##    District                    year month day   time      </span></span>
 <span id="cb206-5"><a href="dplyr.html#cb206-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb206-6"><a href="dplyr.html#cb206-6" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick            2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb206-7"><a href="dplyr.html#cb206-7" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb206-8"><a href="dplyr.html#cb206-8" tabindex="-1"></a><span class="do">##  3 berlinweit                  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb206-9"><a href="dplyr.html#cb206-9" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg    2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb206-10"><a href="dplyr.html#cb206-10" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf         2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb206-11"><a href="dplyr.html#cb206-11" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb206-12"><a href="dplyr.html#cb206-12" tabindex="-1"></a><span class="do">##  7 Mitte                       2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb206-13"><a href="dplyr.html#cb206-13" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb206-14"><a href="dplyr.html#cb206-14" tabindex="-1"></a><span class="do">##  9 Neukölln                    2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb206-15"><a href="dplyr.html#cb206-15" tabindex="-1"></a><span class="do">## 10 berlinweit                  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb206-16"><a href="dplyr.html#cb206-16" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span>
+<span id="cb206-6"><a href="dplyr.html#cb206-6" tabindex="-1"></a><span class="do">##  1 Mitte                       2025 Mär   Do    15H 1M 0S </span></span>
+<span id="cb206-7"><a href="dplyr.html#cb206-7" tabindex="-1"></a><span class="do">##  2 Reinickendorf               2025 Mär   Do    14H 57M 0S</span></span>
+<span id="cb206-8"><a href="dplyr.html#cb206-8" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2025 Mär   Do    14H 49M 0S</span></span>
+<span id="cb206-9"><a href="dplyr.html#cb206-9" tabindex="-1"></a><span class="do">##  4 Mitte                       2025 Mär   Do    11H 40M 0S</span></span>
+<span id="cb206-10"><a href="dplyr.html#cb206-10" tabindex="-1"></a><span class="do">##  5 Pankow                      2025 Mär   Do    10H 49M 0S</span></span>
+<span id="cb206-11"><a href="dplyr.html#cb206-11" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2025 Mär   Do    10H 46M 0S</span></span>
+<span id="cb206-12"><a href="dplyr.html#cb206-12" tabindex="-1"></a><span class="do">##  7 Pankow                      2025 Mär   Do    10H 43M 0S</span></span>
+<span id="cb206-13"><a href="dplyr.html#cb206-13" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2025 Mär   Do    9H 52M 0S </span></span>
+<span id="cb206-14"><a href="dplyr.html#cb206-14" tabindex="-1"></a><span class="do">##  9 Mitte                       2025 Mär   Do    9H 21M 0S </span></span>
+<span id="cb206-15"><a href="dplyr.html#cb206-15" tabindex="-1"></a><span class="do">## 10 Charlottenburg-Wilmersdorf  2025 Mär   Mi    16H 53M 0S</span></span>
+<span id="cb206-16"><a href="dplyr.html#cb206-16" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span>
 <span id="cb206-17"><a href="dplyr.html#cb206-17" tabindex="-1"></a></span>
 <span id="cb206-18"><a href="dplyr.html#cb206-18" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
 <span id="cb206-19"><a href="dplyr.html#cb206-19" tabindex="-1"></a>  <span class="fu">select</span>(District, year<span class="sc">:</span>time)</span>
-<span id="cb206-20"><a href="dplyr.html#cb206-20" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 5</span></span>
+<span id="cb206-20"><a href="dplyr.html#cb206-20" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 5</span></span>
 <span id="cb206-21"><a href="dplyr.html#cb206-21" tabindex="-1"></a><span class="do">##    District                    year month day   time      </span></span>
 <span id="cb206-22"><a href="dplyr.html#cb206-22" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb206-23"><a href="dplyr.html#cb206-23" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick            2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb206-24"><a href="dplyr.html#cb206-24" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb206-25"><a href="dplyr.html#cb206-25" tabindex="-1"></a><span class="do">##  3 berlinweit                  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb206-26"><a href="dplyr.html#cb206-26" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg    2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb206-27"><a href="dplyr.html#cb206-27" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf         2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb206-28"><a href="dplyr.html#cb206-28" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb206-29"><a href="dplyr.html#cb206-29" tabindex="-1"></a><span class="do">##  7 Mitte                       2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb206-30"><a href="dplyr.html#cb206-30" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb206-31"><a href="dplyr.html#cb206-31" tabindex="-1"></a><span class="do">##  9 Neukölln                    2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb206-32"><a href="dplyr.html#cb206-32" tabindex="-1"></a><span class="do">## 10 berlinweit                  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb206-33"><a href="dplyr.html#cb206-33" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb206-23"><a href="dplyr.html#cb206-23" tabindex="-1"></a><span class="do">##  1 Mitte                       2025 Mär   Do    15H 1M 0S </span></span>
+<span id="cb206-24"><a href="dplyr.html#cb206-24" tabindex="-1"></a><span class="do">##  2 Reinickendorf               2025 Mär   Do    14H 57M 0S</span></span>
+<span id="cb206-25"><a href="dplyr.html#cb206-25" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2025 Mär   Do    14H 49M 0S</span></span>
+<span id="cb206-26"><a href="dplyr.html#cb206-26" tabindex="-1"></a><span class="do">##  4 Mitte                       2025 Mär   Do    11H 40M 0S</span></span>
+<span id="cb206-27"><a href="dplyr.html#cb206-27" tabindex="-1"></a><span class="do">##  5 Pankow                      2025 Mär   Do    10H 49M 0S</span></span>
+<span id="cb206-28"><a href="dplyr.html#cb206-28" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2025 Mär   Do    10H 46M 0S</span></span>
+<span id="cb206-29"><a href="dplyr.html#cb206-29" tabindex="-1"></a><span class="do">##  7 Pankow                      2025 Mär   Do    10H 43M 0S</span></span>
+<span id="cb206-30"><a href="dplyr.html#cb206-30" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2025 Mär   Do    9H 52M 0S </span></span>
+<span id="cb206-31"><a href="dplyr.html#cb206-31" tabindex="-1"></a><span class="do">##  9 Mitte                       2025 Mär   Do    9H 21M 0S </span></span>
+<span id="cb206-32"><a href="dplyr.html#cb206-32" tabindex="-1"></a><span class="do">## 10 Charlottenburg-Wilmersdorf  2025 Mär   Mi    16H 53M 0S</span></span>
+<span id="cb206-33"><a href="dplyr.html#cb206-33" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 <p>Instead of telling <code>select()</code> which columns we want to keep, we can also tell it
 which ones not to keep by adding a <code>-</code> before the column names. If we want to
 exclude multiple columns in one step, we combine them with the <code>c()</code> function
@@ -665,20 +665,20 @@ result to <code>reports</code>.</p>
 <span id="cb207-2"><a href="dplyr.html#cb207-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Date, Report, date_cmpl))</span>
 <span id="cb207-3"><a href="dplyr.html#cb207-3" tabindex="-1"></a></span>
 <span id="cb207-4"><a href="dplyr.html#cb207-4" tabindex="-1"></a>reports</span>
-<span id="cb207-5"><a href="dplyr.html#cb207-5" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 5</span></span>
+<span id="cb207-5"><a href="dplyr.html#cb207-5" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 5</span></span>
 <span id="cb207-6"><a href="dplyr.html#cb207-6" tabindex="-1"></a><span class="do">##    District                    year month day   time      </span></span>
 <span id="cb207-7"><a href="dplyr.html#cb207-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb207-8"><a href="dplyr.html#cb207-8" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick            2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb207-9"><a href="dplyr.html#cb207-9" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb207-10"><a href="dplyr.html#cb207-10" tabindex="-1"></a><span class="do">##  3 berlinweit                  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb207-11"><a href="dplyr.html#cb207-11" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg    2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb207-12"><a href="dplyr.html#cb207-12" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf         2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb207-13"><a href="dplyr.html#cb207-13" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb207-14"><a href="dplyr.html#cb207-14" tabindex="-1"></a><span class="do">##  7 Mitte                       2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb207-15"><a href="dplyr.html#cb207-15" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb207-16"><a href="dplyr.html#cb207-16" tabindex="-1"></a><span class="do">##  9 Neukölln                    2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb207-17"><a href="dplyr.html#cb207-17" tabindex="-1"></a><span class="do">## 10 berlinweit                  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb207-18"><a href="dplyr.html#cb207-18" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb207-8"><a href="dplyr.html#cb207-8" tabindex="-1"></a><span class="do">##  1 Mitte                       2025 Mär   Do    15H 1M 0S </span></span>
+<span id="cb207-9"><a href="dplyr.html#cb207-9" tabindex="-1"></a><span class="do">##  2 Reinickendorf               2025 Mär   Do    14H 57M 0S</span></span>
+<span id="cb207-10"><a href="dplyr.html#cb207-10" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2025 Mär   Do    14H 49M 0S</span></span>
+<span id="cb207-11"><a href="dplyr.html#cb207-11" tabindex="-1"></a><span class="do">##  4 Mitte                       2025 Mär   Do    11H 40M 0S</span></span>
+<span id="cb207-12"><a href="dplyr.html#cb207-12" tabindex="-1"></a><span class="do">##  5 Pankow                      2025 Mär   Do    10H 49M 0S</span></span>
+<span id="cb207-13"><a href="dplyr.html#cb207-13" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2025 Mär   Do    10H 46M 0S</span></span>
+<span id="cb207-14"><a href="dplyr.html#cb207-14" tabindex="-1"></a><span class="do">##  7 Pankow                      2025 Mär   Do    10H 43M 0S</span></span>
+<span id="cb207-15"><a href="dplyr.html#cb207-15" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2025 Mär   Do    9H 52M 0S </span></span>
+<span id="cb207-16"><a href="dplyr.html#cb207-16" tabindex="-1"></a><span class="do">##  9 Mitte                       2025 Mär   Do    9H 21M 0S </span></span>
+<span id="cb207-17"><a href="dplyr.html#cb207-17" tabindex="-1"></a><span class="do">## 10 Charlottenburg-Wilmersdorf  2025 Mär   Mi    16H 53M 0S</span></span>
+<span id="cb207-18"><a href="dplyr.html#cb207-18" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 </div>
 <div id="rename" class="section level2 hasAnchor" number="11.3">
 <h2><span class="header-section-number">11.3</span> <code>rename()</code><a href="dplyr.html#rename" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -694,20 +694,20 @@ on by the pipe here – followed by one or more arguments in the form
 <span id="cb208-2"><a href="dplyr.html#cb208-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">district =</span> District)</span>
 <span id="cb208-3"><a href="dplyr.html#cb208-3" tabindex="-1"></a></span>
 <span id="cb208-4"><a href="dplyr.html#cb208-4" tabindex="-1"></a>reports</span>
-<span id="cb208-5"><a href="dplyr.html#cb208-5" tabindex="-1"></a><span class="do">## # A tibble: 21,952 × 5</span></span>
+<span id="cb208-5"><a href="dplyr.html#cb208-5" tabindex="-1"></a><span class="do">## # A tibble: 12,412 × 5</span></span>
 <span id="cb208-6"><a href="dplyr.html#cb208-6" tabindex="-1"></a><span class="do">##    district                    year month day   time      </span></span>
 <span id="cb208-7"><a href="dplyr.html#cb208-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb208-8"><a href="dplyr.html#cb208-8" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick            2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb208-9"><a href="dplyr.html#cb208-9" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb208-10"><a href="dplyr.html#cb208-10" tabindex="-1"></a><span class="do">##  3 berlinweit                  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb208-11"><a href="dplyr.html#cb208-11" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg    2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb208-12"><a href="dplyr.html#cb208-12" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf         2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb208-13"><a href="dplyr.html#cb208-13" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb208-14"><a href="dplyr.html#cb208-14" tabindex="-1"></a><span class="do">##  7 Mitte                       2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb208-15"><a href="dplyr.html#cb208-15" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb208-16"><a href="dplyr.html#cb208-16" tabindex="-1"></a><span class="do">##  9 Neukölln                    2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb208-17"><a href="dplyr.html#cb208-17" tabindex="-1"></a><span class="do">## 10 berlinweit                  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb208-18"><a href="dplyr.html#cb208-18" tabindex="-1"></a><span class="do">## # ℹ 21,942 more rows</span></span></code></pre></div>
+<span id="cb208-8"><a href="dplyr.html#cb208-8" tabindex="-1"></a><span class="do">##  1 Mitte                       2025 Mär   Do    15H 1M 0S </span></span>
+<span id="cb208-9"><a href="dplyr.html#cb208-9" tabindex="-1"></a><span class="do">##  2 Reinickendorf               2025 Mär   Do    14H 57M 0S</span></span>
+<span id="cb208-10"><a href="dplyr.html#cb208-10" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2025 Mär   Do    14H 49M 0S</span></span>
+<span id="cb208-11"><a href="dplyr.html#cb208-11" tabindex="-1"></a><span class="do">##  4 Mitte                       2025 Mär   Do    11H 40M 0S</span></span>
+<span id="cb208-12"><a href="dplyr.html#cb208-12" tabindex="-1"></a><span class="do">##  5 Pankow                      2025 Mär   Do    10H 49M 0S</span></span>
+<span id="cb208-13"><a href="dplyr.html#cb208-13" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2025 Mär   Do    10H 46M 0S</span></span>
+<span id="cb208-14"><a href="dplyr.html#cb208-14" tabindex="-1"></a><span class="do">##  7 Pankow                      2025 Mär   Do    10H 43M 0S</span></span>
+<span id="cb208-15"><a href="dplyr.html#cb208-15" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2025 Mär   Do    9H 52M 0S </span></span>
+<span id="cb208-16"><a href="dplyr.html#cb208-16" tabindex="-1"></a><span class="do">##  9 Mitte                       2025 Mär   Do    9H 21M 0S </span></span>
+<span id="cb208-17"><a href="dplyr.html#cb208-17" tabindex="-1"></a><span class="do">## 10 Charlottenburg-Wilmersdorf  2025 Mär   Mi    16H 53M 0S</span></span>
+<span id="cb208-18"><a href="dplyr.html#cb208-18" tabindex="-1"></a><span class="do">## # ℹ 12,402 more rows</span></span></code></pre></div>
 </div>
 <div id="filter" class="section level2 hasAnchor" number="11.4">
 <h2><span class="header-section-number">11.4</span> <code>filter()</code><a href="dplyr.html#filter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -722,55 +722,103 @@ should filter our data for complete years.</p>
 argument and one or multiple expressions that specify the rules by which to
 filter. To write these expressions, we can make use of the comparison operators
 discussed in subchapter <a href="R1.html#comparison">1.3.2</a>.</p>
-<p>To filter for all years that are not 2022, we can write:</p>
+<p>To filter for all years that are not 2025, we can write:</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="dplyr.html#cb209-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
-<span id="cb209-2"><a href="dplyr.html#cb209-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2022</span>)</span>
-<span id="cb209-3"><a href="dplyr.html#cb209-3" tabindex="-1"></a><span class="do">## # A tibble: 19,716 × 5</span></span>
+<span id="cb209-2"><a href="dplyr.html#cb209-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2025</span>)</span>
+<span id="cb209-3"><a href="dplyr.html#cb209-3" tabindex="-1"></a><span class="do">## # A tibble: 11,912 × 5</span></span>
 <span id="cb209-4"><a href="dplyr.html#cb209-4" tabindex="-1"></a><span class="do">##    district                    year month day   time      </span></span>
 <span id="cb209-5"><a href="dplyr.html#cb209-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb209-6"><a href="dplyr.html#cb209-6" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick            2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb209-7"><a href="dplyr.html#cb209-7" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb209-8"><a href="dplyr.html#cb209-8" tabindex="-1"></a><span class="do">##  3 berlinweit                  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb209-9"><a href="dplyr.html#cb209-9" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg    2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb209-10"><a href="dplyr.html#cb209-10" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf         2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb209-11"><a href="dplyr.html#cb209-11" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb209-12"><a href="dplyr.html#cb209-12" tabindex="-1"></a><span class="do">##  7 Mitte                       2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb209-13"><a href="dplyr.html#cb209-13" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb209-14"><a href="dplyr.html#cb209-14" tabindex="-1"></a><span class="do">##  9 Neukölln                    2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb209-15"><a href="dplyr.html#cb209-15" tabindex="-1"></a><span class="do">## 10 berlinweit                  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb209-16"><a href="dplyr.html#cb209-16" tabindex="-1"></a><span class="do">## # ℹ 19,706 more rows</span></span></code></pre></div>
-<p>Thus, only the observations where “year” does not equal “2022” remain in the
+<span id="cb209-6"><a href="dplyr.html#cb209-6" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf         2024 Okt   Fr    11H 25M 0S</span></span>
+<span id="cb209-7"><a href="dplyr.html#cb209-7" tabindex="-1"></a><span class="do">##  2 Mitte                       2024 Sep   Do    11H 30M 0S</span></span>
+<span id="cb209-8"><a href="dplyr.html#cb209-8" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2024 Mai   Mi    14H 7M 0S </span></span>
+<span id="cb209-9"><a href="dplyr.html#cb209-9" tabindex="-1"></a><span class="do">##  4 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 59M 0S</span></span>
+<span id="cb209-10"><a href="dplyr.html#cb209-10" tabindex="-1"></a><span class="do">##  5 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 7M 0S </span></span>
+<span id="cb209-11"><a href="dplyr.html#cb209-11" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf  2024 Dez   Di    13H 46M 0S</span></span>
+<span id="cb209-12"><a href="dplyr.html#cb209-12" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick            2024 Dez   Di    12H 18M 0S</span></span>
+<span id="cb209-13"><a href="dplyr.html#cb209-13" tabindex="-1"></a><span class="do">##  8 Lichtenberg                 2024 Dez   Di    11H 56M 0S</span></span>
+<span id="cb209-14"><a href="dplyr.html#cb209-14" tabindex="-1"></a><span class="do">##  9 Charlottenburg-Wilmersdorf  2024 Dez   Di    11H 5M 0S </span></span>
+<span id="cb209-15"><a href="dplyr.html#cb209-15" tabindex="-1"></a><span class="do">## 10 Steglitz-Zehlendorf         2024 Dez   Mo    16H 58M 0S</span></span>
+<span id="cb209-16"><a href="dplyr.html#cb209-16" tabindex="-1"></a><span class="do">## # ℹ 11,902 more rows</span></span></code></pre></div>
+<p>Thus, only the observations where “year” does not equal “2025” remain in the
 tibble; more accurately, those observations for which the expression
-<code>year != 2022</code> is returned as <code>TRUE</code>.</p>
-<p>Closer inspection of the data reveals, that 2014 (the first year that is
-available on the website) is not complete either. There also seems to be one
-single report for 2013. We should also exclude these years for analysis. We can
-chain multiple expressions when using <code>filter()</code> separated by commas.</p>
+<code>year != 2025</code> is returned as <code>TRUE</code>.</p>
+<p>This is all the filtering we will have to do here, but we should still look on
+how to filter by multiple values at once, which is an important data
+wrangling still to have.</p>
+<p>We can chain multiple expressions when using <code>filter()</code> separated by commas.
+o for example to reduce the data set to observations from 2024, 2023 and 2022 we
+could write:</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="dplyr.html#cb210-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
-<span id="cb210-2"><a href="dplyr.html#cb210-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2022</span>, year <span class="sc">!=</span> <span class="dv">2014</span>, year <span class="sc">!=</span> <span class="dv">2013</span>)</span>
-<span id="cb210-3"><a href="dplyr.html#cb210-3" tabindex="-1"></a><span class="do">## # A tibble: 19,012 × 5</span></span>
+<span id="cb210-2"><a href="dplyr.html#cb210-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2025</span>, year <span class="sc">!=</span> <span class="dv">2021</span>, year <span class="sc">!=</span> <span class="dv">2020</span>)</span>
+<span id="cb210-3"><a href="dplyr.html#cb210-3" tabindex="-1"></a><span class="do">## # A tibble: 6,832 × 5</span></span>
 <span id="cb210-4"><a href="dplyr.html#cb210-4" tabindex="-1"></a><span class="do">##    district                    year month day   time      </span></span>
 <span id="cb210-5"><a href="dplyr.html#cb210-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
-<span id="cb210-6"><a href="dplyr.html#cb210-6" tabindex="-1"></a><span class="do">##  1 Treptow-Köpenick            2023 Okt   Mo    17H 55M 0S</span></span>
-<span id="cb210-7"><a href="dplyr.html#cb210-7" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf  2023 Okt   Mo    17H 49M 0S</span></span>
-<span id="cb210-8"><a href="dplyr.html#cb210-8" tabindex="-1"></a><span class="do">##  3 berlinweit                  2023 Okt   Mo    14H 43M 0S</span></span>
-<span id="cb210-9"><a href="dplyr.html#cb210-9" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg    2023 Okt   Mo    11H 26M 0S</span></span>
-<span id="cb210-10"><a href="dplyr.html#cb210-10" tabindex="-1"></a><span class="do">##  5 Marzahn-Hellersdorf         2023 Okt   Mo    10H 7M 0S </span></span>
-<span id="cb210-11"><a href="dplyr.html#cb210-11" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg    2023 Okt   Mo    9H 53M 0S </span></span>
-<span id="cb210-12"><a href="dplyr.html#cb210-12" tabindex="-1"></a><span class="do">##  7 Mitte                       2023 Okt   So    21H 7M 0S </span></span>
-<span id="cb210-13"><a href="dplyr.html#cb210-13" tabindex="-1"></a><span class="do">##  8 Charlottenburg-Wilmersdorf  2023 Okt   So    15H 46M 0S</span></span>
-<span id="cb210-14"><a href="dplyr.html#cb210-14" tabindex="-1"></a><span class="do">##  9 Neukölln                    2023 Okt   So    14H 59M 0S</span></span>
-<span id="cb210-15"><a href="dplyr.html#cb210-15" tabindex="-1"></a><span class="do">## 10 berlinweit                  2023 Okt   So    14H 47M 0S</span></span>
-<span id="cb210-16"><a href="dplyr.html#cb210-16" tabindex="-1"></a><span class="do">## # ℹ 19,002 more rows</span></span></code></pre></div>
+<span id="cb210-6"><a href="dplyr.html#cb210-6" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf         2024 Okt   Fr    11H 25M 0S</span></span>
+<span id="cb210-7"><a href="dplyr.html#cb210-7" tabindex="-1"></a><span class="do">##  2 Mitte                       2024 Sep   Do    11H 30M 0S</span></span>
+<span id="cb210-8"><a href="dplyr.html#cb210-8" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2024 Mai   Mi    14H 7M 0S </span></span>
+<span id="cb210-9"><a href="dplyr.html#cb210-9" tabindex="-1"></a><span class="do">##  4 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 59M 0S</span></span>
+<span id="cb210-10"><a href="dplyr.html#cb210-10" tabindex="-1"></a><span class="do">##  5 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 7M 0S </span></span>
+<span id="cb210-11"><a href="dplyr.html#cb210-11" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf  2024 Dez   Di    13H 46M 0S</span></span>
+<span id="cb210-12"><a href="dplyr.html#cb210-12" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick            2024 Dez   Di    12H 18M 0S</span></span>
+<span id="cb210-13"><a href="dplyr.html#cb210-13" tabindex="-1"></a><span class="do">##  8 Lichtenberg                 2024 Dez   Di    11H 56M 0S</span></span>
+<span id="cb210-14"><a href="dplyr.html#cb210-14" tabindex="-1"></a><span class="do">##  9 Charlottenburg-Wilmersdorf  2024 Dez   Di    11H 5M 0S </span></span>
+<span id="cb210-15"><a href="dplyr.html#cb210-15" tabindex="-1"></a><span class="do">## 10 Steglitz-Zehlendorf         2024 Dez   Mo    16H 58M 0S</span></span>
+<span id="cb210-16"><a href="dplyr.html#cb210-16" tabindex="-1"></a><span class="do">## # ℹ 6,822 more rows</span></span></code></pre></div>
+<p>Here we are excluding every observation that does not lie between 2022–2024.</p>
 <p>Often there are multiple ways to formulate the filtering expressions. Here, we
 could tell R which values for “year” we want to keep, instead of which we do not
 want to keep. Instead of listing all those individual years, we can use <code>%in%</code>
 to define a range of numerical values which should be kept when filtering. We
 assign the result to a new object for later use.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="dplyr.html#cb211-1" tabindex="-1"></a>reports_fyears <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
-<span id="cb211-2"><a href="dplyr.html#cb211-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2022</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="dplyr.html#cb211-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb211-2"><a href="dplyr.html#cb211-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2024</span>)</span>
+<span id="cb211-3"><a href="dplyr.html#cb211-3" tabindex="-1"></a><span class="do">## # A tibble: 6,832 × 5</span></span>
+<span id="cb211-4"><a href="dplyr.html#cb211-4" tabindex="-1"></a><span class="do">##    district                    year month day   time      </span></span>
+<span id="cb211-5"><a href="dplyr.html#cb211-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb211-6"><a href="dplyr.html#cb211-6" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf         2024 Okt   Fr    11H 25M 0S</span></span>
+<span id="cb211-7"><a href="dplyr.html#cb211-7" tabindex="-1"></a><span class="do">##  2 Mitte                       2024 Sep   Do    11H 30M 0S</span></span>
+<span id="cb211-8"><a href="dplyr.html#cb211-8" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2024 Mai   Mi    14H 7M 0S </span></span>
+<span id="cb211-9"><a href="dplyr.html#cb211-9" tabindex="-1"></a><span class="do">##  4 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 59M 0S</span></span>
+<span id="cb211-10"><a href="dplyr.html#cb211-10" tabindex="-1"></a><span class="do">##  5 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 7M 0S </span></span>
+<span id="cb211-11"><a href="dplyr.html#cb211-11" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf  2024 Dez   Di    13H 46M 0S</span></span>
+<span id="cb211-12"><a href="dplyr.html#cb211-12" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick            2024 Dez   Di    12H 18M 0S</span></span>
+<span id="cb211-13"><a href="dplyr.html#cb211-13" tabindex="-1"></a><span class="do">##  8 Lichtenberg                 2024 Dez   Di    11H 56M 0S</span></span>
+<span id="cb211-14"><a href="dplyr.html#cb211-14" tabindex="-1"></a><span class="do">##  9 Charlottenburg-Wilmersdorf  2024 Dez   Di    11H 5M 0S </span></span>
+<span id="cb211-15"><a href="dplyr.html#cb211-15" tabindex="-1"></a><span class="do">## 10 Steglitz-Zehlendorf         2024 Dez   Mo    16H 58M 0S</span></span>
+<span id="cb211-16"><a href="dplyr.html#cb211-16" tabindex="-1"></a><span class="do">## # ℹ 6,822 more rows</span></span></code></pre></div>
 <p>While the <code>,</code> behaves like the logical operator <code>&amp;</code>, we can also use <code>|</code> for
-“or” when combining expressions to be filtered upon.</p>
+“OR” when combining expressions to be filtered upon.</p>
+<p>For example we could use <code>|</code> to select the same years in this way:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="dplyr.html#cb212-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb212-2"><a href="dplyr.html#cb212-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2022</span> <span class="sc">|</span> year <span class="sc">==</span> <span class="dv">2023</span> <span class="sc">|</span> year <span class="sc">==</span> <span class="dv">2024</span>)</span>
+<span id="cb212-3"><a href="dplyr.html#cb212-3" tabindex="-1"></a><span class="do">## # A tibble: 6,832 × 5</span></span>
+<span id="cb212-4"><a href="dplyr.html#cb212-4" tabindex="-1"></a><span class="do">##    district                    year month day   time      </span></span>
+<span id="cb212-5"><a href="dplyr.html#cb212-5" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                      &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;Period&gt;  </span></span>
+<span id="cb212-6"><a href="dplyr.html#cb212-6" tabindex="-1"></a><span class="do">##  1 Marzahn-Hellersdorf         2024 Okt   Fr    11H 25M 0S</span></span>
+<span id="cb212-7"><a href="dplyr.html#cb212-7" tabindex="-1"></a><span class="do">##  2 Mitte                       2024 Sep   Do    11H 30M 0S</span></span>
+<span id="cb212-8"><a href="dplyr.html#cb212-8" tabindex="-1"></a><span class="do">##  3 Lichtenberg                 2024 Mai   Mi    14H 7M 0S </span></span>
+<span id="cb212-9"><a href="dplyr.html#cb212-9" tabindex="-1"></a><span class="do">##  4 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 59M 0S</span></span>
+<span id="cb212-10"><a href="dplyr.html#cb212-10" tabindex="-1"></a><span class="do">##  5 Charlottenburg-Wilmersdorf  2024 Dez   Di    16H 7M 0S </span></span>
+<span id="cb212-11"><a href="dplyr.html#cb212-11" tabindex="-1"></a><span class="do">##  6 Charlottenburg-Wilmersdorf  2024 Dez   Di    13H 46M 0S</span></span>
+<span id="cb212-12"><a href="dplyr.html#cb212-12" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick            2024 Dez   Di    12H 18M 0S</span></span>
+<span id="cb212-13"><a href="dplyr.html#cb212-13" tabindex="-1"></a><span class="do">##  8 Lichtenberg                 2024 Dez   Di    11H 56M 0S</span></span>
+<span id="cb212-14"><a href="dplyr.html#cb212-14" tabindex="-1"></a><span class="do">##  9 Charlottenburg-Wilmersdorf  2024 Dez   Di    11H 5M 0S </span></span>
+<span id="cb212-15"><a href="dplyr.html#cb212-15" tabindex="-1"></a><span class="do">## 10 Steglitz-Zehlendorf         2024 Dez   Mo    16H 58M 0S</span></span>
+<span id="cb212-16"><a href="dplyr.html#cb212-16" tabindex="-1"></a><span class="do">## # ℹ 6,822 more rows</span></span></code></pre></div>
+<p>It is important to keep in mind the differences between AND and OR here.
+If we would have used <code>&amp;</code> or <code>,</code> to chain these expressions instead, the
+following would have happened:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="dplyr.html#cb213-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb213-2"><a href="dplyr.html#cb213-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2022</span>, year <span class="sc">==</span> <span class="dv">2023</span>, year <span class="sc">==</span> <span class="dv">2024</span>)</span>
+<span id="cb213-3"><a href="dplyr.html#cb213-3" tabindex="-1"></a><span class="do">## # A tibble: 0 × 5</span></span>
+<span id="cb213-4"><a href="dplyr.html#cb213-4" tabindex="-1"></a><span class="do">## # ℹ 5 variables: district &lt;chr&gt;, year &lt;dbl&gt;, month &lt;ord&gt;, day &lt;ord&gt;,</span></span>
+<span id="cb213-5"><a href="dplyr.html#cb213-5" tabindex="-1"></a><span class="do">## #   time &lt;Period&gt;</span></span></code></pre></div>
+<p>We are left with nothing in our data set. This happens because the expression in
+<code>filter()</code> is now searching for observations who are <strong>at the same time</strong> from
+2022, 2023 <em>and</em> 2024. This is obviously impossible.</p>
+<p>Let us now actually remove the observations for 2025 from the saved object.</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="dplyr.html#cb214-1" tabindex="-1"></a>reports_fyears <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
+<span id="cb214-2"><a href="dplyr.html#cb214-2" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2025</span>)</span></code></pre></div>
 </div>
 <div id="summarise-group_by" class="section level2 hasAnchor" number="11.5">
 <h2><span class="header-section-number">11.5</span> <code>summarise()</code> &amp; <code>group_by()</code><a href="dplyr.html#summarise-group_by" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -795,12 +843,12 @@ tibble, containing only the summary statistics we requested. The function we use
 for the summary statistic here is <code>n()</code>, which returns the number of
 observations. As each observation represents one police report, this equals the
 overall number of reports.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="dplyr.html#cb212-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb212-2"><a href="dplyr.html#cb212-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb212-3"><a href="dplyr.html#cb212-3" tabindex="-1"></a><span class="do">## # A tibble: 1 × 1</span></span>
-<span id="cb212-4"><a href="dplyr.html#cb212-4" tabindex="-1"></a><span class="do">##   reports</span></span>
-<span id="cb212-5"><a href="dplyr.html#cb212-5" tabindex="-1"></a><span class="do">##     &lt;int&gt;</span></span>
-<span id="cb212-6"><a href="dplyr.html#cb212-6" tabindex="-1"></a><span class="do">## 1   19508</span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="dplyr.html#cb215-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb215-2"><a href="dplyr.html#cb215-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb215-3"><a href="dplyr.html#cb215-3" tabindex="-1"></a><span class="do">## # A tibble: 1 × 1</span></span>
+<span id="cb215-4"><a href="dplyr.html#cb215-4" tabindex="-1"></a><span class="do">##   reports</span></span>
+<span id="cb215-5"><a href="dplyr.html#cb215-5" tabindex="-1"></a><span class="do">##     &lt;int&gt;</span></span>
+<span id="cb215-6"><a href="dplyr.html#cb215-6" tabindex="-1"></a><span class="do">## 1   11912</span></span></code></pre></div>
 <p>This worked, but is not very interesting, as the result is the same as the length
 of the reports tibble. We are often more interested in summaries grouped by the
 value of one or more other variables. We might ask ourselves, if there are
@@ -811,113 +859,84 @@ returns the number of observations for each group, i.e. the number of reports
 per year. As always with <strong>dplyr</strong> functions, <code>group_by()</code> needs the data which
 will be grouped as the first argument, followed by one or multiple columns to
 group by.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="dplyr.html#cb213-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb213-2"><a href="dplyr.html#cb213-2" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb213-3"><a href="dplyr.html#cb213-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb213-4"><a href="dplyr.html#cb213-4" tabindex="-1"></a><span class="do">## # A tibble: 8 × 2</span></span>
-<span id="cb213-5"><a href="dplyr.html#cb213-5" tabindex="-1"></a><span class="do">##    year reports</span></span>
-<span id="cb213-6"><a href="dplyr.html#cb213-6" tabindex="-1"></a><span class="do">##   &lt;dbl&gt;   &lt;int&gt;</span></span>
-<span id="cb213-7"><a href="dplyr.html#cb213-7" tabindex="-1"></a><span class="do">## 1  2015    2369</span></span>
-<span id="cb213-8"><a href="dplyr.html#cb213-8" tabindex="-1"></a><span class="do">## 2  2016    2626</span></span>
-<span id="cb213-9"><a href="dplyr.html#cb213-9" tabindex="-1"></a><span class="do">## 3  2017    2233</span></span>
-<span id="cb213-10"><a href="dplyr.html#cb213-10" tabindex="-1"></a><span class="do">## 4  2018    2342</span></span>
-<span id="cb213-11"><a href="dplyr.html#cb213-11" tabindex="-1"></a><span class="do">## 5  2019    2619</span></span>
-<span id="cb213-12"><a href="dplyr.html#cb213-12" tabindex="-1"></a><span class="do">## 6  2020    2583</span></span>
-<span id="cb213-13"><a href="dplyr.html#cb213-13" tabindex="-1"></a><span class="do">## 7  2021    2500</span></span>
-<span id="cb213-14"><a href="dplyr.html#cb213-14" tabindex="-1"></a><span class="do">## 8  2022    2236</span></span></code></pre></div>
-<p>While there are differences between the years, there does not seem to be a
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="dplyr.html#cb216-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb216-2"><a href="dplyr.html#cb216-2" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb216-3"><a href="dplyr.html#cb216-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb216-4"><a href="dplyr.html#cb216-4" tabindex="-1"></a><span class="do">## # A tibble: 5 × 2</span></span>
+<span id="cb216-5"><a href="dplyr.html#cb216-5" tabindex="-1"></a><span class="do">##    year reports</span></span>
+<span id="cb216-6"><a href="dplyr.html#cb216-6" tabindex="-1"></a><span class="do">##   &lt;dbl&gt;   &lt;int&gt;</span></span>
+<span id="cb216-7"><a href="dplyr.html#cb216-7" tabindex="-1"></a><span class="do">## 1  2020    2581</span></span>
+<span id="cb216-8"><a href="dplyr.html#cb216-8" tabindex="-1"></a><span class="do">## 2  2021    2499</span></span>
+<span id="cb216-9"><a href="dplyr.html#cb216-9" tabindex="-1"></a><span class="do">## 3  2022    2235</span></span>
+<span id="cb216-10"><a href="dplyr.html#cb216-10" tabindex="-1"></a><span class="do">## 4  2023    2196</span></span>
+<span id="cb216-11"><a href="dplyr.html#cb216-11" tabindex="-1"></a><span class="do">## 5  2024    2401</span></span></code></pre></div>
+<p>While there are differences between the years, there does not seem to be a clear and
 systematic pattern to it. We can do the same kind of analysis grouped by months
 and weekdays.</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="dplyr.html#cb214-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb214-2"><a href="dplyr.html#cb214-2" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span> </span>
-<span id="cb214-3"><a href="dplyr.html#cb214-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb214-4"><a href="dplyr.html#cb214-4" tabindex="-1"></a><span class="do">## # A tibble: 12 × 2</span></span>
-<span id="cb214-5"><a href="dplyr.html#cb214-5" tabindex="-1"></a><span class="do">##    month reports</span></span>
-<span id="cb214-6"><a href="dplyr.html#cb214-6" tabindex="-1"></a><span class="do">##    &lt;ord&gt;   &lt;int&gt;</span></span>
-<span id="cb214-7"><a href="dplyr.html#cb214-7" tabindex="-1"></a><span class="do">##  1 Jan      1735</span></span>
-<span id="cb214-8"><a href="dplyr.html#cb214-8" tabindex="-1"></a><span class="do">##  2 Feb      1530</span></span>
-<span id="cb214-9"><a href="dplyr.html#cb214-9" tabindex="-1"></a><span class="do">##  3 Mär      1702</span></span>
-<span id="cb214-10"><a href="dplyr.html#cb214-10" tabindex="-1"></a><span class="do">##  4 Apr      1657</span></span>
-<span id="cb214-11"><a href="dplyr.html#cb214-11" tabindex="-1"></a><span class="do">##  5 Mai      1717</span></span>
-<span id="cb214-12"><a href="dplyr.html#cb214-12" tabindex="-1"></a><span class="do">##  6 Jun      1579</span></span>
-<span id="cb214-13"><a href="dplyr.html#cb214-13" tabindex="-1"></a><span class="do">##  7 Jul      1645</span></span>
-<span id="cb214-14"><a href="dplyr.html#cb214-14" tabindex="-1"></a><span class="do">##  8 Aug      1648</span></span>
-<span id="cb214-15"><a href="dplyr.html#cb214-15" tabindex="-1"></a><span class="do">##  9 Sep      1593</span></span>
-<span id="cb214-16"><a href="dplyr.html#cb214-16" tabindex="-1"></a><span class="do">## 10 Okt      1627</span></span>
-<span id="cb214-17"><a href="dplyr.html#cb214-17" tabindex="-1"></a><span class="do">## 11 Nov      1550</span></span>
-<span id="cb214-18"><a href="dplyr.html#cb214-18" tabindex="-1"></a><span class="do">## 12 Dez      1525</span></span>
-<span id="cb214-19"><a href="dplyr.html#cb214-19" tabindex="-1"></a></span>
-<span id="cb214-20"><a href="dplyr.html#cb214-20" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb214-21"><a href="dplyr.html#cb214-21" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">%&gt;%</span> </span>
-<span id="cb214-22"><a href="dplyr.html#cb214-22" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb214-23"><a href="dplyr.html#cb214-23" tabindex="-1"></a><span class="do">## # A tibble: 7 × 2</span></span>
-<span id="cb214-24"><a href="dplyr.html#cb214-24" tabindex="-1"></a><span class="do">##   day   reports</span></span>
-<span id="cb214-25"><a href="dplyr.html#cb214-25" tabindex="-1"></a><span class="do">##   &lt;ord&gt;   &lt;int&gt;</span></span>
-<span id="cb214-26"><a href="dplyr.html#cb214-26" tabindex="-1"></a><span class="do">## 1 So       2688</span></span>
-<span id="cb214-27"><a href="dplyr.html#cb214-27" tabindex="-1"></a><span class="do">## 2 Mo       2663</span></span>
-<span id="cb214-28"><a href="dplyr.html#cb214-28" tabindex="-1"></a><span class="do">## 3 Di       2790</span></span>
-<span id="cb214-29"><a href="dplyr.html#cb214-29" tabindex="-1"></a><span class="do">## 4 Mi       2909</span></span>
-<span id="cb214-30"><a href="dplyr.html#cb214-30" tabindex="-1"></a><span class="do">## 5 Do       2916</span></span>
-<span id="cb214-31"><a href="dplyr.html#cb214-31" tabindex="-1"></a><span class="do">## 6 Fr       2903</span></span>
-<span id="cb214-32"><a href="dplyr.html#cb214-32" tabindex="-1"></a><span class="do">## 7 Sa       2639</span></span></code></pre></div>
-<p>The analysis by month again shows no systematic variation. Looking at the
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="dplyr.html#cb217-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb217-2"><a href="dplyr.html#cb217-2" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span> </span>
+<span id="cb217-3"><a href="dplyr.html#cb217-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb217-4"><a href="dplyr.html#cb217-4" tabindex="-1"></a><span class="do">## # A tibble: 12 × 2</span></span>
+<span id="cb217-5"><a href="dplyr.html#cb217-5" tabindex="-1"></a><span class="do">##    month reports</span></span>
+<span id="cb217-6"><a href="dplyr.html#cb217-6" tabindex="-1"></a><span class="do">##    &lt;ord&gt;   &lt;int&gt;</span></span>
+<span id="cb217-7"><a href="dplyr.html#cb217-7" tabindex="-1"></a><span class="do">##  1 Jan      1013</span></span>
+<span id="cb217-8"><a href="dplyr.html#cb217-8" tabindex="-1"></a><span class="do">##  2 Feb       859</span></span>
+<span id="cb217-9"><a href="dplyr.html#cb217-9" tabindex="-1"></a><span class="do">##  3 Mär      1020</span></span>
+<span id="cb217-10"><a href="dplyr.html#cb217-10" tabindex="-1"></a><span class="do">##  4 Apr      1092</span></span>
+<span id="cb217-11"><a href="dplyr.html#cb217-11" tabindex="-1"></a><span class="do">##  5 Mai      1089</span></span>
+<span id="cb217-12"><a href="dplyr.html#cb217-12" tabindex="-1"></a><span class="do">##  6 Jun      1015</span></span>
+<span id="cb217-13"><a href="dplyr.html#cb217-13" tabindex="-1"></a><span class="do">##  7 Jul      1006</span></span>
+<span id="cb217-14"><a href="dplyr.html#cb217-14" tabindex="-1"></a><span class="do">##  8 Aug      1009</span></span>
+<span id="cb217-15"><a href="dplyr.html#cb217-15" tabindex="-1"></a><span class="do">##  9 Sep       975</span></span>
+<span id="cb217-16"><a href="dplyr.html#cb217-16" tabindex="-1"></a><span class="do">## 10 Okt       964</span></span>
+<span id="cb217-17"><a href="dplyr.html#cb217-17" tabindex="-1"></a><span class="do">## 11 Nov       957</span></span>
+<span id="cb217-18"><a href="dplyr.html#cb217-18" tabindex="-1"></a><span class="do">## 12 Dez       913</span></span>
+<span id="cb217-19"><a href="dplyr.html#cb217-19" tabindex="-1"></a></span>
+<span id="cb217-20"><a href="dplyr.html#cb217-20" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb217-21"><a href="dplyr.html#cb217-21" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">%&gt;%</span> </span>
+<span id="cb217-22"><a href="dplyr.html#cb217-22" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb217-23"><a href="dplyr.html#cb217-23" tabindex="-1"></a><span class="do">## # A tibble: 7 × 2</span></span>
+<span id="cb217-24"><a href="dplyr.html#cb217-24" tabindex="-1"></a><span class="do">##   day   reports</span></span>
+<span id="cb217-25"><a href="dplyr.html#cb217-25" tabindex="-1"></a><span class="do">##   &lt;ord&gt;   &lt;int&gt;</span></span>
+<span id="cb217-26"><a href="dplyr.html#cb217-26" tabindex="-1"></a><span class="do">## 1 So       1568</span></span>
+<span id="cb217-27"><a href="dplyr.html#cb217-27" tabindex="-1"></a><span class="do">## 2 Mo       1608</span></span>
+<span id="cb217-28"><a href="dplyr.html#cb217-28" tabindex="-1"></a><span class="do">## 3 Di       1772</span></span>
+<span id="cb217-29"><a href="dplyr.html#cb217-29" tabindex="-1"></a><span class="do">## 4 Mi       1834</span></span>
+<span id="cb217-30"><a href="dplyr.html#cb217-30" tabindex="-1"></a><span class="do">## 5 Do       1870</span></span>
+<span id="cb217-31"><a href="dplyr.html#cb217-31" tabindex="-1"></a><span class="do">## 6 Fr       1754</span></span>
+<span id="cb217-32"><a href="dplyr.html#cb217-32" tabindex="-1"></a><span class="do">## 7 Sa       1506</span></span></code></pre></div>
+<p>The analysis by month again shows no systematic variation (that February has less reports
+will moist probably come down to the shorter length of the month). Looking at the
 reports by day of the week on the other hand, shows a slight increase in reports
-over the week, culminating on Friday. As stated above, we do not really know
+over the week, culminating on Thursday As stated above, we do not really know
 how the data is created, so the main point to take away from this analysis might
-be, that the PR team of the Berlin police also works on the weekend.</p>
+be, that the PR team of the Berlin police also works on the weekend, but with fewer
+working hours.</p>
 <p>In the same manner, we can analyse the number of released police reports by
 district.</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="dplyr.html#cb215-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb215-2"><a href="dplyr.html#cb215-2" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb215-3"><a href="dplyr.html#cb215-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb215-4"><a href="dplyr.html#cb215-4" tabindex="-1"></a><span class="do">## # A tibble: 22 × 2</span></span>
-<span id="cb215-5"><a href="dplyr.html#cb215-5" tabindex="-1"></a><span class="do">##    district                     reports</span></span>
-<span id="cb215-6"><a href="dplyr.html#cb215-6" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                          &lt;int&gt;</span></span>
-<span id="cb215-7"><a href="dplyr.html#cb215-7" tabindex="-1"></a><span class="do">##  1 Charlottenburg - Wilmersdorf     513</span></span>
-<span id="cb215-8"><a href="dplyr.html#cb215-8" tabindex="-1"></a><span class="do">##  2 Charlottenburg-Wilmersdorf      1279</span></span>
-<span id="cb215-9"><a href="dplyr.html#cb215-9" tabindex="-1"></a><span class="do">##  3 Friedrichshain - Kreuzberg       577</span></span>
-<span id="cb215-10"><a href="dplyr.html#cb215-10" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg        1528</span></span>
-<span id="cb215-11"><a href="dplyr.html#cb215-11" tabindex="-1"></a><span class="do">##  5 Lichtenberg                     1075</span></span>
-<span id="cb215-12"><a href="dplyr.html#cb215-12" tabindex="-1"></a><span class="do">##  6 Marzahn - Hellersdorf            225</span></span>
-<span id="cb215-13"><a href="dplyr.html#cb215-13" tabindex="-1"></a><span class="do">##  7 Marzahn-Hellersdorf              758</span></span>
-<span id="cb215-14"><a href="dplyr.html#cb215-14" tabindex="-1"></a><span class="do">##  8 Mitte                           2936</span></span>
-<span id="cb215-15"><a href="dplyr.html#cb215-15" tabindex="-1"></a><span class="do">##  9 Neukölln                        1734</span></span>
-<span id="cb215-16"><a href="dplyr.html#cb215-16" tabindex="-1"></a><span class="do">## 10 Pankow                          1438</span></span>
-<span id="cb215-17"><a href="dplyr.html#cb215-17" tabindex="-1"></a><span class="do">## # ℹ 12 more rows</span></span></code></pre></div>
-<p>Before we interpret the result, let us examine the district names; districts
-with a dash are written in two ways: with whitespace around the dash and without
-one. There may have been a change in the way these names are recorded in the data
-over the years and we have to deal with it. We can use the function
-<code>str_remove_all()</code> from <strong>stringr</strong> to remove every occurrence of a pattern we
-specify as its argument. If we remove the pattern ” ” we basically delete all
-whitespace. This can again be combined with <code>mutate()</code> to transform the data in
-our tibble.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="dplyr.html#cb216-1" tabindex="-1"></a>reports_fyears <span class="ot">&lt;-</span> reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb216-2"><a href="dplyr.html#cb216-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">district =</span> <span class="fu">str_remove_all</span>(district, <span class="at">pattern =</span> <span class="st">&quot; &quot;</span>))</span>
-<span id="cb216-3"><a href="dplyr.html#cb216-3" tabindex="-1"></a></span>
-<span id="cb216-4"><a href="dplyr.html#cb216-4" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb216-5"><a href="dplyr.html#cb216-5" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb216-6"><a href="dplyr.html#cb216-6" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb216-7"><a href="dplyr.html#cb216-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(reports))</span>
-<span id="cb216-8"><a href="dplyr.html#cb216-8" tabindex="-1"></a><span class="do">## # A tibble: 16 × 2</span></span>
-<span id="cb216-9"><a href="dplyr.html#cb216-9" tabindex="-1"></a><span class="do">##    district                   reports</span></span>
-<span id="cb216-10"><a href="dplyr.html#cb216-10" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                        &lt;int&gt;</span></span>
-<span id="cb216-11"><a href="dplyr.html#cb216-11" tabindex="-1"></a><span class="do">##  1 Mitte                         2936</span></span>
-<span id="cb216-12"><a href="dplyr.html#cb216-12" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg      2105</span></span>
-<span id="cb216-13"><a href="dplyr.html#cb216-13" tabindex="-1"></a><span class="do">##  3 Charlottenburg-Wilmersdorf    1792</span></span>
-<span id="cb216-14"><a href="dplyr.html#cb216-14" tabindex="-1"></a><span class="do">##  4 Neukölln                      1734</span></span>
-<span id="cb216-15"><a href="dplyr.html#cb216-15" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg          1542</span></span>
-<span id="cb216-16"><a href="dplyr.html#cb216-16" tabindex="-1"></a><span class="do">##  6 Pankow                        1438</span></span>
-<span id="cb216-17"><a href="dplyr.html#cb216-17" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick              1197</span></span>
-<span id="cb216-18"><a href="dplyr.html#cb216-18" tabindex="-1"></a><span class="do">##  8 Lichtenberg                   1075</span></span>
-<span id="cb216-19"><a href="dplyr.html#cb216-19" tabindex="-1"></a><span class="do">##  9 Reinickendorf                 1038</span></span>
-<span id="cb216-20"><a href="dplyr.html#cb216-20" tabindex="-1"></a><span class="do">## 10 Spandau                       1024</span></span>
-<span id="cb216-21"><a href="dplyr.html#cb216-21" tabindex="-1"></a><span class="do">## 11 Marzahn-Hellersdorf            983</span></span>
-<span id="cb216-22"><a href="dplyr.html#cb216-22" tabindex="-1"></a><span class="do">## 12 Steglitz-Zehlendorf            946</span></span>
-<span id="cb216-23"><a href="dplyr.html#cb216-23" tabindex="-1"></a><span class="do">## 13 bezirksübergreifend            921</span></span>
-<span id="cb216-24"><a href="dplyr.html#cb216-24" tabindex="-1"></a><span class="do">## 14 &lt;NA&gt;                           382</span></span>
-<span id="cb216-25"><a href="dplyr.html#cb216-25" tabindex="-1"></a><span class="do">## 15 berlinweit                     340</span></span>
-<span id="cb216-26"><a href="dplyr.html#cb216-26" tabindex="-1"></a><span class="do">## 16 bundesweit                      55</span></span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="dplyr.html#cb218-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb218-2"><a href="dplyr.html#cb218-2" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb218-3"><a href="dplyr.html#cb218-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb218-4"><a href="dplyr.html#cb218-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(reports))</span>
+<span id="cb218-5"><a href="dplyr.html#cb218-5" tabindex="-1"></a><span class="do">## # A tibble: 16 × 2</span></span>
+<span id="cb218-6"><a href="dplyr.html#cb218-6" tabindex="-1"></a><span class="do">##    district                   reports</span></span>
+<span id="cb218-7"><a href="dplyr.html#cb218-7" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                        &lt;int&gt;</span></span>
+<span id="cb218-8"><a href="dplyr.html#cb218-8" tabindex="-1"></a><span class="do">##  1 Mitte                         1723</span></span>
+<span id="cb218-9"><a href="dplyr.html#cb218-9" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg      1244</span></span>
+<span id="cb218-10"><a href="dplyr.html#cb218-10" tabindex="-1"></a><span class="do">##  3 Neukölln                      1064</span></span>
+<span id="cb218-11"><a href="dplyr.html#cb218-11" tabindex="-1"></a><span class="do">##  4 Charlottenburg-Wilmersdorf    1059</span></span>
+<span id="cb218-12"><a href="dplyr.html#cb218-12" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg           872</span></span>
+<span id="cb218-13"><a href="dplyr.html#cb218-13" tabindex="-1"></a><span class="do">##  6 Pankow                         869</span></span>
+<span id="cb218-14"><a href="dplyr.html#cb218-14" tabindex="-1"></a><span class="do">##  7 Lichtenberg                    757</span></span>
+<span id="cb218-15"><a href="dplyr.html#cb218-15" tabindex="-1"></a><span class="do">##  8 Treptow-Köpenick               737</span></span>
+<span id="cb218-16"><a href="dplyr.html#cb218-16" tabindex="-1"></a><span class="do">##  9 Spandau                        718</span></span>
+<span id="cb218-17"><a href="dplyr.html#cb218-17" tabindex="-1"></a><span class="do">## 10 Marzahn-Hellersdorf            677</span></span>
+<span id="cb218-18"><a href="dplyr.html#cb218-18" tabindex="-1"></a><span class="do">## 11 Reinickendorf                  650</span></span>
+<span id="cb218-19"><a href="dplyr.html#cb218-19" tabindex="-1"></a><span class="do">## 12 Steglitz-Zehlendorf            566</span></span>
+<span id="cb218-20"><a href="dplyr.html#cb218-20" tabindex="-1"></a><span class="do">## 13 bezirksübergreifend            463</span></span>
+<span id="cb218-21"><a href="dplyr.html#cb218-21" tabindex="-1"></a><span class="do">## 14 berlinweit                     379</span></span>
+<span id="cb218-22"><a href="dplyr.html#cb218-22" tabindex="-1"></a><span class="do">## 15 &lt;NA&gt;                            79</span></span>
+<span id="cb218-23"><a href="dplyr.html#cb218-23" tabindex="-1"></a><span class="do">## 16 bundesweit                      55</span></span></code></pre></div>
 <p>For the grouped summary we also included <code>arrange(desc())</code> which orders the values
 from highest to lowest. If you omit <code>desc()</code> the results are ordered
 ascending.</p>
@@ -925,30 +944,30 @@ ascending.</p>
 compute those, one option is to add another column to the tibble resulting from
 <code>summarise()</code>, in which we calculate the relative share by dividing the
 “reports” columns values by the total of this column.</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="dplyr.html#cb217-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb217-2"><a href="dplyr.html#cb217-2" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb217-3"><a href="dplyr.html#cb217-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb217-4"><a href="dplyr.html#cb217-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(reports)) <span class="sc">%&gt;%</span> </span>
-<span id="cb217-5"><a href="dplyr.html#cb217-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reports_rel =</span> reports <span class="sc">/</span> <span class="fu">sum</span>(reports))</span>
-<span id="cb217-6"><a href="dplyr.html#cb217-6" tabindex="-1"></a><span class="do">## # A tibble: 16 × 3</span></span>
-<span id="cb217-7"><a href="dplyr.html#cb217-7" tabindex="-1"></a><span class="do">##    district                   reports reports_rel</span></span>
-<span id="cb217-8"><a href="dplyr.html#cb217-8" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                        &lt;int&gt;       &lt;dbl&gt;</span></span>
-<span id="cb217-9"><a href="dplyr.html#cb217-9" tabindex="-1"></a><span class="do">##  1 Mitte                         2936     0.151  </span></span>
-<span id="cb217-10"><a href="dplyr.html#cb217-10" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg      2105     0.108  </span></span>
-<span id="cb217-11"><a href="dplyr.html#cb217-11" tabindex="-1"></a><span class="do">##  3 Charlottenburg-Wilmersdorf    1792     0.0919 </span></span>
-<span id="cb217-12"><a href="dplyr.html#cb217-12" tabindex="-1"></a><span class="do">##  4 Neukölln                      1734     0.0889 </span></span>
-<span id="cb217-13"><a href="dplyr.html#cb217-13" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg          1542     0.0790 </span></span>
-<span id="cb217-14"><a href="dplyr.html#cb217-14" tabindex="-1"></a><span class="do">##  6 Pankow                        1438     0.0737 </span></span>
-<span id="cb217-15"><a href="dplyr.html#cb217-15" tabindex="-1"></a><span class="do">##  7 Treptow-Köpenick              1197     0.0614 </span></span>
-<span id="cb217-16"><a href="dplyr.html#cb217-16" tabindex="-1"></a><span class="do">##  8 Lichtenberg                   1075     0.0551 </span></span>
-<span id="cb217-17"><a href="dplyr.html#cb217-17" tabindex="-1"></a><span class="do">##  9 Reinickendorf                 1038     0.0532 </span></span>
-<span id="cb217-18"><a href="dplyr.html#cb217-18" tabindex="-1"></a><span class="do">## 10 Spandau                       1024     0.0525 </span></span>
-<span id="cb217-19"><a href="dplyr.html#cb217-19" tabindex="-1"></a><span class="do">## 11 Marzahn-Hellersdorf            983     0.0504 </span></span>
-<span id="cb217-20"><a href="dplyr.html#cb217-20" tabindex="-1"></a><span class="do">## 12 Steglitz-Zehlendorf            946     0.0485 </span></span>
-<span id="cb217-21"><a href="dplyr.html#cb217-21" tabindex="-1"></a><span class="do">## 13 bezirksübergreifend            921     0.0472 </span></span>
-<span id="cb217-22"><a href="dplyr.html#cb217-22" tabindex="-1"></a><span class="do">## 14 &lt;NA&gt;                           382     0.0196 </span></span>
-<span id="cb217-23"><a href="dplyr.html#cb217-23" tabindex="-1"></a><span class="do">## 15 berlinweit                     340     0.0174 </span></span>
-<span id="cb217-24"><a href="dplyr.html#cb217-24" tabindex="-1"></a><span class="do">## 16 bundesweit                      55     0.00282</span></span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="dplyr.html#cb219-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb219-2"><a href="dplyr.html#cb219-2" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-3"><a href="dplyr.html#cb219-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-4"><a href="dplyr.html#cb219-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(reports)) <span class="sc">%&gt;%</span> </span>
+<span id="cb219-5"><a href="dplyr.html#cb219-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reports_rel =</span> reports <span class="sc">/</span> <span class="fu">sum</span>(reports))</span>
+<span id="cb219-6"><a href="dplyr.html#cb219-6" tabindex="-1"></a><span class="do">## # A tibble: 16 × 3</span></span>
+<span id="cb219-7"><a href="dplyr.html#cb219-7" tabindex="-1"></a><span class="do">##    district                   reports reports_rel</span></span>
+<span id="cb219-8"><a href="dplyr.html#cb219-8" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                        &lt;int&gt;       &lt;dbl&gt;</span></span>
+<span id="cb219-9"><a href="dplyr.html#cb219-9" tabindex="-1"></a><span class="do">##  1 Mitte                         1723     0.145  </span></span>
+<span id="cb219-10"><a href="dplyr.html#cb219-10" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg      1244     0.104  </span></span>
+<span id="cb219-11"><a href="dplyr.html#cb219-11" tabindex="-1"></a><span class="do">##  3 Neukölln                      1064     0.0893 </span></span>
+<span id="cb219-12"><a href="dplyr.html#cb219-12" tabindex="-1"></a><span class="do">##  4 Charlottenburg-Wilmersdorf    1059     0.0889 </span></span>
+<span id="cb219-13"><a href="dplyr.html#cb219-13" tabindex="-1"></a><span class="do">##  5 Tempelhof-Schöneberg           872     0.0732 </span></span>
+<span id="cb219-14"><a href="dplyr.html#cb219-14" tabindex="-1"></a><span class="do">##  6 Pankow                         869     0.0730 </span></span>
+<span id="cb219-15"><a href="dplyr.html#cb219-15" tabindex="-1"></a><span class="do">##  7 Lichtenberg                    757     0.0635 </span></span>
+<span id="cb219-16"><a href="dplyr.html#cb219-16" tabindex="-1"></a><span class="do">##  8 Treptow-Köpenick               737     0.0619 </span></span>
+<span id="cb219-17"><a href="dplyr.html#cb219-17" tabindex="-1"></a><span class="do">##  9 Spandau                        718     0.0603 </span></span>
+<span id="cb219-18"><a href="dplyr.html#cb219-18" tabindex="-1"></a><span class="do">## 10 Marzahn-Hellersdorf            677     0.0568 </span></span>
+<span id="cb219-19"><a href="dplyr.html#cb219-19" tabindex="-1"></a><span class="do">## 11 Reinickendorf                  650     0.0546 </span></span>
+<span id="cb219-20"><a href="dplyr.html#cb219-20" tabindex="-1"></a><span class="do">## 12 Steglitz-Zehlendorf            566     0.0475 </span></span>
+<span id="cb219-21"><a href="dplyr.html#cb219-21" tabindex="-1"></a><span class="do">## 13 bezirksübergreifend            463     0.0389 </span></span>
+<span id="cb219-22"><a href="dplyr.html#cb219-22" tabindex="-1"></a><span class="do">## 14 berlinweit                     379     0.0318 </span></span>
+<span id="cb219-23"><a href="dplyr.html#cb219-23" tabindex="-1"></a><span class="do">## 15 &lt;NA&gt;                            79     0.00663</span></span>
+<span id="cb219-24"><a href="dplyr.html#cb219-24" tabindex="-1"></a><span class="do">## 16 bundesweit                      55     0.00462</span></span></code></pre></div>
 <p>The results show clear differences in the number of reports by
 district, with “Mitte” leading by a substantial margin. Other districts with
 high counts seem to be those that at least in part lie within the inner ring.
@@ -965,34 +984,30 @@ us analyse if these numbers changed over the years for these two districts.
 First we have to use <code>filter()</code> to use only the observations referring to those
 districts and then group the data by the remaining districts and year before we
 count the the number of released reports.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="dplyr.html#cb218-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb218-2"><a href="dplyr.html#cb218-2" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Mitte&quot;</span> <span class="sc">|</span> district <span class="sc">==</span> <span class="st">&quot;Friedrichshain-Kreuzberg&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb218-3"><a href="dplyr.html#cb218-3" tabindex="-1"></a>  <span class="fu">group_by</span>(district, year) <span class="sc">%&gt;%</span> </span>
-<span id="cb218-4"><a href="dplyr.html#cb218-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
-<span id="cb218-5"><a href="dplyr.html#cb218-5" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;district&#39;.</span></span>
-<span id="cb218-6"><a href="dplyr.html#cb218-6" tabindex="-1"></a><span class="do">## You can override using the `.groups` argument.</span></span>
-<span id="cb218-7"><a href="dplyr.html#cb218-7" tabindex="-1"></a><span class="do">## # A tibble: 16 × 3</span></span>
-<span id="cb218-8"><a href="dplyr.html#cb218-8" tabindex="-1"></a><span class="do">## # Groups:   district [2]</span></span>
-<span id="cb218-9"><a href="dplyr.html#cb218-9" tabindex="-1"></a><span class="do">##    district                  year reports</span></span>
-<span id="cb218-10"><a href="dplyr.html#cb218-10" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                    &lt;dbl&gt;   &lt;int&gt;</span></span>
-<span id="cb218-11"><a href="dplyr.html#cb218-11" tabindex="-1"></a><span class="do">##  1 Friedrichshain-Kreuzberg  2015     277</span></span>
-<span id="cb218-12"><a href="dplyr.html#cb218-12" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg  2016     269</span></span>
-<span id="cb218-13"><a href="dplyr.html#cb218-13" tabindex="-1"></a><span class="do">##  3 Friedrichshain-Kreuzberg  2017     234</span></span>
-<span id="cb218-14"><a href="dplyr.html#cb218-14" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg  2018     237</span></span>
-<span id="cb218-15"><a href="dplyr.html#cb218-15" tabindex="-1"></a><span class="do">##  5 Friedrichshain-Kreuzberg  2019     285</span></span>
-<span id="cb218-16"><a href="dplyr.html#cb218-16" tabindex="-1"></a><span class="do">##  6 Friedrichshain-Kreuzberg  2020     301</span></span>
-<span id="cb218-17"><a href="dplyr.html#cb218-17" tabindex="-1"></a><span class="do">##  7 Friedrichshain-Kreuzberg  2021     312</span></span>
-<span id="cb218-18"><a href="dplyr.html#cb218-18" tabindex="-1"></a><span class="do">##  8 Friedrichshain-Kreuzberg  2022     190</span></span>
-<span id="cb218-19"><a href="dplyr.html#cb218-19" tabindex="-1"></a><span class="do">##  9 Mitte                     2015     367</span></span>
-<span id="cb218-20"><a href="dplyr.html#cb218-20" tabindex="-1"></a><span class="do">## 10 Mitte                     2016     448</span></span>
-<span id="cb218-21"><a href="dplyr.html#cb218-21" tabindex="-1"></a><span class="do">## 11 Mitte                     2017     347</span></span>
-<span id="cb218-22"><a href="dplyr.html#cb218-22" tabindex="-1"></a><span class="do">## 12 Mitte                     2018     363</span></span>
-<span id="cb218-23"><a href="dplyr.html#cb218-23" tabindex="-1"></a><span class="do">## 13 Mitte                     2019     391</span></span>
-<span id="cb218-24"><a href="dplyr.html#cb218-24" tabindex="-1"></a><span class="do">## 14 Mitte                     2020     374</span></span>
-<span id="cb218-25"><a href="dplyr.html#cb218-25" tabindex="-1"></a><span class="do">## 15 Mitte                     2021     328</span></span>
-<span id="cb218-26"><a href="dplyr.html#cb218-26" tabindex="-1"></a><span class="do">## 16 Mitte                     2022     318</span></span></code></pre></div>
-<p>There does not seem to be a clear pattern for the number of reports over time in
-both districts. For “Mitte” there is a considerable spike in 2016. To analyse
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="dplyr.html#cb220-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb220-2"><a href="dplyr.html#cb220-2" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Mitte&quot;</span> <span class="sc">|</span> district <span class="sc">==</span> <span class="st">&quot;Friedrichshain-Kreuzberg&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-3"><a href="dplyr.html#cb220-3" tabindex="-1"></a>  <span class="fu">group_by</span>(district, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb220-4"><a href="dplyr.html#cb220-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>())</span>
+<span id="cb220-5"><a href="dplyr.html#cb220-5" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;district&#39;. You can override using the</span></span>
+<span id="cb220-6"><a href="dplyr.html#cb220-6" tabindex="-1"></a><span class="do">## `.groups` argument.</span></span>
+<span id="cb220-7"><a href="dplyr.html#cb220-7" tabindex="-1"></a><span class="do">## # A tibble: 10 × 3</span></span>
+<span id="cb220-8"><a href="dplyr.html#cb220-8" tabindex="-1"></a><span class="do">## # Groups:   district [2]</span></span>
+<span id="cb220-9"><a href="dplyr.html#cb220-9" tabindex="-1"></a><span class="do">##    district                  year reports</span></span>
+<span id="cb220-10"><a href="dplyr.html#cb220-10" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                    &lt;dbl&gt;   &lt;int&gt;</span></span>
+<span id="cb220-11"><a href="dplyr.html#cb220-11" tabindex="-1"></a><span class="do">##  1 Friedrichshain-Kreuzberg  2020     301</span></span>
+<span id="cb220-12"><a href="dplyr.html#cb220-12" tabindex="-1"></a><span class="do">##  2 Friedrichshain-Kreuzberg  2021     312</span></span>
+<span id="cb220-13"><a href="dplyr.html#cb220-13" tabindex="-1"></a><span class="do">##  3 Friedrichshain-Kreuzberg  2022     190</span></span>
+<span id="cb220-14"><a href="dplyr.html#cb220-14" tabindex="-1"></a><span class="do">##  4 Friedrichshain-Kreuzberg  2023     210</span></span>
+<span id="cb220-15"><a href="dplyr.html#cb220-15" tabindex="-1"></a><span class="do">##  5 Friedrichshain-Kreuzberg  2024     231</span></span>
+<span id="cb220-16"><a href="dplyr.html#cb220-16" tabindex="-1"></a><span class="do">##  6 Mitte                     2020     374</span></span>
+<span id="cb220-17"><a href="dplyr.html#cb220-17" tabindex="-1"></a><span class="do">##  7 Mitte                     2021     328</span></span>
+<span id="cb220-18"><a href="dplyr.html#cb220-18" tabindex="-1"></a><span class="do">##  8 Mitte                     2022     318</span></span>
+<span id="cb220-19"><a href="dplyr.html#cb220-19" tabindex="-1"></a><span class="do">##  9 Mitte                     2023     333</span></span>
+<span id="cb220-20"><a href="dplyr.html#cb220-20" tabindex="-1"></a><span class="do">## 10 Mitte                     2024     370</span></span></code></pre></div>
+<p>Looking at “Friedrichshain-Kreuzberg” we can observe a substantial decrease in
+reports starting from 2022. The same is not true for “Mitte” which despite of a
+moderate temporal decrease seems to be relatively stable in the number of reports.
+To analyse
 this further, we had to go deeper into the data and look at the actual texts of
 the police reports.</p>
 <p>But we should briefly talk about a peculiarity to the way <code>group_by()</code> works
@@ -1020,32 +1035,32 @@ a minor increase in the amount of typing needed.</p>
 <p>The column “time” holds the time of day for each report in hours, minutes and
 seconds as a representation of the actual values, which are seconds from
 midnight.</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="dplyr.html#cb219-1" tabindex="-1"></a>reports_fyears[[<span class="dv">1</span>, <span class="st">&#39;time&#39;</span>]]</span>
-<span id="cb219-2"><a href="dplyr.html#cb219-2" tabindex="-1"></a><span class="do">## [1] &quot;13H 31M 0S&quot;</span></span>
-<span id="cb219-3"><a href="dplyr.html#cb219-3" tabindex="-1"></a></span>
-<span id="cb219-4"><a href="dplyr.html#cb219-4" tabindex="-1"></a>reports_fyears[[<span class="dv">1</span>, <span class="st">&#39;time&#39;</span>]] <span class="sc">%&gt;%</span> </span>
-<span id="cb219-5"><a href="dplyr.html#cb219-5" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
-<span id="cb219-6"><a href="dplyr.html#cb219-6" tabindex="-1"></a><span class="do">## [1] 48660</span></span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="dplyr.html#cb221-1" tabindex="-1"></a>reports_fyears[[<span class="dv">1</span>, <span class="st">&#39;time&#39;</span>]]</span>
+<span id="cb221-2"><a href="dplyr.html#cb221-2" tabindex="-1"></a><span class="do">## [1] &quot;11H 25M 0S&quot;</span></span>
+<span id="cb221-3"><a href="dplyr.html#cb221-3" tabindex="-1"></a></span>
+<span id="cb221-4"><a href="dplyr.html#cb221-4" tabindex="-1"></a>reports_fyears[[<span class="dv">1</span>, <span class="st">&#39;time&#39;</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb221-5"><a href="dplyr.html#cb221-5" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb221-6"><a href="dplyr.html#cb221-6" tabindex="-1"></a><span class="do">## [1] 41100</span></span></code></pre></div>
 <p>To calculate with the “time” column, we first have to tell R that we explicitly
 want to use the data as seconds, then compute the summary statistic and after
 this, transform the display of seconds back into the time of day. For the
 transformations we can use the functions <code>period_to_seconds()</code> and
 <code>seconds_to_period()</code>. We will calculate the mean and the median for the time of
 day over all police reports in one call of <code>summarise()</code>.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="dplyr.html#cb220-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
-<span id="cb220-2"><a href="dplyr.html#cb220-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">period_to_seconds</span>(time) <span class="sc">%&gt;%</span> </span>
-<span id="cb220-3"><a href="dplyr.html#cb220-3" tabindex="-1"></a>              <span class="fu">mean</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb220-4"><a href="dplyr.html#cb220-4" tabindex="-1"></a>              <span class="fu">seconds_to_period</span>(),</span>
-<span id="cb220-5"><a href="dplyr.html#cb220-5" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">period_to_seconds</span>(time) <span class="sc">%&gt;%</span> </span>
-<span id="cb220-6"><a href="dplyr.html#cb220-6" tabindex="-1"></a>              <span class="fu">median</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb220-7"><a href="dplyr.html#cb220-7" tabindex="-1"></a>              <span class="fu">seconds_to_period</span>()</span>
-<span id="cb220-8"><a href="dplyr.html#cb220-8" tabindex="-1"></a>  )</span>
-<span id="cb220-9"><a href="dplyr.html#cb220-9" tabindex="-1"></a><span class="do">## # A tibble: 1 × 2</span></span>
-<span id="cb220-10"><a href="dplyr.html#cb220-10" tabindex="-1"></a><span class="do">##   mean                      median    </span></span>
-<span id="cb220-11"><a href="dplyr.html#cb220-11" tabindex="-1"></a><span class="do">##   &lt;Period&gt;                  &lt;Period&gt;  </span></span>
-<span id="cb220-12"><a href="dplyr.html#cb220-12" tabindex="-1"></a><span class="do">## 1 11H 59M 37.1911443148711S 11H 13M 0S</span></span></code></pre></div>
-<p>The mean time of day over all police reports is about 11:59 while the median is
-11:13. This may indicate that the mean is biased towards a later time by a high
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="dplyr.html#cb222-1" tabindex="-1"></a>reports <span class="sc">%&gt;%</span> </span>
+<span id="cb222-2"><a href="dplyr.html#cb222-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">period_to_seconds</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb222-3"><a href="dplyr.html#cb222-3" tabindex="-1"></a>              <span class="fu">mean</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb222-4"><a href="dplyr.html#cb222-4" tabindex="-1"></a>              <span class="fu">seconds_to_period</span>(),</span>
+<span id="cb222-5"><a href="dplyr.html#cb222-5" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">period_to_seconds</span>(time) <span class="sc">%&gt;%</span> </span>
+<span id="cb222-6"><a href="dplyr.html#cb222-6" tabindex="-1"></a>              <span class="fu">median</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb222-7"><a href="dplyr.html#cb222-7" tabindex="-1"></a>              <span class="fu">seconds_to_period</span>()</span>
+<span id="cb222-8"><a href="dplyr.html#cb222-8" tabindex="-1"></a>  )</span>
+<span id="cb222-9"><a href="dplyr.html#cb222-9" tabindex="-1"></a><span class="do">## # A tibble: 1 × 2</span></span>
+<span id="cb222-10"><a href="dplyr.html#cb222-10" tabindex="-1"></a><span class="do">##   mean                      median   </span></span>
+<span id="cb222-11"><a href="dplyr.html#cb222-11" tabindex="-1"></a><span class="do">##   &lt;Period&gt;                  &lt;Period&gt; </span></span>
+<span id="cb222-12"><a href="dplyr.html#cb222-12" tabindex="-1"></a><span class="do">## 1 12H 31M 10.2336448598144S 12H 4M 0S</span></span></code></pre></div>
+<p>The mean time of day over all police reports is about 12:28 while the median is
+12:01. This may indicate that the mean is biased towards a later time by a high
 number of very late reports. We will explore this further graphically in the next
 chapter. Again, the results may represent the time when crimes occur, but it is
 more likely, that we are actually analysing the time when the PR team posts
@@ -1069,13 +1084,13 @@ should make sure that all errors have been fixed and the analysis is final
 before exporting to .csv.</p>
 <p>In this example we save the number of police reports by year for the districts
 “Mitte” and “Friedrichshain-Kreuzberg” we computed earlier into a .csv file:</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="dplyr.html#cb221-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb221-2"><a href="dplyr.html#cb221-2" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Mitte&quot;</span> <span class="sc">|</span> district <span class="sc">==</span> <span class="st">&quot;Friedrichshain-Kreuzberg&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb221-3"><a href="dplyr.html#cb221-3" tabindex="-1"></a>  <span class="fu">group_by</span>(district, year) <span class="sc">%&gt;%</span> </span>
-<span id="cb221-4"><a href="dplyr.html#cb221-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb221-5"><a href="dplyr.html#cb221-5" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">&quot;reports_year_M-FK.csv&quot;</span>)</span>
-<span id="cb221-6"><a href="dplyr.html#cb221-6" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;district&#39;.</span></span>
-<span id="cb221-7"><a href="dplyr.html#cb221-7" tabindex="-1"></a><span class="do">## You can override using the `.groups` argument.</span></span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="dplyr.html#cb223-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb223-2"><a href="dplyr.html#cb223-2" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Mitte&quot;</span> <span class="sc">|</span> district <span class="sc">==</span> <span class="st">&quot;Friedrichshain-Kreuzberg&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb223-3"><a href="dplyr.html#cb223-3" tabindex="-1"></a>  <span class="fu">group_by</span>(district, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb223-4"><a href="dplyr.html#cb223-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb223-5"><a href="dplyr.html#cb223-5" tabindex="-1"></a>  <span class="fu">write_csv</span>(<span class="st">&quot;reports_year_M-FK.csv&quot;</span>)</span>
+<span id="cb223-6"><a href="dplyr.html#cb223-6" tabindex="-1"></a><span class="do">## `summarise()` has grouped output by &#39;district&#39;. You can override using the</span></span>
+<span id="cb223-7"><a href="dplyr.html#cb223-7" tabindex="-1"></a><span class="do">## `.groups` argument.</span></span></code></pre></div>
 <p>For reasons unknown to anyone but Microsoft, importing a .csv file that uses
 commas as the delimiter can actually be quite tricky on a German Windows
 installation if you are using Microsoft Office. Using Libre Office fixes this,
@@ -1139,33 +1154,33 @@ Markdown and is suited for more large scale projects.</p>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/11-dplyr.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section",
-"scroll_highlight": true
-}
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/webscraping-tures/webscraping-tures.github.io/11-dplyr.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
 });
 });
 </script>

@@ -361,9 +361,9 @@ pages %>%
 
 However, we can go one step further and store the data as a vector of the type 
 "Date". This could be advantageous for potential further analyses. The tidyverse
-package **lubridate** makes it easy to convert dates from character or numeric
-vectors into the "Date" format. The package is not part of the core tidyverse 
-and has to be loaded explicitly. Among other things, it offers a number of
+package **lubridate**, which has recently been promoted to be a part of the core
+tidyverse,  makes it easy to convert dates from character or numeric vectors 
+into the "Date" format. Among other things, it offers a number of
 functions in the form `dmy()`, `mdy()`, `ymd()` and so on. `d` stands for "day",
 `m` for "month" and `y` for "year". With the order in which the letters appear
 in the function name, we tell R which format the data we want to convert to the
@@ -374,10 +374,6 @@ which is typical in the USA, we would have to use `mdy()` accordingly. It is
 irrelevant whether the components of the date are separated with ".", "/", "-" 
 or spaces. Even written out or abbreviated month names can be processed by
 lubridate.
-
-``` {r load_lubridate, message = FALSE}
-library(lubridate)
-```
 
 ``` {r extract_date_as_date}
 pages %>% 

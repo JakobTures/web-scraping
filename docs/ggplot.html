@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12 Graphical analysis with ggplot | Web Scraping using R</title>
   <meta name="description" content="12 Graphical analysis with ggplot | Web Scraping using R" />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12 Graphical analysis with ggplot | Web Scraping using R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Jakob Tures" />
 
 
-<meta name="date" content="2023-10-16" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,7 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="libs/echarts4r-4.8.0/echarts-en.min.js"></script>
 <script src="libs/echarts4r-4.8.0/ecStat.min.js"></script>
 <script src="libs/echarts4r-4.8.0/dataTool.min.js"></script>
@@ -61,7 +62,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -71,7 +72,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -254,7 +255,7 @@ Web Scraping using R
 <ul>
 <li class="chapter" data-level="6.1.1" data-path="rvest2.html"><a href="rvest2.html#table-with-css-selectors-from-wikipedia"><i class="fa fa-check"></i><b>6.1.1</b> Table with CSS selectors from Wikipedia</a></li>
 <li class="chapter" data-level="6.1.2" data-path="rvest2.html"><a href="rvest2.html#scraping-multiple-tables"><i class="fa fa-check"></i><b>6.1.2</b> Scraping multiple tables</a></li>
-<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tabellen-mit-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tabellen mit NAs</a></li>
+<li class="chapter" data-level="6.1.3" data-path="rvest2.html"><a href="rvest2.html#tables-with-nas"><i class="fa fa-check"></i><b>6.1.3</b> Tables with NAs</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="rvest2.html"><a href="rvest2.html#dynamic-websites"><i class="fa fa-check"></i><b>6.2</b> Dynamic Websites</a>
 <ul>
@@ -377,27 +378,10 @@ Web Scraping using R
 <p>Since we have cleaned our example data in the last chapter, we will now apply
 some graphical analysis to it, using the <strong>ggplot2</strong> package.</p>
 <p>To follow most of the examples, we need the object <code>reports_fyears</code> from chapter
-<a href="dplyr.html#dplyr">11</a>. Either you can re-run the relevant code blocks from the last
-chapter, or the condensed block below. We also will need to load the <strong>tidyverse</strong>
-package – which includes <strong>ggplot2</strong> – and <strong>lubridate</strong>.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="ggplot.html#cb222-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb222-2"><a href="ggplot.html#cb222-2" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="ggplot.html#cb223-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports.RData&quot;</span>)</span>
-<span id="cb223-2"><a href="ggplot.html#cb223-2" tabindex="-1"></a></span>
-<span id="cb223-3"><a href="ggplot.html#cb223-3" tabindex="-1"></a>reports_fyears <span class="ot">&lt;-</span> reports <span class="sc">%&gt;%</span> </span>
-<span id="cb223-4"><a href="ggplot.html#cb223-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">District =</span> <span class="fu">substr</span>(District, <span class="dv">14</span>, <span class="fu">length</span>(District)),</span>
-<span id="cb223-5"><a href="ggplot.html#cb223-5" tabindex="-1"></a>         <span class="at">date_cmpl =</span> <span class="fu">dmy_hm</span>(Date),</span>
-<span id="cb223-6"><a href="ggplot.html#cb223-6" tabindex="-1"></a>         <span class="at">year =</span> <span class="fu">year</span>(date_cmpl),</span>
-<span id="cb223-7"><a href="ggplot.html#cb223-7" tabindex="-1"></a>         <span class="at">month =</span> <span class="fu">month</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb223-8"><a href="ggplot.html#cb223-8" tabindex="-1"></a>         <span class="at">day =</span> <span class="fu">wday</span>(date_cmpl, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb223-9"><a href="ggplot.html#cb223-9" tabindex="-1"></a>         <span class="at">time =</span> </span>
-<span id="cb223-10"><a href="ggplot.html#cb223-10" tabindex="-1"></a>           <span class="fu">substr</span>(Date, <span class="dv">12</span>, <span class="fu">length</span>(Date)) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-11"><a href="ggplot.html#cb223-11" tabindex="-1"></a>           <span class="fu">hm</span>()</span>
-<span id="cb223-12"><a href="ggplot.html#cb223-12" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-13"><a href="ggplot.html#cb223-13" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Date, Report, date_cmpl)) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-14"><a href="ggplot.html#cb223-14" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">district =</span> District) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-15"><a href="ggplot.html#cb223-15" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2022</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb223-16"><a href="ggplot.html#cb223-16" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">district =</span> <span class="fu">str_remove_all</span>(district, <span class="at">pattern =</span> <span class="st">&quot; &quot;</span>))</span></code></pre></div>
+<a href="dplyr.html#dplyr">11</a>. We also will need to load the <strong>tidyverse</strong>
+package – which also includes <strong>ggplot2</strong>.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ggplot.html#cb224-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="ggplot.html#cb225-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;reports_cleaned.RData&quot;</span>)</span></code></pre></div>
 <div id="ggplot2-syntax" class="section level2 hasAnchor" number="12.1">
 <h2><span class="header-section-number">12.1</span> ggplot2 syntax<a href="ggplot.html#ggplot2-syntax" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The basic principle of <strong>ggplot2</strong> is that we initiate an empty plot using
@@ -407,7 +391,7 @@ elements that shall be plotted – e.g. points, lines, bars and so on. We will
 look at some practical examples of geoms soon.</p>
 <p><code>ggplot()</code> has to be provided the name of the object that contains the data we
 want to plot as its first argument.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ggplot.html#cb224-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="ggplot.html#cb226-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears)</span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/empty_plot-1.png" width="672" /></p>
 <p>As you can see in the “Plots” tab located in the lower right of RStudio, a plot
 was created but it is still empty because we have not added any geoms yet.</p>
@@ -423,10 +407,10 @@ cheat sheet for <strong>ggplot2</strong>, accessible here:
 <p>We add geoms to a plot by writing a <code>+</code> after <code>ggplot()</code> and adding the geom in
 a new line. Additional geoms can be added in the same manner. So the basic
 syntax, this is not runnable code, looks like this:</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="ggplot.html#cb225-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ...) <span class="sc">+</span></span>
-<span id="cb225-2"><a href="ggplot.html#cb225-2" tabindex="-1"></a>  <span class="fu">geom_1</span>() <span class="sc">+</span></span>
-<span id="cb225-3"><a href="ggplot.html#cb225-3" tabindex="-1"></a>  <span class="fu">geom_2</span>() <span class="sc">+</span></span>
-<span id="cb225-4"><a href="ggplot.html#cb225-4" tabindex="-1"></a>  ...</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="ggplot.html#cb227-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ...) <span class="sc">+</span></span>
+<span id="cb227-2"><a href="ggplot.html#cb227-2" tabindex="-1"></a>  <span class="fu">geom_1</span>() <span class="sc">+</span></span>
+<span id="cb227-3"><a href="ggplot.html#cb227-3" tabindex="-1"></a>  <span class="fu">geom_2</span>() <span class="sc">+</span></span>
+<span id="cb227-4"><a href="ggplot.html#cb227-4" tabindex="-1"></a>  ...</span></code></pre></div>
 <p>The <em>aesthetics</em> of a geom are used to assign the x and y variables that will be
 plotted on the coordinate system. Additionally, aesthetics can be used to
 influence the visual display of the plotted elements by the value of a variable,
@@ -438,16 +422,16 @@ else being optional.</p>
 assign variables to the horizontal x-axis and vertical y-axis of the plot, as
 shown below. Once more, the code block is used for illustration only and will
 not run.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="ggplot.html#cb226-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ...) <span class="sc">+</span></span>
-<span id="cb226-2"><a href="ggplot.html#cb226-2" tabindex="-1"></a>  <span class="fu">geom_1</span>(<span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
-<span id="cb226-3"><a href="ggplot.html#cb226-3" tabindex="-1"></a>  <span class="fu">geom_2</span>(<span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
-<span id="cb226-4"><a href="ggplot.html#cb226-4" tabindex="-1"></a>  ...</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="ggplot.html#cb228-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ...) <span class="sc">+</span></span>
+<span id="cb228-2"><a href="ggplot.html#cb228-2" tabindex="-1"></a>  <span class="fu">geom_1</span>(<span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
+<span id="cb228-3"><a href="ggplot.html#cb228-3" tabindex="-1"></a>  <span class="fu">geom_2</span>(<span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
+<span id="cb228-4"><a href="ggplot.html#cb228-4" tabindex="-1"></a>  ...</span></code></pre></div>
 <p>If we are using the same x and y variables for all geoms, we can define them
 directly in the call of <code>ggplot()</code>.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="ggplot.html#cb227-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ..., <span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
-<span id="cb227-2"><a href="ggplot.html#cb227-2" tabindex="-1"></a>  <span class="fu">geom_1</span>() <span class="sc">+</span></span>
-<span id="cb227-3"><a href="ggplot.html#cb227-3" tabindex="-1"></a>  <span class="fu">geom_2</span>() <span class="sc">+</span></span>
-<span id="cb227-4"><a href="ggplot.html#cb227-4" tabindex="-1"></a>  ...</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="ggplot.html#cb229-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ..., <span class="fu">aes</span>(<span class="at">x =</span> x_variable, <span class="at">y =</span> y_variable)) <span class="sc">+</span></span>
+<span id="cb229-2"><a href="ggplot.html#cb229-2" tabindex="-1"></a>  <span class="fu">geom_1</span>() <span class="sc">+</span></span>
+<span id="cb229-3"><a href="ggplot.html#cb229-3" tabindex="-1"></a>  <span class="fu">geom_2</span>() <span class="sc">+</span></span>
+<span id="cb229-4"><a href="ggplot.html#cb229-4" tabindex="-1"></a>  ...</span></code></pre></div>
 <div id="continuous-x-continuous-y" class="section level3 hasAnchor" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> Continuous x, continuous y<a href="ggplot.html#continuous-x-continuous-y" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Variables are continuous, when they are able to take on every value –
@@ -472,24 +456,24 @@ exceptionally expensive district – cost <span class="math inline">\(10\)</span
 following code block – which can not be explained in detail here – will
 generate the data just described. <code>set.seed()</code> assures that you will get the
 same <em>random number generator</em> results every time.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="ggplot.html#cb228-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">01042022</span>)</span>
-<span id="cb228-2"><a href="ggplot.html#cb228-2" tabindex="-1"></a></span>
-<span id="cb228-3"><a href="ggplot.html#cb228-3" tabindex="-1"></a>rent <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb228-4"><a href="ggplot.html#cb228-4" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">15</span>),</span>
-<span id="cb228-5"><a href="ggplot.html#cb228-5" tabindex="-1"></a>  <span class="at">premium =</span> <span class="fu">as.logical</span>(<span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)),</span>
-<span id="cb228-6"><a href="ggplot.html#cb228-6" tabindex="-1"></a>  <span class="at">price =</span> size <span class="sc">*</span> (<span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">3</span>) <span class="sc">+</span> (<span class="dv">10</span> <span class="sc">*</span> premium))</span>
-<span id="cb228-7"><a href="ggplot.html#cb228-7" tabindex="-1"></a>)</span>
-<span id="cb228-8"><a href="ggplot.html#cb228-8" tabindex="-1"></a></span>
-<span id="cb228-9"><a href="ggplot.html#cb228-9" tabindex="-1"></a>rent <span class="sc">%&gt;%</span> </span>
-<span id="cb228-10"><a href="ggplot.html#cb228-10" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb228-11"><a href="ggplot.html#cb228-11" tabindex="-1"></a><span class="do">## # A tibble: 5 × 3</span></span>
-<span id="cb228-12"><a href="ggplot.html#cb228-12" tabindex="-1"></a><span class="do">##    size premium price</span></span>
-<span id="cb228-13"><a href="ggplot.html#cb228-13" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;lgl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb228-14"><a href="ggplot.html#cb228-14" tabindex="-1"></a><span class="do">## 1  84.5 FALSE    881.</span></span>
-<span id="cb228-15"><a href="ggplot.html#cb228-15" tabindex="-1"></a><span class="do">## 2  65.1 FALSE    445.</span></span>
-<span id="cb228-16"><a href="ggplot.html#cb228-16" tabindex="-1"></a><span class="do">## 3  76.0 FALSE    727.</span></span>
-<span id="cb228-17"><a href="ggplot.html#cb228-17" tabindex="-1"></a><span class="do">## 4  65.3 FALSE    892.</span></span>
-<span id="cb228-18"><a href="ggplot.html#cb228-18" tabindex="-1"></a><span class="do">## 5  70.3 FALSE    461.</span></span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="ggplot.html#cb230-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">01042022</span>)</span>
+<span id="cb230-2"><a href="ggplot.html#cb230-2" tabindex="-1"></a></span>
+<span id="cb230-3"><a href="ggplot.html#cb230-3" tabindex="-1"></a>rent <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb230-4"><a href="ggplot.html#cb230-4" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">15</span>),</span>
+<span id="cb230-5"><a href="ggplot.html#cb230-5" tabindex="-1"></a>  <span class="at">premium =</span> <span class="fu">as.logical</span>(<span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)),</span>
+<span id="cb230-6"><a href="ggplot.html#cb230-6" tabindex="-1"></a>  <span class="at">price =</span> size <span class="sc">*</span> (<span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">3</span>) <span class="sc">+</span> (<span class="dv">10</span> <span class="sc">*</span> premium))</span>
+<span id="cb230-7"><a href="ggplot.html#cb230-7" tabindex="-1"></a>)</span>
+<span id="cb230-8"><a href="ggplot.html#cb230-8" tabindex="-1"></a></span>
+<span id="cb230-9"><a href="ggplot.html#cb230-9" tabindex="-1"></a>rent <span class="sc">%&gt;%</span> </span>
+<span id="cb230-10"><a href="ggplot.html#cb230-10" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb230-11"><a href="ggplot.html#cb230-11" tabindex="-1"></a><span class="do">## # A tibble: 5 × 3</span></span>
+<span id="cb230-12"><a href="ggplot.html#cb230-12" tabindex="-1"></a><span class="do">##    size premium price</span></span>
+<span id="cb230-13"><a href="ggplot.html#cb230-13" tabindex="-1"></a><span class="do">##   &lt;dbl&gt; &lt;lgl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb230-14"><a href="ggplot.html#cb230-14" tabindex="-1"></a><span class="do">## 1  84.5 FALSE    881.</span></span>
+<span id="cb230-15"><a href="ggplot.html#cb230-15" tabindex="-1"></a><span class="do">## 2  65.1 FALSE    445.</span></span>
+<span id="cb230-16"><a href="ggplot.html#cb230-16" tabindex="-1"></a><span class="do">## 3  76.0 FALSE    727.</span></span>
+<span id="cb230-17"><a href="ggplot.html#cb230-17" tabindex="-1"></a><span class="do">## 4  65.3 FALSE    892.</span></span>
+<span id="cb230-18"><a href="ggplot.html#cb230-18" tabindex="-1"></a><span class="do">## 5  70.3 FALSE    461.</span></span></code></pre></div>
 <p>We can now plot this data. The price of an apartment depends on its size, thus
 <code>price</code> should be plotted on the y-axis which is usually used for the dependent
 variable and the independent variable <code>size</code> on the x-axis. Our assumption –
@@ -497,8 +481,8 @@ and we know it is true as we created the data this way – is that the size of a
 apartment explains its price. We will use the <code>geom_point()</code> to build a
 scatterplot, with each point representing one of the 1000s of combinations of
 size and price in the data.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="ggplot.html#cb229-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rent, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> price)) <span class="sc">+</span></span>
-<span id="cb229-2"><a href="ggplot.html#cb229-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="ggplot.html#cb231-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rent, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb231-2"><a href="ggplot.html#cb231-2" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/scatter-1.png" width="672" /></p>
 <p>Looking at the data points, we clearly see a relationship. Overall, the bigger
 an apartment is, the higher is its price point. We know this is true in our data
@@ -510,10 +494,10 @@ that we want to use <code>method = 'lm'</code>, which is a linear model. The sec
 <code>se = FALSE</code> means that we do not want to plot the confidence intervals around
 the regression line, which is a measure of the uncertainty of the estimated
 relationship.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="ggplot.html#cb230-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rent, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> price)) <span class="sc">+</span></span>
-<span id="cb230-2"><a href="ggplot.html#cb230-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb230-3"><a href="ggplot.html#cb230-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb230-4"><a href="ggplot.html#cb230-4" tabindex="-1"></a><span class="do">## `geom_smooth()` using formula = &#39;y ~ x&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="ggplot.html#cb232-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rent, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb232-2"><a href="ggplot.html#cb232-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb232-3"><a href="ggplot.html#cb232-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb232-4"><a href="ggplot.html#cb232-4" tabindex="-1"></a><span class="do">## `geom_smooth()` using formula = &#39;y ~ x&#39;</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/scatter_lm-1.png" width="672" /></p>
 <p>The angle of the regression line shows us the correlation between <code>size</code> and
 <code>price</code>. Also we can use it to estimate the mean value of y for every given x.
@@ -524,10 +508,10 @@ aesthetic to group the data in the plot by its values and in this way generate
 different regression lines per group using the aesthetic <code>group = premium</code> or we
 can use <code>colour = premium</code> to simultaneously group the data and colour the
 plotted objects by their group membership.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="ggplot.html#cb231-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rent, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> price, <span class="at">colour =</span> premium)) <span class="sc">+</span></span>
-<span id="cb231-2"><a href="ggplot.html#cb231-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb231-3"><a href="ggplot.html#cb231-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb231-4"><a href="ggplot.html#cb231-4" tabindex="-1"></a><span class="do">## `geom_smooth()` using formula = &#39;y ~ x&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="ggplot.html#cb233-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rent, <span class="fu">aes</span>(<span class="at">x =</span> size, <span class="at">y =</span> price, <span class="at">colour =</span> premium)) <span class="sc">+</span></span>
+<span id="cb233-2"><a href="ggplot.html#cb233-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb233-3"><a href="ggplot.html#cb233-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb233-4"><a href="ggplot.html#cb233-4" tabindex="-1"></a><span class="do">## `geom_smooth()` using formula = &#39;y ~ x&#39;</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/scatter_grouped_lm-1.png" width="672" /></p>
 <p>We see clearly now, that the steepness of both lines differs. For premium
 apartments the correlation between square meters and price is stronger than for
@@ -551,8 +535,8 @@ police reports per day, one common approach is to use a bar plot.
 <code>geom_bar()</code>just needs to be supplied with the variable holding the categories
 – here <code>day</code> – and will then count the number of occurrences of the category
 which are plotted as bars with corresponding height.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="ggplot.html#cb232-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> day)) <span class="sc">+</span></span>
-<span id="cb232-2"><a href="ggplot.html#cb232-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="ggplot.html#cb234-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> day)) <span class="sc">+</span></span>
+<span id="cb234-2"><a href="ggplot.html#cb234-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/bar_wday-1.png" width="672" /></p>
 <p>We see that there is an increase over the course of the week, but that the
 relative differences between the days are minor. Combined with the summary
@@ -565,8 +549,8 @@ released by the Berlin police per day, not depending on whether much of interest
 happened on a specific day.</p>
 <p>Let us plot the report counts by the district, using the same approach. Let us
 plot the categories on the y-axis to make the long district names more readable.</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="ggplot.html#cb233-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">y =</span> district)) <span class="sc">+</span></span>
-<span id="cb233-2"><a href="ggplot.html#cb233-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="ggplot.html#cb235-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">y =</span> district)) <span class="sc">+</span></span>
+<span id="cb235-2"><a href="ggplot.html#cb235-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/basr_district-1.png" width="672" /></p>
 <p>This is nice, but it would be easier to interpret, if the bars were ordered by
 their height. We also have the category “NA” which has no meaning that we could
@@ -582,12 +566,12 @@ The y-axis variable is arranged in descending order using <code>reorder()</code>
 function sorts the variable that is specified in the first argument by using the
 values of the variable defined in the second argument. In this case ordering the
 categories of <code>district</code> by the values of <code>reports</code>.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="ggplot.html#cb234-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb234-2"><a href="ggplot.html#cb234-2" tabindex="-1"></a>  <span class="fu">drop_na</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-3"><a href="ggplot.html#cb234-3" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-4"><a href="ggplot.html#cb234-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb234-5"><a href="ggplot.html#cb234-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> reports, <span class="at">y =</span> <span class="fu">reorder</span>(district, reports))) <span class="sc">+</span></span>
-<span id="cb234-6"><a href="ggplot.html#cb234-6" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="ggplot.html#cb236-1" tabindex="-1"></a>reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb236-2"><a href="ggplot.html#cb236-2" tabindex="-1"></a>  <span class="fu">drop_na</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb236-3"><a href="ggplot.html#cb236-3" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb236-4"><a href="ggplot.html#cb236-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb236-5"><a href="ggplot.html#cb236-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> reports, <span class="at">y =</span> <span class="fu">reorder</span>(district, reports))) <span class="sc">+</span></span>
+<span id="cb236-6"><a href="ggplot.html#cb236-6" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/bars_district_ordered-1.png" width="672" /></p>
 <p>The plot underlines what we have already seen in chapter <a href="dplyr.html#dplyr">11</a>, that some
 districts, especially “Mitte”, are referred to by considerably more police
@@ -607,10 +591,9 @@ therefore represented by the height of the bar. To be able to plot the values of
 seconds to its numerical values – being the number of seconds since midnight –
 by using <code>as.numeric()</code> or <code>period_to_seconds()</code> (also see chapter
 <a href="dplyr.html#dplyr">11</a>).</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="ggplot.html#cb235-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
-<span id="cb235-2"><a href="ggplot.html#cb235-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
-<span id="cb235-3"><a href="ggplot.html#cb235-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
-<span id="cb235-4"><a href="ggplot.html#cb235-4" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="ggplot.html#cb237-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
+<span id="cb237-2"><a href="ggplot.html#cb237-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb237-3"><a href="ggplot.html#cb237-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/time_histo-1.png" width="672" /></p>
 <p>We immediately see that the number of reports is not evenly distributed
 throughout the day. It is also not normally distributed, as the distribution is
@@ -643,36 +626,35 @@ to set a constant colour for the line – instead of using it as an aesthetic an
 thus colouring the data by the values of a third variable.</p>
 <p>Sidenote: For an overview of the available colours, have a look at:
 <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" target="_blank">http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf</a>.</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="ggplot.html#cb236-1" tabindex="-1"></a>mean_time <span class="ot">&lt;-</span> reports_fyears<span class="sc">$</span>time <span class="sc">%&gt;%</span> </span>
-<span id="cb236-2"><a href="ggplot.html#cb236-2" tabindex="-1"></a>        <span class="fu">period_to_seconds</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb236-3"><a href="ggplot.html#cb236-3" tabindex="-1"></a>        <span class="fu">mean</span>()</span>
-<span id="cb236-4"><a href="ggplot.html#cb236-4" tabindex="-1"></a></span>
-<span id="cb236-5"><a href="ggplot.html#cb236-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
-<span id="cb236-6"><a href="ggplot.html#cb236-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb236-7"><a href="ggplot.html#cb236-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">9</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">12</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>,</span>
-<span id="cb236-8"><a href="ggplot.html#cb236-8" tabindex="-1"></a>                                <span class="dv">15</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">18</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">21</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>),</span>
-<span id="cb236-9"><a href="ggplot.html#cb236-9" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;6:00&quot;</span>, <span class="st">&quot;9:00&quot;</span>, <span class="st">&quot;12:00&quot;</span>, <span class="st">&quot;15:00&quot;</span>, <span class="st">&quot;18:00&quot;</span>, <span class="st">&quot;21:00&quot;</span>)</span>
-<span id="cb236-10"><a href="ggplot.html#cb236-10" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
-<span id="cb236-11"><a href="ggplot.html#cb236-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
-<span id="cb236-12"><a href="ggplot.html#cb236-12" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
-<span id="cb236-13"><a href="ggplot.html#cb236-13" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day&quot;</span>) <span class="sc">+</span></span>
-<span id="cb236-14"><a href="ggplot.html#cb236-14" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> mean_time), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb236-15"><a href="ggplot.html#cb236-15" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
-<span id="cb236-16"><a href="ggplot.html#cb236-16" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="ggplot.html#cb238-1" tabindex="-1"></a>mean_time <span class="ot">&lt;-</span> reports_fyears<span class="sc">$</span>time <span class="sc">%&gt;%</span> </span>
+<span id="cb238-2"><a href="ggplot.html#cb238-2" tabindex="-1"></a>        <span class="fu">period_to_seconds</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb238-3"><a href="ggplot.html#cb238-3" tabindex="-1"></a>        <span class="fu">mean</span>()</span>
+<span id="cb238-4"><a href="ggplot.html#cb238-4" tabindex="-1"></a></span>
+<span id="cb238-5"><a href="ggplot.html#cb238-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
+<span id="cb238-6"><a href="ggplot.html#cb238-6" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb238-7"><a href="ggplot.html#cb238-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">9</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">12</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>,</span>
+<span id="cb238-8"><a href="ggplot.html#cb238-8" tabindex="-1"></a>                                <span class="dv">15</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">18</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">21</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>),</span>
+<span id="cb238-9"><a href="ggplot.html#cb238-9" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;6:00&quot;</span>, <span class="st">&quot;9:00&quot;</span>, <span class="st">&quot;12:00&quot;</span>, <span class="st">&quot;15:00&quot;</span>, <span class="st">&quot;18:00&quot;</span>, <span class="st">&quot;21:00&quot;</span>)</span>
+<span id="cb238-10"><a href="ggplot.html#cb238-10" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb238-11"><a href="ggplot.html#cb238-11" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
+<span id="cb238-12"><a href="ggplot.html#cb238-12" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
+<span id="cb238-13"><a href="ggplot.html#cb238-13" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day&quot;</span>) <span class="sc">+</span></span>
+<span id="cb238-14"><a href="ggplot.html#cb238-14" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> mean_time), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb238-15"><a href="ggplot.html#cb238-15" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/time_histo_nice-1.png" width="672" /></p>
 <p>With readable labels and the line representing the mean as reference points, the
 distribution of the time of day becomes more apparent. We see that there are no
-reports filed beginning in the late evening to the early morning. This is
+reports filed during the night time. This is
 another indication that the times we scraped do not actually represent the times
 when the event occurred but rather when the report was officially filed or
 uploaded to the website. From this data, we can not conclude that it is safest
 on the streets of Berlin at night time, but rather that the working hours of the
-people responsible for communicating the police reports range from about 08:00
-to 19:00-20:00.</p>
-<p>We can also see that the mean we calculated in chapter <a href="dplyr.html#dplyr">11</a> – 11:59 –
+people responsible for communicating the police reports range from about 07:00
+to 18:00, with few posting by individuals staying somewhat later.</p>
+<p>We can also see that the mean we calculated in chapter <a href="dplyr.html#dplyr">11</a> – 12:28 –
 is misleading. As a relevant number of reports are filed in the time span of late
-afternoon to early evening, the mean is biased to the right. 11:59 is not the
-peak of the distribution; actually, half of all reports are filed before 11:13, as
+afternoon to early evening, the mean is biased to the right. 12:28 is not the
+peak of the distribution; actually, half of all reports are filed before 12:01, as
 indicated by the median, which in general is more robust to skewed
 distributions. There seems to be a short period of high activity in the early to
 late morning hours. From this data, we can again infer more about the working
@@ -687,30 +669,25 @@ another variable – here <code>year</code> –, we can use <em>facets</em>. As 
 of <code>facet_wrap()</code> we specify the variable by which we want subgroups to be
 formed, using the notation <code>~ variable</code>. The argument <code>nrows</code> determines the
 number of rows to be displayed.</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="ggplot.html#cb237-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
-<span id="cb237-2"><a href="ggplot.html#cb237-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb237-3"><a href="ggplot.html#cb237-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb237-4"><a href="ggplot.html#cb237-4" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">12</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">18</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>),</span>
-<span id="cb237-5"><a href="ggplot.html#cb237-5" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;6:00&quot;</span>, <span class="st">&quot;12:00&quot;</span>, <span class="st">&quot;18:00&quot;</span>)</span>
-<span id="cb237-6"><a href="ggplot.html#cb237-6" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
-<span id="cb237-7"><a href="ggplot.html#cb237-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
-<span id="cb237-8"><a href="ggplot.html#cb237-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
-<span id="cb237-9"><a href="ggplot.html#cb237-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day by year&quot;</span>)</span>
-<span id="cb237-10"><a href="ggplot.html#cb237-10" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
-<span id="cb237-11"><a href="ggplot.html#cb237-11" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="ggplot.html#cb239-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
+<span id="cb239-2"><a href="ggplot.html#cb239-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb239-3"><a href="ggplot.html#cb239-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb239-4"><a href="ggplot.html#cb239-4" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">12</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">18</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>),</span>
+<span id="cb239-5"><a href="ggplot.html#cb239-5" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;6:00&quot;</span>, <span class="st">&quot;12:00&quot;</span>, <span class="st">&quot;18:00&quot;</span>)</span>
+<span id="cb239-6"><a href="ggplot.html#cb239-6" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb239-7"><a href="ggplot.html#cb239-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
+<span id="cb239-8"><a href="ggplot.html#cb239-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
+<span id="cb239-9"><a href="ggplot.html#cb239-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day by year&quot;</span>)</span>
+<span id="cb239-10"><a href="ggplot.html#cb239-10" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <p><img src="webscraping-R_files/figure-html/time_histo_facets-1.png" width="672" /></p>
-<p>Looking at the high numbers of very early reports and their maximum, we can see
-a gradual and moderate shift from the early to the late morning, which is
-especially apparent from 2019 to 2021. Because there are still reports beginning
-from about 08:00, we can not necessarily infer that the working hours have
-changed, but maybe that the working process has. Maybe the writers started
-favouring the quality of the written reports over the quantity of early reports.
-Maybe new rules have been implemented that require reports to be approved by
-some central authority, which might slow down the rate. One also has to keep in
-mind, that the Corona pandemic started in early 2020, so the small shift to the
-right could be an effect of work in the context of home-office, child-minding
-and home-schooling.</p>
-<p>While some of these interpretations may seem reasonable, remember that we do not
+<p>There seems to ba gradual shift from posting most reports in the hours leading
+up to midday towards a more evenly distributed posting behaviour. This is
+especially pronounced in 2024. While the peak still lies between 11:00-12:00, the
+differences for the other core working hours are less pronounced.
+What has not changed over time is that very few postings are made during the very early
+and very late working hours. This means that we can not necessarily infer that the working hours have
+changed, but maybe that the working process has.
+In what way we can only speculate. But also remember that we do not
 actually have enough information to draw any solid conclusions on either the
 number and distribution of crimes in Berlin or the working hours of the PR team.</p>
 </div>
@@ -735,10 +712,9 @@ the size works better, but will often also introduce graphical artefacts.</p>
 last created plot (Distribution of police reports over time of day by year) as
 an .eps file. We could also provide a path argument. If we do not, the file is
 saved in the current working directory.</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="ggplot.html#cb238-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;distr_preports.eps&quot;</span>)</span>
-<span id="cb238-2"><a href="ggplot.html#cb238-2" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span>
-<span id="cb238-3"><a href="ggplot.html#cb238-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
-<span id="cb238-4"><a href="ggplot.html#cb238-4" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="ggplot.html#cb240-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;distr_preports.eps&quot;</span>)</span>
+<span id="cb240-2"><a href="ggplot.html#cb240-2" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span>
+<span id="cb240-3"><a href="ggplot.html#cb240-3" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span></code></pre></div>
 <p>If we want to export graphics in this manner, we have to use <code>ggsave()</code> directly
 after creating a plot. An alternative would be to assign plots to objects which
 can then be exported at a later point in the code. Here we assign two plots to
@@ -747,30 +723,29 @@ objects to be saved. Note that you will not get any plotted output in this way.
 To see the plot, we can always call the created object by typing it’s name in
 the console. I would advice building the plot until you are satisfied and only
 then assign it to an object.</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="ggplot.html#cb239-1" tabindex="-1"></a>distr_reports_day <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
-<span id="cb239-2"><a href="ggplot.html#cb239-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb239-3"><a href="ggplot.html#cb239-3" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">9</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">12</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>,</span>
-<span id="cb239-4"><a href="ggplot.html#cb239-4" tabindex="-1"></a>                                <span class="dv">15</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">18</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">21</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>),</span>
-<span id="cb239-5"><a href="ggplot.html#cb239-5" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;6:00&quot;</span>, <span class="st">&quot;9:00&quot;</span>, <span class="st">&quot;12:00&quot;</span>, <span class="st">&quot;15:00&quot;</span>, <span class="st">&quot;18:00&quot;</span>, <span class="st">&quot;21:00&quot;</span>)</span>
-<span id="cb239-6"><a href="ggplot.html#cb239-6" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
-<span id="cb239-7"><a href="ggplot.html#cb239-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
-<span id="cb239-8"><a href="ggplot.html#cb239-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
-<span id="cb239-9"><a href="ggplot.html#cb239-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day&quot;</span>) <span class="sc">+</span></span>
-<span id="cb239-10"><a href="ggplot.html#cb239-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> mean_time), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb239-11"><a href="ggplot.html#cb239-11" tabindex="-1"></a></span>
-<span id="cb239-12"><a href="ggplot.html#cb239-12" tabindex="-1"></a>n_reports_district <span class="ot">&lt;-</span> reports_fyears <span class="sc">%&gt;%</span> </span>
-<span id="cb239-13"><a href="ggplot.html#cb239-13" tabindex="-1"></a>  <span class="fu">drop_na</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb239-14"><a href="ggplot.html#cb239-14" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
-<span id="cb239-15"><a href="ggplot.html#cb239-15" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb239-16"><a href="ggplot.html#cb239-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> reports, <span class="at">y =</span> <span class="fu">reorder</span>(district, reports))) <span class="sc">+</span></span>
-<span id="cb239-17"><a href="ggplot.html#cb239-17" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span>
-<span id="cb239-18"><a href="ggplot.html#cb239-18" tabindex="-1"></a></span>
-<span id="cb239-19"><a href="ggplot.html#cb239-19" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_timeofday.eps&quot;</span>, <span class="at">plot =</span> distr_reports_day)</span>
-<span id="cb239-20"><a href="ggplot.html#cb239-20" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span>
-<span id="cb239-21"><a href="ggplot.html#cb239-21" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better</span></span>
-<span id="cb239-22"><a href="ggplot.html#cb239-22" tabindex="-1"></a><span class="do">## value with `binwidth`.</span></span>
-<span id="cb239-23"><a href="ggplot.html#cb239-23" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_per_district.eps&quot;</span>, <span class="at">plot =</span> n_reports_district)</span>
-<span id="cb239-24"><a href="ggplot.html#cb239-24" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="ggplot.html#cb241-1" tabindex="-1"></a>distr_reports_day <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> reports_fyears, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">period_to_seconds</span>(time))) <span class="sc">+</span></span>
+<span id="cb241-2"><a href="ggplot.html#cb241-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb241-3"><a href="ggplot.html#cb241-3" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">9</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">12</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>,</span>
+<span id="cb241-4"><a href="ggplot.html#cb241-4" tabindex="-1"></a>                                <span class="dv">15</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">18</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">21</span> <span class="sc">*</span> <span class="dv">60</span> <span class="sc">*</span> <span class="dv">60</span>),</span>
+<span id="cb241-5"><a href="ggplot.html#cb241-5" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;6:00&quot;</span>, <span class="st">&quot;9:00&quot;</span>, <span class="st">&quot;12:00&quot;</span>, <span class="st">&quot;15:00&quot;</span>, <span class="st">&quot;18:00&quot;</span>, <span class="st">&quot;21:00&quot;</span>)</span>
+<span id="cb241-6"><a href="ggplot.html#cb241-6" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb241-7"><a href="ggplot.html#cb241-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time of Day&quot;</span>,</span>
+<span id="cb241-8"><a href="ggplot.html#cb241-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Reports&quot;</span>,</span>
+<span id="cb241-9"><a href="ggplot.html#cb241-9" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Distribution of police reports over time of day&quot;</span>) <span class="sc">+</span></span>
+<span id="cb241-10"><a href="ggplot.html#cb241-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> mean_time), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb241-11"><a href="ggplot.html#cb241-11" tabindex="-1"></a></span>
+<span id="cb241-12"><a href="ggplot.html#cb241-12" tabindex="-1"></a>n_reports_district <span class="ot">&lt;-</span> reports_fyears <span class="sc">%&gt;%</span> </span>
+<span id="cb241-13"><a href="ggplot.html#cb241-13" tabindex="-1"></a>  <span class="fu">drop_na</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb241-14"><a href="ggplot.html#cb241-14" tabindex="-1"></a>  <span class="fu">group_by</span>(district) <span class="sc">%&gt;%</span> </span>
+<span id="cb241-15"><a href="ggplot.html#cb241-15" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">reports =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb241-16"><a href="ggplot.html#cb241-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> reports, <span class="at">y =</span> <span class="fu">reorder</span>(district, reports))) <span class="sc">+</span></span>
+<span id="cb241-17"><a href="ggplot.html#cb241-17" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span>
+<span id="cb241-18"><a href="ggplot.html#cb241-18" tabindex="-1"></a></span>
+<span id="cb241-19"><a href="ggplot.html#cb241-19" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_timeofday.eps&quot;</span>, <span class="at">plot =</span> distr_reports_day)</span>
+<span id="cb241-20"><a href="ggplot.html#cb241-20" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span>
+<span id="cb241-21"><a href="ggplot.html#cb241-21" tabindex="-1"></a><span class="do">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span>
+<span id="cb241-22"><a href="ggplot.html#cb241-22" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;reports_per_district.eps&quot;</span>, <span class="at">plot =</span> n_reports_district)</span>
+<span id="cb241-23"><a href="ggplot.html#cb241-23" tabindex="-1"></a><span class="do">## Saving 7 x 5 in image</span></span></code></pre></div>
 <p>There are additional arguments that can be set. Arguments that control the size
 and resolution of the output may be of particular interest when saving a file in
 a format that is based on pixels. For more information see <code>?ggsave()</code>.</p>
@@ -800,33 +775,33 @@ a format that is based on pixels. For more information see <code>?ggsave()</code
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/webscraping-tures/webscraping-tures.github.io/12-ggplot2.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section",
-"scroll_highlight": true
-}
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/webscraping-tures/webscraping-tures.github.io/12-ggplot2.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section",
+    "scroll_highlight": true
+  }
 });
 });
 </script>

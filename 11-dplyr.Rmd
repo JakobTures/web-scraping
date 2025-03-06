@@ -12,12 +12,11 @@ select the columns and filter the observations (rows) we need, as well as
 compute some grouped summaries of the data.
 
 First, let us load the required packages. **dplyr** is part of the core tidyverse;
-we will need the package **lubridate** as well, to be able to deal with dates and
+the same is true for the package **lubridate**, which will enable us to deal with dates and
 times.
 
 ``` {r load_packages_11, message = FALSE}
 library(tidyverse)
-library(lubridate)
 ```
 
 ## `mutate()`
@@ -103,14 +102,14 @@ character in a string: to begin extraction after "Ereignisort: " we have to
 count the length of this substring including the whitespace after ":", which is
 $13$ and thus use $14$ as the starting position. For the position to stop
 extraction, we could either use an unrealistically high number or use
-`length(District)` to determine the exact length of each string.
+`str_length(District)` to determine the exact length of each string.
 
 ``` {r substr_district}
 reports %>% 
   mutate(District = substr(District, 14, 99))
 
 reports %>% 
-  mutate(District = substr(District, 14, length(District)))
+  mutate(District = substr(District, 14, str_length(District)))
 ```
 
 The column "Date" includes the date and the time of each report as a character
@@ -149,7 +148,7 @@ that contains the time and then apply the lubridate function `hm()` to it.
 ``` {r extract_time}
 reports %>% 
   mutate(time = 
-           substr(Date, 12, length(Date)) %>% 
+           substr(Date, 12, str_length(Date)) %>% 
            hm()
          )
 ```
@@ -159,13 +158,13 @@ them to the object `reports`.
 
 ``` {r mutate_cmpl}
 reports <- reports %>% 
-  mutate(District = substr(District, 14, length(District)),
+  mutate(District = substr(District, 14, str_length(District)),
          date_cmpl = dmy_hm(Date),
          year = year(date_cmpl),
          month = month(date_cmpl, label = TRUE),
          day = wday(date_cmpl, label = TRUE),
          time = 
-           substr(Date, 12, length(Date)) %>% 
+           substr(Date, 12, str_length(Date)) %>% 
            hm()
          )
 
@@ -239,26 +238,31 @@ argument and one or multiple expressions that specify the rules by which to
 filter. To write these expressions, we can make use of the comparison operators
 discussed in subchapter \@ref(comparison).
 
-To filter for all years that are not 2022, we can write:
+To filter for all years that are not 2025, we can write:
 
 ``` {r filter_years}
 reports %>% 
-  filter(year != 2022)
+  filter(year != 2025)
 ```
 
-Thus, only the observations where "year" does not equal "2022" remain in the
+Thus, only the observations where "year" does not equal "2025" remain in the
 tibble; more accurately, those observations for which the expression
-`year != 2022` is returned as `TRUE`.
+`year != 2025` is returned as `TRUE`.
 
-Closer inspection of the data reveals, that 2014 (the first year that is
-available on the website) is not complete either. There also seems to be one
-single report for 2013. We should also exclude these years for analysis. We can
-chain multiple expressions when using `filter()` separated by commas.
+This is all the filtering we will have to do here, but we should still look on
+how to filter by multiple values at once, which is an important data
+wrangling still to have. 
+
+We can chain multiple expressions when using `filter()` separated by commas.
+o for example to reduce the data set to observations from 2024, 2023 and 2022 we
+could write:
 
 ``` {r filter_mltpl_years}
 reports %>% 
-  filter(year != 2022, year != 2014, year != 2013)
+  filter(year != 2025, year != 2021, year != 2020)
 ```
+
+Here we are excluding every observation that does not lie between 2022--2024.
 
 Often there are multiple ways to formulate the filtering expressions. Here, we
 could tell R which values for "year" we want to keep, instead of which we do not
@@ -267,13 +271,39 @@ to define a range of numerical values which should be kept when filtering. We
 assign the result to a new object for later use.
 
 ``` {r filter_years_positive}
-reports_fyears <- reports %>% 
-  filter(year %in% 2015:2022)
+reports %>% 
+  filter(year %in% 2022:2024)
 ```
 
 While the `,` behaves like the logical operator `&`, we can also use `|` for
-"or" when combining expressions to be filtered upon. 
+"OR" when combining expressions to be filtered upon. 
 
+For example we could use `|` to select the same years in this way: 
+
+``` {r filter_years_or}
+reports %>% 
+  filter(year == 2022 | year == 2023 | year == 2024)
+```
+
+It is important to keep in mind the differences between AND and OR here.
+If we would have used `&` or `,` to chain these expressions instead, the
+following would have happened:
+
+``` {r filter_years_and}
+reports %>% 
+  filter(year == 2022, year == 2023, year == 2024)
+```
+
+We are left with nothing in our data set. This happens because the expression in
+`filter()` is now searching for observations who are **at the same time** from
+2022, 2023 *and* 2024. This is obviously impossible. 
+
+Let us now actually remove the observations for 2025 from the saved object.
+
+``` {r filter_years_4real}
+reports_fyears <- reports %>% 
+  filter(year != 2025)
+```
 
 
 ## `summarise()` & `group_by()`
@@ -323,7 +353,7 @@ reports_fyears %>%
   summarise(reports = n())
 ```
 
-While there are differences between the years, there does not seem to be a
+While there are differences between the years, there does not seem to be a clear and
 systematic pattern to it. We can do the same kind of analysis grouped by months
 and weekdays.
 
@@ -337,34 +367,18 @@ reports_fyears %>%
   summarise(reports = n())
 ```
 
-The analysis by month again shows no systematic variation. Looking at the
+The analysis by month again shows no systematic variation (that February has less reports
+will moist probably come down to the shorter length of the month). Looking at the
 reports by day of the week on the other hand, shows a slight increase in reports
-over the week, culminating on Friday. As stated above, we do not really know
+over the week, culminating on Thursday As stated above, we do not really know
 how the data is created, so the main point to take away from this analysis might
-be, that the PR team of the Berlin police also works on the weekend.
+be, that the PR team of the Berlin police also works on the weekend, but with fewer
+working hours.
 
 In the same manner, we can analyse the number of released police reports by
 district.
 
 ``` {r no_reports_district}
-reports_fyears %>% 
-  group_by(district) %>% 
-  summarise(reports = n())
-```
-
-Before we interpret the result, let us examine the district names; districts
-with a dash are written in two ways: with whitespace around the dash and without
-one. There may have been a change in the way these names are recorded in the data
-over the years and we have to deal with it. We can use the function
-`str_remove_all()` from **stringr** to remove every occurrence of a pattern we
-specify as its argument. If we remove the pattern " " we basically delete all
-whitespace. This can again be combined with `mutate()` to transform the data in
-our tibble.
-
-``` {r no_reports_district_corrected}
-reports_fyears <- reports_fyears %>% 
-  mutate(district = str_remove_all(district, pattern = " "))
-
 reports_fyears %>% 
   group_by(district) %>% 
   summarise(reports = n()) %>% 
@@ -413,8 +427,10 @@ reports_fyears %>%
   summarise(reports = n())
 ```
 
-There does not seem to be a clear pattern for the number of reports over time in
-both districts. For "Mitte" there is a considerable spike in 2016. To analyse
+Looking at "Friedrichshain-Kreuzberg" we can observe a substantial decrease in
+reports starting from 2022. The same is not true for "Mitte" which despite of a
+moderate temporal decrease seems to be relatively stable in the number of reports.
+To analyse
 this further, we had to go deeper into the data and look at the actual texts of
 the police reports.
 
@@ -470,8 +486,8 @@ reports %>%
   )
 ```
 
-The mean time of day over all police reports is about 11:59 while the median is
-11:13. This may indicate that the mean is biased towards a later time by a high
+The mean time of day over all police reports is about 12:28 while the median is
+12:01. This may indicate that the mean is biased towards a later time by a high
 number of very late reports. We will explore this further graphically in the next
 chapter. Again, the results may represent the time when crimes occur, but it is
 more likely, that we are actually analysing the time when the PR team posts

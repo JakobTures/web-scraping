@@ -57,20 +57,22 @@ closely, the Web Developer Tools can be very helpful here.
 
 Instead of simply selecting all `<table>` elements on the page, one strategy might
 be to use the WDTs to create a CSS selector for that specific table:
-`"table.wikitable:nth-child(42)"`. We thus select the table of class 
-`"wikitable"` which is the 42nd child of the parent hierarchy level -- 
+`"table.wikitable:nth-child(47)"`. We thus select the table of class 
+`"wikitable"` which is the 47nd child of the parent hierarchy level -- 
 `<div class="mw-parser-output">`.
+
+
 
 If we only want to select a single HTML element, it can be helpful to use the 
 function `html_element()` instead of `html_elements()`.
 
 ``` {r select_css_table}
 elements <- website %>% 
-  html_elements(css = "table.wikitable:nth-child(42)")
+  html_elements(css = "table.wikitable:nth-child(47)")
 elements
 
 element <- website %>% 
-  html_element(css = "table.wikitable:nth-child(42)")
+  html_element(css = "table.wikitable:nth-child(47)")
 element
 ```
 
@@ -155,7 +157,7 @@ tables[c(1, 3)] %>%
 As a result, we get a list again that contains the two tibbles selected here.
 
 
-### Tabellen mit NAs
+### Tables with NAs
 
 What happens when we try to read a table with missing values? Consider the 
 following example:

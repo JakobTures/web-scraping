@@ -135,6 +135,7 @@ Disallow: /cgi-bin/
 Disallow: /temp/
 Disallow: /ueberhang/wpb/
 Disallow: /ueberhang/chronic/
+Disallow: /wahltippspiele/
 ```
 
 The field "User-agent" defines to which crawlers the rules apply to. "*" is

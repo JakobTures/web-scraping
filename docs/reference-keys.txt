@@ -76,7 +76,7 @@ rvest2
 scraping-of-tables
 table-with-css-selectors-from-wikipedia
 scraping-multiple-tables
-tabellen-mit-nas
+tables-with-nas
 dynamic-websites
 html-forms-and-html-queries
 html-forms
